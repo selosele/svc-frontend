@@ -1,27 +1,20 @@
-# Svc
+# svc
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+## 작업기간
 
-## Development server
+- 2024.06.01. ~ 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 기술스택 및 개발환경 (프론트엔드)
 
-## Code scaffolding
+- `Node.js` - v20.10.0
+- `Angular` - v18.0.1
+- `WSL2` - Ubuntu 22.04 LTS
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 개발환경 구동 절차
 
-## Build
+1. `npm install`
+2. `npm start`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## etc.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Backend 저장소](https://github.com/selosele/svc-backend)
