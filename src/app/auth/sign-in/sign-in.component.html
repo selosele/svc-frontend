@@ -1,0 +1,39 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="signInForm">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        id:
+      </div>
+      <div class="ui-grid-col-6">
+        <input pInputText type="text" formControlName="userAccount" class="form-control" name="userAccount">
+      </div>
+      <div class="ui-grid-col-4">
+        <div [hidden]="signInForm.controls['userAccount'].valid || !signInForm.controls['userAccount'].dirty"
+          class="alert alert-danger">
+          id is required
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        password:
+      </div>
+      <div class="ui-grid-col-6">
+        <input pInputText type="password" formControlName="userPassword" class="form-control" name="userPassword">
+      </div>
+      <div class="ui-grid-col-4">
+        <div [hidden]="signInForm.controls['userPassword'].valid || !signInForm.controls['userPassword'].dirty"
+          class="alert alert-danger">
+          password is required
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"></div>
+      <div class="ui-grid-col-6">
+        <button pButton type="submit" label="Submit" [disabled]="!signInForm.valid"></button>
+      </div>
+      <div class="ui-grid-col-4"></div>
+    </div>
+  </div>
+</form>
