@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
-import { SignInComponent } from './sign-in/sign-in.component';
 
 export const authRoutes: Routes = [
-  { path: 'sign-in', component: SignInComponent },
+  
+  // 로그인 페이지
+  {
+    path: 'sign-in',
+    loadComponent: () => import('./sign-in/sign-in.component').then(x => x.SignInComponent),
+  },
 ];
