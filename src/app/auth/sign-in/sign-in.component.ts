@@ -4,9 +4,9 @@ import { AuthService } from '../auth.service';
 import { signInRequestDTO } from '../auth.dto';
 
 @Component({
-  selector: 'view-sign-in',
   standalone: true,
   imports: [ReactiveFormsModule],
+  selector: 'view-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
