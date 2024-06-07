@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { isBlank } from '../shared/utils';
+import { isBlank } from '@app/shared/utils';
 import { signInRequestDTO, signInResponseDTO } from './auth.dto';
 
 @Injectable({ providedIn: 'root' })
@@ -21,7 +21,7 @@ export class AuthService {
 
     /** 액세스 토큰 */
     const accessToken = window.localStorage.getItem('accessToken');
-    if (isBlank(accessToken))
+    if (isBlank(accessToken)) // TODO: 토큰 유효성 검증도 필요
       return false;
 
     return true;
