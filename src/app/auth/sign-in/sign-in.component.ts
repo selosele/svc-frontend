@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { signInRequestDTO } from '../auth.dto';
+import { SignInRequestDTO } from '../auth.dto';
 
 @Component({
   standalone: true,
@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
   
   /** 로그인을 한다. */
   onSubmit(): void { 
-    this.authService.signIn(this.signInForm.value as signInRequestDTO)
+    this.authService.signIn(this.signInForm.value as SignInRequestDTO)
     .subscribe({
       next: (data) => {
         console.log(`accessToken: ${data.accessToken}`);

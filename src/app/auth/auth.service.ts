@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isBlank } from '@app/shared/utils';
-import { signInRequestDTO, signInResponseDTO } from './auth.dto';
+import { SignInRequestDTO, SignInResponseDTO } from './auth.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,8 +12,8 @@ export class AuthService {
   ) {}
 
   /** 로그인을 한다. */
-  signIn(signInRequestDTO: signInRequestDTO): Observable<signInResponseDTO> {
-    return this.http.post<signInResponseDTO>('/auth/sign-in', signInRequestDTO);
+  signIn(signInRequestDTO: SignInRequestDTO): Observable<SignInResponseDTO> {
+    return this.http.post<SignInResponseDTO>('/auth/sign-in', signInRequestDTO);
   }
 
   /** 로그인 여부를 반환한다. */
