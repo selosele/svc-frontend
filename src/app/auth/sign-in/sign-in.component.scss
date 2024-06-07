@@ -1,0 +1,28 @@
+.sign-in {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  &__form {
+    max-width: 23.33333rem;
+    padding: 1.5rem;
+    background-color: var(--surface-0);
+    box-shadow: #0003 1px 1px .75rem;
+
+    .input-box {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+}
