@@ -1,12 +1,26 @@
 import { Routes } from '@angular/router';
 import { authRoutes } from '@app/auth/auth.routes';
-import { AuthGuard } from '@app/shared/guards/auth.guard';
+import { AuthGuard } from './shared/guards';
 
-export const routes: Routes = [
-  ...authRoutes,
+/** 공통 라우터 */
+const globalRoutes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./app.component').then(x => x.AppComponent),
     canActivate: [AuthGuard],
-  }
+    loadComponent: () => import('./app.component').then(x => x.AppComponent),
+  },
+  {
+    path: 'error',
+    loadComponent: () => import('./error/error.component').then(x => x.ErrorComponent),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    loadComponent: () => import('./error/error.component').then(x => x.ErrorComponent),
+  },
+];
+
+export const routes: Routes = [
+  ...authRoutes,   // 인증
+  ...globalRoutes, // 공통
 ];
