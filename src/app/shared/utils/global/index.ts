@@ -9,12 +9,12 @@ export function isNotEmpty(value: any): boolean {
 }
 
 /** 문자열 값이 비었는지 확인한다. */
-export function isBlank(value: any): boolean {
+export function isBlank(value: string): boolean {
   return isEmpty(value) || value.trim().length === 0;
 }
 
 /** 문자열 값이 있는지 확인한다. */
-export function isNotBlank(value: any): boolean {
+export function isNotBlank(value: string): boolean {
   return !isBlank(value);
 }
 
