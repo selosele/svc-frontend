@@ -1,11 +1,7 @@
 <div class="app">
   <router-outlet />
 
-  <div *ngIf="loading$ | async" class="progress-spinner">
-    <p-progressSpinner
-      ariaLabel="로딩"
-    />
-  </div>
+  <ui-loading />
 
-  <p-toast />
+  <ui-message />
 </div>

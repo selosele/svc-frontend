@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { ToastModule } from 'primeng/toast';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { UiLoadingService } from './shared/services/ui/ui-loading-service';
+import { UiLoadingComponent } from './shared/components/ui/ui-loading/ui-loading.component';
+import { UiMessageComponent } from './shared/components/ui/ui-message/ui-message.component';
 
 @Component({
   standalone: true,
   imports: [
-    CommonModule,
     RouterOutlet,
-    ToastModule,
-    ProgressSpinnerModule,
+    UiLoadingComponent,
+    UiMessageComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,11 +16,6 @@ import { UiLoadingService } from './shared/services/ui/ui-loading-service';
 })
 export class AppComponent {
 
-  constructor(
-    private loadingService: UiLoadingService,
-  ) {}
-
-  /** 로딩 상태 */
-  loading$ = this.loadingService.loading$;
+  
   
 }

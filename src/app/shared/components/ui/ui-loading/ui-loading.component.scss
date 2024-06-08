@@ -1,0 +1,34 @@
+.progress-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  margin: auto;
+
+  &:before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
+  &__bottom {
+    display: block;
+    position: absolute;
+    top: calc(50% + 5rem);
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+  }
+}
