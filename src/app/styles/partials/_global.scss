@@ -1,14 +1,14 @@
 html {
-  font-size: 18px;
+  font-size: 14px;
   -webkit-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
 
   @media (min-width: $min-medium-width) {
-    font-size: 19px;
+    font-size: 15px;
   }
 
   @media (min-width: $min-large-width) {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
