@@ -20,7 +20,7 @@ import { UiLoadingService } from './shared/services/ui/ui-loading-service';
 export class AppComponent {
 
   constructor(
-    private loadingService: UiLoadingService
+    private loadingService: UiLoadingService,
   ) {}
 
   /** 로딩 상태 */
