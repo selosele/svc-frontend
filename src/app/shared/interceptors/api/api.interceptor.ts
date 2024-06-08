@@ -1,5 +1,8 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { UiMessageService } from '@app/shared/services/ui/ui-message-service';
 import { isNotBlank } from '@app/shared/utils';
+import { catchError, throwError } from 'rxjs';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
@@ -12,5 +15,15 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
       ...(isNotBlank(accessToken) && { 'Authorization': `Bearer ${accessToken}` }),
     }
   });
-  return next(newReq);
+
+  const messsage: UiMessageService = inject(UiMessageService);
+  
+  return next(newReq).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 400) {
+        messsage.error(err.error.message);
+      }
+      return throwError(() => err);
+    })
+  );
 }
