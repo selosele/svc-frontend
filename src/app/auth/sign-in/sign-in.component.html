@@ -4,25 +4,22 @@
 
     <form (ngSubmit)="onSubmit()" [formGroup]="signInForm">
       <div class="input-box">
-        <input pInputText type="text" formControlName="userAccount" name="userAccount" placeholder="id">
-        <div [hidden]="signInForm.controls['userAccount'].valid || !signInForm.controls['userAccount'].dirty"
-          class="alert alert-danger">
-          id is required
-        </div>
+        <ui-text-field
+          [control]="signInForm.controls['userAccount']"
+          placeholder="id"
+        />
       </div>
 
       <div class="input-box">
-        <input pInputText type="password" formControlName="userPassword" name="userPassword" placeholder="password">
-        <div [hidden]="signInForm.controls['userPassword'].valid || !signInForm.controls['userPassword'].dirty"
-          class="alert alert-danger">
-          password is required
-        </div>
+        <ui-text-field
+          [control]="signInForm.controls['userPassword']"
+          type="password" placeholder="password"
+        />
       </div>
 
       <button
         pButton blockButton
-        type="submit"
-        [disabled]="!signInForm.valid"
+        type="submit" [disabled]="!signInForm.valid"
       >
         로그인
       </button>

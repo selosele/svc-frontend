@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../auth.service';
 import { SignInRequestDTO } from '../auth.dto';
 import { BlockButtonDirective } from '@app/shared/directives';
@@ -12,7 +11,6 @@ import { UiTextFieldComponent } from '@app/shared/components/form';
   imports: [
     ReactiveFormsModule,
     ButtonModule,
-    InputTextModule,
     BlockButtonDirective,
     UiTextFieldComponent,
   ],
@@ -32,8 +30,8 @@ export class SignInComponent implements OnInit {
     
   ngOnInit(): void {
     this.signInForm = this.fb.group({
-      userAccount:  ['', Validators.required], // 사용자 계정
-      userPassword: ['', Validators.required], // 사용자 비밀번호
+      userAccount:  ['', [Validators.required]], // 사용자 계정
+      userPassword: ['', [Validators.required]], // 사용자 비밀번호
     });
   }
   

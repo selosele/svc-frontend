@@ -1,0 +1,12 @@
+<input
+  pInputText
+  [type]="type"
+  [name]="name"
+  [formControl]="formControl"
+  [placeholder]="placeholder"
+  (keydown)="setErrorMessage()"
+  (blur)="setErrorMessage()"
+>
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
