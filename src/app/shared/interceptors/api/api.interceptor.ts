@@ -1,8 +1,9 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { UiLoadingService } from '@app/shared/services/ui/ui-loading-service';
 import { UiMessageService } from '@app/shared/services/ui/ui-message-service';
 import { isNotBlank } from '@app/shared/utils';
-import { catchError, throwError } from 'rxjs';
+import { catchError, finalize, throwError } from 'rxjs';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
@@ -16,14 +17,20 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
     }
   });
 
-  const messsage: UiMessageService = inject(UiMessageService);
+  const loadingService = inject(UiLoadingService);
+  const messsageService: UiMessageService = inject(UiMessageService);
+
+  loadingService.setLoading(true); // HTTP 요청이 진행 중일 때 로딩 레이어를 표출
   
   return next(newReq).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 400) {
-        messsage.error(err.error.message);
+        messsageService.error(err.error.message);
       }
       return throwError(() => err);
+    }),
+    finalize(() => {
+      loadingService.setLoading(false); // HTTP 요청 종료 시 로딩 레이어 삭제
     })
   );
 }
