@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { UiLoadingService } from '@app/shared/services/ui/ui-loading-service';
+import { UiLoadingService } from '@app/shared/services';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../auth.service';
 import { SignInRequestDTO } from '../auth.dto';
 import { BlockButtonDirective } from '@app/shared/directives';
+import { UiTextFieldComponent } from '@app/shared/components/form';
 
 @Component({
   standalone: true,
@@ -13,6 +14,7 @@ import { BlockButtonDirective } from '@app/shared/directives';
     ButtonModule,
     InputTextModule,
     BlockButtonDirective,
+    UiTextFieldComponent,
   ],
   selector: 'view-sign-in',
   templateUrl: './sign-in.component.html',
@@ -36,7 +38,7 @@ export class SignInComponent implements OnInit {
   }
   
   /** 로그인을 한다. */
-  onSubmit(): void { 
+  onSubmit(): void {
     this.authService.signIn(this.signInForm.value as SignInRequestDTO);
   }
   

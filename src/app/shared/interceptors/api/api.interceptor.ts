@@ -1,9 +1,8 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { UiLoadingService } from '@app/shared/services/ui/ui-loading-service';
-import { UiMessageService } from '@app/shared/services/ui/ui-message-service';
-import { isNotBlank } from '@app/shared/utils';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, finalize, throwError } from 'rxjs';
+import { UiLoadingService, UiMessageService } from '@app/shared/services';
+import { isNotBlank } from '@app/shared/utils';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UiLoadingComponent } from './shared/components/ui/ui-loading/ui-loading.component';
-import { UiMessageComponent } from './shared/components/ui/ui-message/ui-message.component';
+import { UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 
 @Component({
   standalone: true,
