@@ -1,2 +1,2 @@
 // 공통
-export * from './global';
+export * from './global/lang.util';
