@@ -10,6 +10,7 @@
           id is required
         </div>
       </div>
+
       <div class="input-box">
         <input pInputText type="password" formControlName="userPassword" name="userPassword" placeholder="password">
         <div [hidden]="signInForm.controls['userPassword'].valid || !signInForm.controls['userPassword'].dirty"
@@ -17,6 +18,7 @@
           password is required
         </div>
       </div>
+
       <div>
         <button
           pButton blockButton
