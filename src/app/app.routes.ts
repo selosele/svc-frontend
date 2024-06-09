@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
-import { authRoutes } from '@app/auth/auth.routes';
 import { AuthGuard } from './shared/guards';
+import { authRoutes } from './auth/auth.routes';
+import { indexRoutes } from './index/index.routes';
 
 /** 공통 라우터 */
 const globalRoutes: Routes = [
@@ -22,5 +23,6 @@ const globalRoutes: Routes = [
 
 export const routes: Routes = [
   ...authRoutes,   // 인증
+  ...indexRoutes,  // 메인
   ...globalRoutes, // 공통
 ];
