@@ -29,6 +29,12 @@ export class AuthService {
     });
   }
 
+  /** 로그아웃을 한다. */
+  signOut(): void {
+    window.localStorage.removeItem('accessToken');
+    this.router.navigateByUrl('/auth/sign-in');
+  }
+
   /** 로그인 여부를 반환한다. */
   isSignIned(): boolean {
     const accessToken = window.localStorage.getItem('accessToken');
