@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { isNotBlank } from '@app/shared/utils';
 import { SignInRequestDTO, SignInResponseDTO } from './auth.dto';
 
@@ -8,6 +9,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
   ) {}
 
   /** 로그인을 한다. */
@@ -18,6 +20,7 @@ export class AuthService {
         const accessToken = data.accessToken;
         if (isNotBlank(accessToken)) {
           window.localStorage.setItem('accessToken', accessToken);
+          this.router.navigateByUrl('/');
         }
       },
       error: (err) => {

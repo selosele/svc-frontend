@@ -1,14 +1,17 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './shared/guards';
+import { AppComponent } from './app.component';
 import { authRoutes } from './auth/auth.routes';
 import { indexRoutes } from './index/index.routes';
 
 /** 공통 라우터 */
 const globalRoutes: Routes = [
+  { path: '', redirectTo: 'index', pathMatch: 'full' },
   {
     path: '',
-    canActivate: [AuthGuard],
-    loadComponent: () => import('./app.component').then(x => x.AppComponent),
+    component: AppComponent,
+    children: [
+      ...indexRoutes,  // 메인 페이지
+    ]
   },
   {
     path: 'error',
@@ -23,6 +26,5 @@ const globalRoutes: Routes = [
 
 export const routes: Routes = [
   ...authRoutes,   // 인증
-  ...indexRoutes,  // 메인
   ...globalRoutes, // 공통
 ];
