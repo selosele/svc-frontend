@@ -50,6 +50,7 @@ export class FormFieldComponent implements OnInit {
         case 'max':       this.errorMessage = validationMessage.max(errors[key].max); break;
         case 'minLength': this.errorMessage = validationMessage.minLength(errors[key].requiredLength); break;
         case 'maxlength': this.errorMessage = validationMessage.maxlength(errors[key].requiredLength); break;
+        case 'numeric':   this.errorMessage = validationMessage.numeric(); break;
         default :         this.errorMessage = ''; break;
       }
     });

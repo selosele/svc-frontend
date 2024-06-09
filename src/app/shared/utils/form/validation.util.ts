@@ -5,4 +5,5 @@ export const validationMessage = {
   max: (len: number) => `최대 ${len}글자 이하여야 합니다.`,
   minLength: (len: number) => `최소 ${len}글자 이상이어야 합니다.`,
   maxlength: (len: number) => `최대 ${len}글자 이하여야 합니다.`,
+  numeric: () => `숫자만 입력 가능합니다.`,
 };
