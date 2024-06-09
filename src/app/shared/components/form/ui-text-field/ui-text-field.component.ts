@@ -18,7 +18,7 @@ import { FormFieldComponent } from '../form-field/form-field.component';
 export class UiTextFieldComponent extends FormFieldComponent {
 
   /** input type */
-  @Input() type?: string = 'text';
+  @Input() type? = 'text';
 
   /** input placeholder */
   @Input() placeholder?: string;

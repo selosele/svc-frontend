@@ -17,12 +17,13 @@
         />
       </div>
 
-      <button
-        pButton blockButton
-        type="submit" [disabled]="!signInForm.valid"
+      <ui-button
+        [block]="true"
+        [type]="'submit'"
+        [disabled]="!signInForm.valid"
       >
         로그인
-      </button>
+      </ui-button>
     </form>
   </div>
 </div>
