@@ -37,7 +37,7 @@ export class FormValidator extends Validators {
     }
   }
 
-  /** 최소에서 최대 사이의 문자열 값을 입력하였는지 검증한다. */
+  /** 최소 길이에서 최대 길이 사이의 문자열 값을 입력하였는지 검증한다. */
   static betweenLength(start: number, end: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value as string;
