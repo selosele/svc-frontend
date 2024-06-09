@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@app/shared/guards';
-import { IndexComponent } from './index.component';
 
 /** 메인 라우터 */
 export const indexRoutes: Routes = [
@@ -9,6 +8,6 @@ export const indexRoutes: Routes = [
   {
     path: 'index',
     canActivate: [authGuard],
-    component: IndexComponent,
+    loadComponent: () => import('./index.component').then(x => x.IndexComponent),
   },
 ];

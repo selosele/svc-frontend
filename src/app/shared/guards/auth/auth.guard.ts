@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
 
   if (authService.isSignIned()) {
     if (state.url === '/index')
-      return true; // 로그인된 상태에서 /index 경로로 접근하면 허용  
+      return true; // 로그인된 상태에서 /index 경로로 접근하면 허용
     
     router.navigateByUrl('/');
     return false;

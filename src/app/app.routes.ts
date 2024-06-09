@@ -9,9 +9,6 @@ const globalRoutes: Routes = [
   {
     path: '',
     component: AppComponent,
-    children: [
-      ...indexRoutes,  // 메인 페이지
-    ]
   },
   {
     path: 'error',
@@ -26,5 +23,6 @@ const globalRoutes: Routes = [
 
 export const routes: Routes = [
   ...authRoutes,   // 인증
+  ...indexRoutes,  // 메인 페이지
   ...globalRoutes, // 공통
 ];
