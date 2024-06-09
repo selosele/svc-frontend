@@ -1,4 +1,8 @@
 <div class="app">
+  @if (authService.isSignIned()) {
+    <layout-header />
+  }
+
   <router-outlet />
 
   <ui-loading />

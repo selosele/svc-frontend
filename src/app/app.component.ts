@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UiLoadingComponent, UiMessageComponent } from './shared/components';
+import { AuthService } from './auth/auth.service';
+import { LayoutHeaderComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
 
 @Component({
   standalone: true,
@@ -8,6 +9,7 @@ import { UiLoadingComponent, UiMessageComponent } from './shared/components';
     RouterOutlet,
     UiLoadingComponent,
     UiMessageComponent,
+    LayoutHeaderComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,6 +17,8 @@ import { UiLoadingComponent, UiMessageComponent } from './shared/components';
 })
 export class AppComponent {
 
-  
+  constructor(
+    protected authService: AuthService,
+  ) {}
   
 }
