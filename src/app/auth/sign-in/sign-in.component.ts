@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { SignInRequestDTO } from '../auth.dto';
-import { FormValidator, UiTextFieldComponent } from '@app/shared/components/form';
-import { UiButtonComponent } from '@app/shared/components/ui';
+import { FormValidator, UiButtonComponent, UiTextFieldComponent } from '@app/shared/components';
 
 @Component({
   standalone: true,
