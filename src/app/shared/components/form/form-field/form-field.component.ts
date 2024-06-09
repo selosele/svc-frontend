@@ -45,13 +45,15 @@ export class FormFieldComponent implements OnInit {
 
     Object.keys(errors).forEach(key => {
       switch (key) {
-        case 'required':  this.errorMessage = validationMessage.required(); break;
-        case 'min':       this.errorMessage = validationMessage.min(errors[key].min); break;
-        case 'max':       this.errorMessage = validationMessage.max(errors[key].max); break;
-        case 'minLength': this.errorMessage = validationMessage.minLength(errors[key].requiredLength); break;
-        case 'maxlength': this.errorMessage = validationMessage.maxlength(errors[key].requiredLength); break;
-        case 'numeric':   this.errorMessage = validationMessage.numeric(); break;
-        default :         this.errorMessage = ''; break;
+        case 'required':      this.errorMessage = validationMessage.required(); break;
+        case 'min':           this.errorMessage = validationMessage.min(errors[key].min); break;
+        case 'max':           this.errorMessage = validationMessage.max(errors[key].max); break;
+        case 'minlength':     this.errorMessage = validationMessage.minLength(errors[key].requiredLength); break;
+        case 'maxlength':     this.errorMessage = validationMessage.maxlength(errors[key].requiredLength); break;
+        case 'numeric':       this.errorMessage = validationMessage.numeric(); break;
+        case 'between':       this.errorMessage = validationMessage.between(errors[key].start, errors[key].end); break;
+        case 'betweenLength': this.errorMessage = validationMessage.betweenLength(errors[key].start, errors[key].end); break;
+        default :             this.errorMessage = ''; break;
       }
     });
   }
