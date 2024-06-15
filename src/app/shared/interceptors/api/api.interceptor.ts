@@ -11,7 +11,8 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const newReq = req.clone({
     url: `${baseUri}${req.url}`,
     setHeaders: {
-      'Content-Type': 'application/json; charset=utf-8',
+      // Content-Type 헤더를 아래처럼 설정 시, API 서버에서 JSON이 아닌 형식의 데이터를 반환하면 오류 발생
+      // 'Content-Type': 'application/json; charset=utf-8',
       ...(isNotBlank(accessToken) && { 'Authorization': `Bearer ${accessToken}` }),
     }
   });

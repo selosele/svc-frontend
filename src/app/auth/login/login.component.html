@@ -1,18 +1,18 @@
-<div class="sign-in__wrapper">
-  <div class="sign-in__form">
-    <h1 class="sign-in__title">로그인</h1>
+<div class="login__wrapper">
+  <div class="login__form">
+    <h1 class="login__title">로그인</h1>
 
-    <form (ngSubmit)="onSubmit()" [formGroup]="signInForm">
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <div class="input-box">
         <ui-text-field
-          [control]="signInForm.controls['userAccount']"
+          [control]="loginForm.controls['userAccount']"
           placeholder="id"
         />
       </div>
 
       <div class="input-box">
         <ui-text-field
-          [control]="signInForm.controls['userPassword']"
+          [control]="loginForm.controls['userPassword']"
           type="password" placeholder="password"
         />
       </div>
@@ -20,7 +20,7 @@
       <ui-button
         [block]="true"
         [type]="'submit'"
-        [disabled]="!signInForm.valid"
+        [disabled]="!loginForm.valid"
       >
         로그인
       </ui-button>

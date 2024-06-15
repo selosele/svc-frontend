@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { SignInRequestDTO } from '../auth.dto';
+import { LoginRequestDTO } from '../auth.dto';
 import { FormValidator, UiButtonComponent, UiTextFieldComponent } from '@app/shared/components';
 
 @Component({
@@ -11,11 +11,11 @@ import { FormValidator, UiButtonComponent, UiTextFieldComponent } from '@app/sha
     UiButtonComponent,
     UiTextFieldComponent,
   ],
-  selector: 'view-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss'
+  selector: 'view-login',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
 })
-export class SignInComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
@@ -23,10 +23,10 @@ export class SignInComponent implements OnInit {
   ) {}
 
   /** 로그인 폼 */
-  signInForm: FormGroup;
+  loginForm: FormGroup;
     
   ngOnInit(): void {
-    this.signInForm = this.fb.group({
+    this.loginForm = this.fb.group({
       userAccount:  ['', [FormValidator.required]], // 사용자 계정
       userPassword: ['', [FormValidator.required]], // 사용자 비밀번호
     });
@@ -34,7 +34,7 @@ export class SignInComponent implements OnInit {
   
   /** 로그인을 한다. */
   onSubmit(): void {
-    this.authService.signIn(this.signInForm.value as SignInRequestDTO);
+    this.authService.login(this.loginForm.value as LoginRequestDTO);
   }
   
 }

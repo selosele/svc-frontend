@@ -3,12 +3,12 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 import { AuthService } from '@app/auth/auth.service';
 
 /** 로그인 guard */
-export const signInGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const loginGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
   // 로그인이 되어 있으면 메인 페이지로 이동한다.
-  if (authService.isSignIned()) {
+  if (authService.isLogined()) {
     router.navigateByUrl('/');
     return false;
   }

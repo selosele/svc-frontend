@@ -1,5 +1,5 @@
 /** 로그인 요청 DTO */
-export interface SignInRequestDTO {
+export interface LoginRequestDTO {
 
   /** 사용자 계정 */
   userAccount?: string;
@@ -10,7 +10,7 @@ export interface SignInRequestDTO {
 }
 
 /** 로그인 응답 DTO */
-export interface SignInResponseDTO {
+export interface LoginResponseDTO {
 
   /** 액세스 토큰 */
   accessToken?: string;

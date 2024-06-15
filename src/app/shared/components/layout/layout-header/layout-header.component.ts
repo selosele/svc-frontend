@@ -20,9 +20,9 @@ export class LayoutHeaderComponent {
   ) {}
 
   /** 로그아웃을 한다. */
-  signOut(): void {
+  logout(): void {
     // TODO: confirm창 띄워서 로그아웃 예/아니오 선택
-    this.authService.signOut();
+    this.authService.logout();
   }
 
 }
