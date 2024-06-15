@@ -12,9 +12,8 @@
 
   &__form {
     padding: 1.875rem;
-    border-radius: 0.625rem;
+    border: 1px solid var(--surface-300);
     background-color: var(--surface-0);
-    box-shadow: #0003 1px 1px 0.9375rem;
   }
 
   &__title {
