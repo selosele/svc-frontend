@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { UiButtonComponent } from '../../ui';
 import { AuthService } from '@app/auth/auth.service';
+import { UiConfirmService } from '@app/shared/services';
 import { LayoutPageTitleComponent } from '../layout-page-title/layout-page-title.component';
+import { UiButtonComponent } from '../../ui';
 
 @Component({
   standalone: true,
@@ -17,12 +18,16 @@ export class LayoutHeaderComponent {
 
   constructor(
     private authService: AuthService,
+    private confirmService: UiConfirmService,
   ) {}
 
   /** 로그아웃을 한다. */
-  logout(): void {
-    // TODO: confirm창 띄워서 로그아웃 예/아니오 선택
-    this.authService.logout();
+  logout(event: Event): void {
+    this.confirmService.confirm1(event, '로그아웃하시겠습니까?',
+      () => {
+        this.authService.logout();
+      },
+    )
   }
 
 }

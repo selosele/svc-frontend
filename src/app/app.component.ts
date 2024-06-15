@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/auth.service';
-import { LayoutHeaderComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
+import { LayoutHeaderComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
 
 @Component({
   standalone: true,
@@ -9,6 +9,7 @@ import { LayoutHeaderComponent, UiLoadingComponent, UiMessageComponent } from '.
     RouterOutlet,
     UiLoadingComponent,
     UiMessageComponent,
+    UiConfirmComponent,
     LayoutHeaderComponent,
   ],
   selector: 'app-root',
