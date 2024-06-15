@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BlockButtonDirective } from '@app/shared/directives';
 
@@ -22,5 +22,13 @@ export class UiButtonComponent {
 
   /** 버튼 disabled */
   @Input() disabled?: boolean;
+
+  /** 버튼 클릭 이벤트 */
+  @Output() click? = new EventEmitter<Event>();
+
+  /** 버튼을 클릭한다. */
+  onClick(event: Event) {
+    this.click.emit(event);
+  }
 
 }
