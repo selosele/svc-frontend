@@ -27,7 +27,7 @@ export class UiButtonComponent {
   @Output() click? = new EventEmitter<Event>();
 
   /** 버튼을 클릭한다. */
-  onClick(event: Event) {
+  onClick(event: Event): void {
     this.click.emit(event);
   }
 
