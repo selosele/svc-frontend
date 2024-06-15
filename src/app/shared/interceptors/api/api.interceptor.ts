@@ -11,7 +11,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const newReq = req.clone({
     url: `${baseUri}${req.url}`,
     setHeaders: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       ...(isNotBlank(accessToken) && { 'Authorization': `Bearer ${accessToken}` }),
     }
   });
@@ -23,9 +23,9 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   
   return next(newReq).pipe(
     catchError((err: HttpErrorResponse) => {
-      if (err.status === 400) {
+      if (err.status === 400)
         messsageService.error(err.error.message);
-      }
+      
       return throwError(() => err);
     }),
     finalize(() => {

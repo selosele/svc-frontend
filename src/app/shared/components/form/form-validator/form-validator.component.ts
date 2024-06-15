@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { isEmpty } from '@app/shared/utils';
+import { isBlank, isEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -42,7 +42,7 @@ export class FormValidator extends Validators {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value as string;
 
-      if (isEmpty(value))
+      if (isBlank(value))
         return { 'betweenLength': { valid: false, start, end } };
 
       // 값이 start와 end 사이에 있는 경우 유효함
