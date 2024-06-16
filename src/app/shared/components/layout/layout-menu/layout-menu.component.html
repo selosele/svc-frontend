@@ -1,0 +1,17 @@
+<nav class="layout-menu">
+  <ul class="depth1">
+    <ng-container *ngFor="let menu1 of menuList$ | async">
+      <li *ngIf="menu1.menuDepth === 1">
+        {{ menu1.menuName }}
+        
+        <ul class="depth2">
+          <ng-container *ngFor="let menu2 of menuList$ | async">
+            <li *ngIf="menu2.upMenuId === menu1.menuId">
+              {{ menu2.menuName }}
+            </li>
+          </ng-container>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

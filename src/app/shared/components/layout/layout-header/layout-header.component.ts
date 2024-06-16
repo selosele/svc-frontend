@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { UiConfirmService } from '@app/shared/services';
 import { LayoutPageTitleComponent } from '../layout-page-title/layout-page-title.component';
+import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent } from '../../ui';
 
 @Component({
@@ -9,6 +10,7 @@ import { UiButtonComponent } from '../../ui';
   imports: [
     UiButtonComponent,
     LayoutPageTitleComponent,
+    LayoutMenuComponent,
   ],
   selector: 'layout-header',
   templateUrl: './layout-header.component.html',
