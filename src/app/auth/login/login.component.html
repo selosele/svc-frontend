@@ -2,7 +2,7 @@
   <div class="login__form">
     <h1 class="login__title">로그인</h1>
 
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-box">
         <ui-text-field
           [control]="loginForm.controls['userAccount']"
