@@ -3,11 +3,13 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, finalize, throwError } from 'rxjs';
 import { UiLoadingService, UiMessageService } from '@app/shared/services';
 import { isNotBlank } from '@app/shared/utils';
+import { AuthService } from '@app/auth/auth.service';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const baseUri = 'api';
-  const accessToken = window.localStorage.getItem('accessToken');
+  const authService = inject(AuthService);
+  const accessToken = authService.getAccessToken();
   const newReq = req.clone({
     url: `${baseUri}${req.url}`,
     setHeaders: {
