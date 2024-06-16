@@ -1,5 +1,5 @@
 /** 사용자 응답 DTO */
-export class UserReponseDTO {
+export class UserResponseDTO {
 
   /** 사용자 ID */
   userId?: number;

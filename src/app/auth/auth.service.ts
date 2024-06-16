@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, isNotBlank } from '@app/shared/utils';
 import { LoginRequestDTO, LoginResponseDTO } from './auth.dto';
-import { UserReponseDTO } from '@app/shared/models';
+import { UserResponseDTO } from '@app/shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -56,8 +56,8 @@ export class AuthService {
   }
 
   /** 인증된 사용자 정보를 반환한다. */
-  getAuthenticatedUser(): UserReponseDTO {
-    return this.jwtHelper.decodeToken<UserReponseDTO>(this.getAccessToken());
+  getAuthenticatedUser(): UserResponseDTO {
+    return this.jwtHelper.decodeToken<UserResponseDTO>(this.getAccessToken());
   }
 
   /** 액세스 토큰을 반환한다. */
