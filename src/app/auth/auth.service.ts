@@ -57,7 +57,7 @@ export class AuthService {
 
   /** 인증된 사용자 정보를 반환한다. */
   getAuthenticatedUser(): UserReponseDTO {
-    return this.jwtHelper.decodeToken(this.getAccessToken()) as UserReponseDTO;
+    return this.jwtHelper.decodeToken<UserReponseDTO>(this.getAccessToken());
   }
 
   /** 액세스 토큰을 반환한다. */
