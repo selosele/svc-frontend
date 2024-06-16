@@ -9,7 +9,7 @@ export class UiConfirmService {
   ) {}
 
   /** confirm 창(유형 1)을 표출한다. */
-  async confirm1(event: Event, message: string): Promise<boolean> {
+  confirm1(event: Event, message: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
@@ -26,7 +26,7 @@ export class UiConfirmService {
   }
 
   /** confirm 창(유형 2)을 표출한다. */
-  async confirm2(event: Event, message: string): Promise<boolean> {
+  confirm2(event: Event, message: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
