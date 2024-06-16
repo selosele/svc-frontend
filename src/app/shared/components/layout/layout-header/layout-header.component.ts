@@ -22,12 +22,11 @@ export class LayoutHeaderComponent {
   ) {}
 
   /** 로그아웃을 한다. */
-  logout(event: Event): void {
-    this.confirmService.confirm1(event, '로그아웃하시겠습니까?',
-      () => {
-        this.authService.logout();
-      },
-    )
+  async logout(event: Event): Promise<void> {
+    const confirm = await this.confirmService.confirm1(event, '로그아웃하시겠습니까?');
+    if (!confirm) return;
+
+    this.authService.logout();
   }
 
 }
