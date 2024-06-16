@@ -18,16 +18,11 @@ export class AuthService {
   /** 로그인을 한다. */
   login(loginRequestDTO: LoginRequestDTO): void {
     this.http.post<LoginResponseDTO>('/auth/login', loginRequestDTO)
-    .subscribe({
-      next: (data) => {
-        const accessToken = data.accessToken;
-        if (isNotBlank(accessToken)) {
-          this.setAccessToken(accessToken);
-          this.router.navigateByUrl('/');
-        }
-      },
-      error: (err) => {
-        console.error(err);
+    .subscribe(data => {
+      const accessToken = data.accessToken;
+      if (isNotBlank(accessToken)) {
+        this.setAccessToken(accessToken);
+        this.router.navigateByUrl('/');
       }
     });
   }
@@ -35,14 +30,9 @@ export class AuthService {
   /** 로그아웃을 한다. */
   logout(): void {
     this.http.post<void>('/auth/logout', {})
-    .subscribe({
-      next: () => {
-        this.removeAccessToken();
-        this.router.navigateByUrl('/auth/login');
-      },
-      error: (err) => {
-        console.error(err);
-      }
+    .subscribe(() => {
+      this.removeAccessToken();
+      this.router.navigateByUrl('/auth/login');
     });
   }
 
