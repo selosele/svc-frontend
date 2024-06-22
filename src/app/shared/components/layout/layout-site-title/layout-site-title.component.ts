@@ -8,10 +8,10 @@ import { UiLinkComponent } from '../../ui';
     RouterModule,
     UiLinkComponent,
   ],
-  selector: 'layout-page-title',
-  templateUrl: './layout-page-title.component.html',
-  styleUrl: './layout-page-title.component.scss'
+  selector: 'layout-site-title',
+  templateUrl: './layout-site-title.component.html',
+  styleUrl: './layout-site-title.component.scss'
 })
-export class LayoutPageTitleComponent {
+export class LayoutSiteTitleComponent {
 
 }

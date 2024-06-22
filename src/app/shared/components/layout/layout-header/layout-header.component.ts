@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
-import { LayoutPageTitleComponent } from '../layout-page-title/layout-page-title.component';
+import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent } from '../../ui';
 
@@ -9,7 +9,7 @@ import { UiButtonComponent } from '../../ui';
   standalone: true,
   imports: [
     UiButtonComponent,
-    LayoutPageTitleComponent,
+    LayoutSiteTitleComponent,
     LayoutMenuComponent,
   ],
   selector: 'layout-header',
