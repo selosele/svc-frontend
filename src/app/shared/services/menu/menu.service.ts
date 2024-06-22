@@ -22,7 +22,7 @@ export class MenuService {
   }
 
   /** 메뉴 목록 데이터를 설정한다. */
-  private setMenuList(menuList: MenuResponseDTO[]): void {
+  setMenuList(menuList: MenuResponseDTO[]): void {
     this.menuListSubject.next(menuList);
   }
 
