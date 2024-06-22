@@ -27,7 +27,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   return next(newReq).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 400)
-        messsageService.error(err.error.message);
+        messsageService.toastError(err.error.message);
       
       console.error(err);
       return throwError(() => err);
