@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '@app/shared/services';
-import { map } from 'rxjs';
 
 @Component({
   standalone: true,

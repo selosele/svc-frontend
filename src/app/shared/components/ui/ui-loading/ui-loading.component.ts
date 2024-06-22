@@ -25,13 +25,13 @@ export class UiLoadingComponent {
   loading$ = this.loadingService.loading$;
 
   /** 취소 버튼을 클릭해서 로딩을 종료한다. */
-  handleClick(): void {
+  onClick(): void {
     this.loadingService.stopLoading();
   }
 
   /** Esc 키를 클릭해서 로딩을 종료한다. */
   @HostListener('document:keydown.escape', ['$event'])
-  handleEscapeKey(event: KeyboardEvent): void {
+  onEscapeKey(event: KeyboardEvent): void {
     this.loadingService.stopLoading();
   }
 
