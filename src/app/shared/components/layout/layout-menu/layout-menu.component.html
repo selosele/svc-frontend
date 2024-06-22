@@ -2,12 +2,16 @@
   <ul class="layout-menu__depth1">
     <ng-container *ngFor="let menu1 of menuList$ | async">
       <li *ngIf="menu1.menuDepth === 1">
-        {{ menu1.menuName }}
+        <ui-link [routerLink]="menu1.menuUrl">
+          {{ menu1.menuName }}
+        </ui-link>
         
         <ul class="layout-menu__depth2">
           <ng-container *ngFor="let menu2 of menuList$ | async">
             <li *ngIf="menu2.upMenuId === menu1.menuId">
-              {{ menu2.menuName }}
+              <ui-link [routerLink]="menu2.menuUrl">
+                {{ menu2.menuName }}
+              </ui-link>
             </li>
           </ng-container>
         </ul>
