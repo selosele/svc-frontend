@@ -44,10 +44,13 @@
     }
 
     > li {
-      &.active > ui-link > a,
-      &:hover > ui-link > a {
+      &.active > ui-link > a {
         background-color: var(--primary-color);
         color: var(--primary-color-text);
+      }
+
+      &:hover:not(.active) > ui-link > a {
+        color: var(--primary-color);
       }
 
       > ui-link > a {

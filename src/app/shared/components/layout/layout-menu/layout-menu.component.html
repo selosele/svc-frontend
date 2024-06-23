@@ -3,7 +3,7 @@
     <ng-container *ngFor="let menu1 of menuList$ | async">
       <li
         *ngIf="menu1.menuDepth === 1"
-        [class.active]="activeMenuId === menu1.menuId"
+        [class.active]="activeMenuUrl?.substring(0, activeMenuUrl.lastIndexOf('/')) === menu1.menuUrl"
         (mouseenter)="toggleSubMenu(menu1.menuId, true)"
         (mouseleave)="toggleSubMenu(menu1.menuId, false)"
       >
@@ -13,7 +13,10 @@
         
         <ul class="layout-menu__depth2" [class.active]="activeMenuId === menu1.menuId">
           <ng-container *ngFor="let menu2 of menuList$ | async">
-            <li *ngIf="menu2.upMenuId === menu1.menuId">
+            <li
+              *ngIf="menu2.upMenuId === menu1.menuId"
+              [class.active]="activeMenuUrl === menu2.menuUrl"
+            >
               <ui-link [routerLink]="menu2.menuUrl">
                 {{ menu2.menuName }}
               </ui-link>
