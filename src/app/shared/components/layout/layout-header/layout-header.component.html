@@ -5,9 +5,15 @@
     </layout-site-title>
 
     <layout-menu />
-    
-    <ui-button (click)="logout($event)">
-      로그아웃
-    </ui-button>
+
+    <div class="layout-header__right">
+      <p class="layout-header__user-info">
+        {{ user.userName }}님 반갑습니다
+      </p>
+      
+      <ui-button [size]="'small'" (click)="logout($event)">
+        로그아웃
+      </ui-button>
+    </div>
   </div>
 </header>

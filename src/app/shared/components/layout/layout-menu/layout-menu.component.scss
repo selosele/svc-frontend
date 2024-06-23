@@ -1,10 +1,59 @@
 .layout-menu  {
+  height: 100%;
+
   &__depth1 {
-    display: flex;
-    gap: 3.75rem;
+    display: table;
+    width: 50rem;
+    height: 100%;
+    text-align: center;
+
+    > li {
+      display: table-cell;
+      position: relative;
+      vertical-align: middle;
+
+      &.active > ui-link > a,
+      &:hover > ui-link > a {
+        color: var(--primary-color);
+      }
+
+      > ui-link > a {
+        display: block;
+        height: 4.375rem;
+        line-height: 4.375rem;
+        font-size: 1.125rem;
+      }
+    }
   }
   
   &__depth2 {
-    margin-top: 0.625rem;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem 0;
+    background-color: var(--surface-0);
+
+    &.active {
+      display: block;
+    }
+
+    &:empty {
+      display: none;
+    }
+
+    > li {
+      &.active > ui-link > a,
+      &:hover > ui-link > a {
+        background-color: var(--primary-color);
+        color: var(--primary-color-text);
+      }
+
+      > ui-link > a {
+        display: block;
+        padding: 0.5rem;
+      }
+    }
   }
 }

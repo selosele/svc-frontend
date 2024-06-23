@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
+import { UserResponseDTO } from '@app/shared/models';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent } from '../../ui';
@@ -16,12 +17,19 @@ import { UiButtonComponent } from '../../ui';
   templateUrl: './layout-header.component.html',
   styleUrl: './layout-header.component.scss'
 })
-export class LayoutHeaderComponent {
+export class LayoutHeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
     private messageService: UiMessageService,
   ) {}
+
+  /** 인증된 사용자 정보 */
+  user: UserResponseDTO;
+
+  ngOnInit(): void {
+    this.user = this.authService.getAuthenticatedUser();
+  }
 
   /** 로그아웃을 한다. */
   async logout(event: Event): Promise<void> {
