@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ACCESS_TOKEN_NAME, isNotBlank } from '@app/shared/utils';
+import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { LoginRequestDTO, LoginResponseDTO } from './auth.dto';
 import { UserResponseDTO } from '@app/shared/models';
 import { MenuService } from '@app/shared/services';
@@ -35,7 +35,7 @@ export class AuthService {
     .subscribe(() => {
       this.removeAccessToken();
       this.clearAllState();
-      this.router.navigateByUrl('/auth/login');
+      this.router.navigateByUrl(LOGIN_PAGE_PATH);
     });
   }
 

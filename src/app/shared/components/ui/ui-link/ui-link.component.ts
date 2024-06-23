@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -8,7 +8,8 @@ import { RouterModule } from '@angular/router';
   ],
   selector: 'ui-link',
   templateUrl: './ui-link.component.html',
-  styleUrl: './ui-link.component.scss'
+  styleUrl: './ui-link.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiLinkComponent {
 

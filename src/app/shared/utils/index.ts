@@ -1,8 +1,8 @@
 // 공통
 export * from './global/lang.util';
 
-// JWT
-export * from './auth/jwt.util';
+// 인증
+export * from './auth/auth.util';
 
 // form
 export * from './form/validation.util';
