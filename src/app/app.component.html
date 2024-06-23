@@ -1,9 +1,16 @@
 <div class="app">
   @if (authService.isLogined()) {
     <layout-header />
+    
+    <div class="page-wrapper">
+      <div class="page-wrapper__inner">
+        <router-outlet />
+      </div>
+    </div>
   }
-
-  <router-outlet />
+  @else {
+    <router-outlet />
+  }
 
   <ui-loading />
   <ui-message />

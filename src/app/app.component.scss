@@ -1,0 +1,9 @@
+.page-wrapper {
+  padding: 1.5rem;
+
+  &__inner {
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: var(--surface-0);
+  }
+}
