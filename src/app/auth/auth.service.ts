@@ -32,7 +32,7 @@ export class AuthService {
   /** 로그아웃을 한다. */
   logout(): void {
     this.http.post<void>('/auth/logout', {})
-    .subscribe(async () => {
+    .subscribe(() => {
       this.removeAccessToken();
       this.clearAllState();
       this.router.navigateByUrl('/auth/login');
