@@ -21,6 +21,9 @@
   }
 
   &__user-info {
-    margin: 0;
+    ui-link {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
   }
 }
