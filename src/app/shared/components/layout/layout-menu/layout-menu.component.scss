@@ -33,14 +33,11 @@
     left: 0;
     width: 100%;
     padding: 0.5rem 0;
+    border: 1px solid var(--surface-300);
     background-color: var(--surface-0);
 
     &.active {
       display: block;
-    }
-
-    &:empty {
-      display: none;
     }
 
     > li {
