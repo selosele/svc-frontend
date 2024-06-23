@@ -4,6 +4,9 @@
     
     <div class="page-wrapper">
       <div class="page-wrapper__inner">
+        <h1 class="page-wrapper__title" *ngIf="currentPageTitle | async">
+          {{ currentPageTitle | async }}
+        </h1>
         <router-outlet />
       </div>
     </div>
