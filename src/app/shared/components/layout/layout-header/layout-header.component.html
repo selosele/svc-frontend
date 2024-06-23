@@ -8,7 +8,12 @@
 
     <div class="layout-header__right">
       <p class="layout-header__user-info">
-        <ui-link [routerLink]="'/human/mypage'">{{ user.userName }}</ui-link>님 반갑습니다
+        <ui-link
+          [routerLink]="'/human/mypage'"
+          [queryParams]="{ menuId: 14 }"
+        >
+        {{ user.userName }}
+      </ui-link>님 반갑습니다
       </p>
       
       <ui-button [size]="'small'" (click)="logout($event)">

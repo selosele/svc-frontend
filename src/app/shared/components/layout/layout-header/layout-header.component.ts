@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
 import { UserResponseDTO } from '@app/shared/models';
@@ -16,7 +16,8 @@ import { UiButtonComponent, UiLinkComponent } from '../../ui';
   ],
   selector: 'layout-header',
   templateUrl: './layout-header.component.html',
-  styleUrl: './layout-header.component.scss'
+  styleUrl: './layout-header.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class LayoutHeaderComponent implements OnInit {
 

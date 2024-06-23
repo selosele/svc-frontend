@@ -1,8 +1,12 @@
 .layout-header {
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
   height: 4.375rem;
   padding: 0 1rem;
+  border-bottom: 1px solid var(--surface-300);
   background-color: var(--surface-0);
 
   &__inner {
