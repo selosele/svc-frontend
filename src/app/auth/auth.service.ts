@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { LoginRequestDTO, LoginResponseDTO } from './auth.dto';
 import { UserResponseDTO } from '@app/shared/models';
-import { MenuService } from '@app/shared/services';
+import { StateService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private jwtHelper: JwtHelperService,
-    private menuService: MenuService,
+    private stateService: StateService,
   ) {}
 
   /** 로그인을 한다. */
@@ -34,7 +34,7 @@ export class AuthService {
     this.http.post<void>('/auth/logout', {})
     .subscribe(() => {
       this.removeAccessToken();
-      this.clearAllState();
+      this.stateService.clearAllState();
       this.router.navigateByUrl(LOGIN_PAGE_PATH);
     });
   }
@@ -76,12 +76,6 @@ export class AuthService {
   /** JWT 만료 여부를 반환한다. */
   isTokenExpired(token: string): boolean {
     return this.jwtHelper.isTokenExpired(token);
-  }
-
-  /** 모든 상태를 초기화한다. */
-  clearAllState(): void {
-    // TODO: 로그아웃 시 상태 초기화 필수
-    this.menuService.setMenuList([]);
   }
 
 }
