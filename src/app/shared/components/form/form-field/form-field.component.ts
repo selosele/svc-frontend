@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { isEmpty, validationMessage } from '@app/shared/utils';
 
@@ -7,7 +7,8 @@ import { isEmpty, validationMessage } from '@app/shared/utils';
   imports: [],
   selector: 'form-field',
   templateUrl: './form-field.component.html',
-  styleUrl: './form-field.component.scss'
+  styleUrl: './form-field.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class FormFieldComponent implements OnInit {
 

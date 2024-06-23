@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { isBlank, isEmpty } from '@app/shared/utils';
 
@@ -7,7 +7,8 @@ import { isBlank, isEmpty } from '@app/shared/utils';
   imports: [],
   selector: 'form-validator',
   templateUrl: './form-validator.component.html',
-  styleUrl: './form-validator.component.scss'
+  styleUrl: './form-validator.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class FormValidator extends Validators {
 
