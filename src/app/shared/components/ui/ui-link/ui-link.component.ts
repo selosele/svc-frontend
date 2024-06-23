@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { Params, RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [
-    RouterModule,
-  ],
+  imports: [],
   selector: 'ui-link',
   templateUrl: './ui-link.component.html',
   styleUrl: './ui-link.component.scss',
@@ -13,16 +10,13 @@ import { Params, RouterModule } from '@angular/router';
 })
 export class UiLinkComponent {
 
-  /** router link */
-  @Input() routerLink?: string;
+  /** 링크 href */
+  @Input() href?: string;
 
-  /** router queryParams */
-  @Input() queryParams?: Params | null;
-
-  /** 버튼 클릭 이벤트 */
+  /** 링크 클릭 이벤트 */
   @Output() click? = new EventEmitter<Event>();
 
-  /** 버튼을 클릭한다. */
+  /** 링크를 클릭한다. */
   onClick(event: Event): void {
     this.click.emit(event);
   }

@@ -11,20 +11,21 @@
       >
         @if (menu1?.children.length > 0) {
           <ui-link
-            [routerLink]="menu1.menuUrl"
-            [queryParams]="{ menuId: menu1.menuId }"
+            [href]="menu1.menuUrl"
             (click)="onClick($event)"
+            ngClass="link"
           >
             {{ menu1.menuName }}
           </ui-link>
         }
         @else {
-          <ui-link
+          <ui-router-link
             [routerLink]="menu1.menuUrl"
             [queryParams]="{ menuId: menu1.menuId }"
+            ngClass="link"
           >
             {{ menu1.menuName }}
-          </ui-link>
+          </ui-router-link>
         }
         
         <ul
@@ -34,9 +35,13 @@
         >
           <ng-container *ngFor="let menu2 of menu1.children">
             <li [class.active]="(currentMenuId$ | async) === menu2.menuId">
-              <ui-link [routerLink]="menu2.menuUrl" [queryParams]="{ menuId: menu2.menuId }">
+              <ui-router-link
+                [routerLink]="menu2.menuUrl"
+                [queryParams]="{ menuId: menu2.menuId }"
+                ngClass="link"
+              >
                 {{ menu2.menuName }}
-              </ui-link>
+              </ui-router-link>
             </li>
           </ng-container>
         </ul>

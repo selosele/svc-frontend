@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { UiLinkComponent } from '../../ui';
+import { UiRouterLinkComponent } from '../../ui';
 
 @Component({
   standalone: true,
   imports: [
     RouterModule,
-    UiLinkComponent,
+    UiRouterLinkComponent,
   ],
   selector: 'layout-site-title',
   templateUrl: './layout-site-title.component.html',

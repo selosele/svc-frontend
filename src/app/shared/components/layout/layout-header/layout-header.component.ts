@@ -4,13 +4,13 @@ import { UiMessageService } from '@app/shared/services';
 import { UserResponseDTO } from '@app/shared/models';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
-import { UiButtonComponent, UiLinkComponent } from '../../ui';
+import { UiButtonComponent, UiRouterLinkComponent } from '../../ui';
 
 @Component({
   standalone: true,
   imports: [
     UiButtonComponent,
-    UiLinkComponent,
+    UiRouterLinkComponent,
     LayoutSiteTitleComponent,
     LayoutMenuComponent,
   ],

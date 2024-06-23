@@ -1,12 +1,15 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuService } from '@app/shared/services';
-import { UiLinkComponent } from '../../ui';
+import { UiLinkComponent, UiRouterLinkComponent } from '../../ui';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
+    UiRouterLinkComponent,
     UiLinkComponent,
   ],
   selector: 'layout-menu',
