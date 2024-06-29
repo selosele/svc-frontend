@@ -12,12 +12,12 @@
       position: relative;
       vertical-align: middle;
 
-      &.active > .link > a,
-      &:hover > .link > a {
+      &.active > .link,
+      &:hover > .link {
         color: var(--primary-color);
       }
 
-      > .link > a {
+      > .link {
         display: block;
         height: 4.375rem;
         line-height: 4.375rem;
@@ -41,16 +41,16 @@
     }
 
     > li {
-      &.active > .link > a {
+      &.active > .link {
         background-color: var(--primary-color);
         color: var(--primary-color-text);
       }
 
-      &:hover:not(.active) > .link > a {
+      &:hover:not(.active) > .link {
         color: var(--primary-color);
       }
 
-      > .link > a {
+      > .link {
         display: block;
         padding: 0.5rem;
       }

@@ -25,7 +25,7 @@
   }
 
   &__user-info {
-    ui-router-link span {
+    a span {
       color: var(--primary-color);
       text-decoration: underline;
     }

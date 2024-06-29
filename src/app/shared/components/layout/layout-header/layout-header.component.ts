@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { UserResponseDTO } from '@app/auth/auth.dto';
 import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
-import { UiButtonComponent, UiRouterLinkComponent } from '../../ui';
+import { UiButtonComponent } from '../../ui';
 
 @Component({
   standalone: true,
   imports: [
+    RouterModule,
     UiButtonComponent,
-    UiRouterLinkComponent,
     LayoutSiteTitleComponent,
     LayoutMenuComponent,
   ],
