@@ -30,18 +30,7 @@ export class UserResponseDTO {
   userName?: string;
 
   /** 사용자 권한 목록 */
-  roles?: UserRoleResponseDTO[];
+  roles?: string[];
     
-}
-
-/** 사용자 권한 응답 DTO */
-export class UserRoleResponseDTO {
-  
-  /** 사용자 ID */
-  userId?: number;
-
-  /** 권한 ID */
-  roleId?: string;
-
 }
 

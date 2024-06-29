@@ -29,7 +29,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
       if (err.status === 400)
         messsageService.toastError(err.error.message);
       
-      console.error(err);
+      // console.error(err);
       return throwError(() => err);
     }),
     finalize(() => {

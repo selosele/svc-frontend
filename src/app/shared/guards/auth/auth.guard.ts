@@ -9,6 +9,13 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   const authService = inject(AuthService);
 
   if (authService.isLogined()) {
+    const userRoles = authService.getAuthenticatedUser().roles;
+
+    if (route.data.roles && !(route.data.roles as string[]).some(x => userRoles.includes(x))) {
+      router.navigateByUrl('/');
+      return false;
+    }
+
     if (state.url !== LOGIN_PAGE_PATH)
       return true; // 로그인된 상태에서 로그인 페이지가 아닌 다른 페이지에 접근 시 허용
     
