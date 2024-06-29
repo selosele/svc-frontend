@@ -12,8 +12,8 @@
           [routerLink]="'/human/mypage'"
           [queryParams]="{ menuId: 14 }"
         >
-        {{ user.userName }}
-      </ui-router-link>님 반갑습니다
+          <span>{{ user.userName }}</span>
+        </ui-router-link>님 반갑습니다
       </p>
       
       <ui-button [size]="'small'" (click)="logout($event)">
