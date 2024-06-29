@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { GetMenuRequestDTO, MenuResponseDTO } from '@app/shared/models';
 import { ActivatedRoute } from '@angular/router';
+import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/shared/components/layout/layout-menu/layout-menu.dto';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
@@ -13,7 +13,7 @@ export class MenuService {
   ) {}
 
   private menuListSubject = new BehaviorSubject<MenuResponseDTO[]>([]);
-  private menuTreeSubject = new BehaviorSubject<MenuResponseDTO[]>([]);
+  private menuTreeSubject = new BehaviorSubject<MenuTree[]>([]);
   private currentMenuIdSubject = new BehaviorSubject<number>(null);
   private currentUpMenuIdSubject = new BehaviorSubject<number>(null);
   private currentPageTitleSubject = new BehaviorSubject<string>(null);
@@ -82,14 +82,13 @@ export class MenuService {
 
   /** 트리를 생성한다. */
   // TODO: 다른 컴포넌트에서 재사용할 수 있도록 공통 함수로 분리
-  createTree(data: MenuResponseDTO[], upMenuId = null): MenuResponseDTO[] {
-    const tree: MenuResponseDTO[] = [];
+  createTree(data: MenuResponseDTO[], upMenuId = null): MenuTree[] {
+    const tree: MenuTree[] = [];
 
-    for (const item of data) {
-      if (item.upMenuId === upMenuId) {
-        const children = this.createTree(data, item.menuId);
-        item.children = children;
-        tree.push(item);
+    for (const menu of data) {
+      if (menu.upMenuId === upMenuId) {
+        const children = this.createTree(data, menu.menuId);
+        tree.push({ ...menu, children });
       }
     }
     return tree;

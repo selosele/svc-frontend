@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { UserResponseDTO } from '@app/auth/auth.dto';
 import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
-import { UserResponseDTO } from '@app/shared/models';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent, UiRouterLinkComponent } from '../../ui';

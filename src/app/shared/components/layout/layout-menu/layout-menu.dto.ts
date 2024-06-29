@@ -48,7 +48,12 @@ export class MenuResponseDTO {
   /** 메뉴 삭제여부 */
   menuDeleteYn?: string;
 
+}
+
+/** 메뉴 트리 */
+export class MenuTree extends MenuResponseDTO {
+
   /** 하위 메뉴 목록 */
   children?: MenuResponseDTO[];
-    
+
 }

@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { LoginRequestDTO, LoginResponseDTO } from './auth.dto';
-import { UserResponseDTO } from '@app/shared/models';
+import { LoginRequestDTO, LoginResponseDTO, UserResponseDTO } from './auth.dto';
 import { StateService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
