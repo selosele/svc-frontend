@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/shared/components/layout/layout-menu/layout-menu.dto';
+import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/shared/components/layout/layout-menu/menu.dto';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
