@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UserResponseDTO } from '@app/auth/auth.dto';
 import { AuthService } from '@app/auth/auth.service';
@@ -27,11 +27,21 @@ export class LayoutHeaderComponent implements OnInit {
     private messageService: UiMessageService,
   ) {}
 
+  /** header 태그 */
+  @ViewChild('header') header: ElementRef<HTMLElement>;
+
   /** 인증된 사용자 정보 */
   user: UserResponseDTO;
 
+  /** 마지막 scroll top */
+  lastScrollTop = 0;
+
+  /** 스크롤다운 여부 */
+  isScrollDown = true;
+
   ngOnInit(): void {
     this.user = this.authService.getAuthenticatedUser();
+    this.lastScrollTop = window.scrollY;
   }
 
   /** 로그아웃을 한다. */
@@ -40,6 +50,19 @@ export class LayoutHeaderComponent implements OnInit {
     if (!confirm) return;
 
     this.authService.logout();
+  }
+
+  /** 스크롤다운 시, header를 위로 이동한다. */
+  @HostListener('document:scroll', ['$event'])
+  onScroll(event: Event): void {
+    if (window.scrollY < 0)
+      return;
+
+    if (Math.abs(window.scrollY - this.lastScrollTop) < this.header.nativeElement.offsetTop)
+      return;
+
+    this.isScrollDown = window.scrollY < this.lastScrollTop;
+    this.lastScrollTop = window.scrollY;
   }
 
 }
