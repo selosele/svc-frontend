@@ -18,6 +18,21 @@ export class UiButtonComponent {
   /** 버튼 크기 */
   @Input() size?: 'small' | 'large';
 
+  /** 버튼 severity */
+  @Input() severity?: 'success' | 'info' | 'warning' | 'danger' | 'help' | 'primary' | 'secondary' | 'contrast';
+
+  /** 버튼 외곽선 표출여부 */
+  @Input() outlined?: boolean;
+
+  /** 버튼 아이콘 */
+  @Input() icon?: string;
+
+  /** 버튼 label */
+  @Input() label?: string;
+
+  /** 버튼 text */
+  @Input() text?: boolean;
+
   /** 버튼 type */
   @Input() type? = 'button';
 

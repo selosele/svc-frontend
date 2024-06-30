@@ -5,8 +5,22 @@
   </ul>
 </layout-page-description>
 
+<ng-template #buttons>
+  <ui-button
+    [size]="'small'"
+    [icon]="'pi pi-plus'"
+    [label]="'사용자 추가'"
+    [outlined]="true"
+  />
+</ng-template>
+
 <ui-data-grid
+  [useAdd]="false"
+  [useRemove]="false"
+  [buttons]="buttons"
   [rowData]="userList"
   [columnDefs]="columnDefs"
   (gridReady)="onGridReady($event)"
-/>
+  (refresh)="onRefresh()"
+>
+</ui-data-grid>

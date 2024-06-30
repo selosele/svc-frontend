@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgGridAngular } from '@ag-grid-community/angular';
 import { GridApi, GridReadyEvent, Module } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model'
+import { UiDataGridButtonsComponent } from '../ui-data-grid-buttons/ui-data-grid-buttons.component';
 
 @Component({
   standalone: true,
   imports: [
     CommonModule,
     AgGridAngular,
+    UiDataGridButtonsComponent,
   ],
   selector: 'ui-data-grid',
   templateUrl: './ui-data-grid.component.html',
@@ -16,6 +18,15 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
   encapsulation: ViewEncapsulation.None,
 })
 export class UiDataGridComponent implements OnInit {
+
+  /** grid 버튼 템플릿 */
+  @Input() buttons: TemplateRef<any>;
+
+  /** grid 행 추가 버튼 사용여부 */
+  @Input() useAdd = true;
+
+  /** grid 행 삭제 버튼 사용여부 */
+  @Input() useRemove = true;
 
   /** grid width 값 */
   @Input() width = '100%';
@@ -31,6 +42,9 @@ export class UiDataGridComponent implements OnInit {
   
   /** grid ready 이벤트 */
   @Output() gridReady = new EventEmitter<GridApi>();
+
+  /** grid 새로고침 이벤트 */
+  @Output() refresh = new EventEmitter<Event>();
 
   /** grid 모듈 */
   modules: Module[] = [ClientSideRowModelModule];
@@ -74,6 +88,11 @@ export class UiDataGridComponent implements OnInit {
       width: width,
       height: height,
     };
+  }
+
+  /** grid 새로고침 버튼을 클릭한다. */
+  onRefresh($event: Event): void {
+    this.refresh.emit($event);
   }
 
 }

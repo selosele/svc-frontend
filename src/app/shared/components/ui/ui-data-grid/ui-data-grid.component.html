@@ -1,8 +1,16 @@
-<div style="display: flex; flex-direction: column; height: 100%;">
+<div class="ui-data-grid" style="display: flex; flex-direction: column; height: 100%;">
+	<ui-data-grid-buttons
+		[useAdd]="useAdd"
+		[useRemove]="useRemove"
+		(refresh)="onRefresh($event)"
+	>
+		<ng-container *ngTemplateOutlet="buttons"></ng-container>
+	</ui-data-grid-buttons>
+
 	<div [ngStyle]="style">
 		<ag-grid-angular
 			style="width: 100%; height: 100%;"
-			class="ui-data-grid ag-theme-quartz"
+			class="ui-data-grid__view ag-theme-quartz"
 			[modules]="modules"
 			[rowData]="rowData"
 			[columnDefs]="columnDefs"

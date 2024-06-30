@@ -1,3 +1,5 @@
 .ui-data-grid {
-  font-family: inherit;
+  &__view {
+    font-family: inherit;
+  }
 }
