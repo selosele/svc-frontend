@@ -1,0 +1,15 @@
+<div style="display: flex; flex-direction: column; height: 100%;">
+	<div [ngStyle]="style">
+		<ag-grid-angular
+			style="width: 100%; height: 100%;"
+			class="ui-data-grid ag-theme-quartz"
+			[modules]="modules"
+			[rowData]="rowData"
+			[columnDefs]="columnDefs"
+			[overlayLoadingTemplate]="overlayLoadingTemplate"
+			[overlayNoRowsTemplate]="overlayNoRowsTemplate"
+			(gridReady)="onGridReady($event)"
+		>
+		</ag-grid-angular>
+	</div>
+</div>

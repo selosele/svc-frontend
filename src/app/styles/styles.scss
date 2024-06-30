@@ -1,15 +1,19 @@
 // primeng
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
-@import "primeicons/primeicons.css";
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+
+// AG Grid
+@import 'ag-grid-community/styles/ag-grid.css';         // Core Grid CSS
+@import 'ag-grid-community/styles/ag-theme-quartz.css'; // Quartz Theme Specific CSS
 
 // 변수
-@import "./base/variables";
+@import './base/variables';
 // 폰트
-@import "./partials/font";
+@import './partials/font';
 // 공통
-@import "./partials/global";
+@import './partials/global';
 // ui
-@import "./partials/ui";
+@import './partials/ui';
 // input
-@import "./partials/input";
+@import './partials/input';
