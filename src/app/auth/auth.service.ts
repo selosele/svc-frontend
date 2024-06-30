@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { LoginRequestDTO, LoginResponseDTO, UserResponseDTO } from './auth.dto';
 import { StateService } from '@app/shared/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -16,10 +17,15 @@ export class AuthService {
     private stateService: StateService,
   ) {}
 
+  userListSubject = new BehaviorSubject<UserResponseDTO[]>([]);
+
+  /** 사용자 목록 */
+  userList$ = this.userListSubject.asObservable();
+
   /** 로그인을 한다. */
   login(loginRequestDTO: LoginRequestDTO): void {
     this.http.post<LoginResponseDTO>('/auth/login', loginRequestDTO)
-    .subscribe(data => {
+    .subscribe((data) => {
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
         this.setAccessToken(accessToken);
@@ -35,6 +41,14 @@ export class AuthService {
       this.removeAccessToken();
       this.stateService.clearAllState();
       this.router.navigateByUrl(LOGIN_PAGE_PATH);
+    });
+  }
+
+  /** 사용자 목록을 조회한다. */
+  listUser(): void {
+    this.http.get<UserResponseDTO[]>('/auth/users')
+    .subscribe((data) => {
+      this.userListSubject.next(data);
     });
   }
 
