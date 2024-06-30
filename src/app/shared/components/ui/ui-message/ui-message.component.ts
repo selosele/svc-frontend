@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
@@ -8,7 +8,8 @@ import { ToastModule } from 'primeng/toast';
   ],
   selector: 'ui-message',
   templateUrl: './ui-message.component.html',
-  styleUrl: './ui-message.component.scss'
+  styleUrl: './ui-message.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiMessageComponent {
 

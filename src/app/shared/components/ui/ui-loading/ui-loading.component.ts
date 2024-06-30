@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -13,7 +13,8 @@ import { UiLoadingService } from '@app/shared/services';
   ],
   selector: 'ui-loading',
   templateUrl: './ui-loading.component.html',
-  styleUrl: './ui-loading.component.scss'
+  styleUrl: './ui-loading.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiLoadingComponent {
 
