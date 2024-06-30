@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   /** 페이지 타이틀 */
-  currentPageTitle = this.menuService.currentPageTitle$;
+  currentPageTitle$ = this.menuService.currentPageTitle$;
 
   /** 메뉴 목록 */
   menuList$ = this.menuService.menuList$;
