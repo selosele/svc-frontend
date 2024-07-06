@@ -3,14 +3,14 @@
 
   <ui-button *ngIf="useAdd"
     [size]="'small'"
-    [icon]="'pi pi-plus'"
+    [icon]="'pi-plus'"
     [label]="'행 추가'"
     [outlined]="true"
   />
   
   <ui-button *ngIf="useRemove"
     [size]="'small'"
-    [icon]="'pi pi-minus'"
+    [icon]="'pi-minus'"
     [label]="'행 삭제'"
     [outlined]="true"
   />
@@ -18,7 +18,7 @@
   <ui-button
     [size]="'small'"
     [severity]="'success'"
-    [icon]="'pi pi-refresh'"
+    [icon]="'pi-refresh'"
     [label]="'새로고침'"
     [outlined]="true"
     (click)="onRefresh($event)"
