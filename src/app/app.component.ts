@@ -4,7 +4,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { MenuService } from './shared/services';
-import { LayoutHeaderComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
+import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
 
 @Component({
   standalone: true,
@@ -15,6 +15,7 @@ import { LayoutHeaderComponent, UiConfirmComponent, UiLoadingComponent, UiMessag
     UiMessageComponent,
     UiConfirmComponent,
     LayoutHeaderComponent,
+    LayoutMenuHistoryComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -33,6 +34,11 @@ export class AppComponent implements OnInit {
 
   /** 메뉴 목록 */
   menuList$ = this.menuService.menuList$;
+
+  /** 현재 페이지가 메인 페이지인지 여부 */
+  get isIndexPage(): boolean {
+    return this.router.url === '/index';
+  }
 
   ngOnInit(): void {
     this.router.events

@@ -1,0 +1,17 @@
+<div class="layout-menu-history" *ngIf="menuHistoryList.length > 0">
+  <ul>
+    <ng-container *ngFor="let item of menuHistoryList">
+      <li [class.active]="item.menuId === menuId">
+        <a [routerLink]="item.menuUrl" [queryParams]="{ menuId: item.menuId}">
+          {{ item.menuName }}
+        </a>
+        <ui-button
+          [size]="'small'"
+          [icon]="'pi pi-times'"
+          [severity]="'secondary'"
+          (click)="onRemove(item.menuId)"
+        />
+      </li>
+    </ng-container>
+  </ul>
+</div>

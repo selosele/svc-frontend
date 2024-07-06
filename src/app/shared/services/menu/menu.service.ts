@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/shared/components/layout/layout-menu/menu.dto';
 
 @Injectable({ providedIn: 'root' })
@@ -11,6 +11,11 @@ export class MenuService {
     private http: HttpClient,
     private route: ActivatedRoute,
   ) {}
+
+  /** 메뉴접속이력 목록 저장 키 */
+  readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
+
+  menuHistoryListSubject = new BehaviorSubject<MenuResponseDTO[]>([]);
 
   private menuListSubject = new BehaviorSubject<MenuResponseDTO[]>([]);
   private menuTreeSubject = new BehaviorSubject<MenuTree[]>([]);
@@ -32,6 +37,9 @@ export class MenuService {
 
   /** 현재 페이지 타이틀 */
   currentPageTitle$ = this.currentPageTitleSubject.asObservable();
+
+  /** 메뉴접속이력 목록 */
+  menuHistoryList$ = this.menuHistoryListSubject.asObservable();
 
   /** 메뉴 목록을 조회한다. */
   listMenu(getMenuRequestDTO?: GetMenuRequestDTO): void {
@@ -78,6 +86,15 @@ export class MenuService {
   /** 현재 페이지 타이틀 데이터를 설정한다. */
   setCurrentPageTitle(currentPageTitle: string): void {
     this.currentPageTitleSubject.next(currentPageTitle);
+  }
+
+  /** 메뉴접속이력 목록 데이터를 설정한다. */
+  setMenuHistoryList(list: MenuResponseDTO[]): void {
+    this.currentMenuId$.subscribe((menuId) => {
+      const newList = list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
+      this.menuHistoryListSubject.next(newList);
+      window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(newList));
+    });
   }
 
   /** 트리를 생성한다. */
