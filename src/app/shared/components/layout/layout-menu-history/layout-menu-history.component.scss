@@ -16,6 +16,10 @@
         padding: 0.625rem;
         border: 1px solid transparent;
         background-color: var(--primary-50);
+
+        &:hover {
+          background-color: var(--primary-100);
+        }
       }
 
       &.active {
