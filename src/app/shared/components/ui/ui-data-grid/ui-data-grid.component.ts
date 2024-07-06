@@ -91,8 +91,8 @@ export class UiDataGridComponent implements OnInit {
   }
 
   /** grid 새로고침 버튼을 클릭한다. */
-  onRefresh($event: Event): void {
-    this.refresh.emit($event);
+  onRefresh(event: Event): void {
+    this.refresh.emit(event);
   }
 
 }
