@@ -24,8 +24,9 @@ export class UiDataGridButtonsComponent {
   @Output() refresh = new EventEmitter<Event>();
 
   /** grid 새로고침 버튼을 클릭한다. */
-  onRefresh($event: Event): void {
-    this.refresh.emit($event);
+  onRefresh(event: Event): void {
+    event.stopPropagation();
+    this.refresh.emit(event);
   }
 
 }
