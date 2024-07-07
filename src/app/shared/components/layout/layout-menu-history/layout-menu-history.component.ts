@@ -37,9 +37,11 @@ export class LayoutMenuHistoryComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.menuId = Number(params?.menuId);
-      this.menuService.setMenuHistoryList(
-        JSON.parse(window.localStorage.getItem(this.menuService.MENU_HISTORY_LIST_KEY)
-      ) as MenuResponseDTO[]);
+
+      const menuHistoryList = JSON.parse(window.localStorage.getItem(this.menuService.MENU_HISTORY_LIST_KEY))
+        ?? [];
+
+      this.menuService.setMenuHistoryList(menuHistoryList as MenuResponseDTO[]);
     });
   }
 
