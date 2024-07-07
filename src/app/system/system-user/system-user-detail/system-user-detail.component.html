@@ -1,4 +1,6 @@
 <form [formGroup]="userDetailForm" (ngSubmit)="onSubmit()">
+  <h2>사용자 정보</h2>
+
   <div class="input-box">
     <ui-text-field
       [control]="userDetailForm.controls['userId']"
@@ -20,6 +22,7 @@
       [readonly]="true"
     />
 
+    <!-- TODO: input 옆에 버튼 만들어서 활성화/비활성화 가능하도록 하기 -->
     <ui-text-field
       [control]="userDetailForm.controls['userActiveYn']"
       [label]="'사용자 활성화 여부'"
@@ -28,9 +31,21 @@
   </div>
 
   <div class="input-box">
+    <ui-text-field
+      [control]="userDetailForm.controls['roles']"
+      [label]="'권한'"
+      [readonly]="true"
+    />
+  </div>
+
+  <!-- TODO: 권한 수정은 체크박스로 해야 할듯 -->
+  <!-- <div class="input-box">
     <ui-dropdown
       [control]="userDetailForm.controls['roles']"
       [label]="'권한'"
+      [data]="userRoleDropdownData"
     />
-  </div>
+  </div> -->
+
+  <h2>직원 정보</h2>
 </form>

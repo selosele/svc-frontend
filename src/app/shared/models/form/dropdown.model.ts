@@ -1,10 +1,10 @@
-/** 드롭다운 데이터 타입 */
+/** 드롭다운 데이터 */
 export interface DropdownData {
 
   /** text */
-  name?: string;
+  label?: string;
 
   /** value */
-  code?: string;
+  value?: string;
 
 }
