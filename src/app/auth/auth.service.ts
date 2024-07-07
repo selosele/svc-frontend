@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UserResponseDTO } from './auth.dto';
 import { StateService } from '@app/shared/services';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -54,6 +54,11 @@ export class AuthService {
     .subscribe((data) => {
       this.userListSubject.next(data);
     });
+  }
+
+  /** 사용자를 조회한다. */
+  getUser(userId: number): Observable<UserResponseDTO> {
+    return this.http.get<UserResponseDTO>(`/auth/users/${userId}`);
   }
 
   /** 권한 목록을 조회한다. */

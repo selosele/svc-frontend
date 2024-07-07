@@ -29,8 +29,11 @@ export class UserResponseDTO {
   /** 사용자 명 */
   userName?: string;
 
+  /** 사용자 활성화 여부 */
+  userActiveYn?: string;
+
   /** 사용자 권한 목록 */
-  roles?: string[];
+  roles?: string[] | UserRoleResponseDTO[];
     
 }
 
@@ -45,6 +48,20 @@ export class RoleResponseDTO {
 
   /** 권한 순서 */
   roleOrder?: number;
+    
+}
+
+/** 사용자 권한 응답 DTO */
+export class UserRoleResponseDTO {
+
+  /** 사용자 ID */
+  userId?: number;
+
+  /** 권한 ID */
+  roleId?: string;
+
+  /** 권한 명 */
+  roleName?: string;
     
 }
 
