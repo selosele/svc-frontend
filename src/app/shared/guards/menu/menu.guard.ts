@@ -1,14 +1,18 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
-import { MenuService } from '@app/shared/services';
+import { MenuService, UiSplitterService } from '@app/shared/services';
 import { isNotEmpty } from '@app/shared/utils';
 
 /** 메뉴 guard */
 export const menuGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const menuService = inject(MenuService);
+  const splitterService = inject(UiSplitterService);
 
   menuService.menuList$.subscribe((menuList) => {
     if (menuList.length === 0) return;
+
+    // Splitter를 비활성화한다.
+    splitterService.hideSplitter();
 
     /** 현재 메뉴 ID */
     const menuId = parseInt(route.queryParams['menuId']);

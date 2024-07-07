@@ -1,0 +1,38 @@
+.ui-splitter {
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1;
+    width: 100%;
+
+    &:first-of-type {
+      position: sticky;
+      top: 0;
+      margin-bottom: 1rem;
+      background: var(--surface-0);
+    }
+
+    &:last-of-type {
+      margin-top: 1rem;
+      position: relative;
+    }
+  }
+
+  .p-splitter-gutter {
+    margin: 0 1rem;
+  }
+  
+  .p-splitter-panel {
+    position: relative;
+    overflow-y: auto;
+    height: 100%;
+
+    &:not(:has(*)) {
+      display: none;
+    }
+
+    > div {
+      width: 100%;
+    }
+  }
+}

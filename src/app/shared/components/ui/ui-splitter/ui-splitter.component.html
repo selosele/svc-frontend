@@ -1,0 +1,33 @@
+<p-splitter [style]="style" class="ui-splitter">
+  <ng-template pTemplate>
+    <div>
+      <ng-content select="[first]"></ng-content>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate>
+    <div *ngIf="isSplitterActive">
+      <div class="ui-splitter__buttons">
+        <ui-button
+          [size]="'small'"
+          [icon]="'pi pi-times'"
+          [text]="true"
+          [severity]="'secondary'"
+          (click)="onClose($event)"
+        />
+      </div>
+
+      <ng-content select="[second]"></ng-content>
+
+      <div class="ui-splitter__buttons">
+        <ui-button
+          [size]="'small'"
+          [severity]="'secondary'"
+          (click)="onClose($event)"
+        >
+          닫기
+        </ui-button>
+      </div>
+    </div>
+  </ng-template>
+</p-splitter>
