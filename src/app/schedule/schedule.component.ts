@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import { LayoutPageDescriptionComponent } from '@app/shared/components';
 
 @Component({
   standalone: true,
-  imports: [],
+  imports: [
+    LayoutPageDescriptionComponent,
+  ],
   selector: 'view-schedule',
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'
