@@ -32,7 +32,7 @@ export class UiDataGridComponent implements OnInit {
   @Input() width = '100%';
 
   /** grid height 값 */
-  @Input() height = '500px';
+  @Input() height = '450px';
 
   /** 컬럼 목록 */
   @Input() columnDefs: any[];
