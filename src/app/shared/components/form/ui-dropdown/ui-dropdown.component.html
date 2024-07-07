@@ -1,0 +1,18 @@
+@if (label) {
+  <span class="custom-label">
+    {{ label }}
+  </span>
+}
+<p-dropdown
+  [name]="name"
+  [readonly]="readonly"
+  [formControl]="formControl"
+  [options]="data"
+  [placeholder]="placeholder"
+  [class.block]="block"
+  (keydown)="setErrorMessage()"
+  (blur)="setErrorMessage()"
+/>
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
