@@ -21,7 +21,8 @@ export class UiTextFieldComponent extends FormFieldComponent {
   /** input type */
   @Input() type? = 'text';
 
-  /** input placeholder */
-  @Input() placeholder?: string;
+  override ngOnInit(): void {
+    super.ngOnInit();
+  }
 
 }

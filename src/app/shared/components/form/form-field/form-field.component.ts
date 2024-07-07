@@ -18,6 +18,18 @@ export class FormFieldComponent implements OnInit {
   /** form 컨트롤 */
   formControl: FormControl<any>;
 
+  /** block 스타일 input 여부 */
+  @Input() block?: boolean;
+
+  /** input placeholder */
+  @Input() readonly? = false;
+
+  /** input label */
+  @Input() label?: string;
+
+  /** input placeholder */
+  @Input() placeholder?: string;
+
   /** input name */
   name?: string;
 

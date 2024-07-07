@@ -1,9 +1,16 @@
+@if (label) {
+  <span class="custom-label">
+    {{ label }}
+  </span>
+}
 <input
   pInputText
   [type]="type"
   [name]="name"
+  [readonly]="readonly"
   [formControl]="formControl"
   [placeholder]="placeholder"
+  [class.block]="block"
   (keydown)="setErrorMessage()"
   (blur)="setErrorMessage()"
 >
