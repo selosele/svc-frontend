@@ -5,6 +5,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-box">
         <ui-text-field
+          [block]="true"
           [control]="loginForm.controls['userAccount']"
           placeholder="id"
         />
@@ -12,6 +13,7 @@
 
       <div class="input-box">
         <ui-text-field
+          [block]="true"
           [control]="loginForm.controls['userPassword']"
           type="password" placeholder="password"
         />

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
@@ -8,7 +8,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   ],
   selector: 'ui-confirm',
   templateUrl: './ui-confirm.component.html',
-  styleUrl: './ui-confirm.component.scss'
+  styleUrl: './ui-confirm.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiConfirmComponent {
 

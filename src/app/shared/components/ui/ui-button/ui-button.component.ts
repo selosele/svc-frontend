@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BlockButtonDirective } from '@app/shared/directives';
 
@@ -11,6 +11,7 @@ import { BlockButtonDirective } from '@app/shared/directives';
   selector: 'ui-button',
   templateUrl: './ui-button.component.html',
   styleUrl: './ui-button.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiButtonComponent implements OnInit {
 

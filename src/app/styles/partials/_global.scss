@@ -1,3 +1,7 @@
+:root {
+  --font-family: $default-font; // primeng theme 오버라이딩
+}
+
 html {
   font-size: 14px;
   -webkit-text-size-adjust: none;
@@ -39,9 +43,21 @@ input {
   font-family: inherit;
 }
 
+input {
+  width: 100%;
+}
+
 input,
 textarea {
   caret-color: auto;
+}
+
+input,
+textarea,
+select {
+  &[readonly] {
+    background-color: var(--primary-50);
+  }
 }
 
 a {
@@ -58,4 +74,9 @@ ol {
 
 p {
   margin: 0;
+}
+
+.block {
+  display: block;
+  width: 100%;
 }

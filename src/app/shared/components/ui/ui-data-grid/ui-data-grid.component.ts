@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgGridAngular } from '@ag-grid-community/angular';
-import { GridApi, GridReadyEvent, Module } from '@ag-grid-community/core';
+import { GridApi, GridReadyEvent, Module, CellClickedEvent } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model'
 import { UiDataGridButtonsComponent } from '../ui-data-grid-buttons/ui-data-grid-buttons.component';
 
@@ -18,9 +18,6 @@ import { UiDataGridButtonsComponent } from '../ui-data-grid-buttons/ui-data-grid
   encapsulation: ViewEncapsulation.None,
 })
 export class UiDataGridComponent implements OnInit {
-
-  /** grid 버튼 템플릿 */
-  @Input() buttons: TemplateRef<any>;
 
   /** grid 행 추가 버튼 사용여부 */
   @Input() useAdd = true;
@@ -42,6 +39,9 @@ export class UiDataGridComponent implements OnInit {
   
   /** grid ready 이벤트 */
   @Output() gridReady = new EventEmitter<GridApi>();
+
+  /** cell 클릭 이벤트 */
+  @Output() cellClicked = new EventEmitter<CellClickedEvent>();
 
   /** grid 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<Event>();
@@ -70,8 +70,8 @@ export class UiDataGridComponent implements OnInit {
   }
 
   /** grid ready 이벤트 */
-  onGridReady(params: GridReadyEvent<any, any>): void {
-    this.gridApi = params.api;
+  onGridReady(event: GridReadyEvent<any, any>): void {
+    this.gridApi = event.api;
     this.gridApi.updateGridOptions({
       columnDefs: this.columnDefs.map((column) => {
         if (column.field === 'rowNum')
@@ -80,6 +80,11 @@ export class UiDataGridComponent implements OnInit {
       }),
     });
     this.gridReady.emit(this.gridApi);
+  }
+
+  /** cell 클릭 이벤트 */
+  onCellClicked(event: CellClickedEvent): void {
+    this.cellClicked.emit(event);
   }
 
   /** grid의 width 값과 height 값을 설정한다. */

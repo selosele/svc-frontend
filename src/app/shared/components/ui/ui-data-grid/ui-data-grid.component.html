@@ -4,7 +4,7 @@
 		[useRemove]="useRemove"
 		(refresh)="onRefresh($event)"
 	>
-		<ng-container *ngTemplateOutlet="buttons"></ng-container>
+		<ng-content [select]="buttons"></ng-content>
 	</ui-data-grid-buttons>
 
 	<div [ngStyle]="style">
@@ -17,6 +17,7 @@
 			[overlayLoadingTemplate]="overlayLoadingTemplate"
 			[overlayNoRowsTemplate]="overlayNoRowsTemplate"
 			(gridReady)="onGridReady($event)"
+			(cellClicked)="onCellClicked($event)"
 		/>
 	</div>
 </div>
