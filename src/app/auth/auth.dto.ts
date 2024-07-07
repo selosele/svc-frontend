@@ -34,3 +34,17 @@ export class UserResponseDTO {
     
 }
 
+/** 권한 응답 DTO */
+export class RoleResponseDTO {
+
+  /** 권한 ID */
+  roleId?: string;
+
+  /** 권한 명 */
+  roleName?: string;
+
+  /** 권한 순서 */
+  roleOrder?: number;
+    
+}
+

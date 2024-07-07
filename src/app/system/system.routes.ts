@@ -14,4 +14,13 @@ export const systemRoutes: Routes = [
     },
     loadComponent: () => import('./system-user/system-user.component').then(x => x.SystemUserComponent),
   },
+  // 권한관리 페이지
+  {
+    path: 'system/role',
+    canActivate: [authGuard, menuGuard],
+    data: {
+      roles: [roles.systemAdmin],
+    },
+    loadComponent: () => import('./system-role/system-role.component').then(x => x.SystemRoleComponent),
+  },
 ];

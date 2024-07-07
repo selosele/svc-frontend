@@ -1,0 +1,15 @@
+<layout-page-description>
+  <ul>
+    <li>권한 목록을 조회할 수 있습니다.</li>
+  </ul>
+</layout-page-description>
+
+<ui-data-grid
+  [height]="'350px'"
+  [useAdd]="false"
+  [useRemove]="false"
+  [rowData]="roleList"
+  [columnDefs]="columnDefs"
+  (gridReady)="onGridReady($event)"
+  (refresh)="onRefresh()"
+/>

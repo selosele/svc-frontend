@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { LoginRequestDTO, LoginResponseDTO, UserResponseDTO } from './auth.dto';
+import { LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UserResponseDTO } from './auth.dto';
 import { StateService } from '@app/shared/services';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,9 +18,13 @@ export class AuthService {
   ) {}
 
   userListSubject = new BehaviorSubject<UserResponseDTO[]>([]);
+  roleListSubject = new BehaviorSubject<RoleResponseDTO[]>([]);
 
   /** 사용자 목록 */
   userList$ = this.userListSubject.asObservable();
+
+  /** 권한 목록 */
+  roleList$ = this.roleListSubject.asObservable();
 
   /** 로그인을 한다. */
   login(loginRequestDTO: LoginRequestDTO): void {
@@ -49,6 +53,14 @@ export class AuthService {
     this.http.get<UserResponseDTO[]>('/auth/users')
     .subscribe((data) => {
       this.userListSubject.next(data);
+    });
+  }
+
+  /** 권한 목록을 조회한다. */
+  listRole(): void {
+    this.http.get<RoleResponseDTO[]>('/auth/roles')
+    .subscribe((data) => {
+      this.roleListSubject.next(data);
     });
   }
 
