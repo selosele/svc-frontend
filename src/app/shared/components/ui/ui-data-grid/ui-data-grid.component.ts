@@ -75,7 +75,7 @@ export class UiDataGridComponent implements OnInit {
     this.gridApi.updateGridOptions({
       columnDefs: this.columnDefs.map((column) => {
         if (column.field === 'rowNum')
-          return { ...column, headerName: 'No', valueGetter: 'node.rowIndex + 1' };
+          return { ...column, headerName: 'No', width: 80, valueGetter: 'node.rowIndex + 1' };
         return column;
       }),
     });

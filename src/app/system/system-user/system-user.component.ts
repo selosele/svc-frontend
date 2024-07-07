@@ -20,6 +20,7 @@ export class SystemUserComponent implements OnInit {
     private authService: AuthService,
   ) {}
 
+  /** 사용자 목록 */
   get userList() {
     return this.authService.userListSubject.value;
   }
