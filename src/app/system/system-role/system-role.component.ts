@@ -38,8 +38,8 @@ export class SystemRoleComponent implements OnInit {
     }
   }
 
-  onGridReady(params: GridApi): void {
-    this.gridApi = params;
+  onGridReady(gridApi: GridApi): void {
+    this.gridApi = gridApi;
   }
 
   /** 권한 목록을 조회한다. */

@@ -21,7 +21,7 @@ export class FormFieldComponent implements OnInit {
   /** block 스타일 input 여부 */
   @Input() block?: boolean;
 
-  /** input placeholder */
+  /** input readonly */
   @Input() readonly? = false;
 
   /** input label */
