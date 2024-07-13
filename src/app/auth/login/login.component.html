@@ -6,7 +6,7 @@
       <div class="input-box">
         <ui-text-field
           [block]="true"
-          [control]="loginForm.controls['userAccount']"
+          [control]="loginForm.get('userAccount')"
           placeholder="id"
         />
       </div>
@@ -14,7 +14,7 @@
       <div class="input-box">
         <ui-text-field
           [block]="true"
-          [control]="loginForm.controls['userPassword']"
+          [control]="loginForm.get('userPassword')"
           type="password" placeholder="password"
         />
       </div>

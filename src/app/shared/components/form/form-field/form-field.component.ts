@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { isEmpty, validationMessage } from '@app/shared/utils';
 
 @Component({
@@ -46,8 +46,31 @@ export class FormFieldComponent implements OnInit {
 
   /** input name 값을 설정한다. */
   setName(): void {
-    const formGroup = this.control.parent.controls;
-    this.name = Object.keys(formGroup).find(name => this.control === formGroup[name]) || null;
+    if (this.control) {
+      this.name = this.findControlName(this.control);
+    }
+  }
+
+  /** 재귀 함수로 FormControl의 이름을 찾아서 반환한다.  */
+  findControlName(control: AbstractControl): string | null {
+    let parent = control.parent;
+    if (!parent) {
+      return null;
+    }
+
+    const formGroup = parent.controls;
+
+    for (const name in formGroup) {
+      if (formGroup[name] === control) {
+        return name;
+      } else if (formGroup[name] instanceof FormGroup) {
+        const nestedControlName = this.findControlName(control);
+        if (nestedControlName) {
+          return `${name}.${nestedControlName}`;
+        }
+      }
+    }
+    return null;
   }
 
   /** 오류 메시지를 설정한다. */
