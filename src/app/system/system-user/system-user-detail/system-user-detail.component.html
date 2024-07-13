@@ -31,21 +31,16 @@
   </div>
 
   <div class="input-box">
-    <ui-text-field
-      [control]="userDetailForm.controls['roles']"
-      [label]="'권한'"
-      [readonly]="true"
-    />
+    <ui-checkbox-group [label]="'사용자 권한'">
+      @for (role of roles; track $index) {
+        <ui-checkbox
+          [control]="userDetailForm.controls['roles']"
+          [label]="role.roleName"
+          [value]="role.roleId"
+        />
+      }
+  </ui-checkbox-group>
   </div>
-
-  <!-- TODO: 권한 수정은 체크박스로 해야 할듯 -->
-  <!-- <div class="input-box">
-    <ui-dropdown
-      [control]="userDetailForm.controls['roles']"
-      [label]="'권한'"
-      [data]="userRoleDropdownData"
-    />
-  </div> -->
 
   <h2>직원 정보</h2>
 </form>

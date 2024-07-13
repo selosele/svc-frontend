@@ -1,0 +1,11 @@
+ui-checkbox {
+  & + & {
+    margin-left: 1rem;
+  }
+
+  p-checkbox {
+    &.readonly {
+      opacity: 0.5;
+    }
+  }
+}

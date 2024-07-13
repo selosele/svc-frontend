@@ -1,0 +1,14 @@
+<p-checkbox
+  [label]="label"
+  [name]="name"
+  [value]="value"
+  [readonly]="readonly"
+  [formControl]="formControl"
+  [class.block]="block"
+  [class.readonly]="readonly"
+  (change)="setErrorMessage()"
+  (blur)="setErrorMessage()"
+/>
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>

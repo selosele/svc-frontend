@@ -30,6 +30,9 @@ export class FormFieldComponent implements OnInit {
   /** input placeholder */
   @Input() placeholder?: string;
 
+  /** input value */
+  @Input() value?: any;
+
   /** input name */
   name?: string;
 
