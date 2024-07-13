@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { SplitterModule } from 'primeng/splitter';
-import { UiSplitterService } from '@app/shared/services';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
 
 @Component({
@@ -16,14 +16,14 @@ import { UiButtonComponent } from '../ui-button/ui-button.component';
   styleUrl: './ui-splitter.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class UiSplitterComponent implements OnInit {
+export class UiSplitterComponent {
 
-  constructor(
-    private splitterService: UiSplitterService,
-  ) {}
+  constructor() {}
+
+  private splitterActiveSubject = new BehaviorSubject<boolean>(false);
 
   /** Splitter 활성화 여부 */
-  isSplitterActive = false;
+  isSplitterActive$ = this.splitterActiveSubject.asObservable();
 
   /** Splitter 스타일 */
   style = {
@@ -33,15 +33,19 @@ export class UiSplitterComponent implements OnInit {
     color: 'inherit',
   };
 
-  ngOnInit(): void {
-    this.splitterService.isSplitterActive$.subscribe((isSplitterActive) => {
-      this.isSplitterActive = isSplitterActive;
-    });
+  /** Splitter를 활성화한다. */
+  show(): void {
+    this.splitterActiveSubject.next(true);
+  }
+
+  /** Splitter를 비활성화한다. */
+  hide(): void {
+    this.splitterActiveSubject.next(false);
   }
 
   /** 버튼을 클릭해서 Splitter를 비활성화한다. */
   onClose(event: Event): void {
-    this.splitterService.hideSplitter();
+    this.hide();
   }
 
 }

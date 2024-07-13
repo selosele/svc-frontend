@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridApi, CellClickedEvent } from '@ag-grid-community/core';
 import { LayoutPageDescriptionComponent, UiButtonComponent, UiDataGridComponent, UiSplitterComponent } from '@app/shared/components';
-import { UiSplitterService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { UserResponseDTO } from '@app/auth/auth.dto';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
@@ -23,8 +22,10 @@ export class SystemUserComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private splitterService: UiSplitterService,
   ) {}
+
+  /** Splitter */
+  @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 사용자 목록 */
   get userList() {
@@ -60,7 +61,7 @@ export class SystemUserComponent implements OnInit {
     this.authService.getUser(event.data['userId'])
     .subscribe((data) => {
       this.userDetail = data;
-      this.splitterService.showSplitter();
+      this.splitter.show();
     });
   }
 

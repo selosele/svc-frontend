@@ -6,7 +6,7 @@
   </ng-template>
 
   <ng-template pTemplate>
-    <div *ngIf="isSplitterActive">
+    <div *ngIf="isSplitterActive$ | async">
       <div class="ui-splitter__buttons">
         <ui-button
           [size]="'small'"
