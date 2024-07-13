@@ -1,3 +1,5 @@
+import { EmployeeResponseDTO } from "@app/human/human.dto";
+
 /** 로그인 요청 DTO */
 export interface LoginRequestDTO {
 
@@ -34,6 +36,9 @@ export class UserResponseDTO {
 
   /** 사용자 권한 목록 */
   roles?: string[] | UserRoleResponseDTO[];
+
+  /** 직원 정보 */
+  employee?: EmployeeResponseDTO;
     
 }
 

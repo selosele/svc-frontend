@@ -36,11 +36,27 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.userDetailForm = this.fb.group({
-      userId: ['', [FormValidator.required]],       // 사용자 ID
-      userAccount: ['', [FormValidator.required]],  // 사용자 계정
-      userName: ['', [FormValidator.required]],     // 사용자 명
-      userActiveYn: ['', [FormValidator.required]], // 사용자 활성화 여부
-      roles: [[], [FormValidator.required]],        // 사용자 권한
+
+      // 사용자 정보
+      userId: ['', [FormValidator.required]],               // 사용자 ID
+      userAccount: ['', [FormValidator.required]],          // 사용자 계정
+      userName: ['', [FormValidator.required]],             // 사용자 명
+      userActiveYn: ['', [FormValidator.required]],         // 사용자 활성화 여부
+      roles: [[], [FormValidator.required]],                // 사용자 권한
+
+      // 직원 정보
+      employee: this.fb.group({
+        employeeId: ['', [FormValidator.required]],         // 직원 ID
+        employeeName: ['', [FormValidator.required]],       // 직원 명
+        genderCodeName: ['', [FormValidator.required]],     // 성별 코드 명
+      }),
+
+      // 직원 회사 정보
+      employeeCompany: this.fb.group({
+        companyId: ['', [FormValidator.required]],          // 회사 ID
+        companyName: ['', [FormValidator.required]],        // 회사 명
+        companyDisplayName: ['', [FormValidator.required]], // 회사 표출 명
+      }),
     });
     this.authService.listRole();
   }
@@ -49,7 +65,9 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     if (changes.userDetail && this.userDetailForm) {
       this.userDetailForm.patchValue({
         ...this.userDetail,
-        roles: this.userDetail.roles.map((x: UserRoleResponseDTO) => x.roleId)
+        roles: this.userDetail.roles.map((x: UserRoleResponseDTO) => x.roleId),
+        employee: this.userDetail.employee,
+        employeeCompany: this.userDetail.employee.employeeCompany,
       });
       this.roles = this.authService.roleListSubject.value;
     }

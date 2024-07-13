@@ -3,13 +3,13 @@
 
   <div class="input-box">
     <ui-text-field
-      [control]="userDetailForm.controls['userId']"
+      [control]="userDetailForm.get('userId')"
       [label]="'사용자 ID'"
       [readonly]="true"
     />
 
     <ui-text-field
-      [control]="userDetailForm.controls['userAccount']"
+      [control]="userDetailForm.get('userAccount')"
       [label]="'사용자 계정'"
       [readonly]="true"
     />
@@ -17,14 +17,14 @@
 
   <div class="input-box">
     <ui-text-field
-      [control]="userDetailForm.controls['userName']"
+      [control]="userDetailForm.get('userName')"
       [label]="'사용자 명'"
       [readonly]="true"
     />
 
     <!-- TODO: input 옆에 버튼 만들어서 활성화/비활성화 가능하도록 하기 -->
     <ui-text-field
-      [control]="userDetailForm.controls['userActiveYn']"
+      [control]="userDetailForm.get('userActiveYn')"
       [label]="'사용자 활성화 여부'"
       [readonly]="true"
     />
@@ -34,13 +34,55 @@
     <ui-checkbox-group [label]="'사용자 권한'">
       @for (role of roles; track $index) {
         <ui-checkbox
-          [control]="userDetailForm.controls['roles']"
+          [control]="userDetailForm.get('roles')"
           [label]="role.roleName"
           [value]="role.roleId"
         />
       }
-  </ui-checkbox-group>
+    </ui-checkbox-group>
   </div>
 
   <h2>직원 정보</h2>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="userDetailForm.get('employee.employeeId')"
+      [label]="'직원 ID'"
+      [readonly]="true"
+    />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employee.employeeName')"
+      [label]="'직원 명'"
+      [readonly]="true"
+    />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employee.genderCodeName')"
+      [label]="'성별'"
+      [readonly]="true"
+    />
+  </div>
+
+  <h2>직원 회사 정보</h2>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="userDetailForm.get('employeeCompany.companyDisplayName')"
+      [label]="'회사 명'"
+      [readonly]="true"
+    />
+
+    <!-- <ui-text-field
+      [control]="userDetailForm.get('employeeCompany.companyDisplayName')"
+      [label]="'부서'"
+      [readonly]="true"
+    />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employeeCompany.companyDisplayName')"
+      [label]="'직급'"
+      [readonly]="true"
+    /> -->
+  </div>
 </form>
