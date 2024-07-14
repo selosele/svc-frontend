@@ -61,6 +61,11 @@ export class AuthService {
     return this.http.get<UserResponseDTO>(`/auth/users/${userId}`);
   }
 
+  /** 사용자를 삭제한다. */
+  removeUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`/auth/users/${userId}`);
+  }
+
   /** 권한 목록을 조회한다. */
   listRole(): void {
     this.http.get<RoleResponseDTO[]>('/auth/roles')

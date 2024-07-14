@@ -6,7 +6,7 @@
 </layout-page-description>
 
 <ui-splitter #splitter>
-  <ui-data-grid first
+  <ui-data-grid #grid first
     [useAdd]="false"
     [useRemove]="false"
     [rowData]="userList"
@@ -20,6 +20,16 @@
       [icon]="'pi-plus'"
       [label]="'사용자 추가'"
       [outlined]="true"
+      (click)="addUser()"
+    />
+
+    <ui-button buttons
+      [size]="'small'"
+      [icon]="'pi-trash'"
+      [label]="'사용자 삭제'"
+      [outlined]="true"
+      [severity]="'danger'"
+      (click)="removeUser($event)"
     />
   </ui-data-grid>
 
