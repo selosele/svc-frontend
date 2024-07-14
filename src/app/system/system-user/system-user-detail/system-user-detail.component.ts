@@ -54,8 +54,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       // 직원 회사 정보
       employeeCompany: this.fb.group({
         companyId: ['', [FormValidator.required]],          // 회사 ID
+        corporateName: ['', [FormValidator.required]],      // 법인 명
         companyName: ['', [FormValidator.required]],        // 회사 명
-        companyDisplayName: ['', [FormValidator.required]], // 회사 표출 명
       }),
     });
     this.authService.listRole();

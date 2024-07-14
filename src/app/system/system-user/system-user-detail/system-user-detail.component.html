@@ -64,11 +64,15 @@
     />
   </div>
 
-  <h2>직원 회사 정보</h2>
-
   <div class="input-box">
     <ui-text-field
-      [control]="userDetailForm.get('employeeCompany.companyDisplayName')"
+      [control]="userDetailForm.get('employeeCompany.corporateName')"
+      [label]="'회사(법인) 명'"
+      [readonly]="true"
+    />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employeeCompany.companyName')"
       [label]="'회사 명'"
       [readonly]="true"
     />

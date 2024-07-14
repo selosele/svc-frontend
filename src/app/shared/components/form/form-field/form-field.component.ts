@@ -51,7 +51,7 @@ export class FormFieldComponent implements OnInit {
     }
   }
 
-  /** 재귀 함수로 FormControl의 이름을 찾아서 반환한다.  */
+  /** 재귀 함수로 FormControl의 이름을 찾아서 반환한다. */
   findControlName(control: AbstractControl): string | null {
     let parent = control.parent;
     if (!parent) {

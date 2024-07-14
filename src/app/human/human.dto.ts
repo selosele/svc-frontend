@@ -24,10 +24,10 @@ export interface EmployeeCompanyResponseDTO {
   /** 회사 ID */
   companyId?: number;
 
+  /** 법인 명 */
+  corporateName?: string;
+
   /** 회사 명 */
   companyName?: string;
-
-  /** 회사 표출 명 */
-  companyDisplayName?: string;
 
 }
