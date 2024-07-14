@@ -3,18 +3,24 @@
     {{ label }}
   </span>
 }
-<input
-  pInputText
-  [type]="type"
-  [name]="name"
-  [readonly]="readonly"
-  [formControl]="formControl"
-  [placeholder]="placeholder"
-  [class.block]="block"
-  [class.readonly]="readonly"
-  (keydown)="setErrorMessage()"
-  (blur)="setErrorMessage()"
->
+
+<div class="input-button-box">
+  <input
+    pInputText
+    [type]="type"
+    [name]="name"
+    [readonly]="readonly"
+    [formControl]="formControl"
+    [placeholder]="placeholder"
+    [class.block]="block"
+    [class.readonly]="readonly"
+    (keydown)="setErrorMessage()"
+    (blur)="setErrorMessage()"
+  >
+
+  <ng-content select="[button]"></ng-content>
+</div>
+
 <div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
   {{ errorMessage }}
 </div>

@@ -9,6 +9,11 @@
   }
 }
 
+.input-button-box {
+  display: flex;
+  gap: 0.625rem;
+}
+
 .input-message {
   margin-top: 0.625rem;
   font-size: 0.875rem;
