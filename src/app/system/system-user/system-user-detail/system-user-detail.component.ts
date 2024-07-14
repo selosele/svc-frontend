@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.dto';
 import { AuthService } from '@app/auth/auth.service';
+import { DepartmentResponseDTO } from '@app/human/human.dto';
 
 @Component({
   standalone: true,
@@ -49,13 +50,19 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         employeeId: ['', [FormValidator.required]],         // 직원 ID
         employeeName: ['', [FormValidator.required]],       // 직원 명
         genderCodeName: ['', [FormValidator.required]],     // 성별 코드 명
-      }),
 
-      // 직원 회사 정보
-      employeeCompany: this.fb.group({
-        companyId: ['', [FormValidator.required]],          // 회사 ID
-        corporateName: ['', [FormValidator.required]],      // 법인 명
-        companyName: ['', [FormValidator.required]],        // 회사 명
+        // 직원 회사 정보
+        employeeCompany: this.fb.group({
+          companyId: ['', [FormValidator.required]],          // 회사 ID
+          corporateName: ['', [FormValidator.required]],      // 법인 명
+          companyName: ['', [FormValidator.required]],        // 회사 명
+        }),
+
+        // 직원 부서 목록
+        departments: this.fb.group({
+          departmentName: ['', [FormValidator.required]],     // 부서 명
+          rankCodeName: ['', [FormValidator.required]],       // 직급 명
+        }),
       }),
     });
     this.authService.listRole();
@@ -66,11 +73,23 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       this.userDetailForm.patchValue({
         ...this.userDetail,
         roles: this.userDetail.roles.map((x: UserRoleResponseDTO) => x.roleId),
-        employee: this.userDetail.employee,
-        employeeCompany: this.userDetail.employee.employeeCompany,
+        employee: {
+          ...this.userDetail.employee,
+          employeeCompany: this.userDetail.employee.employeeCompanies[0],
+          departments: {
+            ...this.userDetail.employee.departments,
+            departmentName: this.findDepartmentName(this.userDetail.employee.departments),
+            rankCodeName: this.userDetail.employee.departments[0].rankCodeName,
+          },
+        },
       });
       this.roles = this.authService.roleListSubject.value;
     }
+  }
+
+  /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
+  findDepartmentName(departments: DepartmentResponseDTO[]): string {
+    return departments.map(x => x.departmentName).join(' > ');
   }
 
   /** 사용자 정보를 저장한다. */

@@ -66,27 +66,29 @@
 
   <div class="input-box">
     <ui-text-field
-      [control]="userDetailForm.get('employeeCompany.corporateName')"
+      [control]="userDetailForm.get('employee.employeeCompany.corporateName')"
       [label]="'회사(법인) 명'"
       [readonly]="true"
     />
 
     <ui-text-field
-      [control]="userDetailForm.get('employeeCompany.companyName')"
+      [control]="userDetailForm.get('employee.employeeCompany.companyName')"
       [label]="'회사 명'"
       [readonly]="true"
     />
 
-    <!-- <ui-text-field
-      [control]="userDetailForm.get('employeeCompany.companyDisplayName')"
-      [label]="'부서'"
-      [readonly]="true"
-    />
-
     <ui-text-field
-      [control]="userDetailForm.get('employeeCompany.companyDisplayName')"
+      [control]="userDetailForm.get('employee.departments.rankCodeName')"
       [label]="'직급'"
       [readonly]="true"
-    /> -->
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="userDetailForm.get('employee.departments.departmentName')"
+      [label]="'부서 명'"
+      [readonly]="true"
+    />
   </div>
 </form>

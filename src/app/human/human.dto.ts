@@ -14,7 +14,10 @@ export interface EmployeeResponseDTO {
   genderCodeName?: string;
 
   /** 직원 회사 정보 */
-  employeeCompany?: EmployeeCompanyResponseDTO;
+  employeeCompanies?: EmployeeCompanyResponseDTO[];
+
+  /** 직원 부서 목록 */
+  departments?: DepartmentResponseDTO[];
 
 }
 
@@ -29,5 +32,28 @@ export interface EmployeeCompanyResponseDTO {
 
   /** 회사 명 */
   companyName?: string;
+
+}
+
+/** 부서 응답 DTO */
+export interface DepartmentResponseDTO {
+
+  /** 부서 ID */
+  departmentId?: number;
+
+  /** 회사 ID */
+  companyId?: number;
+
+  /** 상위 부서 ID */
+  upDepartmentId?: number;
+
+  /** 부서 명 */
+  departmentName?: string;
+
+  /** 부서 순서 */
+  departmentOrder?: number;
+
+  /** 직급 명 */
+  rankCodeName?: string;
 
 }
