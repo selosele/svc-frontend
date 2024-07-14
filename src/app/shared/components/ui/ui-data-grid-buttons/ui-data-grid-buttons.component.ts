@@ -25,7 +25,6 @@ export class UiDataGridButtonsComponent {
 
   /** grid 새로고침 버튼을 클릭한다. */
   onRefresh(event: Event): void {
-    event.stopPropagation();
     this.refresh.emit(event);
   }
 

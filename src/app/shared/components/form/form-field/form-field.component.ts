@@ -28,10 +28,10 @@ export class FormFieldComponent implements OnInit {
   @Input() label?: string;
 
   /** input placeholder */
-  @Input() placeholder?: string;
+  @Input() placeholder?: string = '';
 
   /** input value */
-  @Input() value?: any;
+  @Input() value?: any = '';
 
   /** input name */
   name?: string;

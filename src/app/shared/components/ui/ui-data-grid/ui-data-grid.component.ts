@@ -31,10 +31,13 @@ export class UiDataGridComponent implements OnInit {
   /** grid height 값 */
   @Input() height = '450px';
 
+  /** 행 선택 모드 */
+  @Input() rowSelection: 'single' | 'multiple' = 'single';
+
   /** 컬럼 목록 */
   @Input() columnDefs: any[];
 
-  /** row 목록 */
+  /** 행 목록 */
   @Input() rowData: any[];
   
   /** grid ready 이벤트 */
@@ -70,12 +73,22 @@ export class UiDataGridComponent implements OnInit {
   }
 
   /** grid ready 이벤트 */
-  onGridReady(event: GridReadyEvent<any, any>): void {
+  protected onGridReady(event: GridReadyEvent<any, any>): void {
     this.gridApi = event.api;
     this.gridApi.updateGridOptions({
       columnDefs: this.columnDefs.map((column) => {
-        if (column.field === 'rowNum')
+        if (column.field === '_checkbox')
+          return {
+            ...column,
+            headerName: '',
+            width: 80,
+            checkboxSelection: true,
+            ...(this.rowSelection === 'multiple' && { headerCheckboxSelection: true }),
+          };
+
+        if (column.field === '_rowNum')
           return { ...column, headerName: 'No', width: 80, valueGetter: 'node.rowIndex + 1' };
+
         return column;
       }),
     });
@@ -83,21 +96,26 @@ export class UiDataGridComponent implements OnInit {
   }
 
   /** cell 클릭 이벤트 */
-  onCellClicked(event: CellClickedEvent): void {
+  protected onCellClicked(event: CellClickedEvent): void {
     this.cellClicked.emit(event);
   }
 
+  /** grid 새로고침 버튼을 클릭한다. */
+  protected onRefresh(event: Event): void {
+    this.refresh.emit(event);
+  }
+
   /** grid의 width 값과 height 값을 설정한다. */
-  setGridWidthAndHeight(width: string, height: string): void {
+  private setGridWidthAndHeight(width: string, height: string): void {
     this.style = {
       width: width,
       height: height,
     };
   }
 
-  /** grid 새로고침 버튼을 클릭한다. */
-  onRefresh(event: Event): void {
-    this.refresh.emit(event);
+  /** 선택한 행들을 반환한다. */
+  getSelectedRows(): any[] {
+    return this.gridApi.getSelectedRows();
   }
 
 }

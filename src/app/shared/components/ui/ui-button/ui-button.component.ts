@@ -51,6 +51,7 @@ export class UiButtonComponent implements OnInit {
 
   /** 버튼을 클릭한다. */
   onClick(event: Event): void {
+    event.stopPropagation();
     this.click.emit(event);
   }
 

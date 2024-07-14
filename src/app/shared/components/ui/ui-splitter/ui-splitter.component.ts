@@ -22,10 +22,10 @@ export class UiSplitterComponent {
 
   private splitterActiveSubject = new BehaviorSubject<boolean>(false);
 
-  /** Splitter 활성화 여부 */
+  /** splitter 활성화 여부 */
   isSplitterActive$ = this.splitterActiveSubject.asObservable();
 
-  /** Splitter 스타일 */
+  /** splitter 스타일 */
   style = {
     height: '500px',
     border: '0',
@@ -33,17 +33,17 @@ export class UiSplitterComponent {
     color: 'inherit',
   };
 
-  /** Splitter를 활성화한다. */
+  /** splitter를 활성화한다. */
   show(): void {
     this.splitterActiveSubject.next(true);
   }
 
-  /** Splitter를 비활성화한다. */
+  /** splitter를 비활성화한다. */
   hide(): void {
     this.splitterActiveSubject.next(false);
   }
 
-  /** 버튼을 클릭해서 Splitter를 비활성화한다. */
+  /** 버튼을 클릭해서 splitter를 비활성화한다. */
   onClose(event: Event): void {
     this.hide();
   }

@@ -5,6 +5,7 @@ import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiTextFie
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.dto';
 import { AuthService } from '@app/auth/auth.service';
 import { DepartmentResponseDTO } from '@app/human/human.dto';
+import { isEmpty, isNotEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -34,6 +35,11 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 모든 권한 목록 */
   roles: RoleResponseDTO[] = [];
+
+  /** input readonly 여부 */
+  get isReadonly(): boolean {
+    return isNotEmpty(this.userDetail);
+  }
 
   ngOnInit(): void {
     this.userDetailForm = this.fb.group({
@@ -70,16 +76,21 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userDetail && this.userDetailForm) {
+      if (isEmpty(changes.userDetail.currentValue)) {
+        this.userDetailForm.reset();
+        return;
+      }
+      
       this.userDetailForm.patchValue({
         ...this.userDetail,
-        roles: this.userDetail.roles.map((x: UserRoleResponseDTO) => x.roleId),
+        roles: this.userDetail?.roles.map((x: UserRoleResponseDTO) => x.roleId),
         employee: {
-          ...this.userDetail.employee,
-          employeeCompany: this.userDetail.employee.employeeCompanies[0],
+          ...this.userDetail?.employee,
+          employeeCompany: this.userDetail?.employee.employeeCompanies[0],
           departments: {
-            ...this.userDetail.employee.departments,
-            departmentName: this.findDepartmentName(this.userDetail.employee.departments),
-            rankCodeName: this.userDetail.employee.departments[0].rankCodeName,
+            ...this.userDetail?.employee.departments,
+            departmentName: this.findDepartmentName(this.userDetail?.employee.departments),
+            rankCodeName: this.userDetail?.employee.departments[0].rankCodeName,
           },
         },
       });
@@ -89,6 +100,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
   findDepartmentName(departments: DepartmentResponseDTO[]): string {
+    if (isEmpty(departments)) return ''
     return departments.map(x => x.departmentName).join(' > ');
   }
 
