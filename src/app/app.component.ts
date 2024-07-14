@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { MenuService } from './shared/services';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
+import { JWTUserDTO } from './auth/auth.dto';
 
 @Component({
   standalone: true,
@@ -40,12 +41,17 @@ export class AppComponent implements OnInit {
     return this.router.url === '/index';
   }
 
+  /** 인증된 사용자 정보 */
+  user: JWTUserDTO;
+
   ngOnInit(): void {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
-          if (this.authService.roleListSubject.value.length === 0)
+          this.user = this.authService.getAuthenticatedUser();
+
+          if (this.user.roles.includes('ROLE_SYSTEM_ADMIN') && this.authService.roleListSubject.value.length === 0)
             this.authService.listRole();
           
           this.menuService.setData();

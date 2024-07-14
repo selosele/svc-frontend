@@ -9,12 +9,6 @@
     />
 
     <ui-text-field
-      [control]="userDetailForm.get('userName')"
-      [label]="'사용자 명'"
-      [readonly]="isReadonly"
-    />
-
-    <ui-text-field
       [control]="userDetailForm.get('userActiveYn')"
       [label]="'사용자 활성화 여부'"
       [readonly]="isReadonly"
@@ -46,10 +40,9 @@
 
   <div class="input-box">
     <ui-text-field
-      [control]="userDetailForm.get('userName')"
+      [control]="userDetailForm.get('employee.employeeName')"
       [label]="'직원 명'"
       [readonly]="true"
-      [value]="userDetailForm.get('userName').value"
     />
 
     <ui-text-field

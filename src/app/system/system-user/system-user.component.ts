@@ -45,7 +45,7 @@ export class SystemUserComponent implements OnInit {
     { field: '_rowNum' },
     { field: 'userId', headerName: '사용자 ID', width: 100 },
     { field: 'userAccount', headerName: '사용자 계정', flex: 1 },
-    { field: 'userName', headerName: '사용자 명', flex: 1 },
+    { field: 'employee.employeeName', headerName: '직원 명', flex: 1 },
     { field: 'userActiveYn', headerName: '사용자 활성화 여부', flex: 1 },
     { field: 'roles', headerName: '권한', flex: 1,
       valueGetter: (params) => params.data.roles.map(x => x.roleName)

@@ -1,4 +1,4 @@
-import { EmployeeResponseDTO } from "@app/human/human.dto";
+import { EmployeeResponseDTO } from '@app/human/human.dto';
 
 /** 로그인 요청 DTO */
 export interface LoginRequestDTO {
@@ -28,9 +28,6 @@ export class UpdateUserRequestDTO {
   /** 사용자 계정 */
   userAccount?: string;
 
-  /** 사용자 명 */
-  userName?: string;
-
   /** 사용자 활성화 여부 */
   userActiveYn?: string;
     
@@ -44,9 +41,6 @@ export class UserResponseDTO {
 
   /** 사용자 계정 */
   userAccount?: string;
-
-  /** 사용자 명 */
-  userName?: string;
 
   /** 사용자 활성화 여부 */
   userActiveYn?: string;
@@ -85,5 +79,22 @@ export class UserRoleResponseDTO {
   /** 권한 명 */
   roleName?: string;
     
+}
+
+/** JWT 사용자 DTO */
+export class JWTUserDTO {
+
+  /** 사용자 ID */
+  userId?: number;
+
+  /** 사용자 계정 */
+  userAccount?: string;
+
+  /** 직원 명 */
+  employeeName?: string;
+
+  /** 사용자 권한 목록 */
+  roles?: string[];
+
 }
 

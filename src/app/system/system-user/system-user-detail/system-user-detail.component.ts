@@ -54,9 +54,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     this.userDetailForm = this.fb.group({
 
       // 사용자 정보
-      userId: ['', [FormValidator.required]],               // 사용자 ID
+      userId: [''],                                         // 사용자 ID
       userAccount: ['', [FormValidator.required]],          // 사용자 계정
-      userName: ['', [FormValidator.required]],             // 사용자 명
       userActiveYn: ['', [FormValidator.required]],         // 사용자 활성화 여부
       roles: [[], [FormValidator.required]],                // 사용자 권한
 
