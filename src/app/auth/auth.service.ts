@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UserResponseDTO } from './auth.dto';
+import { LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.dto';
 import { StateService } from '@app/shared/services';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -59,6 +59,11 @@ export class AuthService {
   /** 사용자를 조회한다. */
   getUser(userId: number): Observable<UserResponseDTO> {
     return this.http.get<UserResponseDTO>(`/auth/users/${userId}`);
+  }
+
+  /** 사용자를 수정한다. */
+  updateUser(updateUserRequestDTO: UpdateUserRequestDTO): Observable<UserResponseDTO> {
+    return this.http.put<UserResponseDTO>(`/auth/users/${updateUserRequestDTO.userId}`, updateUserRequestDTO);
   }
 
   /** 사용자를 삭제한다. */

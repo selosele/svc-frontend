@@ -19,6 +19,23 @@ export interface LoginResponseDTO {
 
 }
 
+/** 사용자 수정 요청 DTO */
+export class UpdateUserRequestDTO {
+
+  /** 사용자 ID */
+  userId?: number;
+
+  /** 사용자 계정 */
+  userAccount?: string;
+
+  /** 사용자 명 */
+  userName?: string;
+
+  /** 사용자 활성화 여부 */
+  userActiveYn?: string;
+    
+}
+
 /** 사용자 응답 DTO */
 export class UserResponseDTO {
 

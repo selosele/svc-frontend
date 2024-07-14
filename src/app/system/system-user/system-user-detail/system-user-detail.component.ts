@@ -1,11 +1,12 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.dto';
 import { AuthService } from '@app/auth/auth.service';
 import { DepartmentResponseDTO } from '@app/human/human.dto';
-import { isEmpty, isNotEmpty } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
+import { UiMessageService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -15,6 +16,7 @@ import { isEmpty, isNotEmpty } from '@app/shared/utils';
     UiTextFieldComponent,
     UiCheckboxComponent,
     UiCheckboxGroupComponent,
+    UiButtonComponent,
   ],
   selector: 'system-user-detail',
   templateUrl: './system-user-detail.component.html',
@@ -24,6 +26,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private messageService: UiMessageService,
     private authService: AuthService,
   ) {}
 
@@ -36,10 +39,16 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 모든 권한 목록 */
   roles: RoleResponseDTO[] = [];
 
+  /** 기본 권한 목록 */
+  defaultRoles: string[] = [];
+
   /** input readonly 여부 */
   get isReadonly(): boolean {
-    return isNotEmpty(this.userDetail);
+    return isNotObjectEmpty(this.userDetail);
   }
+
+  /** 데이터 새로고침 이벤트 */
+  @Output() refresh = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.userDetailForm = this.fb.group({
@@ -71,37 +80,62 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         }),
       }),
     });
-    this.authService.listRole();
   }
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userDetail && this.userDetailForm) {
-      if (isEmpty(changes.userDetail.currentValue)) {
-        this.userDetailForm.reset();
+      this.roles = this.authService.roleListSubject.value;
+      this.defaultRoles = this.roles.filter(x => x.roleId === 'ROLE_EMPLOYEE').map(x => x.roleId);
+
+      if (isObjectEmpty(changes.userDetail.currentValue)) {
+        this.userDetailForm.reset({
+          roles: this.defaultRoles,
+        });
         return;
       }
       
       this.userDetailForm.patchValue({
         ...this.userDetail,
-        roles: this.userDetail?.roles.map((x: UserRoleResponseDTO) => x.roleId),
+        roles: this.userDetail?.roles?.map((x: UserRoleResponseDTO) => x.roleId) || this.defaultRoles,
         employee: {
           ...this.userDetail?.employee,
-          employeeCompany: this.userDetail?.employee.employeeCompanies[0],
+          employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
           departments: {
-            ...this.userDetail?.employee.departments,
-            departmentName: this.findDepartmentName(this.userDetail?.employee.departments),
-            rankCodeName: this.userDetail?.employee.departments[0].rankCodeName,
+            ...this.userDetail?.employee?.departments,
+            departmentName: this.findDepartmentName(this.userDetail?.employee?.departments),
+            rankCodeName: this.userDetail?.employee?.departments[0].rankCodeName,
           },
         },
       });
-      this.roles = this.authService.roleListSubject.value;
     }
   }
 
   /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
   findDepartmentName(departments: DepartmentResponseDTO[]): string {
-    if (isEmpty(departments)) return ''
+    if (isEmpty(departments))
+      return '';
+
     return departments.map(x => x.departmentName).join(' > ');
+  }
+
+  /** 사용자 활성화 여부를 수정한다. */
+  async updateUserActiveYn(event: Event, userActiveYn: string): Promise<void> {
+    const activeStatus = `${userActiveYn === 'Y' ? '활성화' : '비활성화'}`;
+    const confirm = await this.messageService.confirm1(event, `사용자를 ${activeStatus}하시겠습니까?`);
+    if (!confirm) return;
+
+    this.authService.updateUser({ userId: this.userDetail?.userId, userActiveYn })
+    .subscribe((data) => {
+      this.messageService.toastSuccess('저장되었습니다.');
+
+      this.userDetail = data;
+      this.userDetailForm.patchValue({
+        ...this.userDetailForm.value,
+        ...this.userDetail,
+        roles: this.userDetail?.roles?.map((x: UserRoleResponseDTO) => x.roleId),
+      });
+      this.refresh.emit();
+    });
   }
 
   /** 사용자 정보를 저장한다. */
