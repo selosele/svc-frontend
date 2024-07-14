@@ -18,6 +18,16 @@ export function isNotBlank(value: string): boolean {
   return !isBlank(value);
 }
 
+/** 객체가 비었는지 확인한다. */
+export function isObjectEmpty(value: object): boolean {
+  return isEmpty(value) || Object.keys(value).length === 0;
+}
+
+/** 객체가 비었는지 확인한다. */
+export function isNotObjectEmpty(value: object): boolean {
+  return !isObjectEmpty(value);
+}
+
 /** 깊은 복사를 해서 반환한다. */
 export function deepCopy(value: any): any {
   return JSON.parse(JSON.stringify(value));
