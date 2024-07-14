@@ -45,6 +45,9 @@ export class AppComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
+          if (this.authService.roleListSubject.value.length === 0)
+            this.authService.listRole();
+          
           this.menuService.setData();
         }
       });

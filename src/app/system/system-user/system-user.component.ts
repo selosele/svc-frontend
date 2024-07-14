@@ -77,7 +77,7 @@ export class SystemUserComponent implements OnInit {
 
   /** 사용자를 추가한다. */
   addUser(): void {
-    this.userDetail = null;
+    this.userDetail = {};
     this.splitter.show();
   }
 
