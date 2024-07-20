@@ -17,9 +17,6 @@ export const roles = {
   /** 시스템 관리자 권한 */
   systemAdmin: 'ROLE_SYSTEM_ADMIN',
 
-  /** 게시판 관리자 권한 */
-  boardAdmin: 'ROLE_BOARD_ADMIN',
-
   /** 직원 권한 */
   employee: 'ROLE_EMPLOYEE',
 
