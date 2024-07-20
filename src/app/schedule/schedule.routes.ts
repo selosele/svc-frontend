@@ -10,7 +10,7 @@ export const scheduleRoutes: Routes = [
     path: 'schedules',
     canActivate: [authGuard, menuGuard],
     data: {
-      roles: [roles.employee],
+      roles: [roles.EMPLOYEE],
     },
     loadComponent: () => import('./schedule.component').then(x => x.ScheduleComponent),
   },

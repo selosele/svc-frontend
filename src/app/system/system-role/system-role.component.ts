@@ -33,8 +33,8 @@ export class SystemRoleComponent implements OnInit {
   gridApi = null;
   columnDefs = [
     { field: '_rownum' },
-    { field: 'roleId', headerName: '권한 ID', flex: 1 },
-    { field: 'roleName', headerName: '권한 명', flex: 1 },
+    { field: 'roleId',    headerName: '권한 ID', flex: 1 },
+    { field: 'roleName',  headerName: '권한 명', flex: 1 },
     { field: 'roleOrder', headerName: '권한 순서', flex: 1 },
   ];
 

@@ -20,6 +20,10 @@
 
   .p-splitter-gutter {
     margin: 0 1rem;
+
+    &:has(~ .p-splitter-panel:empty) {
+      display: none;
+    }
   }
   
   .p-splitter-panel {

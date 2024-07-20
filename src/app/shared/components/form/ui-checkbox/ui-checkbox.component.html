@@ -6,8 +6,8 @@
   [formControl]="formControl"
   [class.block]="block"
   [class.readonly]="readonly"
-  (change)="setErrorMessage()"
-  (blur)="setErrorMessage()"
+  (onChange)="setErrorMessage()"
+  (onBlur)="setErrorMessage()"
 />
 <!-- <div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
   {{ errorMessage }}

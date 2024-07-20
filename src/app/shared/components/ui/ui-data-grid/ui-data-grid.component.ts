@@ -34,6 +34,9 @@ export class UiDataGridComponent implements OnInit {
   /** 행 선택 모드 */
   @Input() rowSelection: 'single' | 'multiple' = 'single';
 
+  /** 행 스타일 */
+  @Input() getRowStyle = null;
+
   /** 컬럼 목록 */
   @Input() columnDefs: any[];
 

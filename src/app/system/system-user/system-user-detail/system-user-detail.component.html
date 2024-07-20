@@ -8,9 +8,10 @@
       [readonly]="isReadonly"
     />
 
-    <ui-text-field
+    <ui-dropdown
       [control]="userDetailForm.get('userActiveYn')"
       [label]="'사용자 활성화 여부'"
+      [data]="userActiveYns"
       [readonly]="isReadonly"
     >
       @if (isReadonly) {
@@ -21,7 +22,7 @@
           {{ userDetail?.userActiveYn === 'Y' ? '비활성화' : '활성화' }}
         </ui-button>
       }
-    </ui-text-field>
+    </ui-dropdown>
   </div>
 
   <div class="input-box">
@@ -45,9 +46,10 @@
       [readonly]="isReadonly"
     />
 
-    <ui-text-field
+    <ui-dropdown
       [control]="userDetailForm.get('employee.genderCodeName')"
       [label]="'성별'"
+      [data]="genderCodes"
       [readonly]="isReadonly"
     />
 

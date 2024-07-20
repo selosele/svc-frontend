@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { DepartmentResponseDTO } from '@app/human/human.model';
 import { isEmpty, isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
+import { DropdownData } from '@app/shared/models';
 
 @Component({
   standalone: true,
@@ -16,6 +17,7 @@ import { UiMessageService } from '@app/shared/services';
     UiTextFieldComponent,
     UiCheckboxComponent,
     UiCheckboxGroupComponent,
+    UiDropdownComponent,
     UiButtonComponent,
   ],
   selector: 'system-user-detail',
@@ -36,11 +38,20 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 사용자 상세 조회 폼 */
   userDetailForm: FormGroup;
 
+  /** 사용자 활성화 여부 데이터 목록 */
+  userActiveYns: DropdownData[] = [{ label: 'Y', value: 'Y' }, { label: 'N', value: 'N' }];
+
+  /** 사용자 활성화 여부 기본 값 */
+  defaultUserActiveYn: string = 'Y';
+
   /** 모든 권한 목록 */
   roles: RoleResponseDTO[] = [];
 
-  /** 기본 권한 목록 */
+  /** 권한 목록 기본 값 */
   defaultRoles: string[] = [];
+
+  /** 성별 코드 데이터 목록 */
+  genderCodes: DropdownData[] = [];
 
   /** input readonly 여부 */
   get isReadonly(): boolean {
@@ -88,6 +99,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
       if (isObjectEmpty(changes.userDetail.currentValue)) {
         this.userDetailForm.reset({
+          userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
         });
         return;

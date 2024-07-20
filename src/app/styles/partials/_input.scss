@@ -12,6 +12,10 @@
 .input-button-box {
   display: flex;
   gap: 0.625rem;
+
+  > * {
+    flex: 1;
+  }
 }
 
 .input-message {

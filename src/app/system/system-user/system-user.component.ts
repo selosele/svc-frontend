@@ -49,11 +49,11 @@ export class SystemUserComponent implements OnInit {
   columnDefs = [
     { field: '_checkbox' },
     { field: '_rownum' },
-    { field: 'userId', headerName: '사용자 ID', width: 100 },
-    { field: 'userAccount', headerName: '사용자 계정', flex: 1 },
+    { field: 'userId',       headerName: '사용자 ID', width: 100 },
+    { field: 'userAccount',  headerName: '사용자 계정', flex: 1 },
     { field: 'employeeName', headerName: '직원 명', flex: 1 },
     { field: 'userActiveYn', headerName: '사용자 활성화 여부', flex: 1 },
-    { field: 'rolesString', headerName: '권한', flex: 1 },
+    { field: 'rolesString',  headerName: '권한', flex: 1 },
   ];
 
   ngOnInit(): void {
