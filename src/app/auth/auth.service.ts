@@ -63,7 +63,8 @@ export class AuthService {
 
   /** 사용자를 수정한다. */
   updateUser(updateUserRequestDTO: UpdateUserRequestDTO): Observable<UserResponseDTO> {
-    return this.http.put<UserResponseDTO>(`/auth/users/${updateUserRequestDTO.userId}`, updateUserRequestDTO);
+    const userId = updateUserRequestDTO.userId;
+    return this.http.put<UserResponseDTO>(`/auth/users/${userId}`, updateUserRequestDTO);
   }
 
   /** 사용자를 삭제한다. */
