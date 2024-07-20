@@ -50,6 +50,12 @@
       [label]="'성별'"
       [readonly]="isReadonly"
     />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employee.departments.rankCodeName')"
+      [label]="'직급'"
+      [readonly]="isReadonly"
+    />
   </div>
 
   <div class="input-box">
@@ -62,12 +68,6 @@
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeCompany.companyName')"
       [label]="'회사 명'"
-      [readonly]="isReadonly"
-    />
-
-    <ui-text-field
-      [control]="userDetailForm.get('employee.departments.rankCodeName')"
-      [label]="'직급'"
       [readonly]="isReadonly"
     />
   </div>

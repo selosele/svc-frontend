@@ -26,6 +26,7 @@
     position: relative;
     overflow-y: auto;
     height: 100%;
+    padding: 0 1rem;
 
     &:not(:has(*)) {
       display: none;
