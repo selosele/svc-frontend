@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridApi, CellClickedEvent } from '@ag-grid-community/core';
-import { LayoutPageDescriptionComponent, UiButtonComponent, UiDataGridComponent, UiSplitterComponent } from '@app/shared/components';
+import { LayoutPageDescriptionComponent, UiButtonComponent, UiDataGridComponent, UiSkeletonComponent, UiSplitterComponent } from '@app/shared/components';
+import { UiMessageService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { UserResponseDTO } from '@app/auth/auth.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
-import { UiMessageService } from '@app/shared/services';
 
 @Component({
   standalone: true,
   imports: [
     UiButtonComponent,
+    UiSkeletonComponent,
     UiDataGridComponent,
     UiSplitterComponent,
     LayoutPageDescriptionComponent,
@@ -35,6 +36,11 @@ export class SystemUserComponent implements OnInit {
   /** 사용자 목록 */
   get userList() {
     return this.authService.userListSubject.value;
+  }
+
+  /** 사용자 목록 데이터 로드 완료 여부 */
+  get userListDataLoad() {
+    return this.authService.userListDataLoadSubject.value;
   }
 
   /** 사용자 상세 정보 */

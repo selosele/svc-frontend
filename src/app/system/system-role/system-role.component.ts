@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { GridApi } from '@ag-grid-community/core';
-import { LayoutPageDescriptionComponent, UiDataGridComponent } from '@app/shared/components';
+import { LayoutPageDescriptionComponent, UiDataGridComponent, UiSkeletonComponent } from '@app/shared/components';
 import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   standalone: true,
   imports: [
+    UiSkeletonComponent,
     UiDataGridComponent,
     LayoutPageDescriptionComponent,
   ],
@@ -22,6 +23,11 @@ export class SystemRoleComponent implements OnInit {
   /** 권한 목록 */
   get roleList() {
     return this.authService.roleListSubject.value;
+  }
+
+  /** 권한 목록 데이터 로드 완료 여부 */
+  get roleListDataLoad() {
+    return this.authService.roleListDataLoadSubject.value;
   }
 
   gridApi = null;

@@ -18,13 +18,21 @@ export class AuthService {
   ) {}
 
   userListSubject = new BehaviorSubject<UserResponseDTO[]>([]);
+  userListDataLoadSubject = new BehaviorSubject<boolean>(false);
   roleListSubject = new BehaviorSubject<RoleResponseDTO[]>([]);
+  roleListDataLoadSubject = new BehaviorSubject<boolean>(false);
 
   /** 사용자 목록 */
   userList$ = this.userListSubject.asObservable();
 
+  /** 사용자 목록 데이터 로드 완료 여부 */
+  userListDataLoad$ = this.userListDataLoadSubject.asObservable();
+
   /** 권한 목록 */
   roleList$ = this.roleListSubject.asObservable();
+
+  /** 권한 목록 데이터 로드 완료 여부 */
+  roleListDataLoad$ = this.roleListDataLoadSubject.asObservable();
 
   /** 로그인을 한다. */
   login(loginRequestDTO: LoginRequestDTO): void {
@@ -53,6 +61,7 @@ export class AuthService {
     this.http.get<UserResponseDTO[]>('/auth/users')
     .subscribe((data) => {
       this.userListSubject.next(data);
+      this.userListDataLoadSubject.next(true);
     });
   }
 
@@ -77,6 +86,7 @@ export class AuthService {
     this.http.get<RoleResponseDTO[]>('/auth/roles')
     .subscribe((data) => {
       this.roleListSubject.next(data);
+      this.roleListDataLoadSubject.next(true);
     });
   }
 

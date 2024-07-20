@@ -4,12 +4,19 @@
   </ul>
 </layout-page-description>
 
-<ui-data-grid
-  [height]="'350px'"
-  [useAdd]="false"
-  [useRemove]="false"
-  [rowData]="roleList"
-  [columnDefs]="columnDefs"
-  (gridReady)="onGridReady($event)"
-  (refresh)="onRefresh()"
-/>
+@if (!roleListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-data-grid
+    [height]="'350px'"
+    [useAdd]="false"
+    [useRemove]="false"
+    [rowData]="roleList"
+    [columnDefs]="columnDefs"
+    (gridReady)="onGridReady($event)"
+    (refresh)="onRefresh()"
+  />
+}

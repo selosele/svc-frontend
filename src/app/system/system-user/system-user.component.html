@@ -5,38 +5,45 @@
   </ul>
 </layout-page-description>
 
-<ui-splitter #splitter>
-  <ui-data-grid #grid first
-    [useAdd]="false"
-    [useRemove]="false"
-    [rowData]="userList"
-    [columnDefs]="columnDefs"
-    (gridReady)="onGridReady($event)"
-    (cellClicked)="onCellClicked($event)"
-    (refresh)="onRefresh()"
-  >
-    <ui-button buttons
-      [size]="'small'"
-      [icon]="'pi-plus'"
-      [label]="'사용자 추가'"
-      [outlined]="true"
-      (click)="addUser()"
-    />
-
-    <ui-button buttons
-      [size]="'small'"
-      [icon]="'pi-trash'"
-      [label]="'사용자 삭제'"
-      [outlined]="true"
-      [severity]="'danger'"
-      (click)="removeUser($event)"
-    />
-  </ui-data-grid>
-
-  <div second>
-    <system-user-detail
-      [userDetail]="userDetail"
-      (refresh)="listUser()"
-    />
-  </div>
-</ui-splitter>
+@if (!userListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-data-grid #grid first
+      [useAdd]="false"
+      [useRemove]="false"
+      [rowData]="userList"
+      [columnDefs]="columnDefs"
+      (gridReady)="onGridReady($event)"
+      (cellClicked)="onCellClicked($event)"
+      (refresh)="onRefresh()"
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'사용자 추가'"
+        [outlined]="true"
+        (click)="addUser()"
+      />
+  
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-trash'"
+        [label]="'사용자 삭제'"
+        [outlined]="true"
+        [severity]="'danger'"
+        (click)="removeUser($event)"
+      />
+    </ui-data-grid>
+  
+    <div second>
+      <system-user-detail
+        [userDetail]="userDetail"
+        (refresh)="listUser()"
+      />
+    </div>
+  </ui-splitter>
+}
