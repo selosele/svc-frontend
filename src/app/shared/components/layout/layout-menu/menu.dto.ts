@@ -7,11 +7,11 @@ export class GetMenuRequestDTO {
   /** 상위 메뉴 ID */
   upMenuId?: number;
 
-  /** 메뉴 사용여부 */
-  menuUseYn?: string = 'Y';
+  /** 사용 여부 */
+  useYn?: string = 'Y';
 
-  /** 메뉴 삭제여부 */
-  menuDeleteYn?: string = 'N';
+  /** 삭제 여부 */
+  deleteYn?: string = 'N';
 
 }
 
@@ -36,11 +36,11 @@ export class MenuResponseDTO {
   /** 메뉴 뎁스 */
   menuDepth?: number;
   
-  /** 메뉴 사용여부 */
-  menuUseYn?: string;
+  /** 사용 여부 */
+  useYn?: string;
   
-  /** 메뉴 삭제여부 */
-  menuDeleteYn?: string;
+  /** 삭제 여부 */
+  deleteYn?: string;
 
 }
 

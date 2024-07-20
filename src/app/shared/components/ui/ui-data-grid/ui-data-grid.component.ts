@@ -86,7 +86,7 @@ export class UiDataGridComponent implements OnInit {
             ...(this.rowSelection === 'multiple' && { headerCheckboxSelection: true }),
           };
 
-        if (column.field === '_rowNum')
+        if (column.field === '_rownum')
           return { ...column, headerName: 'No', width: 80, valueGetter: 'node.rowIndex + 1' };
 
         return column;
