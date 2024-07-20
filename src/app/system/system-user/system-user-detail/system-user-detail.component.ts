@@ -8,6 +8,7 @@ import { DepartmentResponseDTO } from '@app/human/human.model';
 import { isEmpty, isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { DropdownData } from '@app/shared/models';
+import { CodeService } from '@app/code/code.service';
 
 @Component({
   standalone: true,
@@ -30,6 +31,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private messageService: UiMessageService,
     private authService: AuthService,
+    private codeService: CodeService,
   ) {}
 
   /** 사용자 상세 정보 */
@@ -39,7 +41,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   userDetailForm: FormGroup;
 
   /** 사용자 활성화 여부 데이터 목록 */
-  userActiveYns: DropdownData[] = [{ label: 'Y', value: 'Y' }, { label: 'N', value: 'N' }];
+  userActiveYns: DropdownData[] = this.codeService.getDropdownYnData();
 
   /** 사용자 활성화 여부 기본 값 */
   defaultUserActiveYn: string = 'Y';
@@ -51,7 +53,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   defaultRoles: string[] = [];
 
   /** 성별 코드 데이터 목록 */
-  genderCodes: DropdownData[] = [];
+  genderCodes: DropdownData[] = this.codeService.getDropdownData('GENDER_00');
 
   /** input readonly 여부 */
   get isReadonly(): boolean {
@@ -64,7 +66,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.userDetailForm = this.fb.group({
 
-      // 사용자 정보
+      // 사용자 상세 정보
       userId: [''],                                         // 사용자 ID
       userAccount: ['', [FormValidator.required]],          // 사용자 계정
       userActiveYn: ['', [FormValidator.required]],         // 사용자 활성화 여부
@@ -149,7 +151,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     });
   }
 
-  /** 사용자 정보를 저장한다. */
+  /** 사용자 상세 정보를 저장한다. */
   onSubmit(): void {
     
   }

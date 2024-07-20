@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { isEmpty, validationMessage } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty, validationMessage } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -17,6 +17,9 @@ export class FormFieldComponent implements OnInit {
 
   /** form 컨트롤 */
   formControl: FormControl<any>;
+
+  /** form 컨트롤 */
+  foundControl: any = null;
 
   /** block 스타일 input 여부 */
   @Input() block?: boolean;
@@ -40,33 +43,35 @@ export class FormFieldComponent implements OnInit {
   errorMessage: string;
 
   ngOnInit(): void {
-    this.formControl = this.control as FormControl<any>;
+    if (isObjectEmpty(this.foundControl)) {
+      this.foundControl = this.findControl(this.control);
+    }
+    this.formControl = this.foundControl?.control;
     this.setName();
   }
 
   /** input name 값을 설정한다. */
   setName(): void {
-    if (this.control) {
-      this.name = this.findControlName(this.control);
+    if (isObjectEmpty(this.foundControl)) {
+      this.name = this.foundControl?.name;
     }
   }
 
-  /** 재귀 함수로 FormControl의 이름을 찾아서 반환한다. */
-  findControlName(control: AbstractControl): string | null {
+  /** 재귀 함수로 FormControl을 찾아서 반환한다. */
+  findControl(control: AbstractControl) {
     let parent = control.parent;
-    if (!parent) {
-      return null;
-    }
+    if (!parent) return null;
 
     const formGroup = parent.controls;
 
     for (const name in formGroup) {
       if (formGroup[name] === control) {
-        return name;
-      } else if (formGroup[name] instanceof FormGroup) {
-        const nestedControlName = this.findControlName(control);
-        if (nestedControlName) {
-          return `${name}.${nestedControlName}`;
+        return { control: formGroup[name], name };
+      }
+      else if (formGroup[name] instanceof FormGroup) {
+        const nestedControl = this.findControl(control);
+        if (nestedControl) {
+          return { control: nestedControl.control, name: `${name}.${nestedControl.name}` };
         }
       }
     }
