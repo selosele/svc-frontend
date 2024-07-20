@@ -24,9 +24,12 @@
   
   .p-splitter-panel {
     position: relative;
-    overflow-y: auto;
     height: 100%;
     padding: 0 1rem;
+
+    &:last-of-type {
+      overflow-y: auto;
+    }
 
     &:not(:has(*)) {
       display: none;
