@@ -7,7 +7,7 @@ export const systemRoutes: Routes = [
   
   // 사용자관리 페이지
   {
-    path: 'system/user',
+    path: 'system/users',
     canActivate: [authGuard, menuGuard],
     data: {
       roles: [roles.systemAdmin],
@@ -16,7 +16,7 @@ export const systemRoutes: Routes = [
   },
   // 권한관리 페이지
   {
-    path: 'system/role',
+    path: 'system/roles',
     canActivate: [authGuard, menuGuard],
     data: {
       roles: [roles.systemAdmin],

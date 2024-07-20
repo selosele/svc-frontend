@@ -7,7 +7,7 @@ export const scheduleRoutes: Routes = [
   
   // 일정관리 페이지
   {
-    path: 'schedule',
+    path: 'schedules',
     canActivate: [authGuard, menuGuard],
     data: {
       roles: [roles.employee],
