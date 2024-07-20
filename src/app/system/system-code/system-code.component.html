@@ -1,0 +1,29 @@
+<layout-page-description>
+  <ul>
+    <li>코드를 조회/입력할 수 있습니다.</li>
+  </ul>
+</layout-page-description>
+
+@if (!codeListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-data-grid #grid first
+      [useAdd]="false"
+      [useRemove]="false"
+      [getRowStyle]="getRowStyle"
+      [rowData]="codeList"
+      [columnDefs]="columnDefs"
+      (gridReady)="onGridReady($event)"
+      (cellClicked)="onCellClicked($event)"
+      (refresh)="onRefresh()"
+    />
+  
+    <div second>
+
+    </div>
+  </ui-splitter>
+}

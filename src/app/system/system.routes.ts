@@ -10,7 +10,7 @@ export const systemRoutes: Routes = [
     path: 'system/users',
     canActivate: [authGuard, menuGuard],
     data: {
-      roles: [roles.systemAdmin],
+      roles: [roles.SYSTEM_ADMIN],
     },
     loadComponent: () => import('./system-user/system-user.component').then(x => x.SystemUserComponent),
   },
@@ -19,8 +19,17 @@ export const systemRoutes: Routes = [
     path: 'system/roles',
     canActivate: [authGuard, menuGuard],
     data: {
-      roles: [roles.systemAdmin],
+      roles: [roles.SYSTEM_ADMIN],
     },
     loadComponent: () => import('./system-role/system-role.component').then(x => x.SystemRoleComponent),
+  },
+  // 코드관리 페이지
+  {
+    path: 'system/codes',
+    canActivate: [authGuard, menuGuard],
+    data: {
+      roles: [roles.SYSTEM_ADMIN],
+    },
+    loadComponent: () => import('./system-code/system-code.component').then(x => x.SystemCodeComponent),
   },
 ];
