@@ -32,7 +32,10 @@
   }
 
   &__user-info {
-    a span {
+    button {
+      padding: 0;
+      border: 0;
+      background-color: transparent;
       color: var(--primary-color);
       text-decoration: underline;
     }

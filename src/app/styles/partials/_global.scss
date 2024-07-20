@@ -41,6 +41,11 @@ body {
 button,
 input {
   font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 input {
@@ -56,6 +61,12 @@ input,
 textarea,
 select {
   &[readonly] {
+    background-color: var(--primary-50);
+  }
+}
+
+p-dropdown {
+  &.readonly > .p-dropdown {
     background-color: var(--primary-50);
   }
 }
