@@ -3,6 +3,7 @@ import { GridApi, CellClickedEvent } from '@ag-grid-community/core';
 import { LayoutPageDescriptionComponent, UiDataGridComponent, UiSkeletonComponent, UiSplitterComponent } from '@app/shared/components';
 import { CodeService } from '../../code/code.service';
 import { CodeResponseDTO } from '../../code/code.model';
+import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
 
 @Component({
   standalone: true,
@@ -11,6 +12,7 @@ import { CodeResponseDTO } from '../../code/code.model';
     UiDataGridComponent,
     UiSplitterComponent,
     LayoutPageDescriptionComponent,
+    SystemCodeDetailComponent,
   ],
   selector: 'view-system-code',
   templateUrl: './system-code.component.html',

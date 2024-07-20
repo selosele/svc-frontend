@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CodeResponseDTO } from './code.model';
+import { DropdownData } from '@app/shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
@@ -31,6 +32,22 @@ export class CodeService {
   /** 코드를 조회한다. */
   getCode(codeId: string): Observable<CodeResponseDTO> {
     return this.http.get<CodeResponseDTO>(`/codes/${codeId}`);
+  }
+
+  /** 상위 코드 ID로 드롭다운 데이터를 만들어서 반환한다. */
+  getDropdownData(upCodeId: string): DropdownData[] {
+    return this.codeListSubject.value
+      .filter(x => x.upCodeId === upCodeId)
+      .map(x => ({ label: x.codeName, value: x.codeValue })
+    );
+  }
+
+  /** Y/N 드롭다운 데이터를 만들어서 반환한다. */
+  getDropdownYnData(): DropdownData[] {
+    return [
+      { label: 'Y', value: 'Y' },
+      { label: 'N', value: 'N' }
+    ];
   }
 
 }

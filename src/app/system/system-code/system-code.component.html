@@ -23,7 +23,10 @@
     />
   
     <div second>
-
+      <system-code-detail
+        [codeDetail]="codeDetail"
+        (refresh)="listCode()"
+      />
     </div>
   </ui-splitter>
 }

@@ -1,0 +1,60 @@
+<form [formGroup]="codeDetailForm" (ngSubmit)="onSubmit()">
+  <h2>코드 상세 정보</h2>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="codeDetailForm.get('codeId')"
+      [label]="'코드 ID'"
+      [readonly]="isReadonly"
+    />
+
+    <ui-text-field
+      [control]="codeDetailForm.get('upCodeId')"
+      [label]="'상위 코드 ID'"
+      [readonly]="isReadonly"
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="codeDetailForm.get('codeValue')"
+      [label]="'코드 값'"
+      [readonly]="isReadonly"
+    />
+
+    <ui-text-field
+      [control]="codeDetailForm.get('codeName')"
+      [label]="'코드 명'"
+      [readonly]="isReadonly"
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="codeDetailForm.get('codeContent')"
+      [label]="'코드 내용'"
+      [readonly]="isReadonly"
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-text-field
+      [control]="codeDetailForm.get('codeOrder')"
+      [label]="'코드 순서'"
+      [readonly]="isReadonly"
+    />
+
+    <ui-text-field
+      [control]="codeDetailForm.get('codeDepth')"
+      [label]="'코드 뎁스'"
+      [readonly]="isReadonly"
+    />
+
+    <ui-dropdown
+      [control]="codeDetailForm.get('useYn')"
+      [label]="'사용 여부'"
+      [data]="useYns"
+      [readonly]="isReadonly"
+    />
+  </div>
+</form>
