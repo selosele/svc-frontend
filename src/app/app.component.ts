@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthenticatedUser } from './auth/auth.model';
 import { AuthService } from './auth/auth.service';
+import { CodeService } from './code/code.service';
 import { MenuService } from './shared/services';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
 
@@ -25,7 +26,8 @@ import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, 
 export class AppComponent implements OnInit {
 
   constructor(
-    protected authService: AuthService,
+    private authService: AuthService,
+    private codeService: CodeService,
     private menuService: MenuService,
     private router: Router,
   ) {}
@@ -35,6 +37,11 @@ export class AppComponent implements OnInit {
 
   /** 메뉴 목록 */
   menuList$ = this.menuService.menuList$;
+
+  /** 로그인 여부 */
+  get isLogined(): boolean {
+    return this.authService.isLogined();
+  }
 
   /** 현재 페이지가 메인 페이지인지 여부 */
   get isIndexPage(): boolean {
@@ -49,6 +56,9 @@ export class AppComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
+          if (this.codeService.codeListSubject.value.length === 0)
+            this.codeService.listCode();
+          
           if (this.authService.roleListSubject.value.length === 0)
             this.authService.listRole();
           
