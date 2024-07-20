@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
+import { AuthenticatedUser } from './auth/auth.model';
 import { AuthService } from './auth/auth.service';
 import { MenuService } from './shared/services';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
-import { AuthenticatedUser } from './auth/auth.model';
 
 @Component({
   standalone: true,
