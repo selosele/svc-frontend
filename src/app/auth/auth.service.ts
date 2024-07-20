@@ -93,6 +93,32 @@ export class AuthService {
     return this.jwtHelper.decodeToken<AuthenticatedUser>(this.getAccessToken());
   }
 
+  /** 1개의 권한을 가지고 있는지 여부를 반환한다. */
+  hasRole(roleId: string): boolean {
+    const user = this.getAuthenticatedUser();
+    if (!user) return false;
+    for (const userRoleId of user.roles) {
+      if (roleId === userRoleId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /** 모든 권한을 가지고 있는지 여부를 반환한다. */
+  hasRoleAll(...roleIds: string[]): boolean {
+    const user = this.getAuthenticatedUser();
+    if (!user) return false;
+    return roleIds.every(roleId => user.roles.filter(userRoleId => userRoleId === roleId).length > 0);
+  }
+
+  /** 권한을 1개라도 가지고 있는지 여부를 반환한다. */
+  hasRoleOr(...roleIds: string[]): boolean {
+    const user = this.getAuthenticatedUser();
+    if (!user) return false;
+    return roleIds.some(roleId => user.roles.filter(userRoleId => userRoleId === roleId).length > 0);
+  }
+
   /** 액세스 토큰을 반환한다. */
   getAccessToken(): string {
     return this.jwtHelper.tokenGetter() as string;
