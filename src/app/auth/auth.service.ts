@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { JWTUserDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.dto';
+import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
 import { StateService } from '@app/shared/services';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -89,8 +89,8 @@ export class AuthService {
   }
 
   /** 인증된 사용자 정보를 반환한다. */
-  getAuthenticatedUser(): JWTUserDTO {
-    return this.jwtHelper.decodeToken<JWTUserDTO>(this.getAccessToken());
+  getAuthenticatedUser(): AuthenticatedUser {
+    return this.jwtHelper.decodeToken<AuthenticatedUser>(this.getAccessToken());
   }
 
   /** 액세스 토큰을 반환한다. */

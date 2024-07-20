@@ -5,7 +5,7 @@ import { filter } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { MenuService } from './shared/services';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
-import { JWTUserDTO } from './auth/auth.dto';
+import { AuthenticatedUser } from './auth/auth.model';
 
 @Component({
   standalone: true,
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   /** 인증된 사용자 정보 */
-  user: JWTUserDTO;
+  user: AuthenticatedUser;
 
   ngOnInit(): void {
     this.router.events

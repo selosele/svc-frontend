@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridApi, CellClickedEvent } from '@ag-grid-community/core';
 import { LayoutPageDescriptionComponent, UiButtonComponent, UiDataGridComponent, UiSplitterComponent } from '@app/shared/components';
 import { AuthService } from '@app/auth/auth.service';
-import { UserResponseDTO } from '@app/auth/auth.dto';
+import { UserResponseDTO } from '@app/auth/auth.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
 import { UiMessageService } from '@app/shared/services';
 

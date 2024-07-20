@@ -1,7 +1,7 @@
-import { EmployeeResponseDTO } from '@app/human/human.dto';
+import { EmployeeResponseDTO } from '@app/human/human.model';
 
 /** 로그인 요청 DTO */
-export interface LoginRequestDTO {
+export class LoginRequestDTO {
 
   /** 사용자 계정 */
   userAccount?: string;
@@ -12,7 +12,7 @@ export interface LoginRequestDTO {
 }
 
 /** 로그인 응답 DTO */
-export interface LoginResponseDTO {
+export class LoginResponseDTO {
 
   /** 액세스 토큰 */
   accessToken?: string;
@@ -46,7 +46,7 @@ export class UserResponseDTO {
   userActiveYn?: string;
 
   /** 사용자 권한 목록 */
-  roles?: string[] | UserRoleResponseDTO[];
+  roles?: UserRoleResponseDTO[];
 
   /** 직원 정보 */
   employee?: EmployeeResponseDTO;
@@ -81,8 +81,8 @@ export class UserRoleResponseDTO {
     
 }
 
-/** JWT 사용자 DTO */
-export class JWTUserDTO {
+/** 인증된 사용자 정보 */
+export class AuthenticatedUser {
 
   /** 사용자 ID */
   userId?: number;

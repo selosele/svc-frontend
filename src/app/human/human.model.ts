@@ -1,5 +1,5 @@
 /** 직원 응답 DTO */
-export interface EmployeeResponseDTO {
+export class EmployeeResponseDTO {
 
   /** 직원 ID */
   employeeId?: number;
@@ -22,7 +22,7 @@ export interface EmployeeResponseDTO {
 }
 
 /** 직원 회사 응답 DTO */
-export interface EmployeeCompanyResponseDTO {
+export class EmployeeCompanyResponseDTO {
 
   /** 회사 ID */
   companyId?: number;
@@ -36,7 +36,7 @@ export interface EmployeeCompanyResponseDTO {
 }
 
 /** 부서 응답 DTO */
-export interface DepartmentResponseDTO {
+export class DepartmentResponseDTO {
 
   /** 부서 ID */
   departmentId?: number;

@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JWTUserDTO, UserResponseDTO } from '@app/auth/auth.dto';
+import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
@@ -31,7 +31,7 @@ export class LayoutHeaderComponent implements OnInit {
   @ViewChild('header') header: ElementRef<HTMLElement>;
 
   /** 인증된 사용자 정보 */
-  user: JWTUserDTO;
+  user: AuthenticatedUser;
 
   /** 마지막 scroll top */
   lastScrollTop = 0;

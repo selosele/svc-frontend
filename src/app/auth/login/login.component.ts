@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { LoginRequestDTO } from '../auth.dto';
+import { LoginRequestDTO } from '../auth.model';
 import { FormValidator, UiButtonComponent, UiTextFieldComponent } from '@app/shared/components';
 
 @Component({
