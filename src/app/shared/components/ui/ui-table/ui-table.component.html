@@ -1,0 +1,55 @@
+<div class="ui-table">
+  <ui-table-buttons
+		[useAdd]="useAdd"
+		[useRemove]="useRemove"
+		(refresh)="onRefresh($event)"
+	>
+		<ng-content [select]="buttons"></ng-content>
+	</ui-table-buttons>
+
+  <div class="ui-table__view">
+    <p-table #table
+      [scrollHeight]="scrollHeight"
+      [columns]="cols"
+      [value]="data"
+      [dataKey]="dataKey"
+      [loading]="loading"
+      [customSort]="true"
+      [sortMode]="sortMode"
+      [selectionMode]="selectionMode"
+      [(selection)]="selection"
+      (onRowSelect)="onRowSelect($event)" 
+      (onRowUnselect)="onRowUnselect($event)"
+      (sortFunction)="onSort($event)"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngIf="useRowIndex">
+            No
+          </th>
+          <th *ngIf="useCheckbox">
+            <p-tableHeaderCheckbox />
+          </th>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{ col.header }}
+            <p-sortIcon [field]="col.field" />
+            <p-columnFilter type="text" [field]="col.field" display="menu" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngIf="useRowIndex">
+            {{ rowIndex + 1 }}
+          </td>
+          <td *ngIf="useCheckbox">
+            <p-tableCheckbox [value]="rowData" />
+          </td>
+          <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
