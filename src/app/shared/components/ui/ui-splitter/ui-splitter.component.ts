@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SplitterModule } from 'primeng/splitter';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
@@ -17,8 +17,6 @@ import { UiButtonComponent } from '../ui-button/ui-button.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class UiSplitterComponent {
-
-  constructor() {}
 
   private splitterActiveSubject = new BehaviorSubject<boolean>(false);
 
@@ -43,7 +41,7 @@ export class UiSplitterComponent {
     this.splitterActiveSubject.next(false);
   }
 
-  /** 버튼을 클릭해서 splitter를 비활성화한다. */
+  /** 닫기 버튼을 클릭해서 splitter를 비활성화한다. */
   onClose(event: Event): void {
     this.hide();
   }

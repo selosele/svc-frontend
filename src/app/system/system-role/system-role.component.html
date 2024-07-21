@@ -10,13 +10,14 @@
   <ui-skeleton />
 }
 @else {
-  <ui-data-grid
-    [height]="'350px'"
+  <ui-table #table
     [useAdd]="false"
     [useRemove]="false"
-    [rowData]="roleList"
-    [columnDefs]="columnDefs"
-    (gridReady)="onGridReady($event)"
+    [useRowIndex]="true"
+    [cols]="cols"
+    [data]="roleList"
+    [dataKey]="'roleId'"
+    [selection]="selection"
     (refresh)="onRefresh()"
   />
 }

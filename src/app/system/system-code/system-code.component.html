@@ -11,21 +11,24 @@
 }
 @else {
   <ui-splitter #splitter>
-    <ui-data-grid #grid first
+    <ui-table #table first
       [useAdd]="false"
       [useRemove]="false"
-      [getRowStyle]="getRowStyle"
-      [rowData]="codeList"
-      [columnDefs]="columnDefs"
-      (gridReady)="onGridReady($event)"
-      (cellClicked)="onCellClicked($event)"
+      [cols]="cols"
+      [data]="codeList"
+      [dataKey]="'codeId'"
+      [selection]="selection"
       (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
     />
   
     <div second>
       <system-code-detail
         [codeDetail]="codeDetail"
         (refresh)="listCode()"
+        (remove)="onRemove()"
+        (close)="onClose()"
       />
     </div>
   </ui-splitter>

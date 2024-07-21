@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CodeResponseDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
-import { UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components';
+import { UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { DropdownData } from '@app/shared/models';
 import { UiMessageService } from '@app/shared/services';
 import { isNotObjectEmpty } from '@app/shared/utils';
@@ -10,7 +10,7 @@ import { isNotObjectEmpty } from '@app/shared/utils';
 @Component({
   standalone: true,
   imports: [
-    UiFormComponent,
+    UiSplitFormComponent,
     UiTextFieldComponent,
     UiDropdownComponent,
   ],
@@ -35,6 +35,9 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   /** 사용 여부 데이터 목록 */
   useYns: DropdownData[] = this.codeService.getDropdownYnData();
 
+  /** 삭제 버튼 사용 여부 */
+  useRemove = true;
+
   /** input readonly 여부 */
   get isReadonly(): boolean {
     return isNotObjectEmpty(this.codeDetail);
@@ -42,6 +45,15 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
+
+  /** 사용자 정보 저장 이벤트 */
+  @Output() submit = new EventEmitter<any>();
+
+  /** 삭제 버튼 클릭 이벤트 */
+  @Output() remove = new EventEmitter<void>();
+
+  /** 닫기 버튼 클릭 이벤트 */
+  @Output() close = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.codeDetailForm = this.fb.group({
@@ -58,13 +70,27 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.codeDetail && this.codeDetailForm) {
+      this.useRemove = true;
       this.codeDetailForm.patchValue(this.codeDetail);
     }
   }
 
   /** 코드 상세 정보를 저장한다. */
   onSubmit(value: any): void {
-    
+    this.submit.emit(value);
+  }
+
+  /** 코드를 삭제한다. */
+  async removeCode(event: Event): Promise<void> {
+    const confirm = await this.messageService.confirm2(event, '선택한 코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    if (!confirm) return;
+
+    this.remove.emit();
+  }
+
+  /** 닫기 버튼을 클릭한다. */
+  onClose(): void {
+    this.close.emit();
   }
 
 }

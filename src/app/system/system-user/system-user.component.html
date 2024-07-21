@@ -12,14 +12,16 @@
 }
 @else {
   <ui-splitter #splitter>
-    <ui-data-grid #grid first
+    <ui-table #table first
       [useAdd]="false"
       [useRemove]="false"
-      [rowData]="userList"
-      [columnDefs]="columnDefs"
-      (gridReady)="onGridReady($event)"
-      (cellClicked)="onCellClicked($event)"
+      [cols]="cols"
+      [data]="userList"
+      [dataKey]="'userId'"
+      [selection]="selection"
       (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
     >
       <ui-button buttons
         [size]="'small'"
@@ -28,21 +30,14 @@
         [outlined]="true"
         (click)="addUser()"
       />
-  
-      <ui-button buttons
-        [size]="'small'"
-        [icon]="'pi-trash'"
-        [label]="'사용자 삭제'"
-        [outlined]="true"
-        [severity]="'danger'"
-        (click)="removeUser($event)"
-      />
-    </ui-data-grid>
+    </ui-table>
   
     <div second>
       <system-user-detail
         [userDetail]="userDetail"
         (refresh)="listUser()"
+        (remove)="onRemove()"
+        (close)="onClose()"
       />
     </div>
   </ui-splitter>

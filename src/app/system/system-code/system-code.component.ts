@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GridApi, CellClickedEvent } from '@ag-grid-community/core';
-import { LayoutPageDescriptionComponent, UiDataGridComponent, UiSkeletonComponent, UiSplitterComponent } from '@app/shared/components';
+import { LayoutPageDescriptionComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components';
 import { CodeService } from '../../code/code.service';
 import { CodeResponseDTO } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
@@ -9,7 +8,7 @@ import { SystemCodeDetailComponent } from './system-code-detail/system-code-deta
   standalone: true,
   imports: [
     UiSkeletonComponent,
-    UiDataGridComponent,
+    UiTableComponent,
     UiSplitterComponent,
     LayoutPageDescriptionComponent,
     SystemCodeDetailComponent,
@@ -24,24 +23,27 @@ export class SystemCodeComponent implements OnInit {
     private codeService: CodeService,
   ) {}
 
-  /** grid */
-  @ViewChild('grid') grid: UiDataGridComponent;
+  /** table */
+  @ViewChild('table') table: UiTableComponent;
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 코드 목록 */
-  get codeList() {
+  get codeList(): CodeResponseDTO[] {
     return this.codeService.codeListSubject.value;
   }
 
   /** 코드 목록 데이터 로드 완료 여부 */
-  get codeListDataLoad() {
+  get codeListDataLoad(): boolean {
     return this.codeService.codeListDataLoadSubject.value;
   }
 
   /** 코드 상세 정보 */
   codeDetail: CodeResponseDTO = null;
+
+  /** 테이블 선택된 행 */
+  selection: CodeResponseDTO;
 
   /** 행 스타일 */
   getRowStyle = (params) => {
@@ -54,8 +56,9 @@ export class SystemCodeComponent implements OnInit {
     return null;
   };
 
-  columnDefs = [
-    { field: 'codeId',      headerName: '코드 ID', flex: 1,
+  /** 테이블 컬럼 목록 */
+  cols = [
+    { field: 'codeId',      header: '코드 ID', flex: 1,
       cellStyle: (params) => {
         const { codeDepth } = params.data;
         const indent = 16;
@@ -68,12 +71,12 @@ export class SystemCodeComponent implements OnInit {
         return null;
       }
     },
-    { field: 'upCodeId',    headerName: '상위 코드 ID', flex: 1 },
-    { field: 'codeValue',   headerName: '코드 값', flex: 1 },
-    { field: 'codeName',    headerName: '코드 명', flex: 1 },
-    { field: 'codeContent', headerName: '코드 내용', flex: 1 },
-    { field: 'codeOrder',   headerName: '코드 순서', width: 100 },
-    { field: 'useYn',       headerName: '사용 여부', width: 100 },
+    { field: 'upCodeId',    header: '상위 코드 ID' },
+    { field: 'codeValue',   header: '코드 값' },
+    { field: 'codeName',    header: '코드 명' },
+    { field: 'codeContent', header: '코드 내용' },
+    { field: 'codeOrder',   header: '코드 순서' },
+    { field: 'useYn',       header: '사용 여부' },
   ];
 
   ngOnInit(): void {
@@ -82,11 +85,13 @@ export class SystemCodeComponent implements OnInit {
     }
   }
 
-  onGridReady(gridApi: GridApi): void {
-    
+  /** 코드 목록을 조회한다. */
+  listCode(): void {
+    this.codeService.listCode();
   }
 
-  onCellClicked(event: CellClickedEvent): void {
+  /** 테이블 행을 선택한다. */
+  onRowSelect(event: any) {
     this.codeService.getCode(event.data['codeId'])
     .subscribe((data) => {
       this.codeDetail = data;
@@ -94,14 +99,26 @@ export class SystemCodeComponent implements OnInit {
     });
   }
 
-  /** 코드 목록을 조회한다. */
-  listCode(): void {
-    this.codeService.listCode();
+  /** 테이블 행을 선택 해제한다. */
+  onRowUnselect(event: any) {
+    this.codeDetail = {};
+    this.splitter.hide();
   }
 
-  /** grid 새로고침 버튼을 클릭한다. */
+  /** 테이블 새로고침 버튼을 클릭한다. */
   onRefresh(): void {
     this.listCode();
+  }
+
+  /** 삭제 버튼을 클릭한다. */
+  onRemove(): void {
+    this.splitter.hide();
+    this.listCode();
+  }
+  
+  /** 닫기 버튼을 클릭한다. */
+  onClose(): void {
+    this.splitter.hide();
   }
 
 }

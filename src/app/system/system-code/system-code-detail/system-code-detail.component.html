@@ -1,4 +1,10 @@
-<ui-form [form]="codeDetailForm" (submit)="onSubmit($event)">
+<ui-split-form
+  [form]="codeDetailForm"
+  [useRemove]="useRemove"
+  (submit)="onSubmit($event)"
+  (remove)="removeCode($event)"
+  (close)="onClose()"
+>
   <h2>코드 상세 정보</h2>
 
   <div class="input-box">
@@ -57,4 +63,4 @@
       [readonly]="isReadonly"
     />
   </div>
-</ui-form>
+</ui-split-form>

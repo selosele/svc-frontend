@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { DepartmentResponseDTO } from '@app/human/human.model';
@@ -14,7 +14,7 @@ import { CodeService } from '@app/code/code.service';
   standalone: true,
   imports: [
     CommonModule,
-    UiFormComponent,
+    UiSplitFormComponent,
     UiTextFieldComponent,
     UiCheckboxComponent,
     UiCheckboxGroupComponent,
@@ -55,6 +55,9 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 성별 코드 데이터 목록 */
   genderCodes: DropdownData[] = this.codeService.getDropdownData('GENDER_00');
 
+  /** 삭제 버튼 사용 여부 */
+  useRemove = true;
+
   /** input readonly 여부 */
   get isReadonly(): boolean {
     return isNotObjectEmpty(this.userDetail);
@@ -62,6 +65,15 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
+
+  /** 사용자 정보 저장 이벤트 */
+  @Output() submit = new EventEmitter<any>();
+
+  /** 삭제 버튼 클릭 이벤트 */
+  @Output() remove = new EventEmitter<void>();
+
+  /** 닫기 버튼 클릭 이벤트 */
+  @Output() close = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.userDetailForm = this.fb.group({
@@ -96,10 +108,12 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userDetail && this.userDetailForm) {
+      this.useRemove = true;
       this.roles = this.authService.roleListSubject.value;
       this.defaultRoles = this.roles.filter(x => x.roleId === 'ROLE_EMPLOYEE').map(x => x.roleId);
 
       if (isObjectEmpty(changes.userDetail.currentValue)) {
+        this.useRemove = false;
         this.userDetailForm.reset({
           userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
@@ -150,8 +164,25 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   }
 
   /** 사용자 상세 정보를 저장한다. */
-  onSubmit(): void {
-    
+  onSubmit(value: any): void {
+    this.submit.emit(value);
+  }
+
+  /** 사용자를 삭제한다. */
+  async removeUser(event: Event): Promise<void> {
+    const confirm = await this.messageService.confirm2(event, '선택한 사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    if (!confirm) return;
+
+    this.authService.removeUser(this.userDetail.userId)
+    .subscribe(() => {
+      this.messageService.toastSuccess('삭제되었습니다.');
+      this.remove.emit();
+    });
+  }
+
+  /** 닫기 버튼을 클릭한다. */
+  onClose(): void {
+    this.close.emit();
   }
 
 }
