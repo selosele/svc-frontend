@@ -10,9 +10,6 @@ export class EmployeeResponseDTO {
   /** 성별 코드 */
   genderCode?: string;
 
-  /** 성별 코드 명 */
-  genderCodeName?: string;
-
   /** 직원 회사 정보 */
   employeeCompanies?: EmployeeCompanyResponseDTO[];
 

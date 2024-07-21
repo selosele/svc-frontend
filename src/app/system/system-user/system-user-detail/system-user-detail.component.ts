@@ -76,7 +76,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       employee: this.fb.group({
         employeeId: ['', [FormValidator.required]],         // 직원 ID
         employeeName: ['', [FormValidator.required]],       // 직원 명
-        genderCodeName: ['', [FormValidator.required]],     // 성별 코드 명
+        genderCode: ['', [FormValidator.required]],         // 성별 코드
 
         // 직원 회사 정보
         employeeCompany: this.fb.group({
@@ -125,9 +125,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
   findDepartmentName(departments: DepartmentResponseDTO[]): string {
-    if (isEmpty(departments))
-      return '';
-
+    if (isEmpty(departments)) return '';
     return departments.map(x => x.departmentName).join(' > ');
   }
 
