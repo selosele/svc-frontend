@@ -1,13 +1,14 @@
 <div class="login-wrapper">
   <div class="login__form">
-    <h1 class="login__title">로그인</h1>
+    <h1 class="login__title">시스템 로그인</h1>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <ui-form [form]="loginForm" (submit)="onSubmit($event)">
       <div class="input-box">
         <ui-text-field
           [block]="true"
           [control]="loginForm.get('userAccount')"
-          placeholder="id"
+          [label]="'아이디'"
+          placeholder="아이디"
         />
       </div>
 
@@ -15,17 +16,17 @@
         <ui-text-field
           [block]="true"
           [control]="loginForm.get('userPassword')"
-          type="password" placeholder="password"
+          [label]="'비밀번호'"
+          type="password" placeholder="비밀번호"
         />
       </div>
 
       <ui-button
         [block]="true"
         [type]="'submit'"
-        [disabled]="!loginForm.valid"
       >
         로그인
       </ui-button>
-    </form>
+    </ui-form>
   </div>
 </div>

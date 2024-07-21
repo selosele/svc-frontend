@@ -3,14 +3,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
     width: 100%;
     min-height: 100vh;
     padding: 0 1.25rem;
-    background-color: var(--gray-100);
+    background-color: var(--gray-50);
     box-sizing: border-box;
   }
 
   &__form {
+    width: 25rem;
     padding: 1.875rem;
     border: 1px solid var(--surface-300);
     background-color: var(--surface-0);
