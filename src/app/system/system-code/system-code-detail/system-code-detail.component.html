@@ -1,4 +1,4 @@
-<form [formGroup]="codeDetailForm" (ngSubmit)="onSubmit()">
+<ui-form [form]="codeDetailForm" (submit)="onSubmit($event)">
   <h2>코드 상세 정보</h2>
 
   <div class="input-box">
@@ -57,4 +57,4 @@
       [readonly]="isReadonly"
     />
   </div>
-</form>
+</ui-form>

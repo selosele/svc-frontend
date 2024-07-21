@@ -48,6 +48,7 @@ export class FormFieldComponent implements OnInit {
       this.formControl = this.foundControl?.control;
       this.name = this.foundControl?.name;
     }
+    this.setErrorMessage();
   }
 
   /** 재귀 함수로 FormControl을 찾아서 반환한다. */

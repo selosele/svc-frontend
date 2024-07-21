@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { DepartmentResponseDTO } from '@app/human/human.model';
@@ -14,7 +14,7 @@ import { CodeService } from '@app/code/code.service';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    UiFormComponent,
     UiTextFieldComponent,
     UiCheckboxComponent,
     UiCheckboxGroupComponent,

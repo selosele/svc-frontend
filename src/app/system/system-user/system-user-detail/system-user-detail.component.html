@@ -1,4 +1,4 @@
-<form [formGroup]="userDetailForm" (ngSubmit)="onSubmit()">
+<ui-form [form]="userDetailForm" (submit)="onSubmit()">
   <h2>사용자 상세 정보</h2>
 
   <div class="input-box">
@@ -81,4 +81,4 @@
       [readonly]="isReadonly"
     />
   </div>
-</form>
+</ui-form>

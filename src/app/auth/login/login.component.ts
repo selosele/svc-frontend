@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { LoginRequestDTO } from '../auth.model';
-import { FormValidator, UiButtonComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiButtonComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components';
 
 @Component({
   standalone: true,
   imports: [
-    ReactiveFormsModule,
+    UiFormComponent,
     UiButtonComponent,
     UiTextFieldComponent,
   ],
@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
   }
   
   /** 로그인을 한다. */
-  onSubmit(): void {
-    this.authService.login(this.loginForm.value as LoginRequestDTO);
+  onSubmit(value: any): void {
+    this.authService.login(value as LoginRequestDTO);
   }
   
 }

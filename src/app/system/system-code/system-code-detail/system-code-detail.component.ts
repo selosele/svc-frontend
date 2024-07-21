@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CodeResponseDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
-import { UiDropdownComponent, UiTextFieldComponent } from '@app/shared/components';
+import { UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { DropdownData } from '@app/shared/models';
 import { UiMessageService } from '@app/shared/services';
 import { isNotObjectEmpty } from '@app/shared/utils';
@@ -10,7 +10,7 @@ import { isNotObjectEmpty } from '@app/shared/utils';
 @Component({
   standalone: true,
   imports: [
-    ReactiveFormsModule,
+    UiFormComponent,
     UiTextFieldComponent,
     UiDropdownComponent,
   ],
@@ -63,7 +63,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   }
 
   /** 코드 상세 정보를 저장한다. */
-  onSubmit(): void {
+  onSubmit(value: any): void {
     
   }
 
