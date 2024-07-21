@@ -77,7 +77,7 @@ export class SystemCodeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    if (this.codeList.length === 0) {
+    if (!this.codeListDataLoad) {
       this.listCode();
     }
   }

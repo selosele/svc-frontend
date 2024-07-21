@@ -70,7 +70,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       userId: [''],                                         // 사용자 ID
       userAccount: ['', [FormValidator.required]],          // 사용자 계정
       userActiveYn: ['', [FormValidator.required]],         // 사용자 활성화 여부
-      roles: [[], [FormValidator.required]],                // 사용자 권한
+      roles: ['', [FormValidator.required]],                // 사용자 권한
 
       // 직원 정보
       employee: this.fb.group({

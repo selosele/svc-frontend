@@ -45,21 +45,14 @@ export class FormFieldComponent implements OnInit {
   ngOnInit(): void {
     if (isObjectEmpty(this.foundControl)) {
       this.foundControl = this.findControl(this.control);
-    }
-    this.formControl = this.foundControl?.control;
-    this.setName();
-  }
-
-  /** input name 값을 설정한다. */
-  setName(): void {
-    if (isObjectEmpty(this.foundControl)) {
+      this.formControl = this.foundControl?.control;
       this.name = this.foundControl?.name;
     }
   }
 
   /** 재귀 함수로 FormControl을 찾아서 반환한다. */
   findControl(control: AbstractControl) {
-    let parent = control.parent;
+    const parent = control.parent;
     if (!parent) return null;
 
     const formGroup = parent.controls;
@@ -80,7 +73,7 @@ export class FormFieldComponent implements OnInit {
 
   /** 오류 메시지를 설정한다. */
   setErrorMessage(): void {
-    const errors = this.control.errors;
+    const { errors } = this.control;
     
     if (isEmpty(errors)) {
       this.errorMessage = '';

@@ -39,7 +39,7 @@ export class SystemRoleComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    if (this.roleList.length === 0) {
+    if (!this.roleListDataLoad) {
       this.listRole();
     }
   }

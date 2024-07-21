@@ -57,7 +57,7 @@ export class SystemUserComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    if (this.userList.length === 0) {
+    if (!this.userListDataLoad) {
       this.listUser();
     }
   }
