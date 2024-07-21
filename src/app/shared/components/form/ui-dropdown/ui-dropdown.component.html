@@ -1,8 +1,6 @@
-@if (label) {
-  <span class="custom-label">
-    {{ label }}
-  </span>
-}
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
 
 <div class="input-button-box">
   <p-dropdown
