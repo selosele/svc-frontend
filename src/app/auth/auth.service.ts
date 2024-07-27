@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
 import { StateService } from '@app/shared/services';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -72,7 +72,7 @@ export class AuthService {
 
   /** 사용자를 수정한다. */
   updateUser(updateUserRequestDTO: UpdateUserRequestDTO): Observable<UserResponseDTO> {
-    const userId = updateUserRequestDTO.userId;
+    const { userId } = updateUserRequestDTO;
     return this.http.put<UserResponseDTO>(`/auth/users/${userId}`, updateUserRequestDTO);
   }
 
@@ -109,9 +109,7 @@ export class AuthService {
     const user = this.getAuthenticatedUser();
     if (!user) return false;
     for (const userRoleId of user.roles) {
-      if (roleId === userRoleId) {
-        return true;
-      }
+      if (roleId === userRoleId) return true;
     }
     return false;
   }
