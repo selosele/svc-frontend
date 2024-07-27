@@ -33,7 +33,7 @@ export class CodeService {
 
   /** 코드 목록을 조회한다. */
   listCode(): void {
-    this.http.get<CodeResponseDTO[]>('/codes')
+    this.http.get<CodeResponseDTO[]>('/common/codes')
     .subscribe((data) => {
       this.setCodeList(data);
       this.codeListDataLoadSubject.next(true);
@@ -42,7 +42,7 @@ export class CodeService {
 
   /** 코드를 조회한다. */
   getCode(codeId: string): Observable<CodeResponseDTO> {
-    return this.http.get<CodeResponseDTO>(`/codes/${codeId}`);
+    return this.http.get<CodeResponseDTO>(`/common/codes/${codeId}`);
   }
 
   /** 상위 코드 ID로 드롭다운 데이터를 만들어서 반환한다. */

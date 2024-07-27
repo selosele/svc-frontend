@@ -43,7 +43,7 @@ export class MenuService {
 
   /** 메뉴 목록을 조회한다. */
   listMenu(getMenuRequestDTO?: GetMenuRequestDTO): void {
-    this.http.get<MenuResponseDTO[]>('/menus', { params: { ...getMenuRequestDTO } })
+    this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...getMenuRequestDTO } })
     .subscribe((data) => {
       this.setMenuList(data);
     });

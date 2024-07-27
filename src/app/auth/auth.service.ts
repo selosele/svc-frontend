@@ -36,7 +36,7 @@ export class AuthService {
 
   /** 로그인을 한다. */
   login(loginRequestDTO: LoginRequestDTO): void {
-    this.http.post<LoginResponseDTO>('/auth/login', loginRequestDTO)
+    this.http.post<LoginResponseDTO>('/common/auth/login', loginRequestDTO)
     .subscribe((data) => {
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
@@ -48,7 +48,7 @@ export class AuthService {
 
   /** 로그아웃을 한다. */
   logout(): void {
-    this.http.post<void>('/auth/logout', {})
+    this.http.post<void>('/common/auth/logout', {})
     .subscribe(() => {
       this.removeAccessToken();
       this.stateService.clearAllState();
@@ -58,7 +58,7 @@ export class AuthService {
 
   /** 사용자 목록을 조회한다. */
   listUser(): void {
-    this.http.get<UserResponseDTO[]>('/auth/users')
+    this.http.get<UserResponseDTO[]>('/common/auth/users')
     .subscribe((data) => {
       this.userListSubject.next(data);
       this.userListDataLoadSubject.next(true);
@@ -67,23 +67,23 @@ export class AuthService {
 
   /** 사용자를 조회한다. */
   getUser(userId: number): Observable<UserResponseDTO> {
-    return this.http.get<UserResponseDTO>(`/auth/users/${userId}`);
+    return this.http.get<UserResponseDTO>(`/common/auth/users/${userId}`);
   }
 
   /** 사용자를 수정한다. */
   updateUser(updateUserRequestDTO: UpdateUserRequestDTO): Observable<UserResponseDTO> {
     const { userId } = updateUserRequestDTO;
-    return this.http.put<UserResponseDTO>(`/auth/users/${userId}`, updateUserRequestDTO);
+    return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, updateUserRequestDTO);
   }
 
   /** 사용자를 삭제한다. */
   removeUser(userId: number): Observable<void> {
-    return this.http.delete<void>(`/auth/users/${userId}`);
+    return this.http.delete<void>(`/common/auth/users/${userId}`);
   }
 
   /** 권한 목록을 조회한다. */
   listRole(): void {
-    this.http.get<RoleResponseDTO[]>('/auth/roles')
+    this.http.get<RoleResponseDTO[]>('/common/auth/roles')
     .subscribe((data) => {
       this.roleListSubject.next(data);
       this.roleListDataLoadSubject.next(true);
