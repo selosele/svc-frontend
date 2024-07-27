@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MenuResponseDTO } from '../layout-menu/menu.dto';
+import { MenuResponseDTO } from '../../../../menu/menu.model';
 import { UiButtonComponent } from '../../ui';
 import { MenuService } from '@app/shared/services';
 
@@ -25,8 +25,6 @@ export class LayoutMenuHistoryComponent implements OnInit {
   ) {}
 
   /** 메뉴접속이력 목록 */
-  menuHistoryList$ = this.menuService.menuHistoryList$;
-  
   get menuHistoryList() {
     return this.menuService.menuHistoryListSubject.value;
   }

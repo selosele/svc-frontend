@@ -2,13 +2,14 @@
   <ul>
     <ng-container *ngFor="let item of menuHistoryList">
       <li [class.active]="item.menuId === menuId">
-        <a [routerLink]="item.menuUrl" [queryParams]="{ menuId: item.menuId}">
+        <a [routerLink]="item.menuUrl" [queryParams]="{ menuId: item.menuId}" [title]="'최근 방문한 페이지'">
           {{ item.menuName }}
         </a>
         <ui-button
           [size]="'small'"
           [icon]="'pi pi-times'"
           [severity]="'secondary'"
+          [title]="'최근 방문한 페이지 삭제'"
           (click)="onRemove(item.menuId)"
         />
       </li>

@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
+import { Table, TableModule, TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.component';
-import { UiSkeletonComponent } from '../ui-skeleton/ui-skeleton.component';
 import { Column } from '@app/shared/models';
 import { SortEvent } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
@@ -13,7 +12,6 @@ import { deepCopy } from '@app/shared/utils';
     CommonModule,
     TableModule,
     UiTableButtonsComponent,
-    UiSkeletonComponent,
   ],
   selector: 'ui-table',
   templateUrl: './ui-table.component.html',
@@ -64,10 +62,10 @@ export class UiTableComponent implements OnInit {
   @Output() refresh = new EventEmitter<Event>();
 
   /** 테이블 선택 이벤트 */
-  @Output() rowSelect = new EventEmitter<any>();
+  @Output() rowSelect = new EventEmitter<TableRowSelectEvent>();
 
   /** 테이블 선택 해제 이벤트 */
-  @Output() unRowSelect = new EventEmitter<any>();
+  @Output() unRowSelect = new EventEmitter<TableRowUnSelectEvent>();
 
   /** 테이블 데이터 초기 값 */
   private initialValue = [];
@@ -85,12 +83,12 @@ export class UiTableComponent implements OnInit {
   }
 
   /** 테이블 행을 선택한다. */
-  protected onRowSelect(event: any): void {
+  protected onRowSelect(event: TableRowSelectEvent): void {
     this.rowSelect.emit(event);
   }
 
   /** 테이블 행을 선택 해제한다. */
-  protected onRowUnselect(event: any): void {
+  protected onRowUnselect(event: TableRowUnSelectEvent): void {
     this.unRowSelect.emit(event);
   }
 
@@ -112,9 +110,10 @@ export class UiTableComponent implements OnInit {
   /** 테이블 행을 정렬한다. */
   private sortTableData(event: SortEvent): void {
     event.data.sort((data1, data2) => {
-      let value1 = data1[event.field];
-      let value2 = data2[event.field];
+      const value1 = data1[event.field];
+      const value2 = data2[event.field];
       let result = null;
+
       if (value1 == null && value2 != null) result = -1;
       else if (value1 != null && value2 == null) result = 1;
       else if (value1 == null && value2 == null) result = 0;

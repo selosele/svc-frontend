@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/shared/components/layout/layout-menu/menu.dto';
+import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/menu/menu.model';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
@@ -68,7 +68,7 @@ export class MenuService {
 
   /** 메뉴 목록 데이터를 설정한다. */
   setMenuList(menuList: MenuResponseDTO[]): void {
-    const menuTree = this.createTree(menuList);
+    const menuTree = this.createMenuTree(menuList);
     this.menuTreeSubject.next(menuTree);
     this.menuListSubject.next(menuList);
   }
@@ -97,14 +97,13 @@ export class MenuService {
     });
   }
 
-  /** 트리를 생성한다. */
-  // TODO: 다른 컴포넌트에서 재사용할 수 있도록 공통 함수로 분리
-  createTree(data: MenuResponseDTO[], upMenuId = null): MenuTree[] {
+  /** 메뉴 트리를 생성한다. */
+  createMenuTree(data: MenuResponseDTO[], upMenuId = null): MenuTree[] {
     const tree: MenuTree[] = [];
 
     for (const menu of data) {
       if (menu.upMenuId === upMenuId) {
-        const children = this.createTree(data, menu.menuId);
+        const children = this.createMenuTree(data, menu.menuId);
         tree.push({ ...menu, children });
       }
     }
