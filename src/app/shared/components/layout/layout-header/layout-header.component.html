@@ -8,7 +8,7 @@
 
     <div class="layout-header__right">
       <p class="layout-header__user-info">
-        <button type="button">{{ user.employeeName }}</button> 님 반갑습니다
+        <button type="button" (click)="showMyPageModal($event)">{{ user.employeeName }}</button> 님 반갑습니다
       </p>
       
       <ui-button [size]="'small'" (click)="logout($event)">

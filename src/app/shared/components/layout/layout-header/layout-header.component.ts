@@ -6,6 +6,8 @@ import { UiMessageService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent } from '../../ui';
+import { DialogService } from 'primeng/dynamicdialog';
+import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.component';
 
 @Component({
   standalone: true,
@@ -25,6 +27,7 @@ export class LayoutHeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private messageService: UiMessageService,
+    private dialogService: DialogService,
   ) {}
 
   /** header 태그 */
@@ -50,6 +53,14 @@ export class LayoutHeaderComponent implements OnInit {
     if (!confirm) return;
 
     this.authService.logout();
+  }
+
+  /** 내정보 모달을 표출한다. */
+  showMyPageModal(event): void {
+    this.dialogService.open(HumanMyInfoComponent, {
+      header: '내 정보',
+      data: {},
+    });
   }
 
   /** 스크롤다운 시, header를 위로 이동한다. */
