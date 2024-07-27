@@ -1,0 +1,44 @@
+<div class="ui-tree-table">
+  <ui-table-buttons
+		[useAdd]="useAdd"
+		[useRemove]="useRemove"
+		(refresh)="onRefresh($event)"
+	>
+		<ng-content [select]="buttons"></ng-content>
+	</ui-table-buttons>
+
+  <div class="ui-tree-table__view">
+    <p-treeTable #treeTable
+      [scrollHeight]="scrollHeight"
+      [columns]="cols"
+      [value]="data"
+      [dataKey]="dataKey"
+      [loading]="loading"
+      [sortMode]="sortMode"
+      [scrollable]="true"
+      [selectionMode]="selectionMode"
+      [(selection)]="selection"
+      (onNodeSelect)="onNodeSelect($event)" 
+      (onNodeUnselect)="onNodeUnselect($event)"
+      (onNodeExpand)="onNodeExpand($event)"
+      (onSort)="onSort($event)"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [ttSortableColumn]="col.field">
+            {{ col.header }}
+            <p-treeTableSortIcon [field]="col.field" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+          <td *ngFor="let col of columns; let i = index">
+            <p-treeTableToggler [rowNode]="rowNode" (click)="onTogglerClick($event)" *ngIf="i === 0" />
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </div>
+</div>
