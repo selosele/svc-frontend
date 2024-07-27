@@ -90,6 +90,9 @@ export class AuthenticatedUser {
   /** 사용자 계정 */
   userAccount?: string;
 
+  /** 직원 ID */
+  employeeId?: number;
+
   /** 직원 명 */
   employeeName?: string;
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
-import { AuthenticatedUser } from './auth/auth.model';
 import { AuthService } from './auth/auth.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './shared/services';
@@ -26,10 +25,10 @@ import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, 
 export class AppComponent implements OnInit {
 
   constructor(
+    private router: Router,
     private authService: AuthService,
     private codeService: CodeService,
     private menuService: MenuService,
-    private router: Router,
   ) {}
 
   /** 페이지 타이틀 */
@@ -47,9 +46,6 @@ export class AppComponent implements OnInit {
   get isIndexPage(): boolean {
     return this.router.url === '/index';
   }
-
-  /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
 
   ngOnInit(): void {
     this.router.events
