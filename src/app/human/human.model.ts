@@ -53,4 +53,7 @@ export class DepartmentResponseDTO {
   /** 직급 명 */
   rankCodeName?: string;
 
+  /** 직책 명 */
+  jobTitleCodeName?: string;
+
 }

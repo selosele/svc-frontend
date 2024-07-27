@@ -64,6 +64,12 @@
       [label]="'직급'"
       [readonly]="isReadonly"
     />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employee.departments.jobTitleCodeName')"
+      [label]="'직책'"
+      [readonly]="isReadonly"
+    />
   </div>
 
   <div class="input-box">

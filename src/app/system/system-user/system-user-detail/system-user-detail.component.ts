@@ -101,6 +101,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         departments: this.fb.group({
           departmentName: ['', [FormValidator.required]],     // 부서 명
           rankCodeName: ['', [FormValidator.required]],       // 직급 명
+          jobTitleCodeName: ['', [FormValidator.required]],   // 직책 명
         }),
       }),
     });
@@ -131,6 +132,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
             ...this.userDetail?.employee?.departments,
             departmentName: this.findDepartmentName(this.userDetail?.employee?.departments),
             rankCodeName: this.userDetail?.employee?.departments[0].rankCodeName,
+            jobTitleCodeName: this.userDetail?.employee?.departments[0].jobTitleCodeName,
           },
         },
       });
