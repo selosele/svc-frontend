@@ -50,4 +50,7 @@ export class MenuTree extends MenuResponseDTO {
   /** 하위 메뉴 목록 */
   children?: MenuResponseDTO[];
 
+  /** 확장 여부 */
+  expanded?: boolean = false;
+
 }
