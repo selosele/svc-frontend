@@ -1,10 +1,12 @@
 .page-wrapper {
-  padding: 5.875rem 1.5rem 1.5rem 1.5rem;
+  padding: 6.375rem 1.5rem 2rem 1.5rem;
 
   &__inner {
     min-height: 100vh;
-    padding: 1rem;
+    padding: 1.25rem 1.25rem 2rem 1.25rem;
+    border-radius: 0.625rem;
     background-color: var(--surface-0);
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
   }
 
   &__title {
