@@ -29,3 +29,17 @@ export class CodeResponseDTO {
   deleteYn?: string;
     
 }
+
+/** 코드 트리 */
+export class CodeTree extends CodeResponseDTO {
+
+  /** 코드 */
+  data?: CodeResponseDTO;
+
+  /** 하위 코드 목록 */
+  children?: CodeResponseDTO[];
+
+  /** 확장 여부 */
+  expanded?: boolean = false;
+
+}

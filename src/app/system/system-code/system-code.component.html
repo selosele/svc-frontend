@@ -11,16 +11,16 @@
 }
 @else {
   <ui-splitter #splitter>
-    <ui-table #table first
+    <ui-tree-table #treeTable first
       [useAdd]="false"
       [useRemove]="false"
       [cols]="cols"
-      [data]="codeList"
+      [data]="codeTree"
       [dataKey]="'codeId'"
       [selection]="selection"
       (refresh)="onRefresh()"
-      (rowSelect)="onRowSelect($event)"
-      (unRowSelect)="onRowUnselect($event)"
+      (nodeSelect)="onNodeSelect($event)"
+      (nodeUnSelect)="onNodeUnselect($event)"
     />
   
     <div second>

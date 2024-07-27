@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LayoutPageDescriptionComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components';
+import { TreeNode } from 'primeng/api';
+import { LayoutPageDescriptionComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components';
 import { CodeService } from '../../code/code.service';
-import { CodeResponseDTO } from '../../code/code.model';
+import { CodeTree } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
 
 @Component({
   standalone: true,
   imports: [
     UiSkeletonComponent,
-    UiTableComponent,
+    UiTreeTableComponent,
     UiSplitterComponent,
     LayoutPageDescriptionComponent,
     SystemCodeDetailComponent,
@@ -23,15 +24,15 @@ export class SystemCodeComponent implements OnInit {
     private codeService: CodeService,
   ) {}
 
-  /** table */
-  @ViewChild('table') table: UiTableComponent;
+  /** tree table */
+  @ViewChild('treeTable') treeTable: UiTreeTableComponent;
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
-  /** 코드 목록 */
-  get codeList(): CodeResponseDTO[] {
-    return this.codeService.codeListSubject.value;
+  /** 코드 트리 */
+  get codeTree(): CodeTree[] {
+    return this.codeService.codeTreeSubject.value;
   }
 
   /** 코드 목록 데이터 로드 완료 여부 */
@@ -40,41 +41,16 @@ export class SystemCodeComponent implements OnInit {
   }
 
   /** 코드 상세 정보 */
-  codeDetail: CodeResponseDTO = null;
+  codeDetail: CodeTree = null;
 
   /** 테이블 선택된 행 */
-  selection: CodeResponseDTO;
-
-  /** 행 스타일 */
-  getRowStyle = (params) => {
-    const { codeDepth } = params.data;
-    if (codeDepth > 1) {
-      return {
-        backgroundColor: '#fcfbfb',
-      };
-    }
-    return null;
-  };
+  selection: TreeNode;
 
   /** 테이블 컬럼 목록 */
   cols = [
-    { field: 'codeId',      header: '코드 ID', flex: 1,
-      cellStyle: (params) => {
-        const { codeDepth } = params.data;
-        const indent = 16;
-
-        if (codeDepth > 1) {
-          return {
-            paddingLeft: ((codeDepth + 1) * indent) + 'px',
-          }
-        }
-        return null;
-      }
-    },
-    { field: 'upCodeId',    header: '상위 코드 ID' },
+    { field: 'codeId',      header: '코드 ID' },
     { field: 'codeValue',   header: '코드 값' },
     { field: 'codeName',    header: '코드 명' },
-    { field: 'codeContent', header: '코드 내용' },
     { field: 'codeOrder',   header: '코드 순서' },
     { field: 'useYn',       header: '사용 여부' },
   ];
@@ -91,8 +67,8 @@ export class SystemCodeComponent implements OnInit {
   }
 
   /** 테이블 행을 선택한다. */
-  onRowSelect(event: any) {
-    this.codeService.getCode(event.data['codeId'])
+  onNodeSelect(event: any) {
+    this.codeService.getCode(event.node.data['codeId'])
     .subscribe((data) => {
       this.codeDetail = data;
       this.splitter.show();
@@ -100,7 +76,7 @@ export class SystemCodeComponent implements OnInit {
   }
 
   /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any) {
+  onNodeUnselect(event: any) {
     this.codeDetail = {};
     this.splitter.hide();
   }
