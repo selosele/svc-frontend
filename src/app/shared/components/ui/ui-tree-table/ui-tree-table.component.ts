@@ -5,6 +5,7 @@ import { TreeNode, TreeTableNode } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
 import { Column } from '@app/shared/models';
 import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.component';
+import { UiTextComponent } from '../../form';
 
 @Component({
   standalone: true,
@@ -12,6 +13,7 @@ import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.co
     CommonModule,
     TreeTableModule,
     UiTableButtonsComponent,
+    UiTextComponent,
   ],
   selector: 'ui-tree-table',
   templateUrl: './ui-tree-table.component.html',
@@ -48,6 +50,9 @@ export class UiTreeTableComponent implements OnInit {
 
   /** 트리테이블 정렬 모드 */
   @Input() sortMode?: 'single' | 'multiple' = 'single';
+
+  /** 트리테이블 필터 모드 */
+  @Input() filterMode?: 'lenient' | 'strict' = 'lenient';
 
   /** 트리테이블 선택된 행 */
   @Input() selection?: TreeNode;
@@ -97,6 +102,11 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 행 그룹 펼치기 버튼을 클릭한다. */
   protected onTogglerClick(event: Event): void {
     event.stopPropagation(); // 펼치기 버튼 클릭 시, 행선택 이벤트가 동시에 발생하는 이슈를 방지
+  }
+
+  /** 트리테이블 행을 필터링한다. */
+  protected onFilterInput(event: Event, col: any): void {
+    return this.treeTable.filter((event.target as HTMLInputElement).value, col.field, col.filterMatchMode);
   }
 
   /** 트리테이블 행 정렬 커스텀 이벤트 */

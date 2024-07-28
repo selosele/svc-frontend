@@ -15,6 +15,7 @@
       [dataKey]="dataKey"
       [loading]="loading"
       [sortMode]="sortMode"
+      [filterMode]="filterMode"
       [scrollable]="true"
       [selectionMode]="selectionMode"
       [(selection)]="selection"
@@ -28,6 +29,11 @@
           <th *ngFor="let col of columns" [ttSortableColumn]="col.field">
             {{ col.header }}
             <p-treeTableSortIcon [field]="col.field" />
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of columns">
+            <ui-text (input)="onFilterInput($event, col)" />
           </th>
         </tr>
       </ng-template>
