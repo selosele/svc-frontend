@@ -5,22 +5,29 @@
   (remove)="removeUser($event)"
   (close)="onClose()"
 >
-  <h2>사용자 상세 정보</h2>
+  <h2>사용자 정보</h2>
 
   <div class="input-box">
     <ui-text-field
       [control]="userDetailForm.get('userAccount')"
       [label]="'사용자 계정'"
-      [readonly]="isReadonly"
+      [readonly]="isUserNotEmpty"
     />
+
+    @if (!isUserNotEmpty) {
+      <ui-text-field
+        [control]="userDetailForm.get('userPassword')"
+        [label]="'사용자 비밀번호'" type="password" placeholder="12자 이내로 입력하세요"
+      />
+    }
 
     <ui-dropdown
       [control]="userDetailForm.get('userActiveYn')"
       [label]="'사용자 활성화 여부'"
       [data]="userActiveYns"
-      [readonly]="isReadonly"
+      [readonly]="isUserNotEmpty"
     >
-      @if (isReadonly) {
+      @if (isUserNotEmpty) {
         <ui-button button
           [severity]="'secondary'"
           (click)="updateUserActiveYn($event, userDetail?.userActiveYn === 'Y' ? 'N' : 'Y')"
@@ -49,28 +56,24 @@
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeName')"
       [label]="'직원 명'"
-      [readonly]="isReadonly"
     />
 
     <ui-dropdown
       [control]="userDetailForm.get('employee.genderCode')"
       [label]="'성별'"
       [data]="genderCodes"
-      [readonly]="isReadonly"
     />
 
     <ui-dropdown
       [control]="userDetailForm.get('employee.departments.rankCode')"
       [label]="'직급'"
       [data]="rankCodes"
-      [readonly]="isReadonly"
     />
 
     <ui-dropdown
       [control]="userDetailForm.get('employee.departments.jobTitleCode')"
       [label]="'직책'"
       [data]="jobTitleCodes"
-      [readonly]="isReadonly"
     />
   </div>
 
@@ -78,13 +81,16 @@
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeCompany.corporateName')"
       [label]="'회사(법인) 명'"
-      [readonly]="isReadonly"
     />
 
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeCompany.companyName')"
       [label]="'회사 명'"
-      [readonly]="isReadonly"
+    />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employee.employeeCompany.joinYmd')"
+      [label]="'입사일자'"
     />
   </div>
 
@@ -92,7 +98,6 @@
     <ui-text-field
       [control]="userDetailForm.get('employee.departments.departmentName')"
       [label]="'부서 명'"
-      [readonly]="isReadonly"
     />
   </div>
 </ui-split-form>

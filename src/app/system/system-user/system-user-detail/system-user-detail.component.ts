@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { DepartmentResponseDTO } from '@app/human/human.model';
-import { isEmpty, isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
+import { isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { DropdownData } from '@app/shared/models';
 import { CodeService } from '@app/code/code.service';
+import { HumanService } from '@app/human/human.service';
 
 @Component({
   standalone: true,
@@ -32,9 +32,10 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     private messageService: UiMessageService,
     private authService: AuthService,
     private codeService: CodeService,
+    private humanService: HumanService,
   ) {}
 
-  /** 사용자 상세 정보 */
+  /** 사용자 정보 */
   @Input() userDetail: UserResponseDTO = null;
 
   /** 사용자 상세 조회 폼 */
@@ -64,16 +65,13 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
-  /** input readonly 여부 */
-  get isReadonly(): boolean {
+  /** 사용자 정보 존재 여부 */
+  get isUserNotEmpty(): boolean {
     return isNotObjectEmpty(this.userDetail);
   }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
-
-  /** 사용자 정보 저장 이벤트 */
-  @Output() submit = new EventEmitter<any>();
 
   /** 삭제 버튼 클릭 이벤트 */
   @Output() remove = new EventEmitter<void>();
@@ -84,9 +82,13 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.userDetailForm = this.fb.group({
 
-      // 사용자 상세 정보
+      // 사용자 정보
       userId: [''],                                         // 사용자 ID
       userAccount: ['', [FormValidator.required]],          // 사용자 계정
+      userPassword: ['', [                                  // 사용자 비밀번호
+        FormValidator.required,
+        FormValidator.maxLength(12)
+      ]],
       userActiveYn: ['', [FormValidator.required]],         // 사용자 활성화 여부
       roles: ['', [FormValidator.required]],                // 사용자 권한
 
@@ -101,6 +103,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           companyId: ['', [FormValidator.required]],          // 회사 ID
           corporateName: ['', [FormValidator.required]],      // 법인 명
           companyName: ['', [FormValidator.required]],        // 회사 명
+          joinYmd: ['', [FormValidator.required]],            // 입사일자
         }),
 
         // 직원 부서 목록
@@ -125,8 +128,16 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
         });
+        this.userDetailForm.get('userPassword').setValidators([
+          FormValidator.required,
+          FormValidator.maxLength(12)
+        ]);
+        this.userDetailForm.get('userPassword').updateValueAndValidity();
         return;
       }
+
+      this.userDetailForm.get('userPassword').clearValidators();
+      this.userDetailForm.get('userPassword').updateValueAndValidity();
       
       this.userDetailForm.patchValue({
         ...this.userDetail,
@@ -136,23 +147,17 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
           departments: {
             ...this.userDetail?.employee?.departments[0],
-            departmentName: this.findDepartmentName(this.userDetail?.employee?.departments),
+            departmentName: this.humanService.findDepartmentName(this.userDetail?.employee?.departments),
           },
         },
       });
     }
   }
 
-  /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
-  findDepartmentName(departments: DepartmentResponseDTO[]): string {
-    if (isEmpty(departments)) return '';
-    return departments.map(x => x.departmentName).join(' > ');
-  }
-
   /** 사용자 활성화 여부를 수정한다. */
   async updateUserActiveYn(event: Event, userActiveYn: string): Promise<void> {
     const activeStatus = `${userActiveYn === 'Y' ? '활성화' : '비활성화'}`;
-    const confirm = await this.messageService.confirm1(event, `사용자를 ${activeStatus}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`사용자를 ${activeStatus}하시겠습니까?`);
     if (!confirm) return;
 
     this.authService.updateUser({ userId: this.userDetail?.userId, userActiveYn })
@@ -169,14 +174,19 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     });
   }
 
-  /** 사용자 상세 정보를 저장한다. */
-  onSubmit(value: any): void {
-    this.submit.emit(value);
+  /** 사용자 정보를 저장한다. */
+  async onSubmit(value: any): Promise<void> {
+    console.log(value);
+
+    const confirm = await this.messageService.confirm1('사용자 정보를 저장하시겠습니까?');
+    if (!confirm) return;
+
+    
   }
 
   /** 사용자를 삭제한다. */
   async removeUser(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2(event, '선택한 사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('선택한 사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
     this.authService.removeUser(this.userDetail.userId)
