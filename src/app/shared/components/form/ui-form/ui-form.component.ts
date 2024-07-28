@@ -22,6 +22,7 @@ export class UiFormComponent {
   /** form 데이터를 전송한다. */
   protected onSubmit(event: Event): void {
     event.stopPropagation();
+    event.preventDefault(); // submit시, 이벤트 2번 발생 문제로 인해 추가
     
     if (!this.form.valid) {
       this.validateAllFormFields(this.form);
