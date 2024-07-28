@@ -50,10 +50,10 @@ export class DepartmentResponseDTO {
   /** 부서 순서 */
   departmentOrder?: number;
 
-  /** 직급 명 */
-  rankCodeName?: string;
+  /** 직급 코드 */
+  rankCode?: string;
 
-  /** 직책 명 */
-  jobTitleCodeName?: string;
+  /** 직책 코드 */
+  jobTitleCode?: string;
 
 }

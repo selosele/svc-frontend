@@ -55,6 +55,12 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 성별 코드 데이터 목록 */
   genderCodes: DropdownData[] = this.codeService.getDropdownData('GENDER_00');
 
+  /** 직급 코드 데이터 목록 */
+  rankCodes: DropdownData[] = this.codeService.getDropdownData('RANK_00');
+
+  /** 직책 코드 데이터 목록 */
+  jobTitleCodes: DropdownData[] = this.codeService.getDropdownData('JOB_TITLE_00');
+
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
@@ -100,8 +106,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         // 직원 부서 목록
         departments: this.fb.group({
           departmentName: ['', [FormValidator.required]],     // 부서 명
-          rankCodeName: ['', [FormValidator.required]],       // 직급 명
-          jobTitleCodeName: ['', [FormValidator.required]],   // 직책 명
+          rankCode: ['', [FormValidator.required]],           // 직급 코드
+          jobTitleCode: ['', [FormValidator.required]],       // 직책 코드
         }),
       }),
     });
@@ -129,10 +135,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           ...this.userDetail?.employee,
           employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
           departments: {
-            ...this.userDetail?.employee?.departments,
+            ...this.userDetail?.employee?.departments[0],
             departmentName: this.findDepartmentName(this.userDetail?.employee?.departments),
-            rankCodeName: this.userDetail?.employee?.departments[0].rankCodeName,
-            jobTitleCodeName: this.userDetail?.employee?.departments[0].jobTitleCodeName,
           },
         },
       });

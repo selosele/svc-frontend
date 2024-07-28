@@ -59,15 +59,17 @@
       [readonly]="isReadonly"
     />
 
-    <ui-text-field
-      [control]="userDetailForm.get('employee.departments.rankCodeName')"
+    <ui-dropdown
+      [control]="userDetailForm.get('employee.departments.rankCode')"
       [label]="'직급'"
+      [data]="rankCodes"
       [readonly]="isReadonly"
     />
 
-    <ui-text-field
-      [control]="userDetailForm.get('employee.departments.jobTitleCodeName')"
+    <ui-dropdown
+      [control]="userDetailForm.get('employee.departments.jobTitleCode')"
       [label]="'직책'"
+      [data]="jobTitleCodes"
       [readonly]="isReadonly"
     />
   </div>
