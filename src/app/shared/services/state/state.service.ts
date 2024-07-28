@@ -23,7 +23,6 @@ export class StateService {
     
     this.humanService.employeeSubject.next(null);
     this.humanService.employeeDataLoadSubject.next(false);
-    
   }
 
 }
