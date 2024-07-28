@@ -22,11 +22,11 @@ export class HumanMyInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getAuthenticatedUser();
-    this.getUser();
+    this.getEmployee();
   }
 
   /** 직원을 조회한다. */
-  private getUser(): void {
+  private getEmployee(): void {
     this.humanService.getEmployee(this.user.employeeId)
     .subscribe(data => {
       console.log(data);
