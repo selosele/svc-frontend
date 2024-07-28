@@ -1,1 +1,119 @@
-<p>직원정보 표출 및 수정, 비밀번호 변경 기능(비밀번호 2회 입력)</p>
+<layout-page-description>
+  <ul>
+    <li>내 정보를 조회/입력할 수 있습니다.</li>
+    <li>권한 조회/변경은 시스템 관리자에게 문의하시기 바랍니다.</li>
+  </ul>
+</layout-page-description>
+
+@if (!employeeDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <h2>비밀번호 변경</h2>
+
+  <ui-form [form]="changePasswordForm" (submit)="onSubmitPassword($event)">
+    <div class="input-box">
+      <ui-text-field
+        [control]="changePasswordForm.get('currentPassword')"
+        [label]="'현재 비밀번호'" type="password" placeholder="12자 이내로 입력하세요"
+      />
+
+      <ui-text-field
+        [control]="changePasswordForm.get('newPassword')"
+        [label]="'새 비밀번호'" type="password" placeholder="12자 이내로 입력하세요"
+      />
+
+      <ui-text-field
+        [control]="changePasswordForm.get('newPasswordConfirm')"
+        [label]="'새 비밀번호 확인'" type="password" placeholder="12자 이내로 입력하세요"
+      />
+    </div>
+
+    <div class="ui-form__buttons">
+      <ui-button
+        [type]="'submit'"
+        [size]="'small'"
+        [icon]="'pi-check'"
+        [label]="'비밀번호 변경'"
+      />
+    </div>
+  </ui-form>
+
+  <h2>직원 정보</h2>
+
+  <ui-form [form]="employeeForm" (submit)="onSubmitEmployee($event)">
+    <div class="input-box">
+      <ui-text-field
+        [control]="employeeForm.get('employeeName')"
+        [label]="'직원 명'"
+      />
+  
+      <ui-dropdown
+        [control]="employeeForm.get('genderCode')"
+        [label]="'성별'"
+        [data]="genderCodes"
+      />
+  
+      <ui-dropdown
+        [control]="employeeForm.get('departments.rankCode')"
+        [label]="'직급'"
+        [data]="rankCodes"
+        [readonly]="true"
+      />
+  
+      <ui-dropdown
+        [control]="employeeForm.get('departments.jobTitleCode')"
+        [label]="'직책'"
+        [data]="jobTitleCodes"
+        [readonly]="true"
+      />
+    </div>
+  
+    <div class="input-box">
+      <ui-text-field
+        [control]="employeeForm.get('employeeCompany.corporateName')"
+        [label]="'회사(법인) 명'"
+        [readonly]="true"
+      />
+  
+      <ui-text-field
+        [control]="employeeForm.get('employeeCompany.companyName')"
+        [label]="'회사 명'"
+        [readonly]="true"
+      />
+
+      <ui-text-field
+        [control]="employeeForm.get('employeeCompany.joinYmd')"
+        [label]="'입사일자'"
+        [readonly]="true"
+      />
+    </div>
+  
+    <div class="input-box">
+      <ui-text-field
+        [control]="employeeForm.get('departments.departmentName')"
+        [label]="'부서 명'"
+        [readonly]="true"
+      />
+    </div>
+
+    <div class="ui-form__buttons">
+      <ui-button
+        [type]="'submit'"
+        [size]="'small'"
+        [icon]="'pi-check'"
+        [label]="'직원정보 저장'"
+      />
+      
+      <ui-button
+        [size]="'small'"
+        [severity]="'success'"
+        [icon]="'pi-refresh'"
+        [label]="'새로고침'"
+        (click)="onRefresh($event)"
+      />
+    </div>
+  </ui-form>
+}

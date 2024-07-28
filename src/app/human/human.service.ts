@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { EmployeeResponseDTO } from './human.model';
+import { BehaviorSubject } from 'rxjs';
+import { isEmpty } from '@app/shared/utils';
+import { DepartmentResponseDTO, EmployeeResponseDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -20,8 +21,18 @@ export class HumanService {
   employeeDataLoad$ = this.employeeDataLoadSubject.asObservable();
 
   /** 직원을 조회한다. */
-  getEmployee(employeeId: number): Observable<EmployeeResponseDTO> {
-    return this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`);
+  getEmployee(employeeId: number): void {
+    this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`)
+    .subscribe(data => {
+      this.employeeSubject.next(data);
+      this.employeeDataLoadSubject.next(true);
+    });
+  }
+
+  /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
+  findDepartmentName(departments: DepartmentResponseDTO[]): string {
+    if (isEmpty(departments)) return '';
+    return departments.map(x => x.departmentName).join(' > ');
   }
 
 }
