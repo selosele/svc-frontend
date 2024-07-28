@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       userAccount:  ['', [FormValidator.required]], // 사용자 계정
-      userPassword: ['', [FormValidator.required]], // 사용자 비밀번호
+      userPassword: ['', [FormValidator.required, FormValidator.maxLength(12)]], // 사용자 비밀번호
     });
   }
   
   /** 로그인을 한다. */
-  onSubmit(value: any): void {
-    this.authService.login(value as LoginRequestDTO);
+  onSubmit(value: LoginRequestDTO): void {
+    this.authService.login(value);
   }
   
 }

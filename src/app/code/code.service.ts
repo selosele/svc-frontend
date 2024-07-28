@@ -21,7 +21,7 @@ export class CodeService {
   /** 코드 목록 데이터 로드 완료 여부 */
   codeListDataLoad$ = this.codeListDataLoadSubject.asObservable();
 
-  /** 코드 목록 */
+  /** 코드 트리 목록 */
   codeTree$ = this.codeTreeSubject.asObservable();
 
   /** 코드 목록 데이터를 설정한다. */

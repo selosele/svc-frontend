@@ -30,7 +30,7 @@ export class SystemCodeComponent implements OnInit {
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
-  /** 코드 트리 */
+  /** 코드 트리 목록 */
   get codeTree(): CodeTree[] {
     return this.codeService.codeTreeSubject.value;
   }

@@ -1,6 +1,6 @@
 <div class="login-wrapper">
   <div class="login__form">
-    <h1 class="login__title">시스템 로그인</h1>
+    <h1 class="login__title">로그인</h1>
 
     <ui-form [form]="loginForm" (submit)="onSubmit($event)">
       <div class="input-box">
@@ -16,16 +16,12 @@
         <ui-text-field
           [block]="true"
           [control]="loginForm.get('userPassword')"
-          [label]="'비밀번호'"
-          type="password" placeholder="비밀번호"
+          [label]="'비밀번호'" placeholder="비밀번호" type="password"
         />
       </div>
 
-      <ui-button
-        [block]="true"
-        [type]="'submit'"
-      >
-        로그인
+      <ui-button [block]="true" [type]="'submit'">
+        GO
       </ui-button>
     </ui-form>
   </div>

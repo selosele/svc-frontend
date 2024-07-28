@@ -25,7 +25,7 @@ export class UiSplitterComponent {
 
   /** splitter 스타일 */
   style = {
-    height: '500px',
+    // height: '500px',
     border: '0',
     background: 'inherit',
     color: 'inherit',

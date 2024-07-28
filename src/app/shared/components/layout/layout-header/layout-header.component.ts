@@ -58,7 +58,7 @@ export class LayoutHeaderComponent implements OnInit {
   /** 내정보 모달을 표출한다. */
   showMyPageModal(event): void {
     this.dialogService.open(HumanMyInfoComponent, {
-      header: '내 정보',
+      header: '내 정보 조회',
       data: {},
     });
   }
