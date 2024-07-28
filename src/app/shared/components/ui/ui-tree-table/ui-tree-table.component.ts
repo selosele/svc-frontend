@@ -5,7 +5,7 @@ import { TreeNode, TreeTableNode } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
 import { Column } from '@app/shared/models';
 import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.component';
-import { UiTextComponent } from '../../form';
+import { UiTextComponent } from '../../ui';
 
 @Component({
   standalone: true,

@@ -1,0 +1,18 @@
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
+
+<div class="input-button-box">
+  <input
+    pInputText
+    [type]="type"
+    [name]="name"
+    [readonly]="readonly"
+    [placeholder]="placeholder"
+    [class.block]="block"
+    [class.readonly]="readonly"
+    (input)="onInput($event)"
+  >
+
+  <ng-content select="[button]"></ng-content>
+</div>
