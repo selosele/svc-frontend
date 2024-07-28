@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
-import { StateService } from '@app/shared/services';
+import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
+import { StateService, UiDialogService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,6 +15,7 @@ export class AuthService {
     private router: Router,
     private jwtHelper: JwtHelperService,
     private stateService: StateService,
+    private dialogService: UiDialogService,
   ) {}
 
   userListSubject = new BehaviorSubject<UserResponseDTO[]>([]);
@@ -51,6 +52,7 @@ export class AuthService {
     this.http.post<void>('/common/auth/logout', {})
     .subscribe(() => {
       this.removeAccessToken();
+      this.dialogService.closeAllDialog();
       this.stateService.clearAllState();
       this.router.navigateByUrl(LOGIN_PAGE_PATH);
     });
@@ -79,6 +81,12 @@ export class AuthService {
   /** 사용자를 삭제한다. */
   removeUser(userId: number): Observable<void> {
     return this.http.delete<void>(`/common/auth/users/${userId}`);
+  }
+
+  /** 사용자 비밀번호를 변경한다. */
+  updatePassword(updateUserPasswordRequestDTO: UpdateUserPasswordRequestDTO): Observable<number> {
+    const { userId } = this.getAuthenticatedUser();
+    return this.http.put<number>(`/common/auth/users/${userId}/password`, updateUserPasswordRequestDTO);
   }
 
   /** 권한 목록을 조회한다. */

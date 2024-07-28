@@ -53,6 +53,20 @@ export class UserResponseDTO {
     
 }
 
+/** 사용자 비밀번호 변경 요청 DTO */
+export class UpdateUserPasswordRequestDTO {
+
+  /** 현재 비밀번호 */
+  currentPassword?: string;
+
+  /** 변경할 비밀번호 */
+  newPassword?: string;
+
+  /** 변경할 비밀번호 확인 */
+  newPasswordConfirm?: string;
+
+}
+
 /** 권한 응답 DTO */
 export class RoleResponseDTO {
 
