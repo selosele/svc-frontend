@@ -82,7 +82,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   /** 코드를 삭제한다. */
   async removeCode(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2(event, '선택한 코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('선택한 코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
     this.remove.emit();

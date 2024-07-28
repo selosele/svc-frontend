@@ -49,7 +49,7 @@ export class LayoutHeaderComponent implements OnInit {
 
   /** 로그아웃을 한다. */
   async logout(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm1(event, '로그아웃하시겠습니까?');
+    const confirm = await this.messageService.confirm1('로그아웃하시겠습니까?');
     if (!confirm) return;
 
     this.authService.logout();
