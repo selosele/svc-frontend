@@ -40,7 +40,7 @@ export class SystemCodeComponent implements OnInit {
     return this.codeService.codeListDataLoadSubject.value;
   }
 
-  /** 코드 상세 정보 */
+  /** 코드 정보 */
   codeDetail: CodeTree = null;
 
   /** 테이블 선택된 행 */

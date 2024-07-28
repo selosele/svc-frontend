@@ -26,7 +26,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     private codeService: CodeService,
   ) {}
 
-  /** 코드 상세 정보 */
+  /** 코드 정보 */
   @Input() codeDetail: CodeResponseDTO = null;
 
   /** 코드 상세 조회 폼 */
@@ -75,7 +75,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     }
   }
 
-  /** 코드 상세 정보를 저장한다. */
+  /** 코드 정보를 저장한다. */
   onSubmit(value: any): void {
     this.submit.emit(value);
   }

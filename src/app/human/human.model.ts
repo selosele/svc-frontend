@@ -30,6 +30,12 @@ export class EmployeeCompanyResponseDTO {
   /** 회사 명 */
   companyName?: string;
 
+  /** 입사일자 */
+  joinYmd?: string;
+
+  /** 퇴사일자 */
+  quitYmd?: string;
+
 }
 
 /** 부서 응답 DTO */

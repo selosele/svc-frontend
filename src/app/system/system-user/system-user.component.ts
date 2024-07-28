@@ -40,7 +40,7 @@ export class SystemUserComponent implements OnInit {
     return this.authService.userListDataLoadSubject.value;
   }
 
-  /** 사용자 상세 정보 */
+  /** 사용자 정보 */
   userDetail: UserResponseDTO = null;
 
   /** 테이블 선택된 행 */
