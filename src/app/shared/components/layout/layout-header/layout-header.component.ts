@@ -2,11 +2,10 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulati
 import { RouterModule } from '@angular/router';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { UiMessageService } from '@app/shared/services';
+import { UiDialogService, UiMessageService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent } from '../../ui';
-import { DialogService } from 'primeng/dynamicdialog';
 import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.component';
 
 @Component({
@@ -27,7 +26,7 @@ export class LayoutHeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private messageService: UiMessageService,
-    private dialogService: DialogService,
+    private dialogService: UiDialogService,
   ) {}
 
   /** header 태그 */
@@ -55,7 +54,7 @@ export class LayoutHeaderComponent implements OnInit {
     this.authService.logout();
   }
 
-  /** 내정보 모달을 표출한다. */
+  /** 내정보 modal을 표출한다. */
   showMyPageModal(event): void {
     this.dialogService.open(HumanMyInfoComponent, {
       header: '내 정보 조회',

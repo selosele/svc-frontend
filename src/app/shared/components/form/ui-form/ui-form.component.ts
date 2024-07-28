@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   ],
   selector: 'ui-form',
   templateUrl: './ui-form.component.html',
-  styleUrl: './ui-form.component.scss'
+  styleUrl: './ui-form.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiFormComponent {
 
