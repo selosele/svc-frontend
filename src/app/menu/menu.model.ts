@@ -24,7 +24,7 @@ export class MenuResponseDTO {
   /** 상위 메뉴 ID */
   upMenuId?: number;
   
-  /** 메뉴 명 */
+  /** 메뉴명 */
   menuName?: string;
   
   /** 메뉴 URL */

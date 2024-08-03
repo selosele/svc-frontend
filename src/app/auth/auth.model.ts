@@ -73,7 +73,7 @@ export class RoleResponseDTO {
   /** 권한 ID */
   roleId?: string;
 
-  /** 권한 명 */
+  /** 권한명 */
   roleName?: string;
 
   /** 권한 순서 */
@@ -90,7 +90,7 @@ export class UserRoleResponseDTO {
   /** 권한 ID */
   roleId?: string;
 
-  /** 권한 명 */
+  /** 권한명 */
   roleName?: string;
     
 }
@@ -107,7 +107,7 @@ export class AuthenticatedUser {
   /** 직원 ID */
   employeeId?: number;
 
-  /** 직원 명 */
+  /** 직원명 */
   employeeName?: string;
 
   /** 사용자 권한 목록 */

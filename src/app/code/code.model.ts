@@ -10,7 +10,7 @@ export class CodeResponseDTO {
   /** 코드 값 */
   codeValue?: string;
   
-  /** 코드 명 */
+  /** 코드명 */
   codeName?: string;
   
   /** 코드 내용 */

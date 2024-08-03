@@ -36,7 +36,7 @@ export class SystemRoleComponent implements OnInit {
   /** 테이블 컬럼 목록 */
   cols = [
     { field: 'roleId',    header: '권한 ID'},
-    { field: 'roleName',  header: '권한 명'},
+    { field: 'roleName',  header: '권한명'},
     { field: 'roleOrder', header: '권한 순서'},
   ];
 

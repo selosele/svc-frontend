@@ -4,7 +4,7 @@ export class EmployeeResponseDTO {
   /** 직원 ID */
   employeeId?: number;
 
-  /** 직원 명 */
+  /** 직원명 */
   employeeName?: string;
 
   /** 성별 코드 */
@@ -24,10 +24,10 @@ export class EmployeeCompanyResponseDTO {
   /** 회사 ID */
   companyId?: number;
 
-  /** 법인 명 */
+  /** 법인명 */
   corporateName?: string;
 
-  /** 회사 명 */
+  /** 회사명 */
   companyName?: string;
 
   /** 입사일자 */
@@ -50,7 +50,7 @@ export class DepartmentResponseDTO {
   /** 상위 부서 ID */
   upDepartmentId?: number;
 
-  /** 부서 명 */
+  /** 부서명 */
   departmentName?: string;
 
   /** 부서 순서 */

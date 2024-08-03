@@ -16,7 +16,7 @@ export const menuGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
     /** 현재 메뉴 URL */
     const menuUrl = `/${route.routeConfig.path}`;
 
-    /** 현재 메뉴 명 */
+    /** 현재 메뉴명 */
     const menuName = menuList.find(x => x.menuId === menuId)?.menuName;
 
     // 같은 메뉴접속이력 데이터가 존재하는지 확인한다.

@@ -98,20 +98,20 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       // 직원 정보
       employee: this.fb.group({
         employeeId: ['', [FormValidator.required]],         // 직원 ID
-        employeeName: ['', [FormValidator.required]],       // 직원 명
+        employeeName: ['', [FormValidator.required]],       // 직원명
         genderCode: ['', [FormValidator.required]],         // 성별 코드
 
         // 직원 회사 정보
         employeeCompany: this.fb.group({
           companyId: ['', [FormValidator.required]],          // 회사 ID
-          corporateName: ['', [FormValidator.required]],      // 법인 명
-          companyName: ['', [FormValidator.required]],        // 회사 명
+          corporateName: ['', [FormValidator.required]],      // 법인명
+          companyName: ['', [FormValidator.required]],        // 회사명
           joinYmd: ['', [FormValidator.required]],            // 입사일자
         }),
 
         // 직원 부서 목록
         departments: this.fb.group({
-          departmentName: ['', [FormValidator.required]],     // 부서 명
+          departmentName: ['', [FormValidator.required]],     // 부서명
           rankCode: ['', [FormValidator.required]],           // 직급 코드
           jobTitleCode: ['', [FormValidator.required]],       // 직책 코드
         }),

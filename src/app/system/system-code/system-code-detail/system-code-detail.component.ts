@@ -60,7 +60,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
       codeId: [''],       // 코드 ID
       upCodeId: [''],     // 상위 코드 ID
       codeValue: [''],    // 코드 값
-      codeName: [''],     // 코드 명
+      codeName: [''],     // 코드명
       codeContent: [''],  // 코드 내용
       codeOrder: [''],    // 코드 순서
       codeDepth: [''],    // 코드 뎁스

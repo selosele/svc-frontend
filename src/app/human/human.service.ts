@@ -28,7 +28,7 @@ export class HumanService {
     });
   }
 
-  /** 부서 목록에서 모든 부서 명을 연결해서 반환한다. */
+  /** 부서 목록에서 모든 부서명을 연결해서 반환한다. */
   findDepartmentName(departments: DepartmentResponseDTO[]): string {
     if (isEmpty(departments)) return '';
     return departments.map(x => x.departmentName).join(' > ');

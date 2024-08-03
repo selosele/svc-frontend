@@ -50,7 +50,7 @@ export class SystemCodeComponent implements OnInit {
   cols = [
     { field: 'codeId',      header: '코드 ID' },
     { field: 'codeValue',   header: '코드 값' },
-    { field: 'codeName',    header: '코드 명' },
+    { field: 'codeName',    header: '코드명' },
     { field: 'codeOrder',   header: '코드 순서' },
     { field: 'useYn',       header: '사용 여부' },
   ];
