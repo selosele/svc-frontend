@@ -20,11 +20,11 @@ export const menuGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
     const menuName = menuList.find(x => x.menuId === menuId)?.menuName;
 
     // 같은 메뉴접속이력 데이터가 존재하는지 확인한다.
-    const hasExist = isNotEmpty(menuService.menuHistoryListSubject.value.find(x => x.menuId === menuId));
+    const hasExist = isNotEmpty(menuService.menuHistoryList.value.find(x => x.menuId === menuId));
     if (hasExist) return;
 
     // 메뉴접속이력 데이터를 쌓아 넣는다.
-    menuService.setMenuHistoryList([...menuService.menuHistoryListSubject.value, { menuId, menuUrl, menuName }]);
+    menuService.setMenuHistoryList([...menuService.menuHistoryList.value, { menuId, menuUrl, menuName }]);
   });
   
   return true;

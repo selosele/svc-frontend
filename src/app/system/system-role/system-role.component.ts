@@ -22,12 +22,12 @@ export class SystemRoleComponent implements OnInit {
 
   /** 권한 목록 */
   get roleList(): RoleResponseDTO[] {
-    return this.authService.roleListSubject.value;
+    return this.authService.roleList.value;
   }
 
   /** 권한 목록 데이터 로드 완료 여부 */
   get roleListDataLoad(): boolean {
-    return this.authService.roleListDataLoadSubject.value;
+    return this.authService.roleListDataLoad.value;
   }
 
   /** 테이블 선택된 행 */

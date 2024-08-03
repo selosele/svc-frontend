@@ -122,7 +122,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userDetail && this.userDetailForm) {
       this.useRemove = true;
-      this.roles = this.authService.roleListSubject.value;
+      this.roles = this.authService.roleList.value;
       this.defaultRoles = this.roles.filter(x => x.roleId === 'ROLE_EMPLOYEE').map(x => x.roleId);
 
       if (isObjectEmpty(changes.userDetail.currentValue)) {

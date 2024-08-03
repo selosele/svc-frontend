@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulati
 import { RouterModule } from '@angular/router';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { UiDialogService, UiMessageService } from '@app/shared/services';
+import { UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { UiButtonComponent } from '../../ui';
@@ -25,7 +25,6 @@ export class LayoutHeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private messageService: UiMessageService,
     private dialogService: UiDialogService,
   ) {}
 
@@ -47,10 +46,7 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   /** 로그아웃을 한다. */
-  async logout(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm1('로그아웃하시겠습니까?');
-    if (!confirm) return;
-
+  logout(event: Event): void {
     this.authService.logout();
   }
 

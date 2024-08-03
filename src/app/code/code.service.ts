@@ -11,24 +11,23 @@ export class CodeService {
     private http: HttpClient,
   ) {}
 
-  codeListSubject = new BehaviorSubject<CodeResponseDTO[]>([]);
-  codeListDataLoadSubject = new BehaviorSubject<boolean>(false);
-  codeTreeSubject = new BehaviorSubject<CodeTree[]>([]);
-
   /** 코드 목록 */
-  codeList$ = this.codeListSubject.asObservable();
+  codeList = new BehaviorSubject<CodeResponseDTO[]>([]);
+  codeList$ = this.codeList.asObservable();
 
   /** 코드 목록 데이터 로드 완료 여부 */
-  codeListDataLoad$ = this.codeListDataLoadSubject.asObservable();
+  codeListDataLoad = new BehaviorSubject<boolean>(false);
+  codeListDataLoad$ = this.codeListDataLoad.asObservable();
 
   /** 코드 트리 목록 */
-  codeTree$ = this.codeTreeSubject.asObservable();
+  codeTree = new BehaviorSubject<CodeTree[]>([]);
+  codeTree$ = this.codeTree.asObservable();
 
   /** 코드 목록 데이터를 설정한다. */
   setCodeList(codeList: CodeResponseDTO[]): void {
     const codeTree = this.createCodeTree(codeList);
-    this.codeTreeSubject.next(codeTree);
-    this.codeListSubject.next(codeList);
+    this.codeTree.next(codeTree);
+    this.codeList.next(codeList);
   }
 
   /** 코드 목록을 조회한다. */
@@ -36,7 +35,7 @@ export class CodeService {
     this.http.get<CodeResponseDTO[]>('/common/codes')
     .subscribe((data) => {
       this.setCodeList(data);
-      this.codeListDataLoadSubject.next(true);
+      this.codeListDataLoad.next(true);
     });
   }
 
@@ -47,7 +46,7 @@ export class CodeService {
 
   /** 상위 코드 ID로 드롭다운 데이터를 만들어서 반환한다. */
   getDropdownData(upCodeId: string): DropdownData[] {
-    return this.codeListSubject.value
+    return this.codeList.value
       .filter(x => x.upCodeId === upCodeId)
       .map(x => ({ label: x.codeName, value: x.codeValue })
     );

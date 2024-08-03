@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
-import { StateService, UiDialogService } from '@app/shared/services';
+import { UiDialogService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,26 +14,24 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private jwtHelper: JwtHelperService,
-    private stateService: StateService,
     private dialogService: UiDialogService,
   ) {}
 
-  userListSubject = new BehaviorSubject<UserResponseDTO[]>([]);
-  userListDataLoadSubject = new BehaviorSubject<boolean>(false);
-  roleListSubject = new BehaviorSubject<RoleResponseDTO[]>([]);
-  roleListDataLoadSubject = new BehaviorSubject<boolean>(false);
-
   /** 사용자 목록 */
-  userList$ = this.userListSubject.asObservable();
+  userList = new BehaviorSubject<UserResponseDTO[]>([]);
+  userList$ = this.userList.asObservable();
 
   /** 사용자 목록 데이터 로드 완료 여부 */
-  userListDataLoad$ = this.userListDataLoadSubject.asObservable();
+  userListDataLoad = new BehaviorSubject<boolean>(false);
+  userListDataLoad$ = this.userListDataLoad.asObservable();
 
   /** 권한 목록 */
-  roleList$ = this.roleListSubject.asObservable();
+  roleList = new BehaviorSubject<RoleResponseDTO[]>([]);
+  roleList$ = this.roleList.asObservable();
 
   /** 권한 목록 데이터 로드 완료 여부 */
-  roleListDataLoad$ = this.roleListDataLoadSubject.asObservable();
+  roleListDataLoad = new BehaviorSubject<boolean>(false);
+  roleListDataLoad$ = this.roleListDataLoad.asObservable();
 
   /** 로그인을 한다. */
   login(loginRequestDTO: LoginRequestDTO): void {
@@ -53,8 +51,9 @@ export class AuthService {
     .subscribe(() => {
       this.removeAccessToken();
       this.dialogService.closeAllDialog();
-      this.stateService.clearAllState();
-      this.router.navigateByUrl(LOGIN_PAGE_PATH);
+      this.router.navigateByUrl(LOGIN_PAGE_PATH).then(() => {
+        window.location.reload();
+      });
     });
   }
 
@@ -62,8 +61,8 @@ export class AuthService {
   listUser(): void {
     this.http.get<UserResponseDTO[]>('/common/auth/users')
     .subscribe((data) => {
-      this.userListSubject.next(data);
-      this.userListDataLoadSubject.next(true);
+      this.userList.next(data);
+      this.userListDataLoad.next(true);
     });
   }
 
@@ -93,8 +92,8 @@ export class AuthService {
   listRole(): void {
     this.http.get<RoleResponseDTO[]>('/common/auth/roles')
     .subscribe((data) => {
-      this.roleListSubject.next(data);
-      this.roleListDataLoadSubject.next(true);
+      this.roleList.next(data);
+      this.roleListDataLoad.next(true);
     });
   }
 

@@ -32,12 +32,12 @@ export class SystemUserComponent implements OnInit {
 
   /** 사용자 목록 */
   get userList(): UserResponseDTO[] {
-    return this.authService.userListSubject.value;
+    return this.authService.userList.value;
   }
 
   /** 사용자 목록 데이터 로드 완료 여부 */
   get userListDataLoad(): boolean {
-    return this.authService.userListDataLoadSubject.value;
+    return this.authService.userListDataLoad.value;
   }
 
   /** 사용자 정보 */

@@ -11,21 +11,20 @@ export class HumanService {
     private http: HttpClient,
   ) {}
 
-  employeeSubject = new BehaviorSubject<EmployeeResponseDTO>(null);
-  employeeDataLoadSubject = new BehaviorSubject<boolean>(false);
-
   /** 직원 정보 */
-  employee$ = this.employeeSubject.asObservable();
+  employee = new BehaviorSubject<EmployeeResponseDTO>(null);
+  employee$ = this.employee.asObservable();
 
   /** 직원 정보 데이터 로드 완료 여부 */
-  employeeDataLoad$ = this.employeeDataLoadSubject.asObservable();
+  employeeDataLoad = new BehaviorSubject<boolean>(false);
+  employeeDataLoad$ = this.employeeDataLoad.asObservable();
 
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
     this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`)
     .subscribe(data => {
-      this.employeeSubject.next(data);
-      this.employeeDataLoadSubject.next(true);
+      this.employee.next(data);
+      this.employeeDataLoad.next(true);
     });
   }
 

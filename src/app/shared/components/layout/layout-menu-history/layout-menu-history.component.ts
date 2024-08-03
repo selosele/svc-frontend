@@ -26,7 +26,7 @@ export class LayoutMenuHistoryComponent implements OnInit {
 
   /** 메뉴접속이력 목록 */
   get menuHistoryList() {
-    return this.menuService.menuHistoryListSubject.value;
+    return this.menuService.menuHistoryList.value;
   }
 
   /** 메뉴 ID */

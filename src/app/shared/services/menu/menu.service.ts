@@ -15,31 +15,29 @@ export class MenuService {
   /** 메뉴접속이력 목록 저장 키 */
   readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
 
-  menuHistoryListSubject = new BehaviorSubject<MenuResponseDTO[]>([]);
-
-  private menuListSubject = new BehaviorSubject<MenuResponseDTO[]>([]);
-  private menuTreeSubject = new BehaviorSubject<MenuTree[]>([]);
-  private currentMenuIdSubject = new BehaviorSubject<number>(null);
-  private currentUpMenuIdSubject = new BehaviorSubject<number>(null);
-  private currentPageTitleSubject = new BehaviorSubject<string>(null);
-
   /** 메뉴 목록 */
-  menuList$ = this.menuListSubject.asObservable();
+  private menuList = new BehaviorSubject<MenuResponseDTO[]>([]);
+  menuList$ = this.menuList.asObservable();
 
   /** 메뉴 트리 목록 */
-  menuTree$ = this.menuTreeSubject.asObservable();
+  private menuTree = new BehaviorSubject<MenuTree[]>([]);
+  menuTree$ = this.menuTree.asObservable();
 
   /** 현재 메뉴 ID */
-  currentMenuId$ = this.currentMenuIdSubject.asObservable();
+  private currentMenuId = new BehaviorSubject<number>(null);
+  currentMenuId$ = this.currentMenuId.asObservable();
 
   /** 현재 상위 메뉴 ID */
-  currentUpMenuId$ = this.currentUpMenuIdSubject.asObservable();
+  private currentUpMenuId = new BehaviorSubject<number>(null);
+  currentUpMenuId$ = this.currentUpMenuId.asObservable();
 
   /** 현재 페이지 타이틀 */
-  currentPageTitle$ = this.currentPageTitleSubject.asObservable();
+  private currentPageTitle = new BehaviorSubject<string>(null);
+  currentPageTitle$ = this.currentPageTitle.asObservable();
 
   /** 메뉴접속이력 목록 */
-  menuHistoryList$ = this.menuHistoryListSubject.asObservable();
+  menuHistoryList = new BehaviorSubject<MenuResponseDTO[]>([]);
+  menuHistoryList$ = this.menuHistoryList.asObservable();
 
   /** 메뉴 목록을 조회한다. */
   listMenu(getMenuRequestDTO?: GetMenuRequestDTO): void {
@@ -69,30 +67,30 @@ export class MenuService {
   /** 메뉴 목록 데이터를 설정한다. */
   setMenuList(menuList: MenuResponseDTO[]): void {
     const menuTree = this.createMenuTree(menuList);
-    this.menuTreeSubject.next(menuTree);
-    this.menuListSubject.next(menuList);
+    this.menuTree.next(menuTree);
+    this.menuList.next(menuList);
   }
 
   /** 현재 메뉴 ID 데이터를 설정한다. */
   setCurrentMenuId(currentMenuId: number): void {
-    this.currentMenuIdSubject.next(currentMenuId);
+    this.currentMenuId.next(currentMenuId);
   }
 
   /** 현재 상위 메뉴 ID 데이터를 설정한다. */
   setCurrentUpMenuId(currentUpMenuId: number): void {
-    this.currentUpMenuIdSubject.next(currentUpMenuId);
+    this.currentUpMenuId.next(currentUpMenuId);
   }
 
   /** 현재 페이지 타이틀 데이터를 설정한다. */
   setCurrentPageTitle(currentPageTitle: string): void {
-    this.currentPageTitleSubject.next(currentPageTitle);
+    this.currentPageTitle.next(currentPageTitle);
   }
 
   /** 메뉴접속이력 목록 데이터를 설정한다. */
   setMenuHistoryList(list: MenuResponseDTO[]): void {
     this.currentMenuId$.subscribe((menuId) => {
       list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
-      this.menuHistoryListSubject.next(list);
+      this.menuHistoryList.next(list);
       window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
     });
   }

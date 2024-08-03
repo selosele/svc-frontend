@@ -35,7 +35,7 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 직원 정보 데이터 로드 완료 여부 */
   get employeeDataLoad(): boolean {
-    return this.humanService.employeeDataLoadSubject.value;
+    return this.humanService.employeeDataLoad.value;
   }
   
   /** 인증된 사용자 정보 */
@@ -60,7 +60,7 @@ export class HumanMyInfoComponent implements OnInit {
     this.user = this.authService.getAuthenticatedUser();
     this.initForm();
 
-    if (isEmpty(this.humanService.employeeSubject.value)) {
+    if (isEmpty(this.humanService.employee.value)) {
       this.getEmployee();
     }
     this.setMyInfoForm();

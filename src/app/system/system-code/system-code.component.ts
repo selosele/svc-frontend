@@ -32,12 +32,12 @@ export class SystemCodeComponent implements OnInit {
 
   /** 코드 트리 목록 */
   get codeTree(): CodeTree[] {
-    return this.codeService.codeTreeSubject.value;
+    return this.codeService.codeTree.value;
   }
 
   /** 코드 목록 데이터 로드 완료 여부 */
   get codeListDataLoad(): boolean {
-    return this.codeService.codeListDataLoadSubject.value;
+    return this.codeService.codeListDataLoad.value;
   }
 
   /** 코드 정보 */
