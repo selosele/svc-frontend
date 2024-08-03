@@ -94,13 +94,13 @@ export class UiTableComponent implements OnInit {
 
   /** 테이블 행 정렬 커스텀 이벤트 */
   protected onSort(event: SortEvent): void {
-    if (this.isSorted == null || this.isSorted === undefined) {
+    if (this.isSorted === null || this.isSorted === undefined) {
       this.isSorted = true;
       this.sortTableData(event);
-    } else if (this.isSorted == true) {
+    } else if (this.isSorted === true) {
       this.isSorted = false;
       this.sortTableData(event);
-    } else if (this.isSorted == false) {
+    } else if (this.isSorted === false) {
       this.isSorted = null;
       this.data = [...this.initialValue];
       this.table.reset();
@@ -114,9 +114,9 @@ export class UiTableComponent implements OnInit {
       const value2 = data2[event.field];
       let result = null;
 
-      if (value1 == null && value2 != null) result = -1;
-      else if (value1 != null && value2 == null) result = 1;
-      else if (value1 == null && value2 == null) result = 0;
+      if (value1 === null && value2 !== null) result = -1;
+      else if (value1 !== null && value2 === null) result = 1;
+      else if (value1 === null && value2 === null) result = 0;
       else if (typeof value1 === 'string' && typeof value2 === 'string') result = value1.localeCompare(value2);
       else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
 
