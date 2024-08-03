@@ -51,6 +51,7 @@ export class SystemUserComponent implements OnInit {
     { field: 'userId',       header: '사용자 ID' },
     { field: 'userAccount',  header: '사용자 계정' },
     { field: 'employeeName', header: '직원 명' },
+    { field: 'companyName',  header: '회사 명' },
     { field: 'userActiveYn', header: '사용자 활성화 여부' },
     { field: 'rolesString',  header: '권한' },
   ];
