@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SplitterModule } from 'primeng/splitter';
 import { UiButtonComponent } from '../ui-button/ui-button.component';

@@ -22,7 +22,9 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const loadingService = inject(UiLoadingService);
   const messsageService = inject(UiMessageService);
 
-  loadingService.setLoading(true); // HTTP 요청이 진행 중일 때 로딩 레이어를 표출
+  if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
+    loadingService.setLoading(true); // HTTP 요청이 진행 중일 때 로딩 레이어를 표출
+  }
   
   return next(newReq).pipe(
     catchError((err: HttpErrorResponse) => {
