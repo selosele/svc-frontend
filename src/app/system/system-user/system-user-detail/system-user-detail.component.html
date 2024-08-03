@@ -80,17 +80,26 @@
   <div class="input-box">
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeCompany.corporateName')"
-      [label]="'회사(법인) 명'"
+      [label]="'회사(법인)명'"
     />
 
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeCompany.companyName')"
       [label]="'회사명'"
     />
+  </div>
 
-    <ui-text-field
+  <div class="input-box">
+    <ui-date-field
       [control]="userDetailForm.get('employee.employeeCompany.joinYmd')"
       [label]="'입사일자'"
+      [dateFormat]="'yymmdd'"
+    />
+
+    <ui-date-field
+      [control]="userDetailForm.get('employee.employeeCompany.quitYmd')"
+      [label]="'퇴사일자'"
+      [dateFormat]="'yymmdd'"
     />
   </div>
 

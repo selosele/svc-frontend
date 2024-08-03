@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDateFieldComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
@@ -19,6 +19,7 @@ import { HumanService } from '@app/human/human.service';
     UiCheckboxComponent,
     UiCheckboxGroupComponent,
     UiDropdownComponent,
+    UiDateFieldComponent,
     UiButtonComponent,
   ],
   selector: 'system-user-detail',
@@ -83,23 +84,23 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     this.userDetailForm = this.fb.group({
 
       // 사용자 정보
-      userId: [''],                                         // 사용자 ID
+      userId: [''],                                           // 사용자 ID
       userAccount: ['', [
         FormValidator.required,
-        FormValidator.maxLength(20)                         // 사용자 계정
+        FormValidator.maxLength(20)                           // 사용자 계정
       ]],
-      userPassword: ['', [                                  // 사용자 비밀번호
+      userPassword: ['', [                                    // 사용자 비밀번호
         FormValidator.required,
         FormValidator.maxLength(12)
       ]],
-      userActiveYn: ['', [FormValidator.required]],         // 사용자 활성화 여부
-      roles: ['', [FormValidator.required]],                // 사용자 권한
+      userActiveYn: ['', [FormValidator.required]],           // 사용자 활성화 여부
+      roles: ['', [FormValidator.required]],                  // 사용자 권한
 
       // 직원 정보
       employee: this.fb.group({
-        employeeId: ['', [FormValidator.required]],         // 직원 ID
-        employeeName: ['', [FormValidator.required]],       // 직원명
-        genderCode: ['', [FormValidator.required]],         // 성별 코드
+        employeeId: ['', [FormValidator.required]],           // 직원 ID
+        employeeName: ['', [FormValidator.required]],         // 직원명
+        genderCode: ['', [FormValidator.required]],           // 성별 코드
 
         // 직원 회사 정보
         employeeCompany: this.fb.group({
@@ -107,6 +108,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           corporateName: ['', [FormValidator.required]],      // 법인명
           companyName: ['', [FormValidator.required]],        // 회사명
           joinYmd: ['', [FormValidator.required]],            // 입사일자
+          quitYmd: [''],                                      // 퇴사일자
         }),
 
         // 직원 부서 목록

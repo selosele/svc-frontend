@@ -1,0 +1,25 @@
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
+
+<div class="input-button-box">
+  <p-calendar
+    [name]="name"
+    [readonlyInput]="readonly"
+    [formControl]="formControl"
+    [dateFormat]="dateFormat"
+    [dataType]="dataType"
+    [showIcon]="showIcon"
+    [showClear]="showClear"
+    [placeholder]="placeholder"
+    [class.block]="block"
+    [class.readonly]="readonly"
+    (onInput)="setErrorMessage()"
+    (onBlur)="setErrorMessage()"
+  />
+  <ng-content select="[button]"></ng-content>
+</div>
+
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
