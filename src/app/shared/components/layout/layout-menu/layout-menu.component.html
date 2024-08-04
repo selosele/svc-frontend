@@ -2,49 +2,47 @@
   <ul class="layout-menu__depth1">
     <ng-container *ngFor="let menu1 of menuTree$ | async">
       <li
-        *ngIf="menu1.upMenuId === null"
-        [class.active]="((currentUpMenuId$ | async) ?? (currentMenuId$ | async)) === menu1.menuId"
-        (mouseenter)="toggleSubMenu(menu1.menuId, true)"
-        (mouseleave)="toggleSubMenu(menu1.menuId, false)"
-        (focusin)="toggleSubMenu(menu1.menuId, true)"
-        (focusout)="toggleSubMenu(menu1.menuId, false)"
+        *ngIf="menu1.data.upMenuId === null"
+        [class.active]="((currentUpMenuId$ | async) ?? (currentMenuId$ | async)) === menu1.data.menuId"
+        (mouseenter)="toggleSubMenu(menu1.data.menuId, true)"
+        (mouseleave)="toggleSubMenu(menu1.data.menuId, false)"
+        (focusin)="toggleSubMenu(menu1.data.menuId, true)"
+        (focusout)="toggleSubMenu(menu1.data.menuId, false)"
       >
         @if (menu1?.children.length > 0) {
           <a
-            [href]="menu1.menuUrl"
+            [href]="menu1.data.menuUrl"
             (click)="onClick($event)"
             ngClass="link"
           >
-            {{ menu1.menuName }}
+            {{ menu1.data.menuName }}
           </a>
         }
         @else {
           <a
-            [routerLink]="menu1.menuUrl"
-            [queryParams]="{ menuId: menu1.menuId }"
+            [routerLink]="menu1.data.menuUrl"
+            [queryParams]="{ menuId: menu1.data.menuId }"
             ngClass="link"
           >
-            {{ menu1.menuName }}
+            {{ menu1.data.menuName }}
           </a>
         }
         
-        <ul
-          *ngIf="menu1?.children.length > 0"
-          [class.active]="activeMenuId === menu1.menuId"
-          class="layout-menu__depth2"
-        >
-          <ng-container *ngFor="let menu2 of menu1.children">
-            <li [class.active]="(currentMenuId$ | async) === menu2.menuId">
-              <a
-                [routerLink]="menu2.menuUrl"
-                [queryParams]="{ menuId: menu2.menuId }"
-                ngClass="link"
-              >
-                {{ menu2.menuName }}
-              </a>
-            </li>
-          </ng-container>
-        </ul>
+        @if (menu1?.children.length > 0) {
+          <ul [class.active]="activeMenuId === menu1.data.menuId" class="layout-menu__depth2">
+            <ng-container *ngFor="let menu2 of menu1.children">
+              <li [class.active]="(currentMenuId$ | async) === menu2.data.menuId">
+                <a
+                  [routerLink]="menu2.data.menuUrl"
+                  [queryParams]="{ menuId: menu2.data.menuId }"
+                  ngClass="link"
+                >
+                  {{ menu2.data.menuName }}
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+        }
       </li>
     </ng-container>
   </ul>
