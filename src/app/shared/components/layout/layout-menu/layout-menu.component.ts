@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MenuService } from '@app/shared/services';
+import { MenuService } from '@app/menu/menu.service';
 
 @Component({
   standalone: true,

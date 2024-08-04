@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/menu/menu.model';
 
 @Injectable({ providedIn: 'root' })
@@ -47,15 +47,20 @@ export class MenuService {
     });
   }
 
+  /** 권한별 메뉴 목록을 조회한다. */
+  listMenuByRole(getMenuRequestDTO?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
+    return this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...getMenuRequestDTO } });
+  }
+
   /** 메뉴 관련 데이터를 설정한다. */
   setData(): void {
-    combineLatest([this.route.queryParams, this.menuList$]).subscribe(([params, menuList]) => {
+    combineLatest([this.route.queryParams, this.menuList$]).subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) {
         this.listMenu();
       }
 
       if (menuList.length > 0) {
-        const menuId = Number(params?.menuId);
+        const menuId = Number(queryParams?.menuId);
   
         this.setCurrentMenuId(menuId);
         this.setCurrentUpMenuId(menuList.find(x => x.menuId === menuId)?.upMenuId);
@@ -102,7 +107,7 @@ export class MenuService {
     for (const menu of data) {
       if (menu.upMenuId === upMenuId) {
         const children = this.createMenuTree(data, menu.menuId);
-        tree.push({ ...menu, children });
+        tree.push({ data: menu, children, expanded: false });
       }
     }
     return tree;

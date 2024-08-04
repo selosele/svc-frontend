@@ -4,7 +4,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { CodeService } from './code/code.service';
-import { MenuService } from './shared/services';
+import { MenuService } from './menu/menu.service';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
 
 @Component({

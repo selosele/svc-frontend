@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
-import { MenuService } from '@app/shared/services';
+import { MenuService } from '@app/menu/menu.service';
 import { isNotEmpty } from '@app/shared/utils';
 
 /** 메뉴 guard */

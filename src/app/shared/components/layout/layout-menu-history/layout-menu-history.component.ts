@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MenuResponseDTO } from '../../../../menu/menu.model';
 import { UiButtonComponent } from '../../ui';
-import { MenuService } from '@app/shared/services';
+import { MenuService } from '@app/menu/menu.service';
 
 @Component({
   standalone: true,
