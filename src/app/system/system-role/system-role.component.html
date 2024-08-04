@@ -10,7 +10,7 @@
   <ui-skeleton />
 }
 @else {
-  <ui-table #table
+  <ui-table #table first
     [useAdd]="false"
     [useRemove]="false"
     [useRowIndex]="true"
@@ -19,5 +19,6 @@
     [dataKey]="'roleId'"
     [selection]="selection"
     (refresh)="onRefresh()"
+    (rowSelect)="onRowSelect($event)"
   />
 }

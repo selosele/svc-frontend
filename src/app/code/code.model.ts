@@ -37,7 +37,7 @@ export class CodeTree extends CodeResponseDTO {
   data?: CodeResponseDTO;
 
   /** 하위 코드 목록 */
-  children?: CodeResponseDTO[];
+  children?: CodeTree[];
 
   /** 확장 여부 */
   expanded?: boolean = false;

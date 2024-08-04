@@ -19,6 +19,14 @@ export class LoginResponseDTO {
 
 }
 
+/** 사용자 조회 요청 DTO */
+export class GetUserRequestDTO {
+
+  /** 권한 ID 목록 */
+  roleIdList?: string[];
+    
+}
+
 /** 사용자 수정 요청 DTO */
 export class UpdateUserRequestDTO {
 

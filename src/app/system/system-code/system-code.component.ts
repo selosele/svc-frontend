@@ -46,7 +46,7 @@ export class SystemCodeComponent implements OnInit {
   /** 테이블 선택된 행 */
   selection: TreeNode;
 
-  /** 테이블 컬럼 목록 */
+  /** 테이블 컬럼 */
   cols = [
     { field: 'codeId',      header: '코드 ID' },
     { field: 'codeValue',   header: '코드 값' },

@@ -13,6 +13,9 @@ export class GetMenuRequestDTO {
   /** 삭제 여부 */
   deleteYn?: string = 'N';
 
+  /** 권한 ID 목록 */
+  roleIdList?: string[];
+
 }
 
 /** 메뉴 응답 DTO */
@@ -47,8 +50,11 @@ export class MenuResponseDTO {
 /** 메뉴 트리 */
 export class MenuTree extends MenuResponseDTO {
 
+  /** 메뉴 */
+  data?: MenuResponseDTO;
+
   /** 하위 메뉴 목록 */
-  children?: MenuResponseDTO[];
+  children?: MenuTree[];
 
   /** 확장 여부 */
   expanded?: boolean = false;
