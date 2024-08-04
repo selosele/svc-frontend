@@ -1,0 +1,7 @@
+<p-dialog header="알림" [(visible)]="visible" [modal]="true" [style]="{ minWidth: '10rem' }">
+  <p>{{ message }}</p>
+
+  <ng-template pTemplate="footer">
+    <ui-button [severity]="'primary'" (click)="closeAlert($event)">확인</ui-button>
+  </ng-template>
+</p-dialog>

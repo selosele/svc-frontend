@@ -7,7 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { routes } from './app.routes';
 import { apiInterceptor } from './shared/interceptors';
 import { jwtOptionsFactory } from './shared/utils';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +17,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([apiInterceptor])
     ),
     provideAnimations(),
+    DynamicDialogConfig,
     DialogService,
     MessageService,
     ConfirmationService,
