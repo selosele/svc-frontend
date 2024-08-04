@@ -15,7 +15,7 @@
     [outlined]="true"
   />
   
-  <ui-button
+  <ui-button *ngIf="useRefresh"
     [size]="'small'"
     [severity]="'success'"
     [icon]="'pi-refresh'"

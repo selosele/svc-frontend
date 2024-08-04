@@ -28,6 +28,9 @@ export class UiTableComponent implements OnInit {
   /** 테이블 행 삭제 버튼 사용여부 */
   @Input() useRemove = true;
 
+  /** 테이블 새로고침 버튼 사용여부 */
+  @Input() useRefresh = true;
+
   /** 테이블 row index 사용여부 */
   @Input() useRowIndex = false;
 

@@ -20,6 +20,9 @@ export class UiTableButtonsComponent {
   /** 테이블 행 삭제 버튼 사용여부 */
   @Input() useRemove = true;
 
+  /** 테이블 새로고침 버튼 사용여부 */
+  @Input() useRefresh = true;
+
   /** 테이블 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<Event>();
 
