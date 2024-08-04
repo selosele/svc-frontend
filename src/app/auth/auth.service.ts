@@ -51,9 +51,7 @@ export class AuthService {
     .subscribe(() => {
       this.removeAccessToken();
       this.dialogService.closeAllDialog();
-      this.router.navigateByUrl(LOGIN_PAGE_PATH).then(() => {
-        window.location.reload();
-      });
+      window.location.href = LOGIN_PAGE_PATH; // 로그아웃 시에는 페이지 새로고침을 발생시켜서 모든 state를 초기화한다.
     });
   }
 

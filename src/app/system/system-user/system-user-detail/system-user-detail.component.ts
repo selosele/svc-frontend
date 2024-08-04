@@ -99,7 +99,10 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       // 직원 정보
       employee: this.fb.group({
         employeeId: ['', [FormValidator.required]],           // 직원 ID
-        employeeName: ['', [FormValidator.required]],         // 직원명
+        employeeName: ['', [                                  // 직원명
+          FormValidator.required,
+          FormValidator.maxLength(30),
+        ]],
         genderCode: ['', [FormValidator.required]],           // 성별 코드
 
         // 직원 회사 정보
