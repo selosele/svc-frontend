@@ -94,7 +94,7 @@ export class HumanMyInfoComponent implements OnInit {
     this.humanService.updateEmployee(value)
     .subscribe((data) => {
       this.messageService.toastSuccess('저장되었습니다.');
-      this.setMyInfoFormData(data);
+      this.getEmployee();
     });
   }
 

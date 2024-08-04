@@ -54,7 +54,7 @@ export class LayoutHeaderComponent implements OnInit {
   showMyPageModal(event): void {
     this.dialogService.open(HumanMyInfoComponent, {
       header: '내 정보 조회',
-      data: {},
+      focusOnShow: false,
     });
   }
 
