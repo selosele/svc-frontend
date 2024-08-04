@@ -2,6 +2,7 @@
   <ui-table-buttons
 		[useAdd]="useAdd"
 		[useRemove]="useRemove"
+		[useRefresh]="useRefresh"
 		(refresh)="onRefresh($event)"
 	>
 		<ng-content [select]="buttons"></ng-content>

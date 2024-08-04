@@ -30,6 +30,9 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 행 삭제 버튼 사용여부 */
   @Input() useRemove = true;
 
+  /** 트리테이블 새로고침 버튼 사용여부 */
+  @Input() useRefresh = true;
+
   /** 트리테이블 행 선택 모드 */
   @Input() selectionMode: 'single' | 'multiple' = 'single';
 
