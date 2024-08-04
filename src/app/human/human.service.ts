@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { isEmpty } from '@app/shared/utils';
-import { DepartmentResponseDTO, EmployeeResponseDTO } from './human.model';
+import { DepartmentResponseDTO, EmployeeResponseDTO, UpdateEmployeeRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -26,6 +26,12 @@ export class HumanService {
       this.employee.next(data);
       this.employeeDataLoad.next(true);
     });
+  }
+
+  /** 직원을 수정한다. */
+  updateEmployee(updateEmployeeRequestDTO: UpdateEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
+    const { employeeId } = updateEmployeeRequestDTO;
+    return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, updateEmployeeRequestDTO);
   }
 
   /** 부서 목록에서 모든 부서명을 연결해서 반환한다. */

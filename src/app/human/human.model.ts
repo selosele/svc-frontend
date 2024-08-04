@@ -1,3 +1,17 @@
+/** 직원 수정 요청 DTO */
+export class UpdateEmployeeRequestDTO {
+
+  /** 직원 ID */
+  employeeId?: number;
+
+  /** 직원명 */
+  employeeName?: string;
+
+  /** 성별 코드 */
+  genderCode?: string;
+
+}
+
 /** 직원 응답 DTO */
 export class EmployeeResponseDTO {
 

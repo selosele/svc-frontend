@@ -8,6 +8,7 @@ import { UiMessageService } from '@app/shared/services';
 import { FormValidator, LayoutPageDescriptionComponent, UiButtonComponent, UiDropdownComponent, UiFormComponent, UiSkeletonComponent, UiTextFieldComponent } from '@app/shared/components';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
+import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
 
 @Component({
   standalone: true,
@@ -86,8 +87,15 @@ export class HumanMyInfoComponent implements OnInit {
   }
 
   /** 직원 정보를 저장한다. */
-  onSubmitEmployee(value: any): void {
-    console.log(value);
+  async onSubmitEmployee(value: UpdateEmployeeRequestDTO): Promise<void> {
+    const confirm = await this.messageService.confirm1('저장하시겠습니까?');
+    if (!confirm) return;
+
+    this.humanService.updateEmployee(value)
+    .subscribe((data) => {
+      this.messageService.toastSuccess('저장되었습니다.');
+      this.setMyInfoFormData(data);
+    });
   }
 
   /** 새로고침 버튼을 클릭한다. */
@@ -113,7 +121,10 @@ export class HumanMyInfoComponent implements OnInit {
 
       // 직원 정보
       employeeId: ['', [FormValidator.required]],         // 직원 ID
-      employeeName: ['', [FormValidator.required]],       // 직원명
+      employeeName: ['', [                                // 직원명
+        FormValidator.required,
+        FormValidator.maxLength(30),
+      ]],
       genderCode: ['', [FormValidator.required]],         // 성별 코드
 
       // 직원 회사 정보
@@ -136,14 +147,19 @@ export class HumanMyInfoComponent implements OnInit {
   /** 직원 정보 폼을 설정한다. */
   private setMyInfoForm(): void {
     this.humanService.employee$.subscribe(employee => {
-      this.employeeForm.patchValue({
-        ...employee,
-        employeeCompany: employee?.employeeCompanies[0],
-        departments: {
-          ...employee?.departments[0],
-          departmentName: this.humanService.findDepartmentName(employee?.departments),
-        },
-      });
+      this.setMyInfoFormData(employee);
+    });
+  }
+
+  /** 직원 정보 폼 데이터를 설정한다. */
+  private setMyInfoFormData(employee: EmployeeResponseDTO): void {
+    this.employeeForm.patchValue({
+      ...employee,
+      employeeCompany: employee?.employeeCompanies[0],
+      departments: {
+        ...employee?.departments[0],
+        departmentName: this.humanService.findDepartmentName(employee?.departments),
+      },
     });
   }
 
