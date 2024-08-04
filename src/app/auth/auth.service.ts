@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
+import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
 import { UiDialogService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
@@ -62,6 +62,11 @@ export class AuthService {
       this.userList.next(data);
       this.userListDataLoad.next(true);
     });
+  }
+
+  /** 권한별 사용자 목록을 조회한다. */
+  listUserByRole(getUserRequestDTO: GetUserRequestDTO): Observable<UserResponseDTO[]> {
+    return this.http.get<UserResponseDTO[]>('/common/auth/users', { params: { ...getUserRequestDTO } });
   }
 
   /** 사용자를 조회한다. */
