@@ -1,4 +1,5 @@
 import { Injectable, Type } from '@angular/core';
+import { UiAlertComponent } from '@app/shared/components/ui';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject } from 'rxjs';
 
@@ -23,9 +24,8 @@ export class UiDialogService {
   }
 
   /** alert을 표출한다. */
-  alert(message: string): void {
-    this.alertMessage.next(message);
-    this.alertVisible.next(true);
+  alert(message: string): DynamicDialogRef<UiAlertComponent> {
+    return this.dialogService.open(UiAlertComponent, { header: '알림', modal: true, data: { message, type: 'alert' } });
   }
 
   /** 모든 modal을 닫는다. */

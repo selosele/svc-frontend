@@ -1,12 +1,12 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
-import { DialogModule } from 'primeng/dialog';
-import { UiDialogService } from '@app/shared/services';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   standalone: true,
   imports: [
-    DialogModule,
+    CommonModule,
     UiButtonComponent,
   ],
   selector: 'ui-alert',
@@ -14,26 +14,37 @@ import { UiDialogService } from '@app/shared/services';
   styleUrl: './ui-alert.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class UiAlertComponent {
+export class UiAlertComponent implements OnInit {
 
   constructor(
-    private dialogService: UiDialogService,
+    private config: DynamicDialogConfig,
+    private dialogRef: DynamicDialogRef,
   ) {}
+
+  /** alert 표출 상태 */
+  visible = false;
 
   /** alert 메시지 */
   get message(): string {
-    return this.dialogService.alertMessage.value;
+    return this.config?.data?.['message'];
   }
 
-  /** alert 표출 상태 */
-  get visible(): boolean {
-    return this.dialogService.alertVisible.value;
+  /** modal type */
+  get type(): string {
+    return this.config?.data?.['type'];
+  }
+
+  ngOnInit(): void {
+    if (this.type === 'alert') {
+      this.visible = true;
+    }
   }
 
   /** alert을 닫는다. */
   closeAlert(event: Event): void {
-    this.dialogService.alertMessage.next('');
-    this.dialogService.alertVisible.next(false);
+    this.visible = false;
+    this.dialogRef.close();
+    this.dialogRef.destroy();
   }
 
 }

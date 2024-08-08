@@ -4,11 +4,13 @@ import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.
 import { DropdownData } from '@app/shared/models';
 import { AuthService } from '@app/auth/auth.service';
 import { CodeService } from '@app/code/code.service';
-import { UiMessageService } from '@app/shared/services';
-import { FormValidator, LayoutPageDescriptionComponent, UiButtonComponent, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiSkeletonComponent, UiTextFieldComponent } from '@app/shared/components';
+import { UiDialogService, UiMessageService } from '@app/shared/services';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
+import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
+import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 
 @Component({
   standalone: true,
@@ -29,9 +31,10 @@ export class HumanMyInfoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private messageService: UiMessageService,
+    private dialogService: UiDialogService,
     private authService: AuthService,
     private codeService: CodeService,
-    private messageService: UiMessageService,
     private humanService: HumanService,
   ) {}
 
@@ -82,8 +85,10 @@ export class HumanMyInfoComponent implements OnInit {
 
     this.authService.updatePassword(value)
     .subscribe((data) => {
-      this.messageService.toastSuccess('정상적으로 변경되었습니다. 다시 로그인해주시기 바랍니다.');
-      this.authService.logout();
+      const alert = this.dialogService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
+      alert.onClose.subscribe((data) => {
+        this.authService.logout();
+      });
     });
   }
 
@@ -94,8 +99,10 @@ export class HumanMyInfoComponent implements OnInit {
 
     this.humanService.updateEmployee(value)
     .subscribe((data) => {
-      this.messageService.toastSuccess('저장되었습니다.');
-      this.getEmployee();
+      const alert = this.dialogService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
+      alert.onClose.subscribe((data) => {
+        this.authService.logout();
+      });
     });
   }
 
