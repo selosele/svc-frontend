@@ -33,11 +33,21 @@ export class UiDateFieldComponent extends FormFieldComponent {
   /** 하단 버튼 표출 여부 */
   @Input() showButtonBar = true;
 
+  /** focus시 캘린더 표출 여부 */
+  @Input() showOnFocus = true;
+
   /** 캘린더 팝업 위치 */
   @Input() appendTo = 'body';
 
   override ngOnInit(): void {
     super.ngOnInit();
+
+    // readonly일 때는 캘린더를 표출할 수 없도록 한다.
+    if (this.readonly) {
+      this.showIcon = false;
+      this.showClear = false;
+      this.showOnFocus = false;
+    }
   }
 
 }

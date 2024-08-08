@@ -92,9 +92,10 @@
     </div>
   
     <div class="input-box">
-      <ui-text-field
+      <ui-date-field
         [control]="employeeForm.get('employeeCompany.joinYmd')"
         [label]="'입사일자'"
+        [dateFormat]="'yymmdd'"
         [readonly]="true"
       />
 
