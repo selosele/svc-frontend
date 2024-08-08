@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { LoginRequestDTO } from '../auth.model';
-import { FormValidator, UiButtonComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiButtonComponent } from '@app/shared/components/ui';
 
 @Component({
   standalone: true,

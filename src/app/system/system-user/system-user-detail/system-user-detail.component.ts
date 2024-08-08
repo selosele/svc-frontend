@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidator, UiButtonComponent, UiCheckboxComponent, UiCheckboxGroupComponent, UiDateFieldComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiDateFieldComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiButtonComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { DropdownData } from '@app/shared/models';

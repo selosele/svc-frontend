@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserResponseDTO } from '@app/auth/auth.model';
 import { MenuTree } from '@app/menu/menu.model';
-import { LayoutPageDescriptionComponent, UiTableComponent, UiTreeTableComponent } from '@app/shared/components';
+import { UiTableComponent, UiTreeTableComponent } from '@app/shared/components/ui';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({

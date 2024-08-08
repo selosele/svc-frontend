@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutPageDescriptionComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components';
+import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { AuthService } from '@app/auth/auth.service';
 import { RoleResponseDTO } from '@app/auth/auth.model';
 import { UiDialogService } from '@app/shared/services';

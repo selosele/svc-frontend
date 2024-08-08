@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { LayoutPageDescriptionComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components';
+import { UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components/ui';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CodeService } from '../../code/code.service';
 import { CodeTree } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';

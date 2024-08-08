@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LayoutPageDescriptionComponent, UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components';
+import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { AuthService } from '@app/auth/auth.service';
 import { UserResponseDTO } from '@app/auth/auth.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CodeResponseDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
-import { UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components';
+import { UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/models';
 import { UiMessageService } from '@app/shared/services';
 import { isNotObjectEmpty } from '@app/shared/utils';

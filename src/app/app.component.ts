@@ -5,7 +5,8 @@ import { filter } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
-import { LayoutHeaderComponent, LayoutMenuHistoryComponent, UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components';
+import { UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
+import { LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
 
 @Component({
   standalone: true,

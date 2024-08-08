@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LayoutPageDescriptionComponent } from '@app/shared/components';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 
 @Component({
   standalone: true,
