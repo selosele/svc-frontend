@@ -30,6 +30,9 @@ export class UiDateFieldComponent extends FormFieldComponent {
   /** 날짜 삭제 버튼 표출 여부 */
   @Input() showClear = true;
 
+  /** 하단 버튼 표출 여부 */
+  @Input() showButtonBar = true;
+
   override ngOnInit(): void {
     super.ngOnInit();
   }
