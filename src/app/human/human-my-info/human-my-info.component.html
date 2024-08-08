@@ -55,7 +55,26 @@
         [label]="'성별'"
         [data]="genderCodes"
       />
+
+      <ui-date-field
+        [control]="employeeForm.get('birthYmd')"
+        [label]="'생년월일'"
+        [dateFormat]="'yymmdd'"
+      />
+
+      <ui-text-field
+        [control]="employeeForm.get('phoneNumber')"
+        [label]="'휴대폰번호'"
+      />
+    </div>
   
+    <div class="input-box">
+      <ui-text-field
+        [control]="employeeForm.get('employeeCompany.companyName')"
+        [label]="'회사명'"
+        [readonly]="true"
+      />
+
       <ui-dropdown
         [control]="employeeForm.get('departments.rankCode')"
         [label]="'직급'"
@@ -73,25 +92,11 @@
   
     <div class="input-box">
       <ui-text-field
-        [control]="employeeForm.get('employeeCompany.corporateName')"
-        [label]="'회사(법인)명'"
-        [readonly]="true"
-      />
-  
-      <ui-text-field
-        [control]="employeeForm.get('employeeCompany.companyName')"
-        [label]="'회사명'"
-        [readonly]="true"
-      />
-
-      <ui-text-field
         [control]="employeeForm.get('employeeCompany.joinYmd')"
         [label]="'입사일자'"
         [readonly]="true"
       />
-    </div>
-  
-    <div class="input-box">
+
       <ui-text-field
         [control]="employeeForm.get('departments.departmentName')"
         [label]="'부서명'"

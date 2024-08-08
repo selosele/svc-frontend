@@ -5,7 +5,7 @@ import { DropdownData } from '@app/shared/models';
 import { AuthService } from '@app/auth/auth.service';
 import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
-import { FormValidator, LayoutPageDescriptionComponent, UiButtonComponent, UiDropdownComponent, UiFormComponent, UiSkeletonComponent, UiTextFieldComponent } from '@app/shared/components';
+import { FormValidator, LayoutPageDescriptionComponent, UiButtonComponent, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiSkeletonComponent, UiTextFieldComponent } from '@app/shared/components';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
@@ -17,6 +17,7 @@ import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
     UiFormComponent,
     UiButtonComponent,
     UiTextFieldComponent,
+    UiDateFieldComponent,
     UiDropdownComponent,
     LayoutPageDescriptionComponent,
   ],
@@ -126,6 +127,8 @@ export class HumanMyInfoComponent implements OnInit {
         FormValidator.maxLength(30),
       ]],
       genderCode: ['', [FormValidator.required]],         // 성별 코드
+      birthYmd: ['', [FormValidator.required]],           // 생년월일
+      phoneNumber: ['', [FormValidator.required]],        // 휴대폰번호
 
       // 직원 회사 정보
       employeeCompany: this.fb.group({

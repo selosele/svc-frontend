@@ -10,6 +10,12 @@ export class UpdateEmployeeRequestDTO {
   /** 성별 코드 */
   genderCode?: string;
 
+  /** 생년월일 */
+  birthYmd?: string;
+
+  /** 휴대폰번호 */
+  phoneNumber?: string;
+
 }
 
 /** 직원 응답 DTO */
@@ -23,6 +29,12 @@ export class EmployeeResponseDTO {
 
   /** 성별 코드 */
   genderCode?: string;
+
+  /** 생년월일 */
+  birthYmd?: string;
+
+  /** 휴대폰번호 */
+  phoneNumber?: string;
 
   /** 직원 회사 정보 */
   employeeCompanies?: EmployeeCompanyResponseDTO[];

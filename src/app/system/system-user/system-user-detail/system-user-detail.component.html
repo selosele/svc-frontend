@@ -78,6 +78,19 @@
   </div>
 
   <div class="input-box">
+    <ui-date-field
+      [control]="userDetailForm.get('employee.birthYmd')"
+      [label]="'생년월일'"
+      [dateFormat]="'yymmdd'"
+    />
+
+    <ui-text-field
+      [control]="userDetailForm.get('employee.phoneNumber')"
+      [label]="'휴대폰번호'"
+    />
+  </div>
+
+  <div class="input-box">
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeCompany.corporateName')"
       [label]="'회사(법인)명'"

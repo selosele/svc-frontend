@@ -104,6 +104,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           FormValidator.maxLength(30),
         ]],
         genderCode: ['', [FormValidator.required]],           // 성별 코드
+        birthYmd: ['', [FormValidator.required]],             // 생년월일
+        phoneNumber: ['', [FormValidator.required]],          // 휴대폰번호
 
         // 직원 회사 정보
         employeeCompany: this.fb.group({
