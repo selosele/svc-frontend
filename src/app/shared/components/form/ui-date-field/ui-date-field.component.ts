@@ -33,6 +33,9 @@ export class UiDateFieldComponent extends FormFieldComponent {
   /** 하단 버튼 표출 여부 */
   @Input() showButtonBar = true;
 
+  /** 캘린더 팝업 위치 */
+  @Input() appendTo = 'body';
+
   override ngOnInit(): void {
     super.ngOnInit();
   }
