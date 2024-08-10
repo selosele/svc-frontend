@@ -2,7 +2,7 @@
   {{ label }}
 </span>
 
-<div class="input-button-box">
+<div class="search-input-button-box">
   <input
     pInputText
     [type]="'text'"
@@ -16,9 +16,8 @@
     (blur)="setErrorMessage()"
   >
   <ui-button
-    [size]="'small'"
     [icon]="'pi-search'"
-    [severity]="'secondary'"
+    [severity]="'primary'"
     [title]="'회사 검색'"
     [ngStyle]="{ 'flex': '0' }"
     (click)="onSearch($event)"

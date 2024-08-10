@@ -23,6 +23,24 @@
   }
 }
 
+.search-input-button-box {
+  display: flex;
+
+  > * {
+    flex: 1;
+  }
+
+  .p-inputtext {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .p-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
 .input-message {
   margin-top: 0.625rem;
   font-size: 0.875rem;
