@@ -91,3 +91,37 @@ export class DepartmentResponseDTO {
   jobTitleCode?: string;
 
 }
+
+/** 회사 조회 요청 DTO */
+export class GetCompanyRequestDTO extends HttpRequestDTOBase {
+
+  /** 회사 ID */
+  companyId?: number;
+
+  /** 법인명 */
+  corporateName?: string;
+
+  /** 회사명 */
+  companyName?: string;
+
+  /** 사업자등록번호 */
+  registrationNumber?: string;
+
+}
+
+/** 회사 응답 DTO */
+export class CompanyResponseDTO {
+
+  /** 회사 ID */
+  companyId?: number;
+
+  /** 법인명 */
+  corporateName?: string;
+
+  /** 회사명 */
+  companyName?: string;
+
+  /** 사업자등록번호 */
+  registrationNumber?: string;
+
+}

@@ -4,8 +4,13 @@
   gap: 1.25rem;
   margin-bottom: 1.25rem;
 
-  > * {
+  > *:not(.search-button) {
     flex: 1;
+  }
+
+  .search-button {
+    display: inline-flex;
+    align-items: end;
   }
 }
 

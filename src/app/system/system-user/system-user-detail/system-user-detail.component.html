@@ -10,8 +10,7 @@
   <div class="input-box">
     <ui-text-field
       [control]="userDetailForm.get('userAccount')"
-      [label]="'사용자 계정'"
-      [readonly]="isUserNotEmpty"
+      [label]="'사용자 계정'" [readonly]="isUserNotEmpty" placeholder="20자 이내로 입력하세요"
     />
 
     @if (!isUserNotEmpty) {
@@ -55,7 +54,7 @@
   <div class="input-box">
     <ui-text-field
       [control]="userDetailForm.get('employee.employeeName')"
-      [label]="'직원명'"
+      [label]="'직원명'" placeholder="30자 이내로 입력하세요"
     />
 
     <ui-dropdown
@@ -91,12 +90,16 @@
   </div>
 
   <div class="input-box">
-    <ui-text-field
+    <ui-hidden-field
+      [control]="userDetailForm.get('employee.employeeCompany.companyId')"
+    />
+    
+    <ui-company-field
       [control]="userDetailForm.get('employee.employeeCompany.corporateName')"
       [label]="'회사(법인)명'"
     />
 
-    <ui-text-field
+    <ui-company-field
       [control]="userDetailForm.get('employee.employeeCompany.companyName')"
       [label]="'회사명'"
     />

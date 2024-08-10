@@ -1,0 +1,41 @@
+<ui-form [form]="searchCompanyForm" (submit)="onSubmit($event)">
+  <div class="input-box search-box">
+    <ui-text-field
+      [control]="searchCompanyForm.get('corporateName')"
+      [label]="'법인명'"
+    />
+
+    <ui-text-field
+      [control]="searchCompanyForm.get('companyName')"
+      [label]="'회사명'"
+    />
+
+    <ui-text-field
+      [control]="searchCompanyForm.get('registrationNumber')"
+      [label]="'사업자등록번호'"
+    />
+
+    <ui-button
+      [type]="'submit'"
+      [icon]="'pi-search'"
+      [class]="'search-button'"
+    />
+  </div>
+
+  @if (!companyListDataLoad) {
+    <ui-skeleton />
+    <ui-skeleton />
+    <ui-skeleton />
+  }
+  @else {
+    <ui-table #table
+      [useAdd]="false"
+      [useRemove]="false"
+      [cols]="cols"
+      [data]="companyList"
+      [dataKey]="'companyId'"
+      (refresh)="onRefresh()"
+      (rowDblclick)="onRowDblClick($event)"
+    />
+  }
+</ui-form>
