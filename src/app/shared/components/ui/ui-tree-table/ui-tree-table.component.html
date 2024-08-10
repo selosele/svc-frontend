@@ -39,7 +39,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" (dblclick)="onRowDblclick(rowData)">
           <td *ngFor="let col of columns; let i = index">
             <p-treeTableToggler [rowNode]="rowNode" (click)="onTogglerClick($event)" *ngIf="i === 0" />
             <ng-container *ngIf="col.field">

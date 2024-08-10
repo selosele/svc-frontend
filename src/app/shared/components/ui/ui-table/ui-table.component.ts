@@ -64,11 +64,14 @@ export class UiTableComponent implements OnInit {
   /** 테이블 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<Event>();
 
-  /** 테이블 선택 이벤트 */
+  /** 테이블 행 선택 이벤트 */
   @Output() rowSelect = new EventEmitter<TableRowSelectEvent>();
 
-  /** 테이블 선택 해제 이벤트 */
+  /** 테이블 행 선택 해제 이벤트 */
   @Output() unRowSelect = new EventEmitter<TableRowUnSelectEvent>();
+
+  /** 테이블 행 더블 클릭 이벤트 */
+  @Output() rowDblclick = new EventEmitter<any>();
 
   /** 테이블 데이터 초기 값 */
   private initialValue = [];
@@ -93,6 +96,11 @@ export class UiTableComponent implements OnInit {
   /** 테이블 행을 선택 해제한다. */
   protected onRowUnselect(event: TableRowUnSelectEvent): void {
     this.unRowSelect.emit(event);
+  }
+
+  /** 테이블 행을 더블 클릭한다. */
+  protected onRowDblclick(event: any): void {
+    this.rowDblclick.emit(event);
   }
 
   /** 테이블 행 정렬 커스텀 이벤트 */

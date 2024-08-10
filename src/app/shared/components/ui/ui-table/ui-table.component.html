@@ -39,7 +39,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-        <tr [pSelectableRow]="rowData">
+        <tr [pSelectableRow]="rowData" (dblclick)="onRowDblclick(rowData)">
           <td *ngIf="useRowIndex">
             {{ rowIndex + 1 }}
           </td>

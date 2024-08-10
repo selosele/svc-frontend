@@ -63,14 +63,17 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<Event>();
 
-  /** 트리테이블 선택 이벤트 */
+  /** 트리테이블 행 선택 이벤트 */
   @Output() nodeSelect = new EventEmitter<TreeTableNode>();
 
-  /** 트리테이블 선택 해제 이벤트 */
+  /** 트리테이블 행 선택 해제 이벤트 */
   @Output() nodeUnSelect = new EventEmitter<TreeTableNodeUnSelectEvent>();
 
   /** 트리테이블 행 그룹 펼치기 이벤트 */
   @Output() nodeExpand = new EventEmitter<TreeTableNodeUnSelectEvent>();
+
+  /** 테이블 행 더블 클릭 이벤트 */
+  @Output() rowDblclick = new EventEmitter<any>();
 
   /** 트리테이블 데이터 초기 값 */
   private initialValue = [];
@@ -110,6 +113,11 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 행을 필터링한다. */
   protected onFilterInput(event: Event, col: any): void {
     return this.treeTable.filter((event.target as HTMLInputElement).value, col.field, col.filterMatchMode);
+  }
+
+  /** 테이블 행을 더블 클릭한다. */
+  protected onRowDblclick(event: any): void {
+    this.rowDblclick.emit(event);
   }
 
   /** 트리테이블 행 정렬 커스텀 이벤트 */
