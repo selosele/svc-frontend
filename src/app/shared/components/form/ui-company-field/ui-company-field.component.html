@@ -1,0 +1,31 @@
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
+
+<div class="input-button-box">
+  <input
+    pInputText
+    [type]="'text'"
+    [name]="name"
+    [readonly]="true"
+    [formControl]="formControl"
+    [placeholder]="placeholder"
+    [class.block]="block"
+    [class.readonly]="readonly"
+    (keydown)="setErrorMessage()"
+    (blur)="setErrorMessage()"
+  >
+  <ui-button
+    [size]="'small'"
+    [icon]="'pi-search'"
+    [severity]="'secondary'"
+    [title]="'회사 검색'"
+    [ngStyle]="{ 'flex': '0' }"
+    (click)="onSearch($event)"
+  >
+  </ui-button>
+</div>
+
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
