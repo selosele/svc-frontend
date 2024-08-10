@@ -4,7 +4,7 @@ import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.
 import { DropdownData } from '@app/shared/models';
 import { AuthService } from '@app/auth/auth.service';
 import { CodeService } from '@app/code/code.service';
-import { UiDialogService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
@@ -32,7 +32,6 @@ export class HumanMyInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private messageService: UiMessageService,
-    private dialogService: UiDialogService,
     private authService: AuthService,
     private codeService: CodeService,
     private humanService: HumanService,
@@ -85,7 +84,7 @@ export class HumanMyInfoComponent implements OnInit {
 
     this.authService.updatePassword(value)
     .subscribe((data) => {
-      const alert = this.dialogService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
+      const alert = this.messageService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
       alert.onClose.subscribe((data) => {
         this.authService.logout();
       });
@@ -99,7 +98,7 @@ export class HumanMyInfoComponent implements OnInit {
 
     this.humanService.updateEmployee(value)
     .subscribe((data) => {
-      const alert = this.dialogService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
+      const alert = this.messageService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
       alert.onClose.subscribe((data) => {
         this.authService.logout();
       });

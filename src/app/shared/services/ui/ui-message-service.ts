@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { UiAlertComponent } from '@app/shared/components/ui';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Injectable({ providedIn: 'root' })
 export class UiMessageService {
 
   constructor(
     private messageService: MessageService,
+    private dialogService: DialogService,
     private confirmationService: ConfirmationService,
   ) {}
 
@@ -27,6 +30,11 @@ export class UiMessageService {
   /** 오류 toast 메시지를 표출한다. */
   toastError(detail: string, summary?: 'Error'): void {
     this.messageService.add({ severity: 'error', summary, detail });
+  }
+
+  /** alert을 표출한다. */
+  alert(message: string): DynamicDialogRef<UiAlertComponent> {
+    return this.dialogService.open(UiAlertComponent, { header: '알림', modal: true, data: { message, type: 'alert' } });
   }
 
   /** confirm 창(유형 1)을 표출한다. */
