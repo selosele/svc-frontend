@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiDateFieldComponent, UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
@@ -21,7 +21,9 @@ import { HumanService } from '@app/human/human.service';
     UiCheckboxGroupComponent,
     UiDropdownComponent,
     UiDateFieldComponent,
+    UiCompanyFieldComponent,
     UiButtonComponent,
+    UiHiddenFieldComponent,
   ],
   selector: 'system-user-detail',
   templateUrl: './system-user-detail.component.html',
@@ -99,7 +101,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
       // 직원 정보
       employee: this.fb.group({
-        employeeId: ['', [FormValidator.required]],           // 직원 ID
+        employeeId: [''],                                     // 직원 ID
         employeeName: ['', [                                  // 직원명
           FormValidator.required,
           FormValidator.maxLength(30),
@@ -110,7 +112,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
         // 직원 회사 정보
         employeeCompany: this.fb.group({
-          companyId: ['', [FormValidator.required]],          // 회사 ID
+          companyId: [''],                                    // 회사 ID
           corporateName: ['', [FormValidator.required]],      // 법인명
           companyName: ['', [FormValidator.required]],        // 회사명
           joinYmd: ['', [FormValidator.required]],            // 입사일자
