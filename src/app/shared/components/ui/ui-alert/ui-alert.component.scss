@@ -1,8 +1,11 @@
 .ui-alert {
+  &__message {
+    padding-bottom: 1rem;
+  }
+
   &__buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--surface-c);
+    text-align: right;
   }
 }

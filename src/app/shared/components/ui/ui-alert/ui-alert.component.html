@@ -1,5 +1,5 @@
 <div class="ui-alert" [ngStyle]="{ 'display': visible ? 'block' : 'none' }">
-  <div [innerHTML]="message"></div>
+  <div class="ui-alert__message" [innerHTML]="message"></div>
 
   <div class="ui-alert__buttons">
     <ui-button [severity]="'primary'" (click)="closeAlert($event)">확인</ui-button>
