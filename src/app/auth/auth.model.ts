@@ -1,7 +1,8 @@
 import { EmployeeResponseDTO } from '@app/human/human.model';
+import { HttpRequestDTOBase } from '@app/shared/models';
 
 /** 로그인 요청 DTO */
-export class LoginRequestDTO {
+export class LoginRequestDTO extends HttpRequestDTOBase {
 
   /** 사용자 계정 */
   userAccount?: string;
@@ -20,7 +21,7 @@ export class LoginResponseDTO {
 }
 
 /** 사용자 조회 요청 DTO */
-export class GetUserRequestDTO {
+export class GetUserRequestDTO extends HttpRequestDTOBase {
 
   /** 권한 ID 목록 */
   roleIdList?: string[];
@@ -28,7 +29,7 @@ export class GetUserRequestDTO {
 }
 
 /** 사용자 수정 요청 DTO */
-export class UpdateUserRequestDTO {
+export class UpdateUserRequestDTO extends HttpRequestDTOBase {
 
   /** 사용자 ID */
   userId?: number;
@@ -62,7 +63,7 @@ export class UserResponseDTO {
 }
 
 /** 사용자 비밀번호 변경 요청 DTO */
-export class UpdateUserPasswordRequestDTO {
+export class UpdateUserPasswordRequestDTO extends HttpRequestDTOBase {
 
   /** 현재 비밀번호 */
   currentPassword?: string;

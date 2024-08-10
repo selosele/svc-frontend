@@ -1,5 +1,7 @@
+import { HttpRequestDTOBase } from '@app/shared/models';
+
 /** 직원 수정 요청 DTO */
-export class UpdateEmployeeRequestDTO {
+export class UpdateEmployeeRequestDTO extends HttpRequestDTOBase {
 
   /** 직원 ID */
   employeeId?: number;

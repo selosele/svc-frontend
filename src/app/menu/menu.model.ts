@@ -1,17 +1,13 @@
+import { HttpRequestDTOBase } from '@app/shared/models';
+
 /** 메뉴 조회 요청 DTO */
-export class GetMenuRequestDTO {
+export class GetMenuRequestDTO extends HttpRequestDTOBase {
 
   /** 메뉴 ID */
   MenuId?: number;
 
   /** 상위 메뉴 ID */
   upMenuId?: number;
-
-  /** 사용 여부 */
-  useYn?: string = 'Y';
-
-  /** 삭제 여부 */
-  deleteYn?: string = 'N';
 
   /** 권한 ID 목록 */
   roleIdList?: string[];
