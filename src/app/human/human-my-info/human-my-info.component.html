@@ -89,16 +89,16 @@
         [data]="jobTitleCodes"
         [readonly]="true"
       />
-    </div>
-  
-    <div class="input-box">
+
       <ui-date-field
         [control]="employeeForm.get('employeeCompany.joinYmd')"
         [label]="'입사일자'"
         [dateFormat]="'yymmdd'"
         [readonly]="true"
       />
-
+    </div>
+  
+    <div class="input-box">
       <ui-text-field
         [control]="employeeForm.get('departments.departmentName')"
         [label]="'부서명'"

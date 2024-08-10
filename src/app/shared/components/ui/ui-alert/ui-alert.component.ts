@@ -44,7 +44,6 @@ export class UiAlertComponent implements OnInit {
   closeAlert(event: Event): void {
     this.visible = false;
     this.dialogRef.close();
-    this.dialogRef.destroy();
   }
 
 }
