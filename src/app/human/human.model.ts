@@ -90,6 +90,9 @@ export class DepartmentResponseDTO {
   /** 직책 코드 */
   jobTitleCode?: string;
 
+  /** 삭제 여부 */
+  deleteYn?: string;
+
 }
 
 /** 회사 조회 요청 DTO */
@@ -123,5 +126,8 @@ export class CompanyResponseDTO {
 
   /** 사업자등록번호 */
   registrationNumber?: string;
+
+  /** 삭제 여부 */
+  deleteYn?: string;
 
 }

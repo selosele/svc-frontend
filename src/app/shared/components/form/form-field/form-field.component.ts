@@ -81,7 +81,7 @@ export class FormFieldComponent implements OnInit {
       return;
     }
 
-    Object.keys(errors).forEach(key => {
+    Object.keys(errors).forEach((key) => {
       switch (key) {
         case 'required':      this.errorMessage = validationMessage.required(); break;
         case 'min':           this.errorMessage = validationMessage.min(errors[key].min); break;

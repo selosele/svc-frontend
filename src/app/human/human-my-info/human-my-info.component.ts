@@ -155,7 +155,7 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 직원 정보 폼을 설정한다. */
   private setMyInfoForm(): void {
-    this.humanService.employee$.subscribe(employee => {
+    this.humanService.employee$.subscribe((employee) => {
       this.setMyInfoFormData(employee);
     });
   }

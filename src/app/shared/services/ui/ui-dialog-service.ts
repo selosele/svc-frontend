@@ -15,7 +15,7 @@ export class UiDialogService {
 
   /** 모든 modal을 닫는다. */
   closeAllDialog(): void {
-    this.dialogService.dialogComponentRefMap.forEach(dialog => {
+    this.dialogService.dialogComponentRefMap.forEach((dialog) => {
       dialog.destroy();
     });
   }
