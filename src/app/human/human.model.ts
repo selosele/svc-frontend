@@ -66,6 +66,20 @@ export class EmployeeCompanyResponseDTO {
 
 }
 
+/** 부서 조회 요청 DTO */
+export class GetDepartmentRequestDTO {
+
+  /** 직원 ID */
+  employeeId?: number;
+
+  /** 회사 ID */
+  companyId?: number;
+
+  /** 회사별 조회 여부 */
+  getByCompanyYn?: string;
+
+}
+
 /** 부서 응답 DTO */
 export class DepartmentResponseDTO {
 
@@ -74,6 +88,9 @@ export class DepartmentResponseDTO {
 
   /** 회사 ID */
   companyId?: number;
+
+  /** 회사명 */
+  companyName?: string;
 
   /** 상위 부서 ID */
   upDepartmentId?: number;
@@ -129,5 +146,19 @@ export class CompanyResponseDTO {
 
   /** 삭제 여부 */
   deleteYn?: string;
+
+}
+
+/** 부서 트리 */
+export class DepartmentTree extends DepartmentResponseDTO {
+
+  /** 부서 */
+  data?: DepartmentResponseDTO;
+
+  /** 하위 부서 목록 */
+  children?: DepartmentTree[];
+
+  /** 확장 여부 */
+  expanded?: boolean = false;
 
 }

@@ -120,7 +120,11 @@
   </div>
 
   <div class="input-box">
-    <ui-text-field
+    <ui-hidden-field
+      [control]="userDetailForm.get('employee.departments.departmentId')"
+    />
+
+    <ui-department-field
       [control]="userDetailForm.get('employee.departments.departmentName')"
       [label]="'부서명'"
     />
