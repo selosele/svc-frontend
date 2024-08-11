@@ -1,17 +1,24 @@
-<ui-form [form]="searchCompanyForm" (submit)="onSubmit($event)">
+<layout-page-description>
+  <ul>
+    <li>회사를 검색할 수 있습니다.</li>
+    <li>행을 더블 클릭하면 행의 회사 ID, 법인명, 회사명이 입력 필드에 반영됩니다.</li>
+  </ul>
+</layout-page-description>
+
+<ui-form [form]="searchForm" (submit)="onSubmit($event)">
   <div class="input-box search-box">
     <ui-text-field
-      [control]="searchCompanyForm.get('corporateName')"
+      [control]="searchForm.get('corporateName')"
       [label]="'법인명'"
     />
 
     <ui-text-field
-      [control]="searchCompanyForm.get('companyName')"
+      [control]="searchForm.get('companyName')"
       [label]="'회사명'"
     />
 
     <ui-text-field
-      [control]="searchCompanyForm.get('registrationNumber')"
+      [control]="searchForm.get('registrationNumber')"
       [label]="'사업자등록번호'"
     />
 

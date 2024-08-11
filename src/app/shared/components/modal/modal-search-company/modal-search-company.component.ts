@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HumanService } from '@app/human/human.service';
@@ -7,6 +7,7 @@ import { FormValidator } from '../../form/form-validator/form-validator.componen
 import { UiFormComponent } from '../../form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '../../form/ui-text-field/ui-text-field.component';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '../../ui';
+import { LayoutPageDescriptionComponent } from '../../layout';
 
 @Component({
   standalone: true,
@@ -16,10 +17,12 @@ import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '../../
     UiButtonComponent,
     UiTableComponent,
     UiSkeletonComponent,
+    LayoutPageDescriptionComponent,
   ],
   selector: 'modal-search-company',
   templateUrl: './modal-search-company.component.html',
-  styleUrl: './modal-search-company.component.scss'
+  styleUrl: './modal-search-company.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalSearchCompanyComponent implements OnInit {
 
@@ -40,7 +43,7 @@ export class ModalSearchCompanyComponent implements OnInit {
   }
 
   /** 회사 검색 폼 */
-  searchCompanyForm: FormGroup;
+  searchForm: FormGroup;
 
   /** 테이블 컬럼 */
   cols = [
@@ -54,7 +57,7 @@ export class ModalSearchCompanyComponent implements OnInit {
       this.listCompany();
     }
 
-    this.searchCompanyForm = this.fb.group({
+    this.searchForm = this.fb.group({
       corporateName: ['', [FormValidator.maxLength(100)]],       // 법인명
       companyName: ['', [FormValidator.maxLength(100)]],         // 회사명
       registrationNumber: ['', [FormValidator.maxLength(10)]]    // 사업자등록번호
