@@ -4,6 +4,7 @@ export * from './ui-checkbox/ui-checkbox.component';
 export * from './ui-checkbox-group/ui-checkbox-group.component';
 export * from './ui-company-field/ui-company-field.component';
 export * from './ui-date-field/ui-date-field.component';
+export * from './ui-department-field/ui-department-field.component';
 export * from './ui-dropdown/ui-dropdown.component';
 export * from './ui-form/ui-form.component';
 export * from './ui-hidden-field/ui-hidden-field.component';
