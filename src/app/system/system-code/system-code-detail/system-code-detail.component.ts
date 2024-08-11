@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CodeResponseDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
 import { UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { DropdownData } from '@app/shared/models';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
 import { isNotObjectEmpty } from '@app/shared/utils';
 

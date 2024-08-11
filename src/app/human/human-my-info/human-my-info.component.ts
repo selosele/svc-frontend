@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.model';
-import { DropdownData } from '@app/shared/models';
 import { AuthService } from '@app/auth/auth.service';
 import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
@@ -9,8 +8,13 @@ import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
 import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
-import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
+import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
+import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
+import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/ui-date-field.component';
+import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
+import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Component({
   standalone: true,

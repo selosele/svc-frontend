@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDepartmentFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
-import { DropdownData } from '@app/shared/models';
 import { CodeService } from '@app/code/code.service';
 import { HumanService } from '@app/human/human.service';
 
@@ -22,6 +22,7 @@ import { HumanService } from '@app/human/human.service';
     UiDropdownComponent,
     UiDateFieldComponent,
     UiCompanyFieldComponent,
+    UiDepartmentFieldComponent,
     UiButtonComponent,
     UiHiddenFieldComponent,
   ],
@@ -121,6 +122,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
         // 직원 부서 목록
         departments: this.fb.group({
+          departmentId: [''],                                 // 부서 ID
           departmentName: ['', [FormValidator.required]],     // 부서명
           rankCode: ['', [FormValidator.required]],           // 직급 코드
           jobTitleCode: ['', [FormValidator.required]],       // 직책 코드

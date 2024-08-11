@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CodeResponseDTO, CodeTree } from './code.model';
-import { DropdownData } from '@app/shared/models';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {

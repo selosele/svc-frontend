@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormFieldComponent } from '../form-field/form-field.component';
-import { DropdownData } from '@app/shared/models';
+import { DropdownData } from './ui-dropdown.model';
 
 @Component({
   standalone: true,
