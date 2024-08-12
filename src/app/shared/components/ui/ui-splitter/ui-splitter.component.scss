@@ -34,7 +34,30 @@
     height: 100%;
 
     &:has(~ .p-splitter-panel:not(:empty)) {
+      overflow-x: auto;
       padding: 0 1rem;
+
+      &::-webkit-scrollbar {
+        width: 1rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 0.625rem;
+        background-color: var(--surface-600);
+
+        &:hover {
+          background-color: var(--surface-700);
+        }
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: var(--surface-200);
+      }
+
+      .ui-table__view,
+      .ui-tree-table__view {
+        width: 1400px;
+      }
     }
 
     &:last-of-type {
