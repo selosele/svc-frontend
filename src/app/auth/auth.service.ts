@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, UpdateUserRequestDTO, UserResponseDTO } from './auth.model';
+import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO } from './auth.model';
 import { UiDialogService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
@@ -75,9 +75,9 @@ export class AuthService {
   }
 
   /** 사용자를 수정한다. */
-  updateUser(updateUserRequestDTO: UpdateUserRequestDTO): Observable<UserResponseDTO> {
-    const { userId } = updateUserRequestDTO;
-    return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, updateUserRequestDTO);
+  updateUser(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
+    const { userId } = saveUserRequestDTO;
+    return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, saveUserRequestDTO);
   }
 
   /** 사용자를 삭제한다. */

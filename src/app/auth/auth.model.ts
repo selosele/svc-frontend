@@ -1,5 +1,5 @@
-import { EmployeeResponseDTO } from '@app/human/human.model';
 import { HttpRequestDTOBase } from '@app/shared/models';
+import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/human/human.model';
 
 /** 로그인 요청 DTO */
 export class LoginRequestDTO extends HttpRequestDTOBase {
@@ -28,8 +28,8 @@ export class GetUserRequestDTO extends HttpRequestDTOBase {
     
 }
 
-/** 사용자 수정 요청 DTO */
-export class UpdateUserRequestDTO extends HttpRequestDTOBase {
+/** 사용자 추가/수정 요청 DTO */
+export class SaveUserRequestDTO extends HttpRequestDTOBase {
 
   /** 사용자 ID */
   userId?: number;
@@ -39,7 +39,13 @@ export class UpdateUserRequestDTO extends HttpRequestDTOBase {
 
   /** 사용자 활성화 여부 */
   userActiveYn?: string;
-    
+
+  /** 권한 ID 목록 */
+  roles?: string[];
+
+  /** 직원 정보 */
+  employee?: SaveEmployeeRequestDTO;
+
 }
 
 /** 사용자 응답 DTO */

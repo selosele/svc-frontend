@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isEmpty } from '@app/shared/utils';
-import { CompanyResponseDTO, DepartmentResponseDTO, DepartmentTree, EmployeeResponseDTO, GetCompanyRequestDTO, GetDepartmentRequestDTO, UpdateEmployeeRequestDTO } from './human.model';
+import { CompanyResponseDTO, DepartmentResponseDTO, DepartmentTree, EmployeeResponseDTO, GetCompanyRequestDTO, GetDepartmentRequestDTO, SaveEmployeeRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -49,9 +49,9 @@ export class HumanService {
   }
 
   /** 직원을 수정한다. */
-  updateEmployee(updateEmployeeRequestDTO: UpdateEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
-    const { employeeId } = updateEmployeeRequestDTO;
-    return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, updateEmployeeRequestDTO);
+  updateEmployee(saveEmployeeRequestDTO: SaveEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
+    const { employeeId } = saveEmployeeRequestDTO;
+    return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, saveEmployeeRequestDTO);
   }
 
   /** 회사 목록을 조회한다. */

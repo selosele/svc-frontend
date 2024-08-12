@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RoleResponseDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
+import { RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDepartmentFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
-import { isObjectEmpty, isNotObjectEmpty } from '@app/shared/utils';
+import { isObjectEmpty, isNotObjectEmpty, isEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { HumanService } from '@app/human/human.service';
@@ -111,7 +111,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         birthYmd: ['', [FormValidator.required]],             // 생년월일
         phoneNumber: ['', [FormValidator.required]],          // 휴대폰번호
 
-        // 직원 회사 정보
+        // 회사 정보
         employeeCompany: this.fb.group({
           companyId: [''],                                    // 회사 ID
           corporateName: ['', [FormValidator.required]],      // 법인명
@@ -120,8 +120,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           quitYmd: [''],                                      // 퇴사일자
         }),
 
-        // 직원 부서 목록
-        departments: this.fb.group({
+        // 부서 정보
+        department: this.fb.group({
           departmentId: [''],                                 // 부서 ID
           departmentName: ['', [FormValidator.required]],     // 부서명
           rankCode: ['', [FormValidator.required]],           // 직급 코드
@@ -152,6 +152,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       }
 
       this.userDetailForm.get('userPassword').clearValidators();
+      this.userDetailForm.get('userPassword').patchValue(null);
       this.userDetailForm.get('userPassword').updateValueAndValidity();
       
       this.userDetailForm.patchValue({
@@ -160,7 +161,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         employee: {
           ...this.userDetail?.employee,
           employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
-          departments: {
+          department: {
             ...this.userDetail?.employee?.departments[0],
             departmentName: this.humanService.findDepartmentName(this.userDetail?.employee?.departments),
           },
@@ -177,7 +178,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
     this.authService.updateUser({ userId: this.userDetail?.userId, userActiveYn })
     .subscribe((data) => {
-      this.messageService.toastSuccess('저장되었습니다.');
+      this.messageService.toastSuccess(`정상적으로 ${activeStatus}되었습니다.`);
 
       this.userDetail = data;
       this.userDetailForm.patchValue({
@@ -189,14 +190,27 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     });
   }
 
-  /** 사용자 정보를 저장한다. */
-  async onSubmit(value: any): Promise<void> {
-    console.log(value);
+  /** 사용자 정보를 추가/수정한다. */
+  async onSubmit(value: SaveUserRequestDTO): Promise<void> {
+    const crudName = isEmpty(value.userId) ? '추가' : '수정';
 
-    const confirm = await this.messageService.confirm1('사용자 정보를 저장하시겠습니까?');
+    const confirm = await this.messageService.confirm1(`사용자 및 직원 정보를 ${crudName}하시겠습니까?`);
     if (!confirm) return;
 
-    
+    // 사용자 ID가 없으면 추가 API를 타고
+    if (isEmpty(value.userId)) {
+      this.authService.addUser(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+      });
+    }
+    // 있으면 수정 API를 탄다.
+    else {
+      this.authService.updateUser(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+      });
+    }
   }
 
   /** 사용자를 삭제한다. */
@@ -206,7 +220,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
     this.authService.removeUser(this.userDetail.userId)
     .subscribe(() => {
-      this.messageService.toastSuccess('삭제되었습니다.');
+      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();
     });
   }
