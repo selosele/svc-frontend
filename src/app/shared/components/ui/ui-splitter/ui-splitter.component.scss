@@ -51,6 +51,7 @@
       }
 
       &::-webkit-scrollbar-track {
+        border-radius: 0.625rem;
         background-color: var(--surface-200);
       }
 
