@@ -74,6 +74,11 @@ export class AuthService {
     return this.http.get<UserResponseDTO>(`/common/auth/users/${userId}`);
   }
 
+  /** 사용자를 추가한다. */
+  addUser(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
+    return this.http.post<UserResponseDTO>('/common/auth/users', saveUserRequestDTO);
+  }
+
   /** 사용자를 수정한다. */
   updateUser(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
     const { userId } = saveUserRequestDTO;
