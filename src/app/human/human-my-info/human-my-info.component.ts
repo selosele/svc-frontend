@@ -6,7 +6,7 @@ import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
-import { EmployeeResponseDTO, UpdateEmployeeRequestDTO } from '../human.model';
+import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
 import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
@@ -96,7 +96,7 @@ export class HumanMyInfoComponent implements OnInit {
   }
 
   /** 직원 정보를 저장한다. */
-  async onSubmitEmployee(value: UpdateEmployeeRequestDTO): Promise<void> {
+  async onSubmitEmployee(value: SaveEmployeeRequestDTO): Promise<void> {
     const confirm = await this.messageService.confirm1('저장하시겠습니까?');
     if (!confirm) return;
 
