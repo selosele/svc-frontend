@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isEmpty } from '@app/shared/utils';
-import { CompanyResponseDTO, DepartmentResponseDTO, DepartmentTree, EmployeeResponseDTO, GetCompanyRequestDTO, GetDepartmentRequestDTO, SaveEmployeeRequestDTO } from './human.model';
+import { CompanyResponseDTO, DepartmentResponseDTO, DepartmentTree, EmployeeCompanyResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetDepartmentRequestDTO, SaveEmployeeRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -61,6 +61,16 @@ export class HumanService {
       this.companyList.next(data);
       this.companyListDataLoad.next(true);
     });
+  }
+
+  /** 직원 회사를 조회한다. */
+  getEmployeeCompany(employeeId: number, employeeCompanyId: number): Observable<EmployeeCompanyResponseDTO> {
+    return this.http.get<EmployeeCompanyResponseDTO>(`/human/employees/${employeeId}/companies/${employeeCompanyId}`);
+  }
+
+  /** 직원 회사를 삭제한다. */
+  removeEmployeeCompany(employeeId: number, employeeCompanyId: number): Observable<void> {
+    return this.http.delete<void>(`/human/employees/${employeeId}/companies/${employeeCompanyId}`);
   }
 
   /** 부서 목록을 조회한다. */
