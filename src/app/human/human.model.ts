@@ -75,6 +75,9 @@ export class SaveEmployeeCompanyRequestDTO extends HttpRequestDTOBase {
 /** 직원 회사 응답 DTO */
 export class EmployeeCompanyResponseDTO {
 
+  /** 직원 회사 ID */
+  employeeCompanyId?: number;
+  
   /** 회사 ID */
   companyId?: number;
 
