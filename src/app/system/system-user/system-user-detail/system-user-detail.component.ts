@@ -143,6 +143,11 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         this.userDetailForm.reset({
           userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
+          employee: {
+            department: {
+              jobTitleCode: '0098', // 직책 기본값 - 팀원
+            },
+          },
         });
         this.userDetailForm.get('userPassword').setValidators([
           FormValidator.required,
