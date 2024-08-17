@@ -49,7 +49,7 @@ export class ModalSearchCompanyComponent implements OnInit {
   cols = [
     { field: 'corporateName',      header: '법인명' },
     { field: 'companyName',        header: '회사명' },
-    { field: 'registrationNumber', header: '사업자등록번호' },
+    { field: 'registrationNo',     header: '사업자등록번호' },
   ];
 
   ngOnInit(): void {
@@ -60,7 +60,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     this.searchForm = this.fb.group({
       corporateName: ['', [FormValidator.maxLength(100)]],       // 법인명
       companyName: ['', [FormValidator.maxLength(100)]],         // 회사명
-      registrationNumber: ['', [FormValidator.maxLength(10)]]    // 사업자등록번호
+      registrationNo: ['', [FormValidator.maxLength(10)]]        // 사업자등록번호
     });
   }
 

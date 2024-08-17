@@ -165,7 +165,7 @@ export class GetCompanyRequestDTO extends HttpRequestDTOBase {
   companyName?: string;
 
   /** 사업자등록번호 */
-  registrationNumber?: string;
+  registrationNo?: string;
 
 }
 
@@ -182,7 +182,7 @@ export class CompanyResponseDTO {
   companyName?: string;
 
   /** 사업자등록번호 */
-  registrationNumber?: string;
+  registrationNo?: string;
 
   /** 삭제 여부 */
   deleteYn?: string;
