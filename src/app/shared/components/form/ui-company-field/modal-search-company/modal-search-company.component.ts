@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HumanService } from '@app/human/human.service';
 import { CompanyResponseDTO, GetCompanyRequestDTO } from '@app/human/human.model';
-import { FormValidator } from '../../form/form-validator/form-validator.component';
-import { UiFormComponent } from '../../form/ui-form/ui-form.component';
-import { UiTextFieldComponent } from '../../form/ui-text-field/ui-text-field.component';
-import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '../../ui';
-import { LayoutPageDescriptionComponent } from '../../layout';
+import { FormValidator } from '../../form-validator/form-validator.component';
+import { UiFormComponent } from '../../ui-form/ui-form.component';
+import { UiTextFieldComponent } from '../../ui-text-field/ui-text-field.component';
+import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '../../../ui';
+import { LayoutPageDescriptionComponent } from '../../../layout';
 
 @Component({
   standalone: true,

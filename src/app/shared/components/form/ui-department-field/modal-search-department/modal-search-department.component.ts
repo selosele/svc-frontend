@@ -2,10 +2,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DepartmentResponseDTO } from '@app/human/human.model';
 import { HumanService } from '@app/human/human.service';
-import { UiFormComponent } from '../../form/ui-form/ui-form.component';
-import { UiTextFieldComponent } from '../../form/ui-text-field/ui-text-field.component';
-import { UiButtonComponent, UiSkeletonComponent, UiTreeTableComponent } from '../../ui';
-import { LayoutPageDescriptionComponent } from '../../layout';
+import { UiFormComponent } from '../../ui-form/ui-form.component';
+import { UiTextFieldComponent } from '../../ui-text-field/ui-text-field.component';
+import { UiButtonComponent, UiSkeletonComponent, UiTreeTableComponent } from '../../../ui';
+import { LayoutPageDescriptionComponent } from '../../../layout';
 
 @Component({
   standalone: true,

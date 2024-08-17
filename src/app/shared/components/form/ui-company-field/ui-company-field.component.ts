@@ -6,7 +6,7 @@ import { UiDialogService } from '@app/shared/services';
 import { CompanyResponseDTO } from '@app/human/human.model';
 import { FormFieldComponent } from '../form-field/form-field.component';
 import { UiButtonComponent } from '../../ui';
-import { ModalSearchCompanyComponent } from '../../modal';
+import { ModalSearchCompanyComponent } from './modal-search-company/modal-search-company.component';
 
 @Component({
   standalone: true,
