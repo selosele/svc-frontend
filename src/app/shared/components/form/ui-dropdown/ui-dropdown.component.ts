@@ -22,6 +22,9 @@ export class UiDropdownComponent extends FormFieldComponent {
   /** 드롭다운 데이터 */
   @Input() data?: DropdownData[];
 
+  /** 리스트 팝업 위치 */
+  @Input() appendTo = 'body';
+
   override ngOnInit(): void {
     super.ngOnInit();
   }
