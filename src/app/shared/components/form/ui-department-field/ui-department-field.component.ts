@@ -43,8 +43,13 @@ export class UiDepartmentFieldComponent extends FormFieldComponent {
     modal.onClose.subscribe((data: { rowData: DepartmentResponseDTO, departmentNames: string }) => {
       if (!data) return;
 
-      this.formControl?.parent?.controls?.['departmentId'].patchValue(data.rowData['departmentId']);
-      this.formControl?.parent?.controls?.['departmentName'].patchValue(data['departmentNames']);
+      if (this.formControl?.parent?.controls?.['departmentId']) {
+        this.formControl.parent.controls['departmentId'].patchValue(data.rowData['departmentId']);
+      }
+
+      if (this.formControl?.parent?.controls?.['departmentName']) {
+        this.formControl.parent.controls['departmentName'].patchValue(data['departmentNames']);
+      }
     });
   }
 

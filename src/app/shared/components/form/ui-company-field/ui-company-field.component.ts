@@ -43,9 +43,17 @@ export class UiCompanyFieldComponent extends FormFieldComponent {
     modal.onClose.subscribe((data: CompanyResponseDTO) => {
       if (!data) return;
 
-      this.formControl?.parent?.controls?.['companyId'].patchValue(data['companyId']);
-      this.formControl?.parent?.controls?.['corporateName'].patchValue(data['corporateName']);
-      this.formControl?.parent?.controls?.['companyName'].patchValue(data['companyName']);
+      if (this.formControl?.parent?.controls?.['companyId']) {
+        this.formControl.parent.controls['companyId'].patchValue(data['companyId']);
+      }
+
+      if (this.formControl?.parent?.controls?.['corporateName']) {
+        this.formControl.parent.controls['corporateName'].patchValue(data['corporateName']);
+      }
+
+      if (this.formControl?.parent?.controls?.['companyName']) {
+        this.formControl.parent.controls['companyName'].patchValue(data['companyName']);
+      }
     });
   }
 
