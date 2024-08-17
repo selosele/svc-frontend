@@ -1,7 +1,7 @@
 <layout-page-description>
   <ul>
     <li>내 정보를 조회/입력할 수 있습니다.</li>
-    <li>내 정보 변경 시, 자동으로 로그아웃 처리되며 재로그인이 필요합니다.</li>
+    <li>비밀번호 변경 또는 직원 정보 변경 시, 자동으로 로그아웃 처리되며 재로그인이 필요합니다.</li>
     <li>권한 조회/변경은 시스템 관리자에게 문의하시기 바랍니다.</li>
   </ul>
 </layout-page-description>
@@ -119,8 +119,42 @@
         [severity]="'success'"
         [icon]="'pi-refresh'"
         [label]="'새로고침'"
-        (click)="onRefresh($event)"
+        (click)="onRefreshEmployee($event)"
       />
     </div>
   </ui-form>
+
+  <h2>근무이력 정보</h2>
+
+  <ui-splitter #splitter>
+    <ui-table #table first
+      [useAdd]="false"
+      [useRemove]="false"
+      [useRefresh]="false"
+      [cols]="cols"
+      [data]="employeeCompanyList"
+      [dataKey]="'employeeCompanyId'"
+      [selection]="selection"
+      (refresh)="onRefreshEmployeeCompany($event)"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'회사 추가'"
+        [outlined]="true"
+        (click)="addCompany()"
+      />
+    </ui-table>
+
+    <div second>
+      <human-my-info-company-detail
+        [employeeCompanyDetail]="employeeCompanyDetail"
+        (refresh)="getEmployee()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
+    </div>
+  </ui-splitter>
 }

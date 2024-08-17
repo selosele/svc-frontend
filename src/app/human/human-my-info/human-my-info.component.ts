@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
-import { isEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 import { HumanService } from '../human.service';
-import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
-import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
+import { EmployeeCompanyResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
+import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
@@ -15,6 +15,7 @@ import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detail/human-my-info-company-detail.component';
 
 @Component({
   standalone: true,
@@ -25,8 +26,11 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
     UiTextFieldComponent,
     UiDateFieldComponent,
     UiDropdownComponent,
+    UiTableComponent,
+    UiSplitterComponent,
     LayoutPageDescriptionComponent,
-  ],
+    HumanMyInfoCompanyDetailComponent
+],
   selector: 'modal-human-my-info',
   templateUrl: './human-my-info.component.html',
   styleUrl: './human-my-info.component.scss'
@@ -41,9 +45,20 @@ export class HumanMyInfoComponent implements OnInit {
     private humanService: HumanService,
   ) {}
 
+  /** table */
+  @ViewChild('table') table: UiTableComponent;
+
+  /** splitter */
+  @ViewChild('splitter') splitter: UiSplitterComponent;
+
   /** 직원 정보 데이터 로드 완료 여부 */
   get employeeDataLoad(): boolean {
     return this.humanService.employeeDataLoad.value;
+  }
+
+  /** 직원 회사 목록 */
+  get employeeCompanyList(): EmployeeCompanyResponseDTO[] {
+    return this.humanService.employee.value.employeeCompanies;
   }
   
   /** 인증된 사용자 정보 */
@@ -64,6 +79,40 @@ export class HumanMyInfoComponent implements OnInit {
   /** 직책 코드 데이터 목록 */
   jobTitleCodes: DropdownData[] = this.codeService.getDropdownData('JOB_TITLE_00');
 
+  /** 테이블 컬럼 */
+  cols = [
+    { field: 'companyName', header: '회사명' },
+    { field: 'joinYmd',     header: '입사일자' },
+    { field: 'quitYmd',     header: '퇴사일자' },
+    { header: '재직기간',
+      valueGetter: (data) => {
+        let startDate = dateUtil(data.joinYmd);
+        let endDate = dateUtil(dateUtil().format('YYYYMMDD'));
+        
+        if (isNotBlank(data.quitYmd)) {
+          endDate = dateUtil(data.quitYmd);
+        } else {
+          endDate = dateUtil(dateUtil().format('YYYYMMDD'));
+        }
+
+        const diffInYears = endDate.diff(startDate, 'year');
+        const adjustedEndDate = startDate.add(diffInYears, 'year');
+        const diffInMonths = endDate.diff(adjustedEndDate, 'month');
+
+        if (diffInYears === 0) {
+          return `${diffInMonths}개월`;
+        }
+        return `${diffInYears}년 ${diffInMonths}개월`;
+      }
+    },
+  ];
+
+  /** 직원 회사 정보 */
+  employeeCompanyDetail: EmployeeCompanyResponseDTO = null;
+
+  /** 테이블 선택된 행 */
+  selection: EmployeeCompanyResponseDTO;
+
   ngOnInit(): void {
     this.user = this.authService.getAuthenticatedUser();
     this.initForm();
@@ -71,6 +120,12 @@ export class HumanMyInfoComponent implements OnInit {
     if (isEmpty(this.humanService.employee.value)) {
       this.getEmployee();
     }
+    this.setMyInfoForm();
+  }
+
+  /** 직원을 조회한다. */
+  getEmployee(): void {
+    this.humanService.getEmployee(this.user.employeeId);
     this.setMyInfoForm();
   }
 
@@ -109,15 +164,46 @@ export class HumanMyInfoComponent implements OnInit {
     });
   }
 
-  /** 새로고침 버튼을 클릭한다. */
-  onRefresh(event: Event): void {
+  /** 직원 정보 새로고침 버튼을 클릭한다. */
+  onRefreshEmployee(event: Event): void {
     this.getEmployee();
   }
 
-  /** 직원을 조회한다. */
-  private getEmployee(): void {
-    this.humanService.getEmployee(this.user.employeeId);
-    this.setMyInfoForm();
+  /** 근무이력 정보 새로고침 버튼을 클릭한다. */
+  onRefreshEmployeeCompany(event: Event): void {
+    
+  }
+
+  /** 근무이력 정보 추가 버튼을 클릭한다. */
+  addCompany(): void {
+    this.employeeCompanyDetail = {};
+    this.splitter.show();
+  }
+
+  /** 테이블 행을 선택한다. */
+  onRowSelect(event: any): void {
+    this.humanService.getEmployeeCompany(this.user.userId, event.data['employeeCompanyId'])
+    .subscribe((data) => {
+      this.employeeCompanyDetail = data;
+      this.splitter.show();
+    });
+  }
+
+  /** 테이블 행을 선택 해제한다. */
+  onRowUnselect(event: any): void {
+    this.employeeCompanyDetail = {};
+    this.splitter.hide();
+  }
+
+  /** 삭제 버튼을 클릭한다. */
+  onRemove(): void {
+    this.splitter.hide();
+    this.getEmployee();
+  }
+
+  /** 닫기 버튼을 클릭한다. */
+  onClose(): void {
+    this.splitter.hide();
   }
 
   /** 폼을 초기화한다. */

@@ -1,0 +1,48 @@
+<ui-split-form
+  [form]="companyDetailForm"
+  [useRemove]="useRemove"
+  (submit)="onSubmit($event)"
+  (remove)="removeCompany($event)"
+  (close)="onClose()"
+>
+  <h2>회사 정보</h2>
+
+  <ui-hidden-field
+    [control]="companyDetailForm.get('employeeCompanyId')"
+  />
+
+  <div class="input-box">
+    <ui-company-field
+      [control]="companyDetailForm.get('companyName')"
+      [label]="'회사명'"
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-dropdown
+      [control]="companyDetailForm.get('rankCode')"
+      [label]="'직급'"
+      [data]="rankCodes"
+    />
+
+    <ui-dropdown
+      [control]="companyDetailForm.get('jobTitleCode')"
+      [label]="'직책'"
+      [data]="jobTitleCodes"
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-date-field
+      [control]="companyDetailForm.get('joinYmd')"
+      [label]="'입사일자'"
+      [dateFormat]="'yymmdd'"
+    />
+
+    <ui-date-field
+      [control]="companyDetailForm.get('quitYmd')"
+      [label]="'퇴사일자'"
+      [dateFormat]="'yymmdd'"
+    />
+  </div>
+</ui-split-form>
