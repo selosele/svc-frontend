@@ -197,6 +197,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       this.authService.addUser(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit();
       });
     }
     // 있으면 수정 API를 탄다.
@@ -204,6 +205,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       this.authService.updateUser(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit();
       });
     }
   }
