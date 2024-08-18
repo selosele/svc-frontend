@@ -10,7 +10,7 @@ import { EmployeeCompanyResponseDTO, SaveEmployeeCompanyRequestDTO } from '@app/
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
-import { isObjectEmpty } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { HumanService } from '@app/human/human.service';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
@@ -98,8 +98,30 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   }
 
   /** 회사 정보를 저장한다. */
-  onSubmit(value: SaveEmployeeCompanyRequestDTO): void {
-    console.log(value);
+  async onSubmit(value: SaveEmployeeCompanyRequestDTO): Promise<void> {
+    const crudName = isEmpty(value.employeeCompanyId) ? '추가' : '수정';
+
+    const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠습니까?`);
+    if (!confirm) return;
+
+    value.employeeId = this.user.employeeId;
+
+    // 직원 회사 ID가 없으면 추가 API를 타고
+    if (isEmpty(value.employeeCompanyId)) {
+      this.humanService.addEmployeeCompany(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit();
+      });
+    }
+    // 있으면 수정 API를 탄다.
+    else {
+      this.humanService.updateEmployeeCompany(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit();
+      });
+    }
   }
 
   /** 회사 정보를 삭제한다. */

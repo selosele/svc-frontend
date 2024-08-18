@@ -231,12 +231,7 @@ export class HumanMyInfoComponent implements OnInit {
         companyId: ['', [FormValidator.required]],        // 회사 ID
         corporateName: ['', [FormValidator.required]],    // 법인명
         companyName: ['', [FormValidator.required]],      // 회사명
-        joinYmd: ['', [FormValidator.required]],          // 입사일자
-      }),
-
-      // 직원 부서 목록
-      departments: this.fb.group({
-        departmentName: ['', [FormValidator.required]],   // 부서명
+        joinYmd: ['', [FormValidator.required]],          // 입사일자,
         rankCode: ['', [FormValidator.required]],         // 직급 코드
         jobTitleCode: ['', [FormValidator.required]],     // 직책 코드
       }),
@@ -255,10 +250,6 @@ export class HumanMyInfoComponent implements OnInit {
     this.employeeForm.patchValue({
       ...employee,
       employeeCompany: employee?.employeeCompanies[0],
-      departments: {
-        ...employee?.departments[0],
-        departmentName: this.humanService.findDepartmentName(employee?.departments),
-      },
     });
   }
 

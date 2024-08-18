@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDepartmentFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty } from '@app/shared/utils';
@@ -22,7 +22,6 @@ import { HumanService } from '@app/human/human.service';
     UiDropdownComponent,
     UiDateFieldComponent,
     UiCompanyFieldComponent,
-    UiDepartmentFieldComponent,
     UiButtonComponent,
     UiHiddenFieldComponent,
   ],
@@ -119,12 +118,6 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           companyName: ['', [FormValidator.required]],        // 회사명
           joinYmd: ['', [FormValidator.required]],            // 입사일자
           quitYmd: [''],                                      // 퇴사일자
-        }),
-
-        // 부서 정보
-        department: this.fb.group({
-          departmentId: [''],                                 // 부서 ID
-          departmentName: ['', [FormValidator.required]],     // 부서명
           rankCode: ['', [FormValidator.required]],           // 직급 코드
           jobTitleCode: ['', [FormValidator.required]],       // 직책 코드
         }),
@@ -144,7 +137,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
           employee: {
-            department: {
+            employeeCompany: {
               jobTitleCode: '0098', // 직책 기본값 - 팀원
             },
           },
@@ -167,10 +160,6 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         employee: {
           ...this.userDetail?.employee,
           employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
-          department: {
-            ...this.userDetail?.employee?.departments[0],
-            departmentName: this.humanService.findDepartmentName(this.userDetail?.employee?.departments),
-          },
         },
       });
     }

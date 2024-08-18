@@ -77,14 +77,14 @@
       />
 
       <ui-dropdown
-        [control]="employeeForm.get('departments.rankCode')"
+        [control]="employeeForm.get('employeeCompany.rankCode')"
         [label]="'직급'"
         [data]="rankCodes"
         [readonly]="true"
       />
   
       <ui-dropdown
-        [control]="employeeForm.get('departments.jobTitleCode')"
+        [control]="employeeForm.get('employeeCompany.jobTitleCode')"
         [label]="'직책'"
         [data]="jobTitleCodes"
         [readonly]="true"
@@ -94,14 +94,6 @@
         [control]="employeeForm.get('employeeCompany.joinYmd')"
         [label]="'입사일자'"
         [dateFormat]="'yymmdd'"
-        [readonly]="true"
-      />
-    </div>
-  
-    <div class="input-box">
-      <ui-text-field
-        [control]="employeeForm.get('departments.departmentName')"
-        [label]="'부서명'"
         [readonly]="true"
       />
     </div>
