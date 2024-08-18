@@ -153,13 +153,13 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       this.userDetailForm.get('userPassword').clearValidators();
       this.userDetailForm.get('userPassword').patchValue(null);
       this.userDetailForm.get('userPassword').updateValueAndValidity();
-      
+
       this.userDetailForm.patchValue({
         ...this.userDetail,
-        roles: this.userDetail?.roles?.map((x: UserRoleResponseDTO) => x.roleId) || this.defaultRoles,
+        roles: this.userDetail?.roles?.map(x => x.roleId) || this.defaultRoles,
         employee: {
           ...this.userDetail?.employee,
-          employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
+          employeeCompany: this.userDetail?.employee?.employeeCompanies.find(x => x.quitYmd === null),
         },
       });
     }
