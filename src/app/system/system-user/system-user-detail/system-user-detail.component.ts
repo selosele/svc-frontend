@@ -159,7 +159,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         roles: this.userDetail?.roles?.map(x => x.roleId) || this.defaultRoles,
         employee: {
           ...this.userDetail?.employee,
-          employeeCompany: this.userDetail?.employee?.employeeCompanies.find(x => x.quitYmd === null),
+          employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
         },
       });
     }
