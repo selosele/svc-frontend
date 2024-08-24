@@ -79,7 +79,7 @@ export class SystemUserComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.authService.getUser(event.data['userId'])
+    this.authService.getUser$(event.data['userId'])
     .subscribe((data) => {
       this.userDetail = data;
       this.splitter.show();

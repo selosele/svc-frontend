@@ -171,7 +171,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm1(`사용자를 ${activeStatus}하시겠습니까?`);
     if (!confirm) return;
 
-    this.authService.updateUser({ userId: this.userDetail?.userId, userActiveYn })
+    this.authService.updateUser$({ userId: this.userDetail?.userId, userActiveYn })
     .subscribe((data) => {
       this.messageService.toastSuccess(`정상적으로 ${activeStatus}되었습니다.`);
 
@@ -194,7 +194,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
     // 사용자 ID가 없으면 추가 API를 타고
     if (isEmpty(value.userId)) {
-      this.authService.addUser(value)
+      this.authService.addUser$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -202,7 +202,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.authService.updateUser(value)
+      this.authService.updateUser$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -215,7 +215,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('선택한 사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.authService.removeUser(this.userDetail.userId)
+    this.authService.removeUser$(this.userDetail.userId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

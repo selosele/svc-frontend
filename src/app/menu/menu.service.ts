@@ -48,7 +48,7 @@ export class MenuService {
   }
 
   /** 권한별 메뉴 목록을 조회한다. */
-  listMenuByRole(getMenuRequestDTO?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
+  listMenuByRole$(getMenuRequestDTO?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
     return this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...getMenuRequestDTO } });
   }
 

@@ -26,6 +26,14 @@ export class HumanService {
   companyListDataLoad = new BehaviorSubject<boolean>(false);
   companyListDataLoad$ = this.companyListDataLoad.asObservable();
 
+  /** 직원 회사 목록 */
+  employeeCompanyList = new BehaviorSubject<EmployeeCompanyResponseDTO[]>(null);
+  employeeCompanyList$ = this.employeeCompanyList.asObservable();
+
+  /** 직원 회사 목록 데이터 로드 완료 여부 */
+  employeeCompanyListDataLoad = new BehaviorSubject<boolean>(false);
+  employeeCompanyListDataLoad$ = this.employeeCompanyListDataLoad.asObservable();
+
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
     this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`)
@@ -36,7 +44,7 @@ export class HumanService {
   }
 
   /** 직원을 수정한다. */
-  updateEmployee(saveEmployeeRequestDTO: SaveEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
+  updateEmployee$(saveEmployeeRequestDTO: SaveEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
     const { employeeId } = saveEmployeeRequestDTO;
     return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, saveEmployeeRequestDTO);
   }
@@ -50,25 +58,34 @@ export class HumanService {
     });
   }
 
+  /** 직원 회사 목록을 조회한다. */
+  listEmployeeCompany(employeeId: number): void {
+    this.http.get<EmployeeCompanyResponseDTO[]>(`/human/employees/${employeeId}/companies`)
+    .subscribe((data) => {
+      this.employeeCompanyList.next(data);
+      this.employeeCompanyListDataLoad.next(true);
+    });
+  }
+
   /** 직원 회사를 조회한다. */
-  getEmployeeCompany(employeeId: number, employeeCompanyId: number): Observable<EmployeeCompanyResponseDTO> {
+  getEmployeeCompany$(employeeId: number, employeeCompanyId: number): Observable<EmployeeCompanyResponseDTO> {
     return this.http.get<EmployeeCompanyResponseDTO>(`/human/employees/${employeeId}/companies/${employeeCompanyId}`);
   }
 
   /** 직원 회사를 추가한다. */
-  addEmployeeCompany(saveEmployeeCompanyRequestDTO: SaveEmployeeCompanyRequestDTO): Observable<void> {
+  addEmployeeCompany$(saveEmployeeCompanyRequestDTO: SaveEmployeeCompanyRequestDTO): Observable<void> {
     const { employeeId } = saveEmployeeCompanyRequestDTO;
     return this.http.post<void>(`/human/employees/${employeeId}/companies`, saveEmployeeCompanyRequestDTO);
   }
 
   /** 직원 회사를 수정한다. */
-  updateEmployeeCompany(saveEmployeeCompanyRequestDTO: SaveEmployeeCompanyRequestDTO): Observable<void> {
+  updateEmployeeCompany$(saveEmployeeCompanyRequestDTO: SaveEmployeeCompanyRequestDTO): Observable<void> {
     const { employeeId, employeeCompanyId } = saveEmployeeCompanyRequestDTO;
     return this.http.put<void>(`/human/employees/${employeeId}/companies/${employeeCompanyId}`, saveEmployeeCompanyRequestDTO);
   }
 
   /** 직원 회사를 삭제한다. */
-  removeEmployeeCompany(employeeId: number, employeeCompanyId: number): Observable<void> {
+  removeEmployeeCompany$(employeeId: number, employeeCompanyId: number): Observable<void> {
     return this.http.delete<void>(`/human/employees/${employeeId}/companies/${employeeCompanyId}`);
   }
 

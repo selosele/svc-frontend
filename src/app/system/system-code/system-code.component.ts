@@ -76,7 +76,7 @@ export class SystemCodeComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onNodeSelect(event: any) {
-    this.codeService.getCode(event.node.data['codeId'])
+    this.codeService.getCode$(event.node.data['codeId'])
     .subscribe((data) => {
       this.codeDetail = data;
       this.splitter.show();

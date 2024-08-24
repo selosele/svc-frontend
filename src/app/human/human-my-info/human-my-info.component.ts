@@ -141,7 +141,7 @@ export class HumanMyInfoComponent implements OnInit {
     const confirm = await this.messageService.confirm1('비밀번호를 변경하시겠습니까?');
     if (!confirm) return;
 
-    this.authService.updatePassword(value)
+    this.authService.updatePassword$(value)
     .subscribe((data) => {
       const alert = this.messageService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
       alert.onClose.subscribe((data) => {
@@ -155,7 +155,7 @@ export class HumanMyInfoComponent implements OnInit {
     const confirm = await this.messageService.confirm1('저장하시겠습니까?');
     if (!confirm) return;
 
-    this.humanService.updateEmployee(value)
+    this.humanService.updateEmployee$(value)
     .subscribe((data) => {
       const alert = this.messageService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
       alert.onClose.subscribe((data) => {
@@ -182,7 +182,7 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.humanService.getEmployeeCompany(this.user.userId, event.data['employeeCompanyId'])
+    this.humanService.getEmployeeCompany$(this.user.userId, event.data['employeeCompanyId'])
     .subscribe((data) => {
       this.employeeCompanyDetail = data;
       this.splitter.show();

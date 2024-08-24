@@ -40,23 +40,23 @@ export class CodeService {
   }
 
   /** 코드를 조회한다. */
-  getCode(codeId: string): Observable<CodeResponseDTO> {
+  getCode$(codeId: string): Observable<CodeResponseDTO> {
     return this.http.get<CodeResponseDTO>(`/common/codes/${codeId}`);
   }
 
   /** 코드를 추가한다. */
-  addCode(saveCodeRequestDTO: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
+  addCode$(saveCodeRequestDTO: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
     return this.http.post<CodeResponseDTO>('/common/codes', saveCodeRequestDTO);
   }
 
   /** 코드를 수정한다. */
-  updateCode(saveCodeRequestDTO: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
+  updateCode$(saveCodeRequestDTO: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
     const { codeId } = saveCodeRequestDTO;
     return this.http.put<CodeResponseDTO>(`/common/codes/${codeId}`, saveCodeRequestDTO);
   }
 
   /** 코드를 삭제한다. */
-  removeCode(codeId: string): Observable<void> {
+  removeCode$(codeId: string): Observable<void> {
     return this.http.delete<void>(`/common/codes/${codeId}`);
   }
 

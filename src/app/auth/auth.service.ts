@@ -66,33 +66,33 @@ export class AuthService {
   }
 
   /** 권한별 사용자 목록을 조회한다. */
-  listUserByRole(getUserRequestDTO: GetUserRequestDTO): Observable<UserResponseDTO[]> {
+  listUserByRole$(getUserRequestDTO: GetUserRequestDTO): Observable<UserResponseDTO[]> {
     return this.http.get<UserResponseDTO[]>('/common/auth/users', { params: { ...getUserRequestDTO } });
   }
 
   /** 사용자를 조회한다. */
-  getUser(userId: number): Observable<UserResponseDTO> {
+  getUser$(userId: number): Observable<UserResponseDTO> {
     return this.http.get<UserResponseDTO>(`/common/auth/users/${userId}`);
   }
 
   /** 사용자를 추가한다. */
-  addUser(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
+  addUser$(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
     return this.http.post<UserResponseDTO>('/common/auth/users', saveUserRequestDTO);
   }
 
   /** 사용자를 수정한다. */
-  updateUser(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
+  updateUser$(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
     const { userId } = saveUserRequestDTO;
     return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, saveUserRequestDTO);
   }
 
   /** 사용자를 삭제한다. */
-  removeUser(userId: number): Observable<void> {
+  removeUser$(userId: number): Observable<void> {
     return this.http.delete<void>(`/common/auth/users/${userId}`);
   }
 
   /** 사용자 비밀번호를 변경한다. */
-  updatePassword(updateUserPasswordRequestDTO: UpdateUserPasswordRequestDTO): Observable<number> {
+  updatePassword$(updateUserPasswordRequestDTO: UpdateUserPasswordRequestDTO): Observable<number> {
     const { userId } = this.getAuthenticatedUser();
     return this.http.put<number>(`/common/auth/users/${userId}/password`, updateUserPasswordRequestDTO);
   }

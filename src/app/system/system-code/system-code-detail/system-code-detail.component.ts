@@ -88,7 +88,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
     // 코드 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalCodeId)) {
-      this.codeService.addCode(value)
+      this.codeService.addCode$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -96,7 +96,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.codeService.updateCode(value)
+      this.codeService.updateCode$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -109,7 +109,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('선택한 코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.codeService.removeCode(this.codeDetail.codeId)
+    this.codeService.removeCode$(this.codeDetail.codeId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

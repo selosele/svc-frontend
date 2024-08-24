@@ -108,7 +108,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
     // 직원 회사 ID가 없으면 추가 API를 타고
     if (isEmpty(value.employeeCompanyId)) {
-      this.humanService.addEmployeeCompany(value)
+      this.humanService.addEmployeeCompany$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -116,7 +116,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.humanService.updateEmployeeCompany(value)
+      this.humanService.updateEmployeeCompany$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -132,7 +132,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     const { employeeId } = this.user;
     const employeeCompanyId = this.companyDetailForm.get('employeeCompanyId').value;
 
-    this.humanService.removeEmployeeCompany(employeeId, employeeCompanyId)
+    this.humanService.removeEmployeeCompany$(employeeId, employeeCompanyId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

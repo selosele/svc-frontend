@@ -60,10 +60,10 @@ export class SystemRoleComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    const listUserByRole$ = this.authService.listUserByRole({ roleIdList: [event.data['roleId']] });
-    const listMenuByRole$ = this.menuService.listMenuByRole({ roleIdList: [event.data['roleId']] });
-
-    combineLatest([listUserByRole$, listMenuByRole$]).subscribe(([userList, menuList]) => {
+    combineLatest([
+      this.authService.listUserByRole$({ roleIdList: [event.data['roleId']] }),
+      this.menuService.listMenuByRole$({ roleIdList: [event.data['roleId']] })
+    ]).subscribe(([userList, menuList]) => {
       const menuTree = this.menuService.createMenuTree(menuList);
 
       this.dialogService.open(SystemRoleDetailComponent, {
