@@ -122,6 +122,9 @@ export class AuthenticatedUser {
   /** 직원 ID */
   employeeId?: number;
 
+  /** 회사 ID */
+  companyId?: number;
+
   /** 직원명 */
   employeeName?: string;
 
