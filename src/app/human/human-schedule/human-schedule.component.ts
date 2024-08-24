@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 
 @Component({
   standalone: true,
   imports: [
+    RouterModule,
     LayoutPageDescriptionComponent,
   ],
   selector: 'view-human-schedule',
