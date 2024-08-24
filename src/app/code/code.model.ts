@@ -1,3 +1,34 @@
+import { HttpRequestDTOBase } from '@app/shared/models';
+
+/** 코드 추가/수정 요청 DTO DTO */
+export class SaveCodeRequestDTO extends HttpRequestDTOBase {
+
+  /** 기존 코드 ID */
+  originalCodeId?: string;
+
+  /** 코드 ID */
+  codeId?: string;
+
+  /** 상위 코드 ID */
+  upCodeId?: string;
+  
+  /** 코드 값 */
+  codeValue?: string;
+  
+  /** 코드명 */
+  codeName?: string;
+  
+  /** 코드 내용 */
+  codeContent?: string;
+  
+  /** 코드 순서 */
+  codeOrder?: number;
+  
+  /** 코드 뎁스 */
+  codeDepth?: number;
+    
+}
+
 /** 코드 응답 DTO */
 export class CodeResponseDTO {
 

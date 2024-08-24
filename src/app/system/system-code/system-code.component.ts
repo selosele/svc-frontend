@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CodeService } from '../../code/code.service';
 import { CodeTree } from '../../code/code.model';
@@ -12,6 +12,7 @@ import { SystemCodeDetailComponent } from './system-code-detail/system-code-deta
     UiSkeletonComponent,
     UiTreeTableComponent,
     UiSplitterComponent,
+    UiButtonComponent,
     LayoutPageDescriptionComponent,
     SystemCodeDetailComponent,
   ],
@@ -65,6 +66,12 @@ export class SystemCodeComponent implements OnInit {
   /** 코드 목록을 조회한다. */
   listCode(): void {
     this.codeService.listCode();
+  }
+
+  /** 코드를 추가한다. */
+  addCode(): void {
+    this.codeDetail = {};
+    this.splitter.show();
   }
 
   /** 테이블 행을 선택한다. */

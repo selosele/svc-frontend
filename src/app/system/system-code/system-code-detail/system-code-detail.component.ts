@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CodeResponseDTO } from '@app/code/code.model';
+import { CodeResponseDTO, SaveCodeRequestDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
-import { UiDropdownComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
-import { isNotObjectEmpty } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -13,6 +13,7 @@ import { isNotObjectEmpty } from '@app/shared/utils';
     UiSplitFormComponent,
     UiTextFieldComponent,
     UiDropdownComponent,
+    UiHiddenFieldComponent,
   ],
   selector: 'system-code-detail',
   templateUrl: './system-code-detail.component.html',
@@ -38,16 +39,8 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
-  /** input readonly 여부 */
-  get isReadonly(): boolean {
-    return isNotObjectEmpty(this.codeDetail);
-  }
-
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
-
-  /** 사용자 정보 저장 이벤트 */
-  @Output() submit = new EventEmitter<any>();
 
   /** 삭제 버튼 클릭 이벤트 */
   @Output() remove = new EventEmitter<void>();
@@ -57,27 +50,58 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.codeDetailForm = this.fb.group({
-      codeId: [''],       // 코드 ID
-      upCodeId: [''],     // 상위 코드 ID
-      codeValue: [''],    // 코드 값
-      codeName: [''],     // 코드명
-      codeContent: [''],  // 코드 내용
-      codeOrder: [''],    // 코드 순서
-      codeDepth: [''],    // 코드 뎁스
-      useYn: [''],        // 사용 여부
+      originalCodeId: [''],  // 기존 코드 ID
+      codeId: [''],          // 코드 ID
+      upCodeId: [''],        // 상위 코드 ID
+      codeValue: [''],       // 코드 값
+      codeName: [''],        // 코드명
+      codeContent: [''],     // 코드 내용
+      codeOrder: [''],       // 코드 순서
+      codeDepth: [''],       // 코드 뎁스
+      useYn: [''],           // 사용 여부
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.codeDetail && this.codeDetailForm) {
       this.useRemove = true;
-      this.codeDetailForm.patchValue(this.codeDetail);
+      
+      if (isObjectEmpty(changes.codeDetail.currentValue)) {
+        this.useRemove = false;
+        this.codeDetailForm.reset();
+        return;
+      }
+
+      this.codeDetailForm.patchValue({
+        originalCodeId: this.codeDetail.codeId,
+        ...this.codeDetail
+      });
     }
   }
 
   /** 코드 정보를 저장한다. */
-  onSubmit(value: any): void {
-    this.submit.emit(value);
+  async onSubmit(value: SaveCodeRequestDTO): Promise<void> {
+    const crudName = isEmpty(value.originalCodeId) ? '추가' : '수정';
+
+    const confirm = await this.messageService.confirm1(`코드 정보를 ${crudName}하시겠습니까?`);
+    if (!confirm) return;
+
+    // 코드 ID가 없으면 추가 API를 타고
+    if (isEmpty(value.originalCodeId)) {
+      this.codeService.addCode(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit();
+      });
+    }
+    // 있으면 수정 API를 탄다.
+    else {
+      this.codeService.updateCode(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit();
+      });
+    }
   }
 
   /** 코드를 삭제한다. */
@@ -85,7 +109,11 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('선택한 코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.remove.emit();
+    this.codeService.removeCode(this.codeDetail.codeId)
+    .subscribe(() => {
+      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.remove.emit();
+    });
   }
 
   /** 닫기 버튼을 클릭한다. */

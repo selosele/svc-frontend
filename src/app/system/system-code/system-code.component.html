@@ -21,7 +21,15 @@
       (refresh)="onRefresh()"
       (nodeSelect)="onNodeSelect($event)"
       (nodeUnSelect)="onNodeUnselect($event)"
-    />
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'코드 추가'"
+        [outlined]="true"
+        (click)="addCode()"
+      />
+    </ui-tree-table>
   
     <div second>
       <system-code-detail
