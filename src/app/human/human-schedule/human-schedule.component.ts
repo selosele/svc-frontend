@@ -6,10 +6,10 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
   imports: [
     LayoutPageDescriptionComponent,
   ],
-  selector: 'view-schedule',
-  templateUrl: './schedule.component.html',
-  styleUrl: './schedule.component.scss'
+  selector: 'view-human-schedule',
+  templateUrl: './human-schedule.component.html',
+  styleUrl: './human-schedule.component.scss'
 })
-export class ScheduleComponent {
+export class HumanScheduleComponent {
 
 }

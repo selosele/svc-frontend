@@ -12,7 +12,7 @@ export const humanRoutes: Routes = [
     data: {
       roles: [roles.EMPLOYEE],
     },
-    loadComponent: () => import('./schedule/schedule.component').then(x => x.ScheduleComponent),
+    loadComponent: () => import('./human-schedule/human-schedule.component').then(x => x.HumanScheduleComponent),
   },
   
 ];
