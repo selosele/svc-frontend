@@ -14,6 +14,9 @@ import { UiButtonComponent } from '../ui-button/ui-button.component';
 })
 export class UiTableButtonsComponent {
 
+  /** 테이블 타이틀 */
+  @Input() title?: string;
+
   /** 테이블 행 추가 버튼 사용여부 */
   @Input() useAdd = true;
 

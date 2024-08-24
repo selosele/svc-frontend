@@ -1,8 +1,16 @@
 .ui-table__buttons {
   display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.25rem;
+
+  &-right {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    gap: 1rem;
+    width: 100%;
+  }
 
   &:not(:has(*)) {
     display: none;

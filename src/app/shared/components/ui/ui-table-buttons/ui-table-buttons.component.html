@@ -1,26 +1,32 @@
 <div class="ui-table__buttons">
-  <ng-content></ng-content>
+  @if (title) {
+    <h2 [ngStyle]="{ 'margin': '0' }">{{ title }}</h2>
+  }
 
-  <ui-button *ngIf="useAdd"
-    [size]="'small'"
-    [icon]="'pi-plus'"
-    [label]="'행 추가'"
-    [outlined]="true"
-  />
-  
-  <ui-button *ngIf="useRemove"
-    [size]="'small'"
-    [icon]="'pi-minus'"
-    [label]="'행 삭제'"
-    [outlined]="true"
-  />
-  
-  <ui-button *ngIf="useRefresh"
-    [size]="'small'"
-    [severity]="'success'"
-    [icon]="'pi-refresh'"
-    [label]="'새로고침'"
-    [outlined]="true"
-    (click)="onRefresh($event)"
-  />
+  <div class="ui-table__buttons-right">
+    <ng-content></ng-content>
+
+    <ui-button *ngIf="useAdd"
+      [size]="'small'"
+      [icon]="'pi-plus'"
+      [label]="'행 추가'"
+      [outlined]="true"
+    />
+    
+    <ui-button *ngIf="useRemove"
+      [size]="'small'"
+      [icon]="'pi-minus'"
+      [label]="'행 삭제'"
+      [outlined]="true"
+    />
+    
+    <ui-button *ngIf="useRefresh"
+      [size]="'small'"
+      [severity]="'success'"
+      [icon]="'pi-refresh'"
+      [label]="'새로고침'"
+      [outlined]="true"
+      (click)="onRefresh($event)"
+    />
+  </div>
 </div>

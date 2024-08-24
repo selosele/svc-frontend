@@ -24,6 +24,9 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 */
   @ViewChild('treeTable') treeTable: TreeTable;
 
+  /** 트리테이블 타이틀 */
+  @Input() title?: string;
+
   /** 트리테이블 행 추가 버튼 사용여부 */
   @Input() useAdd = true;
 
