@@ -1,0 +1,23 @@
+<layout-page-description>
+  <ul>
+    <li>회사별 휴가를 조회/입력할 수 있습니다.</li>
+    <li>휴가를 등록 시, <a [routerLink]="'/human/schedules'" [queryParams]="{ menuId: 5 }">일정관리 페이지</a>에서도 확인할 수 있습니다.</li>
+  </ul>
+</layout-page-description>
+
+@if (!employeeCompanyListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-tab
+    [tabs]="tabs"
+    [activeIndex]="activeIndex"
+    (change)="onChange($event)"
+  >
+    <view-human-vacation-list
+      [employeeCompanyId]="employeeCompanyId"
+    />
+  </ui-tab>
+}

@@ -131,3 +131,43 @@ export class CompanyResponseDTO {
   deleteYn?: string;
 
 }
+
+/** 휴가 조회 요청 DTO */
+export class GetVacationRequestDTO extends HttpRequestDTOBase {
+
+  /** 휴가 ID */
+  vacationId?: number;
+
+  /** 직원 회사 ID */
+  employeeCompanyId?: number;
+
+}
+
+/** 휴가 응답 DTO */
+export class VacationResponseDTO {
+
+  /** 휴가 ID */
+  vacationId?: number;
+
+  /** 직원 ID */
+  employeeId?: number;
+
+  /** 직원 회사 ID */
+  employeeCompanyId?: number;
+
+  /** 휴가 구분 코드 */
+  vacationTypeCode?: string;
+
+  /** 휴가 내용 */
+  vacationContent?: string;
+
+  /** 휴가 시작일자 */
+  vacationStartYmd?: string;
+
+  /** 휴가 종료일자 */
+  vacationEndYmd?: string;
+
+  /** 삭제 여부 */
+  deleteYn?: string;
+
+}

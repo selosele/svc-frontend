@@ -1,0 +1,39 @@
+@if (!vacationListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-table #table first
+      [useAdd]="false"
+      [useRemove]="false"
+      [cols]="cols"
+      [data]="vacationList"
+      [dataKey]="'vacationId'"
+      [selection]="selection"
+      (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
+    >
+      <ui-card card>
+        <ul>
+          <li>나의 남은 휴가: 12/15 (회계년도, 입사년도별 남은 휴가를 표출 필요)</li>
+          <li>휴가 계산법: blar blar...</li>
+        </ul>
+      </ui-card>
+
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'휴가 등록'"
+        [outlined]="true"
+        (click)="addVacation()"
+      />
+    </ui-table>
+  
+    <div second>
+      
+    </div>
+  </ui-splitter>
+}

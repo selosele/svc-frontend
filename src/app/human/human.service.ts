@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CompanyResponseDTO, EmployeeCompanyResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, SaveEmployeeCompanyRequestDTO, SaveEmployeeRequestDTO } from './human.model';
+import { CompanyResponseDTO, EmployeeCompanyResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveEmployeeCompanyRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -87,6 +87,11 @@ export class HumanService {
   /** 직원 회사를 삭제한다. */
   removeEmployeeCompany$(employeeId: number, employeeCompanyId: number): Observable<void> {
     return this.http.delete<void>(`/human/employees/${employeeId}/companies/${employeeCompanyId}`);
+  }
+
+  /** 휴가 목록을 조회한다. */
+  listVacation$(getVacationRequestDTO: GetVacationRequestDTO): Observable<VacationResponseDTO[]> {
+    return this.http.get<VacationResponseDTO[]>('/human/vacations', { params: { ...getVacationRequestDTO } });
   }
 
 }
