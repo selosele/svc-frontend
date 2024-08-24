@@ -9,7 +9,6 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
 import { isObjectEmpty, isNotObjectEmpty, isEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
-import { HumanService } from '@app/human/human.service';
 
 @Component({
   standalone: true,
@@ -36,7 +35,6 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     private messageService: UiMessageService,
     private authService: AuthService,
     private codeService: CodeService,
-    private humanService: HumanService,
   ) {}
 
   /** 사용자 정보 */
