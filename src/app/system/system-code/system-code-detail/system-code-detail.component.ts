@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CodeResponseDTO, SaveCodeRequestDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
-import { UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
@@ -50,15 +50,30 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.codeDetailForm = this.fb.group({
-      originalCodeId: [''],  // 기존 코드 ID
-      codeId: [''],          // 코드 ID
-      upCodeId: [''],        // 상위 코드 ID
-      codeValue: [''],       // 코드 값
-      codeName: [''],        // 코드명
-      codeContent: [''],     // 코드 내용
-      codeOrder: [''],       // 코드 순서
-      codeDepth: [''],       // 코드 뎁스
-      useYn: [''],           // 사용 여부
+      originalCodeId: [''],                              // 기존 코드 ID
+      codeId: ['', [                                     // 코드 ID
+        FormValidator.required,
+        FormValidator.maxLength(30)
+      ]],
+      upCodeId: ['', [FormValidator.maxLength(30)]],     // 상위 코드 ID
+      codeValue: ['', [                                  // 코드 값
+        FormValidator.required,
+        FormValidator.maxLength(10)
+      ]],
+      codeName: ['', [                                   // 코드명
+        FormValidator.required,
+        FormValidator.maxLength(100)]
+      ],
+      codeContent: ['', [FormValidator.maxLength(100)]], // 코드 내용
+      codeOrder: ['', [                                  // 코드 순서
+        FormValidator.required,
+        FormValidator.numeric
+      ]],
+      codeDepth: ['', [                                  // 코드 뎁스
+        FormValidator.required,
+        FormValidator.numeric
+      ]],
+      useYn: ['', [FormValidator.required]],             // 사용 여부
     });
   }
 
