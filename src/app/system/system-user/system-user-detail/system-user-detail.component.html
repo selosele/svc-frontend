@@ -90,12 +90,8 @@
   </div>
 
   <div class="input-box">
-    <ui-hidden-field
-      [control]="userDetailForm.get('employee.employeeCompany.employeeCompanyId')"
-    />
-    <ui-hidden-field
-      [control]="userDetailForm.get('employee.employeeCompany.companyId')"
-    />
+    <ui-hidden-field [control]="userDetailForm.get('employee.employeeCompany.employeeCompanyId')" />
+    <ui-hidden-field [control]="userDetailForm.get('employee.employeeCompany.companyId')" />
     
     <ui-company-field
       [control]="userDetailForm.get('employee.employeeCompany.corporateName')"

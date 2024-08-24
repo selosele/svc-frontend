@@ -5,11 +5,9 @@
   (remove)="removeCompany($event)"
   (close)="onClose()"
 >
-  <h2>회사 정보</h2>
+  <ui-hidden-field [control]="companyDetailForm.get('employeeCompanyId')" />
 
-  <ui-hidden-field
-    [control]="companyDetailForm.get('employeeCompanyId')"
-  />
+  <h2>회사 정보</h2>
 
   <div class="input-box">
     <ui-company-field
