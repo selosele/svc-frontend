@@ -11,4 +11,9 @@
       line-height: 1.5;
     }
   }
+
+  a {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
 }
