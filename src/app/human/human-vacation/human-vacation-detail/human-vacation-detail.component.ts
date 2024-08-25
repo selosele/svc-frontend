@@ -101,7 +101,11 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('휴가를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    
+    this.humanService.removeVacation$(this.vacationDetail.vacationId)
+    .subscribe(() => {
+      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.remove.emit();
+    });
   }
 
   /** 닫기 버튼을 클릭한다. */
