@@ -13,12 +13,10 @@
 }
 @else {
   <ui-tab
-    [tabs]="tabs"
+    [tabs]="employeeCompanyTabList"
     [activeIndex]="activeIndex"
     (change)="onChange($event)"
   >
-    <human-vacation-list
-      [employeeCompanyId]="employeeCompanyId"
-    />
+    <human-vacation-list />
   </ui-tab>
 }

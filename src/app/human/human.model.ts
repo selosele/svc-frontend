@@ -143,6 +143,29 @@ export class GetVacationRequestDTO extends HttpRequestDTOBase {
 
 }
 
+/** 휴가 추가/수정 요청 DTO */
+export class SaveVacationRequestDTO extends HttpRequestDTOBase {
+
+  /** 휴가 ID */
+  vacationId?: number;
+
+  /** 직원 회사 ID */
+  employeeCompanyId?: number;
+
+  /** 휴가 구분 코드 */
+  vacationTypeCode?: string;
+
+  /** 휴가 시작일자 */
+  vacationStartYmd?: string;
+
+  /** 휴가 종료일자 */
+  vacationEndYmd?: string;
+
+  /** 휴가 내용 */
+  vacationContent?: string;
+
+}
+
 /** 휴가 응답 DTO */
 export class VacationResponseDTO {
 

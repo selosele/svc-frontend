@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CodeService } from '@app/code/code.service';
 import { VacationResponseDTO } from '@app/human/human.model';
 import { HumanService } from '@app/human/human.service';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
 
 @Component({
   standalone: true,
@@ -13,12 +14,13 @@ import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComp
     UiTableComponent,
     UiSplitterComponent,
     UiButtonComponent,
+    HumanVacationDetailComponent,
   ],
   selector: 'human-vacation-list',
   templateUrl: './human-vacation-list.component.html',
   styleUrl: './human-vacation-list.component.scss'
 })
-export class HumanVacationListComponent implements OnChanges {
+export class HumanVacationListComponent implements OnInit {
 
   constructor(
     private codeService: CodeService,
@@ -26,7 +28,9 @@ export class HumanVacationListComponent implements OnChanges {
   ) {}
 
   /** 직원 회사 ID */
-  @Input() employeeCompanyId: number;
+  get employeeCompanyId(): number {
+    return this.humanService.employeeCompanyId.value;
+  }
 
   /** table */
   @ViewChild('table') table: UiTableComponent;
@@ -59,11 +63,11 @@ export class HumanVacationListComponent implements OnChanges {
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.employeeCompanyId) {
-      this.employeeCompanyId = changes.employeeCompanyId.currentValue;
+  ngOnInit(): void {
+    this.humanService.employeeCompanyId$.subscribe((data) => {
+      if (!data) return;
       this.listVacation();
-    }
+    });
   }
 
   /** 휴가 목록을 조회한다. */
@@ -83,11 +87,11 @@ export class HumanVacationListComponent implements OnChanges {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    // this.humanService.getVacation$(event.data['vacationId'])
-    // .subscribe((data) => {
-    //   this.vacationDetail = data;
-    //   this.splitter.show();
-    // });
+    this.humanService.getVacation$(event.data['vacationId'])
+    .subscribe((data) => {
+      this.vacationDetail = data;
+      this.splitter.show();
+    });
   }
 
   /** 테이블 행을 선택 해제한다. */

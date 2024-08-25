@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CompanyResponseDTO, EmployeeCompanyResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveEmployeeCompanyRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO } from './human.model';
+import { Tab } from '@app/shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -29,10 +30,21 @@ export class HumanService {
   /** 직원 회사 목록 */
   employeeCompanyList = new BehaviorSubject<EmployeeCompanyResponseDTO[]>(null);
   employeeCompanyList$ = this.employeeCompanyList.asObservable();
+  employeeCompanyTabList = new BehaviorSubject<Tab[]>(null);
+  employeeCompanyTabList$ = this.employeeCompanyTabList.asObservable();
 
   /** 직원 회사 목록 데이터 로드 완료 여부 */
   employeeCompanyListDataLoad = new BehaviorSubject<boolean>(false);
   employeeCompanyListDataLoad$ = this.employeeCompanyListDataLoad.asObservable();
+
+  /** 직원 회사 ID */
+  employeeCompanyId = new BehaviorSubject<number>(null);
+  employeeCompanyId$ = this.employeeCompanyId.asObservable();
+
+  /** 직원 회사 ID 값을 설정한다. */
+  setEmployeeCompanyId(value: number): void {
+    this.employeeCompanyId.next(value);
+  }
 
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
@@ -63,6 +75,7 @@ export class HumanService {
     this.http.get<EmployeeCompanyResponseDTO[]>(`/human/employees/${employeeId}/companies`)
     .subscribe((data) => {
       this.employeeCompanyList.next(data);
+      this.employeeCompanyTabList.next(data.map(x => ({ title: x.companyName, key: x.employeeCompanyId })));
       this.employeeCompanyListDataLoad.next(true);
     });
   }
@@ -92,6 +105,11 @@ export class HumanService {
   /** 휴가 목록을 조회한다. */
   listVacation$(getVacationRequestDTO: GetVacationRequestDTO): Observable<VacationResponseDTO[]> {
     return this.http.get<VacationResponseDTO[]>('/human/vacations', { params: { ...getVacationRequestDTO } });
+  }
+
+  /** 휴가를 조회한다. */
+  getVacation$(vacationId: number): Observable<VacationResponseDTO> {
+    return this.http.get<VacationResponseDTO>(`/human/vacations/${vacationId}`);
   }
 
 }

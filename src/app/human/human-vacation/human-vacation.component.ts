@@ -37,8 +37,10 @@ export class HumanVacationComponent implements OnInit {
   /** 선택된 회사 탭 index */
   activeIndex: number;
 
-  /** 직원 회사 ID */
-  employeeCompanyId: number;
+  /** 직원 회사 탭 목록 */
+  get employeeCompanyTabList() {
+    return this.humanService.employeeCompanyTabList.value;
+  }
 
   /** 직원 회사 목록 데이터 로드 완료 여부 */
   get employeeCompanyListDataLoad(): boolean {
@@ -47,26 +49,22 @@ export class HumanVacationComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
-    this.employeeCompanyId = this.user.employeeCompanyId;
-    this.listEmployeeCompany();
+    this.humanService.setEmployeeCompanyId(parseInt(`${this.user.employeeCompanyId}`));
+
+    if (!this.employeeCompanyListDataLoad) {
+      this.listEmployeeCompany();
+    }
   }
 
   /** 직원 회사 목록을 조회한다. */
   listEmployeeCompany(): void {
     this.humanService.listEmployeeCompany(this.user.employeeId);
-    this.humanService.employeeCompanyList$.subscribe((data) => {
-      if (data === null) return;
-      
-      this.tabs = [
-        ...data.map(x => ({ title: x.companyName, key: x.employeeCompanyId }))
-      ];
-    });
   }
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
-    this.employeeCompanyId = event.activeKey;
+    this.humanService.setEmployeeCompanyId(event.activeKey);
   }
 
 }

@@ -28,7 +28,12 @@
     </ui-table>
   
     <div second>
-      
+      <human-vacation-detail
+        [vacationDetail]="vacationDetail"
+        (refresh)="listVacation()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
     </div>
   </ui-splitter>
 }
