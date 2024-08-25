@@ -7,7 +7,7 @@ import { UiMessageService } from '@app/shared/services';
 import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { EmployeeCompanyResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
-import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
@@ -28,6 +28,7 @@ import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detai
     UiDropdownComponent,
     UiTableComponent,
     UiSplitterComponent,
+    UiContentTitleComponent,
     LayoutPageDescriptionComponent,
     HumanMyInfoCompanyDetailComponent
 ],

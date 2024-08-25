@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { UiButtonComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
@@ -23,6 +23,7 @@ import { CodeService } from '@app/code/code.service';
     UiCompanyFieldComponent,
     UiButtonComponent,
     UiHiddenFieldComponent,
+    UiContentTitleComponent,
   ],
   selector: 'system-user-detail',
   templateUrl: './system-user-detail.component.html',

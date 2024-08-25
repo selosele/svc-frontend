@@ -1,0 +1,12 @@
+.ui-tab {
+  margin-top: 1.25rem;
+
+  .p-tabview {
+    .p-tabview-nav li.p-highlight {
+      .p-tabview-nav-link {
+        background-color: var(--primary-color);
+        color: var(--surface-0);
+      }
+    }
+  }
+}

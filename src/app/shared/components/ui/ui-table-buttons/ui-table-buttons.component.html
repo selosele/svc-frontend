@@ -1,6 +1,6 @@
 <div class="ui-table__buttons">
   @if (title) {
-    <h2 [ngStyle]="{ 'margin': '0' }">{{ title }}</h2>
+    <ui-content-title [text]="title" />
   }
 
   <div class="ui-table__buttons-right">

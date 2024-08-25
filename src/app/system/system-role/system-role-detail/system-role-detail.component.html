@@ -4,9 +4,8 @@
   </ul>
 </layout-page-description>
 
-<h2>사용자 목록</h2>
-
 <ui-table
+  [title]="'사용자 목록'"
   [useAdd]="false"
   [useRemove]="false"
   [useRefresh]="false"
@@ -15,9 +14,8 @@
   [dataKey]="'userId'"
 />
 
-<h2>메뉴 목록</h2>
-
 <ui-tree-table
+  [title]="'메뉴 목록'"
   [useAdd]="false"
   [useRemove]="false"
   [useRefresh]="false"

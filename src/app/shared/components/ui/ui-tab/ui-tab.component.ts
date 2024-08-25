@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { TabViewChangeEvent, TabViewModule } from 'primeng/tabview';
 import { Tab, UiTabChangeEvent } from '@app/shared/models';
 
@@ -11,7 +11,8 @@ import { Tab, UiTabChangeEvent } from '@app/shared/models';
   ],
   selector: 'ui-tab',
   templateUrl: './ui-tab.component.html',
-  styleUrl: './ui-tab.component.scss'
+  styleUrl: './ui-tab.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiTabComponent {
 

@@ -12,7 +12,7 @@
   <ui-skeleton />
 }
 @else {
-  <h2>비밀번호 변경</h2>
+  <ui-content-title [text]="'비밀번호 변경'" />
 
   <ui-form [form]="changePasswordForm" (submit)="onSubmitPassword($event)">
     <div class="input-box">
@@ -42,7 +42,7 @@
     </div>
   </ui-form>
 
-  <h2>직원 정보</h2>
+  <ui-content-title [text]="'직원 정보'" />
 
   <ui-form [form]="employeeForm" (submit)="onSubmitEmployee($event)">
     <div class="input-box">

@@ -5,7 +5,7 @@
   (remove)="removeUser($event)"
   (close)="onClose()"
 >
-  <h2>사용자 정보</h2>
+  <ui-content-title [text]="'사용자 정보'" />
 
   <div class="input-box">
     <ui-text-field
@@ -49,7 +49,7 @@
     </ui-checkbox-group>
   </div>
 
-  <h2>직원 정보</h2>
+  <ui-content-title [text]="'직원 정보'" />
 
   <div class="input-box">
     <ui-text-field

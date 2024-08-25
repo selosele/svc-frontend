@@ -4,6 +4,7 @@ import { CodeResponseDTO, SaveCodeRequestDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
 import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 
@@ -15,6 +16,7 @@ import { isEmpty, isObjectEmpty } from '@app/shared/utils';
     UiTextareaComponent,
     UiDropdownComponent,
     UiHiddenFieldComponent,
+    UiContentTitleComponent,
   ],
   selector: 'system-code-detail',
   templateUrl: './system-code-detail.component.html',

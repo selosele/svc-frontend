@@ -1,8 +1,10 @@
-<p-tabView [activeIndex]="activeIndex" (onChange)="onChange($event)">
-  <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
-    <div *ngIf="tab?.content">
-      {{ tab.content }}
-    </div>
-  </p-tabPanel>
-  <ng-content></ng-content>
-</p-tabView>
+<div class="ui-tab">
+  <p-tabView [activeIndex]="activeIndex" (onChange)="onChange($event)">
+    <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
+      <div *ngIf="tab?.content">
+        {{ tab.content }}
+      </div>
+    </p-tabPanel>
+    <ng-content></ng-content>
+  </p-tabView>
+</div>
