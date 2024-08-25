@@ -2,7 +2,7 @@
   [form]="companyDetailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
-  (remove)="removeCompany($event)"
+  (remove)="onRemove($event)"
   (close)="onClose()"
 >
   <ui-hidden-field [control]="companyDetailForm.get('employeeCompanyId')" />

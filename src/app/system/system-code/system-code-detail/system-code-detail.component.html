@@ -2,7 +2,7 @@
   [form]="codeDetailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
-  (remove)="removeCode($event)"
+  (remove)="onRemove($event)"
   (close)="onClose()"
 >
   <ui-hidden-field [control]="codeDetailForm.get('originalCodeId')" />

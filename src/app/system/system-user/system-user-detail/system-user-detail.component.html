@@ -2,7 +2,7 @@
   [form]="userDetailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
-  (remove)="removeUser($event)"
+  (remove)="onRemove($event)"
   (close)="onClose()"
 >
   <ui-content-title [text]="'사용자 정보'" />

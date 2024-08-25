@@ -86,6 +86,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
       if (isObjectEmpty(changes.employeeCompanyDetail.currentValue)) {
         this.useRemove = false;
+        return;
       }
       
       this.companyDetailForm.patchValue(this.employeeCompanyDetail);
@@ -125,8 +126,8 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   }
 
   /** 회사 정보를 삭제한다. */
-  async removeCompany(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('선택한 회사를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+  async onRemove(event: Event): Promise<void> {
+    const confirm = await this.messageService.confirm2('회사를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
     const { employeeId } = this.user;

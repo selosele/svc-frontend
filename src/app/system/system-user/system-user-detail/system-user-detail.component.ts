@@ -210,8 +210,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   }
 
   /** 사용자를 삭제한다. */
-  async removeUser(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('선택한 사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+  async onRemove(event: Event): Promise<void> {
+    const confirm = await this.messageService.confirm2('사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
     this.authService.removeUser$(this.userDetail.userId)
