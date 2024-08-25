@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
 import { UiContentTitleComponent } from '../ui-content-title/ui-content-title.component';
 
@@ -12,7 +12,8 @@ import { UiContentTitleComponent } from '../ui-content-title/ui-content-title.co
   ],
   selector: 'ui-table-buttons',
   templateUrl: './ui-table-buttons.component.html',
-  styleUrl: './ui-table-buttons.component.scss'
+  styleUrl: './ui-table-buttons.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiTableButtonsComponent {
 

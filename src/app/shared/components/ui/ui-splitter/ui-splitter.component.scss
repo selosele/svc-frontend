@@ -59,6 +59,10 @@
       .ui-tree-table__view {
         width: 1400px;
       }
+
+      .ui-table__buttons-right {
+        flex: auto;
+      }
     }
 
     &:last-of-type {

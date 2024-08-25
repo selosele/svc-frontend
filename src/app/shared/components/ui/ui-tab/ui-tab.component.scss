@@ -4,6 +4,7 @@
   .p-tabview {
     .p-tabview-nav li.p-highlight {
       .p-tabview-nav-link {
+        border-color: transparent;
         background-color: var(--primary-color);
         color: var(--surface-0);
       }
