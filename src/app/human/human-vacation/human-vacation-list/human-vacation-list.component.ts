@@ -14,7 +14,7 @@ import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComp
     UiSplitterComponent,
     UiButtonComponent,
   ],
-  selector: 'view-human-vacation-list',
+  selector: 'human-vacation-list',
   templateUrl: './human-vacation-list.component.html',
   styleUrl: './human-vacation-list.component.scss'
 })
