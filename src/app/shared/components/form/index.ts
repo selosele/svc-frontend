@@ -9,3 +9,4 @@ export * from './ui-form/ui-form.component';
 export * from './ui-hidden-field/ui-hidden-field.component';
 export * from './ui-split-form/ui-split-form.component';
 export * from './ui-text-field/ui-text-field.component';
+export * from './ui-textarea/ui-textarea.component';

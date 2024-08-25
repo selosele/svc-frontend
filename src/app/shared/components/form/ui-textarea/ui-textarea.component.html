@@ -1,0 +1,23 @@
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
+
+<div class="input-button-box">
+  <textarea
+    pInputTextarea 
+    [name]="name"
+    [readonly]="readonly"
+    [formControl]="formControl"
+    [placeholder]="placeholder"
+    [class.block]="block"
+    [class.readonly]="readonly"
+    (keydown)="setErrorMessage()"
+    (blur)="setErrorMessage()"
+  >
+  </textarea>
+  <ng-content select="[button]"></ng-content>
+</div>
+
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
