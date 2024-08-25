@@ -47,7 +47,7 @@ export class HumanVacationComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
-    this.employeeCompanyId = this.user.companyId;
+    this.employeeCompanyId = this.user.employeeCompanyId;
     this.listEmployeeCompany();
   }
 
