@@ -16,7 +16,7 @@ export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
   birthYmd?: string;
 
   /** 휴대폰번호 */
-  phoneNumber?: string;
+  phoneNo?: string;
 
   /** 직원 회사 정보 */
   employeeCompany?: SaveEmployeeCompanyRequestDTO;
@@ -39,7 +39,7 @@ export class EmployeeResponseDTO {
   birthYmd?: string;
 
   /** 휴대폰번호 */
-  phoneNumber?: string;
+  phoneNo?: string;
 
   /** 직원 회사 정보 */
   employeeCompanies?: EmployeeCompanyResponseDTO[];
