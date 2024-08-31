@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SplitterModule } from 'primeng/splitter';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
@@ -17,6 +17,9 @@ import { UiButtonComponent } from '../ui-button/ui-button.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class UiSplitterComponent {
+
+  /** 가로/세로 */
+  @Input() layout: 'horizontal' | 'vertical' = 'horizontal';
 
   private splitterActiveSubject = new BehaviorSubject<boolean>(false);
 

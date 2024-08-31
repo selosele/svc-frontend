@@ -1,4 +1,10 @@
-<p-splitter [style]="style" class="ui-splitter">
+<p-splitter
+  [layout]="layout"
+  [class.horizontal]="layout === 'horizontal'"
+  [class.vertical]="layout === 'vertical'"
+  [style]="style"
+  class="ui-splitter"
+>
   <ng-template pTemplate>
     <div>
       <ng-content select="[first]"></ng-content>

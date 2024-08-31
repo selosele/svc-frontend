@@ -14,6 +14,7 @@ import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { HumanService } from '@app/human/human.service';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
+import { UiContentTitleComponent } from '@app/shared/components/ui';
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ import { AuthService } from '@app/auth/auth.service';
     UiDropdownComponent,
     UiHiddenFieldComponent,
     UiCompanyFieldComponent,
+    UiContentTitleComponent,
   ],
   selector: 'human-my-info-company-detail',
   templateUrl: './human-my-info-company-detail.component.html',
