@@ -7,7 +7,7 @@ import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenField
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { UiMessageService } from '@app/shared/services';
-import { isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -94,8 +94,24 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     }
   }
 
+  /** 휴가 정보 저장 유효성 검증을 한다. */
+  async isValid(): Promise<boolean> {
+    const startYmd: string = this.vacationDetailForm.get('vacationStartYmd').value;
+    const endYmd: string = this.vacationDetailForm.get('vacationEndYmd').value;
+
+    // 휴가 시작일자가 종료일자보다 큰지 확인
+    if (dateUtil(startYmd).isAfter(endYmd)) {
+      this.messageService.toastError('휴가 시작일자는 종료일자보다 클 수 없습니다.');
+      return false;
+    }
+
+    return true;
+  }
+
   /** 휴가 정보를 저장한다. */
   async onSubmit(value: SaveVacationRequestDTO): Promise<void> {
+    if (!(await this.isValid())) return;
+
     const crudName = isEmpty(value.vacationId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`휴가를 ${crudName}하시겠습니까?`);
