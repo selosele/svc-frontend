@@ -95,7 +95,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   }
 
   /** 휴가 정보 저장 유효성 검증을 한다. */
-  async isValid(): Promise<boolean> {
+  isValid(): boolean {
     const startYmd: string = this.vacationDetailForm.get('vacationStartYmd').value;
     const endYmd: string = this.vacationDetailForm.get('vacationEndYmd').value;
 
@@ -110,7 +110,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
   /** 휴가 정보를 저장한다. */
   async onSubmit(value: SaveVacationRequestDTO): Promise<void> {
-    if (!(await this.isValid())) return;
+    if (!this.isValid()) return;
 
     const crudName = isEmpty(value.vacationId) ? '등록' : '수정';
 
