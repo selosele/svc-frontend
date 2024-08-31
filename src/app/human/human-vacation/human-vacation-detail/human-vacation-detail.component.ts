@@ -7,7 +7,7 @@ import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenField
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { UiMessageService } from '@app/shared/services';
-import { isObjectEmpty } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -49,6 +49,9 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
+
+  /** 데이터 새로고침 이벤트 */
+  @Output() refresh = new EventEmitter<number>();
 
   /** 삭제 버튼 클릭 이벤트 */
   @Output() remove = new EventEmitter<void>();
@@ -93,7 +96,27 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
   /** 휴가 정보를 저장한다. */
   async onSubmit(value: SaveVacationRequestDTO): Promise<void> {
-    console.log(value);
+    const crudName = isEmpty(value.vacationId) ? '등록' : '수정';
+
+    const confirm = await this.messageService.confirm1(`휴가를 ${crudName}하시겠습니까?`);
+    if (!confirm) return;
+
+    // 휴가 ID가 없으면 추가 API를 타고
+    if (isEmpty(value.vacationId)) {
+      this.humanService.addVacation$(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit(data.workHistoryId);
+      });
+    }
+    // 있으면 수정 API를 탄다.
+    else {
+      this.humanService.updateVacation$(value)
+      .subscribe((data) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.refresh.emit(value.workHistoryId);
+      });
+    }
   }
 
   /** 휴가를 삭제한다. */

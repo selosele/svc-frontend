@@ -66,13 +66,13 @@ export class HumanVacationListComponent implements OnInit {
   ngOnInit(): void {
     this.humanService.workHistoryId$.subscribe((data) => {
       if (!data) return;
-      this.listVacation();
+      this.listVacation(data);
     });
   }
 
   /** 휴가 목록을 조회한다. */
-  listVacation(): void {
-    this.humanService.listVacation$({ workHistoryId: this.workHistoryId })
+  listVacation(workHistoryId: number): void {
+    this.humanService.listVacation$({ workHistoryId })
     .subscribe((data) => {
       this.vacationList = data;
       this.vacationListDataLoad = true;
@@ -102,13 +102,13 @@ export class HumanVacationListComponent implements OnInit {
   
   /** 테이블 새로고침 버튼을 클릭한다. */
   onRefresh(): void {
-    this.listVacation();
+    this.listVacation(this.workHistoryId);
   }
 
   /** 삭제 버튼을 클릭한다. */
   onRemove(): void {
     this.splitter.hide();
-    this.listVacation();
+    this.listVacation(this.workHistoryId);
   }
   
   /** 닫기 버튼을 클릭한다. */

@@ -30,7 +30,7 @@
     <div second>
       <human-vacation-detail
         [vacationDetail]="vacationDetail"
-        (refresh)="listVacation()"
+        (refresh)="listVacation($event)"
         (remove)="onRemove()"
         (close)="onClose()"
       />
