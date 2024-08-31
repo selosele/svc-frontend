@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Tab } from '@app/shared/models';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem } from './human.model';
+import { isNotEmpty } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -41,6 +42,14 @@ export class HumanService {
   workHistoryId = new BehaviorSubject<number>(null);
   workHistoryId$ = this.workHistoryId.asObservable();
 
+  /** 휴가 목록 */
+  vacationList = new BehaviorSubject<VacationTabViewItem[]>(null);
+  vacationList$ = this.vacationList.asObservable();
+
+  /** 휴가 탭별 테이블 타이틀 */
+  vacationTableTitle = new BehaviorSubject<string>(null);
+  vacationTableTitle$ = this.vacationList.asObservable();
+
   /** 근무이력 ID 값을 설정한다. */
   setWorkHistoryId(value: number): void {
     this.workHistoryId.next(value);
@@ -77,6 +86,7 @@ export class HumanService {
       this.workHistoryList.next(data);
       this.workHistoryTabList.next(data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
       this.workHistoryListDataLoad.next(true);
+      this.setVacationTableTitle(0);
     });
   }
 
@@ -126,6 +136,15 @@ export class HumanService {
   /** 휴가를 삭제한다. */
   removeVacation$(vacationId: number): Observable<void> {
     return this.http.delete<void>(`/human/vacations/${vacationId}`);
+  }
+
+  /** 테이블 타이틀을 설정한다. */
+  setVacationTableTitle(index: number): void {
+    if (isNotEmpty(this.workHistoryList.value[index].quitYmd)) {
+      this.vacationTableTitle.next('');
+      return;
+    }
+    this.vacationTableTitle.next('나의 남은 휴가: 12/15 (회계년도, 입사년도별 남은 월차 및 연차를 표출 필요)');
   }
 
 }

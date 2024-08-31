@@ -6,12 +6,12 @@
 @else {
   <ui-splitter #splitter>
     <ui-table #table first
-      [title]="'나의 남은 휴가: 12/15 (회계년도, 입사년도별 남은 월차 및 연차를 표출 필요)'"
+      [title]="tableTitle"
       [useAdd]="false"
       [useRemove]="false"
       [useRowIndex]="true"
       [cols]="cols"
-      [data]="vacationList"
+      [data]="vacationListCurrent"
       [dataKey]="'vacationId'"
       [selection]="selection"
       (refresh)="onRefresh()"

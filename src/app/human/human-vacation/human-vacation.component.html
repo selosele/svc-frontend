@@ -16,6 +16,8 @@
     [activeIndex]="activeIndex"
     (change)="onChange($event)"
   >
-    <human-vacation-list />
+    <human-vacation-list
+      [tableTitle]="vacationTableTitle"
+    />
   </ui-tab>
 }

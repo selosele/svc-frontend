@@ -37,9 +37,19 @@ export class HumanVacationComponent implements OnInit {
   /** 선택된 회사 탭 index */
   activeIndex: number;
 
+  /** 휴가 테이블 타이틀 */
+  get vacationTableTitle() {
+    return this.humanService.vacationTableTitle.value;
+  }
+
   /** 근무이력 탭 목록 */
   get workHistoryTabList() {
     return this.humanService.workHistoryTabList.value;
+  }
+
+  /** 근무이력 목록 */
+  get workHistoryList() {
+    return this.humanService.workHistoryList.value;
   }
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
@@ -65,6 +75,7 @@ export class HumanVacationComponent implements OnInit {
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
     this.humanService.setWorkHistoryId(event.activeKey);
+    this.humanService.setVacationTableTitle(this.activeIndex);
   }
 
 }

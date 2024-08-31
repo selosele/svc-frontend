@@ -194,3 +194,14 @@ export class VacationResponseDTO {
   deleteYn?: string;
 
 }
+
+/** 탭별 휴가 목록 */
+export interface VacationTabViewItem {
+
+  /** key */
+  key: number;
+
+  /** 리스트 */
+  value: VacationResponseDTO[];
+
+}

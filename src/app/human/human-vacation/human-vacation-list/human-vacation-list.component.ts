@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CodeService } from '@app/code/code.service';
-import { VacationResponseDTO } from '@app/human/human.model';
+import { VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
 import { HumanService } from '@app/human/human.service';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
+import { isEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -32,6 +33,9 @@ export class HumanVacationListComponent implements OnInit {
     return this.humanService.workHistoryId.value;
   }
 
+  /** 테이블 타이틀 */
+  @Input() tableTitle: string;
+
   /** table */
   @ViewChild('table') table: UiTableComponent;
 
@@ -44,8 +48,11 @@ export class HumanVacationListComponent implements OnInit {
   /** 휴가 목록 데이터 로드 완료 여부 */
   vacationListDataLoad = false;
 
-  /** 휴가 목록 */
-  vacationList: VacationResponseDTO[] = [];
+  /** 모든 탭의 휴가 목록 */
+  vacationList: VacationTabViewItem[]= [];
+
+  /** 선택된 탭의 휴가 목록 */
+  vacationListCurrent: VacationResponseDTO[] = [];
 
   /** 휴가 정보 */
   vacationDetail: VacationResponseDTO = null;
@@ -66,7 +73,11 @@ export class HumanVacationListComponent implements OnInit {
   ngOnInit(): void {
     this.humanService.workHistoryId$.subscribe((data) => {
       if (!data) return;
-      this.listVacation(data);
+
+      this.vacationListCurrent = this.vacationList.find(x => x.key === data)?.value;
+      if (isEmpty(this.vacationList.find(x => x.key === data))) {
+        this.listVacation(data);
+      }
     });
   }
 
@@ -74,8 +85,16 @@ export class HumanVacationListComponent implements OnInit {
   listVacation(workHistoryId: number): void {
     this.humanService.listVacation$({ workHistoryId })
     .subscribe((data) => {
-      this.vacationList = data;
-      this.vacationListDataLoad = true;
+      if (isEmpty(this.vacationList.find(x => x.key === workHistoryId)?.value)) {
+        this.vacationList.push({ key: workHistoryId, value: data });
+        this.vacationListCurrent = this.vacationList.find(x => x.key === workHistoryId)?.value;
+        this.vacationListDataLoad = true;
+      } else {
+        this.vacationList.forEach(x => {
+          if (x.key === workHistoryId) x.value = data;
+        });
+        this.vacationListCurrent = data;
+      }
     });
   }
 
