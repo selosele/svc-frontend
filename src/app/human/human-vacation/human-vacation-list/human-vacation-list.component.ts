@@ -74,10 +74,11 @@ export class HumanVacationListComponent implements OnInit {
     this.humanService.workHistoryId$.subscribe((data) => {
       if (!data) return;
 
-      this.vacationListCurrent = this.vacationList.find(x => x.key === data)?.value;
-      if (isEmpty(this.vacationList.find(x => x.key === data))) {
+      const currentItem = this.vacationList.find(x => x.key === data);
+      if (isEmpty(currentItem)) {
         this.listVacation(data);
       }
+      this.vacationListCurrent = currentItem?.value;
     });
   }
 
