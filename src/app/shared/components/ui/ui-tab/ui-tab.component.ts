@@ -16,7 +16,7 @@ import { Tab, UiTabChangeEvent } from '@app/shared/models';
 })
 export class UiTabComponent {
 
-  /** 탭 구조 */
+  /** 탭 목록 */
   @Input() tabs: Tab[];
 
   /** 클릭된 탭의 index */

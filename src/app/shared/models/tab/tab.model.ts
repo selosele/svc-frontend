@@ -1,6 +1,6 @@
 import { TabViewChangeEvent } from 'primeng/tabview';
 
-/** 탭 구조 */
+/** 탭 */
 export interface Tab {
 
   /** 탭명 */
