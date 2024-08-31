@@ -74,7 +74,7 @@ export class HumanMyInfoComponent implements OnInit {
   /** 성별 코드 데이터 목록 */
   genderCodes: DropdownData[] = this.codeService.getDropdownData('GENDER_00');
 
-  /** 직급 코드 데이터 목록 */
+  /** 직위 코드 데이터 목록 */
   rankCodes: DropdownData[] = this.codeService.getDropdownData('RANK_00');
 
   /** 직책 코드 데이터 목록 */
@@ -233,7 +233,7 @@ export class HumanMyInfoComponent implements OnInit {
         corporateName: ['', [FormValidator.required]],    // 법인명
         companyName: ['', [FormValidator.required]],      // 회사명
         joinYmd: ['', [FormValidator.required]],          // 입사일자,
-        rankCode: ['', [FormValidator.required]],         // 직급 코드
+        rankCode: ['', [FormValidator.required]],         // 직위 코드
         jobTitleCode: ['', [FormValidator.required]],     // 직책 코드
       }),
     });

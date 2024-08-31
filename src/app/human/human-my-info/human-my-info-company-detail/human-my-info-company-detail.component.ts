@@ -44,7 +44,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   /** 회사 상세 조회 폼 */
   companyDetailForm: FormGroup;
 
-  /** 직급 코드 데이터 목록 */
+  /** 직위 코드 데이터 목록 */
   rankCodes: DropdownData[] = this.codeService.getDropdownData('RANK_00');
 
   /** 직책 코드 데이터 목록 */
@@ -72,7 +72,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
       employeeCompanyId: [''],                      // 직원 회사 ID
       companyId: [''],                              // 회사 ID
       companyName: ['', [FormValidator.required]],  // 회사명
-      rankCode: ['', [FormValidator.required]],     // 직급 코드
+      rankCode: ['', [FormValidator.required]],     // 직위 코드
       jobTitleCode: ['', [FormValidator.required]], // 직책 코드
       joinYmd: ['', [FormValidator.required]],      // 입사일자
       quitYmd: [''],                                // 퇴사일자
