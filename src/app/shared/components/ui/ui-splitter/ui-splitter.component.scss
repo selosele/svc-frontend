@@ -69,7 +69,7 @@
     .p-splitter-panel {
       &:has(~ .p-splitter-panel:not(:empty)) {
         overflow-x: auto;
-        // padding: 0 1rem;
+        padding-right: 1rem;
 
         .ui-table__view,
         .ui-tree-table__view {
@@ -105,6 +105,10 @@
         padding: 1rem;
         border: 4px solid var(--surface-b);
       }
+    }
+
+    .p-splitter-gutter {
+      display: none;
     }
   }
 }
