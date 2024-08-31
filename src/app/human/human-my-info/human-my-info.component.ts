@@ -6,7 +6,7 @@ import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
 import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 import { HumanService } from '../human.service';
-import { EmployeeCompanyResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
+import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
@@ -57,9 +57,9 @@ export class HumanMyInfoComponent implements OnInit {
     return this.humanService.employeeDataLoad.value;
   }
 
-  /** 직원 회사 목록 */
-  get employeeCompanyList(): EmployeeCompanyResponseDTO[] {
-    return this.humanService.employee.value.employeeCompanies;
+  /** 근무이력 목록 */
+  get workHistoryList(): WorkHistoryResponseDTO[] {
+    return this.humanService.employee.value.workHistories;
   }
   
   /** 인증된 사용자 정보 */
@@ -108,11 +108,11 @@ export class HumanMyInfoComponent implements OnInit {
     },
   ];
 
-  /** 직원 회사 정보 */
-  employeeCompanyDetail: EmployeeCompanyResponseDTO = null;
+  /** 근무이력 정보 */
+  workHistoryDetail: WorkHistoryResponseDTO = null;
 
   /** 테이블 선택된 행 */
-  selection: EmployeeCompanyResponseDTO;
+  selection: WorkHistoryResponseDTO;
 
   ngOnInit(): void {
     this.user = this.authService.getAuthenticatedUser();
@@ -171,28 +171,28 @@ export class HumanMyInfoComponent implements OnInit {
   }
 
   /** 근무이력 정보 새로고침 버튼을 클릭한다. */
-  onRefreshEmployeeCompany(event: Event): void {
+  onRefreshWorkHistory(event: Event): void {
     
   }
 
   /** 근무이력 정보 추가 버튼을 클릭한다. */
   addCompany(): void {
-    this.employeeCompanyDetail = {};
+    this.workHistoryDetail = {};
     this.splitter.show();
   }
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.humanService.getEmployeeCompany$(this.user.userId, event.data['employeeCompanyId'])
+    this.humanService.getWorkHistory$(this.user.userId, event.data['workHistoryId'])
     .subscribe((data) => {
-      this.employeeCompanyDetail = data;
+      this.workHistoryDetail = data;
       this.splitter.show();
     });
   }
 
   /** 테이블 행을 선택 해제한다. */
   onRowUnselect(event: any): void {
-    this.employeeCompanyDetail = {};
+    this.workHistoryDetail = {};
     this.splitter.hide();
   }
 
@@ -227,8 +227,8 @@ export class HumanMyInfoComponent implements OnInit {
       birthYmd: ['', [FormValidator.required]],           // 생년월일
       phoneNo: ['', [FormValidator.required]],            // 휴대폰번호
 
-      // 직원 회사 정보
-      employeeCompany: this.fb.group({
+      // 근무이력 정보
+      workHistory: this.fb.group({
         companyId: ['', [FormValidator.required]],        // 회사 ID
         corporateName: ['', [FormValidator.required]],    // 법인명
         companyName: ['', [FormValidator.required]],      // 회사명
@@ -250,7 +250,7 @@ export class HumanMyInfoComponent implements OnInit {
   private setMyInfoFormData(employee: EmployeeResponseDTO): void {
     this.employeeForm.patchValue({
       ...employee,
-      employeeCompany: employee?.employeeCompanies[0],
+      workHistory: employee?.workHistories[0],
     });
   }
 

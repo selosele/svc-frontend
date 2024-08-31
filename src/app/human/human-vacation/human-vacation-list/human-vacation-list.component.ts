@@ -27,9 +27,9 @@ export class HumanVacationListComponent implements OnInit {
     private humanService: HumanService,
   ) {}
 
-  /** 직원 회사 ID */
-  get employeeCompanyId(): number {
-    return this.humanService.employeeCompanyId.value;
+  /** 근무이력 ID */
+  get workHistoryId(): number {
+    return this.humanService.workHistoryId.value;
   }
 
   /** table */
@@ -64,7 +64,7 @@ export class HumanVacationListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.humanService.employeeCompanyId$.subscribe((data) => {
+    this.humanService.workHistoryId$.subscribe((data) => {
       if (!data) return;
       this.listVacation();
     });
@@ -72,7 +72,7 @@ export class HumanVacationListComponent implements OnInit {
 
   /** 휴가 목록을 조회한다. */
   listVacation(): void {
-    this.humanService.listVacation$({ employeeCompanyId: this.employeeCompanyId })
+    this.humanService.listVacation$({ workHistoryId: this.workHistoryId })
     .subscribe((data) => {
       this.vacationList = data;
       this.vacationListDataLoad = true;

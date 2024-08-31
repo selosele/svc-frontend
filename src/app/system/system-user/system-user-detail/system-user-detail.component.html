@@ -64,13 +64,13 @@
     />
 
     <ui-dropdown
-      [control]="userDetailForm.get('employee.employeeCompany.rankCode')"
+      [control]="userDetailForm.get('employee.workHistory.rankCode')"
       [label]="'직위'"
       [data]="rankCodes"
     />
 
     <ui-dropdown
-      [control]="userDetailForm.get('employee.employeeCompany.jobTitleCode')"
+      [control]="userDetailForm.get('employee.workHistory.jobTitleCode')"
       [label]="'직책'"
       [data]="jobTitleCodes"
     />
@@ -90,29 +90,29 @@
   </div>
 
   <div class="input-box">
-    <ui-hidden-field [control]="userDetailForm.get('employee.employeeCompany.employeeCompanyId')" />
-    <ui-hidden-field [control]="userDetailForm.get('employee.employeeCompany.companyId')" />
+    <ui-hidden-field [control]="userDetailForm.get('employee.workHistory.workHistoryId')" />
+    <ui-hidden-field [control]="userDetailForm.get('employee.workHistory.companyId')" />
     
     <ui-company-field
-      [control]="userDetailForm.get('employee.employeeCompany.corporateName')"
+      [control]="userDetailForm.get('employee.workHistory.corporateName')"
       [label]="'회사(법인)명'"
     />
 
     <ui-company-field
-      [control]="userDetailForm.get('employee.employeeCompany.companyName')"
+      [control]="userDetailForm.get('employee.workHistory.companyName')"
       [label]="'회사명'"
     />
   </div>
 
   <div class="input-box">
     <ui-date-field
-      [control]="userDetailForm.get('employee.employeeCompany.joinYmd')"
+      [control]="userDetailForm.get('employee.workHistory.joinYmd')"
       [label]="'입사일자'"
       [dateFormat]="'yymmdd'"
     />
 
     <ui-date-field
-      [control]="userDetailForm.get('employee.employeeCompany.quitYmd')"
+      [control]="userDetailForm.get('employee.workHistory.quitYmd')"
       [label]="'퇴사일자'"
       [dateFormat]="'yymmdd'"
     />

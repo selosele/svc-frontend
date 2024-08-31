@@ -110,8 +110,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         phoneNo: ['', [FormValidator.required]],              // 휴대폰번호
 
         // 회사 정보
-        employeeCompany: this.fb.group({
-          employeeCompanyId: [''],                            // 직원 회사 ID
+        workHistory: this.fb.group({
+          workHistoryId: [''],                                // 근무이력 ID
           companyId: [''],                                    // 회사 ID
           corporateName: ['', [FormValidator.required]],      // 법인명
           companyName: ['', [FormValidator.required]],        // 회사명
@@ -136,7 +136,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
           userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
           employee: {
-            employeeCompany: {
+            workHistory: {
               jobTitleCode: '0098', // 직책 기본값 - 팀원
             },
           },
@@ -158,7 +158,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         roles: this.userDetail?.roles?.map(x => x.roleId) || this.defaultRoles,
         employee: {
           ...this.userDetail?.employee,
-          employeeCompany: this.userDetail?.employee?.employeeCompanies[0],
+          workHistory: this.userDetail?.employee?.workHistories[0],
         },
       });
     }

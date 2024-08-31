@@ -6,7 +6,7 @@ import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-
 import { UiHiddenFieldComponent } from '@app/shared/components/form/ui-hidden-field/ui-hidden-field.component';
 import { UiCompanyFieldComponent } from '@app/shared/components/form/ui-company-field/ui-company-field.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
-import { EmployeeCompanyResponseDTO, SaveEmployeeCompanyRequestDTO } from '@app/human/human.model';
+import { WorkHistoryResponseDTO, SaveWorkHistoryRequestDTO } from '@app/human/human.model';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
@@ -39,7 +39,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 회사 정보 */
-  @Input() employeeCompanyDetail: EmployeeCompanyResponseDTO = null;
+  @Input() workHistoryDetail: WorkHistoryResponseDTO = null;
 
   /** 회사 상세 조회 폼 */
   companyDetailForm: FormGroup;
@@ -69,7 +69,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     this.user = this.authService.getAuthenticatedUser();
     
     this.companyDetailForm = this.fb.group({
-      employeeCompanyId: [''],                      // 직원 회사 ID
+      workHistoryId: [''],                      // 근무이력 ID
       companyId: [''],                              // 회사 ID
       companyName: ['', [FormValidator.required]],  // 회사명
       rankCode: ['', [FormValidator.required]],     // 직위 코드
@@ -80,16 +80,16 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.employeeCompanyDetail && this.companyDetailForm) {
+    if (changes.workHistoryDetail && this.companyDetailForm) {
       this.useRemove = true;
       this.companyDetailForm.reset();
 
-      if (isObjectEmpty(changes.employeeCompanyDetail.currentValue)) {
+      if (isObjectEmpty(changes.workHistoryDetail.currentValue)) {
         this.useRemove = false;
         return;
       }
       
-      this.companyDetailForm.patchValue(this.employeeCompanyDetail);
+      this.companyDetailForm.patchValue(this.workHistoryDetail);
     }
   }
 
@@ -99,17 +99,17 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   }
 
   /** 회사 정보를 저장한다. */
-  async onSubmit(value: SaveEmployeeCompanyRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.employeeCompanyId) ? '추가' : '수정';
+  async onSubmit(value: SaveWorkHistoryRequestDTO): Promise<void> {
+    const crudName = isEmpty(value.workHistoryId) ? '추가' : '수정';
 
     const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠습니까?`);
     if (!confirm) return;
 
     value.employeeId = this.user.employeeId;
 
-    // 직원 회사 ID가 없으면 추가 API를 타고
-    if (isEmpty(value.employeeCompanyId)) {
-      this.humanService.addEmployeeCompany$(value)
+    // 근무이력 ID가 없으면 추가 API를 타고
+    if (isEmpty(value.workHistoryId)) {
+      this.humanService.addWorkHistory$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -117,7 +117,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.humanService.updateEmployeeCompany$(value)
+      this.humanService.updateWorkHistory$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
         this.refresh.emit();
@@ -131,9 +131,9 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     if (!confirm) return;
 
     const { employeeId } = this.user;
-    const employeeCompanyId = this.companyDetailForm.get('employeeCompanyId').value;
+    const workHistoryId = this.companyDetailForm.get('workHistoryId').value;
 
-    this.humanService.removeEmployeeCompany$(employeeId, employeeCompanyId)
+    this.humanService.removeWorkHistory$(employeeId, workHistoryId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

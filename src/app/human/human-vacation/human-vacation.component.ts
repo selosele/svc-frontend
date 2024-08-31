@@ -37,34 +37,34 @@ export class HumanVacationComponent implements OnInit {
   /** 선택된 회사 탭 index */
   activeIndex: number;
 
-  /** 직원 회사 탭 목록 */
-  get employeeCompanyTabList() {
-    return this.humanService.employeeCompanyTabList.value;
+  /** 근무이력 탭 목록 */
+  get workHistoryTabList() {
+    return this.humanService.workHistoryTabList.value;
   }
 
-  /** 직원 회사 목록 데이터 로드 완료 여부 */
-  get employeeCompanyListDataLoad(): boolean {
-    return this.humanService.employeeCompanyListDataLoad.value;
+  /** 근무이력 목록 데이터 로드 완료 여부 */
+  get workHistoryListDataLoad(): boolean {
+    return this.humanService.workHistoryListDataLoad.value;
   }
 
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
-    this.humanService.setEmployeeCompanyId(parseInt(`${this.user.employeeCompanyId}`));
+    this.humanService.setWorkHistoryId(parseInt(`${this.user.workHistoryId}`));
 
-    if (!this.employeeCompanyListDataLoad) {
-      this.listEmployeeCompany();
+    if (!this.workHistoryListDataLoad) {
+      this.listWorkHistory();
     }
   }
 
-  /** 직원 회사 목록을 조회한다. */
-  listEmployeeCompany(): void {
-    this.humanService.listEmployeeCompany(this.user.employeeId);
+  /** 근무이력 목록을 조회한다. */
+  listWorkHistory(): void {
+    this.humanService.listWorkHistory(this.user.employeeId);
   }
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
-    this.humanService.setEmployeeCompanyId(event.activeKey);
+    this.humanService.setWorkHistoryId(event.activeKey);
   }
 
 }

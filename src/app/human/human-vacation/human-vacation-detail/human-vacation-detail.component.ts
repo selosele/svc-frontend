@@ -33,9 +33,9 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     private humanService: HumanService,
   ) {}
 
-  /** 직원 회사 ID */
-  get employeeCompanyId(): number {
-    return this.humanService.employeeCompanyId.value;
+  /** 근무이력 ID */
+  get workHistoryId(): number {
+    return this.humanService.workHistoryId.value;
   }
 
   /** 휴가 정보 */
@@ -59,16 +59,16 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.vacationDetailForm = this.fb.group({
       vacationId: [''],                                       // 휴가 ID
-      employeeCompanyId: [''],                                // 직원 회사 ID
+      workHistoryId: [''],                                // 근무이력 ID
       vacationTypeCode: ['', [FormValidator.required]],       // 휴가 구분 코드
       vacationStartYmd: ['', [FormValidator.required]],       // 휴가 시작일자
       vacationEndYmd: ['', [FormValidator.required]],         // 휴가 종료일자
       vacationContent: ['', FormValidator.maxLength(100)],    // 휴가 내용
     });
 
-    this.humanService.employeeCompanyId$.subscribe((data) => {
+    this.humanService.workHistoryId$.subscribe((data) => {
       if (!data) return;
-      this.vacationDetailForm.get('employeeCompanyId').patchValue(data);
+      this.vacationDetailForm.get('workHistoryId').patchValue(data);
     });
   }
 
@@ -79,14 +79,14 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       if (isObjectEmpty(changes.vacationDetail.currentValue)) {
         this.useRemove = false;
         this.vacationDetailForm.reset({
-          employeeCompanyId: this.employeeCompanyId,
+          workHistoryId: this.workHistoryId,
         });
         return;
       }
 
       this.vacationDetailForm.patchValue({
         ...this.vacationDetail,
-        employeeCompanyId: this.employeeCompanyId,
+        workHistoryId: this.workHistoryId,
       });
     }
   }

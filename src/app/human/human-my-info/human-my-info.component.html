@@ -71,27 +71,27 @@
   
     <div class="input-box">
       <ui-text-field
-        [control]="employeeForm.get('employeeCompany.companyName')"
+        [control]="employeeForm.get('workHistory.companyName')"
         [label]="'회사명'"
         [readonly]="true"
       />
 
       <ui-dropdown
-        [control]="employeeForm.get('employeeCompany.rankCode')"
+        [control]="employeeForm.get('workHistory.rankCode')"
         [label]="'직위'"
         [data]="rankCodes"
         [readonly]="true"
       />
   
       <ui-dropdown
-        [control]="employeeForm.get('employeeCompany.jobTitleCode')"
+        [control]="employeeForm.get('workHistory.jobTitleCode')"
         [label]="'직책'"
         [data]="jobTitleCodes"
         [readonly]="true"
       />
 
       <ui-date-field
-        [control]="employeeForm.get('employeeCompany.joinYmd')"
+        [control]="employeeForm.get('workHistory.joinYmd')"
         [label]="'입사일자'"
         [dateFormat]="'yymmdd'"
         [readonly]="true"
@@ -123,10 +123,10 @@
       [useRemove]="false"
       [useRefresh]="false"
       [cols]="cols"
-      [data]="employeeCompanyList"
-      [dataKey]="'employeeCompanyId'"
+      [data]="workHistoryList"
+      [dataKey]="'workHistoryId'"
       [selection]="selection"
-      (refresh)="onRefreshEmployeeCompany($event)"
+      (refresh)="onRefreshWorkHistory($event)"
       (rowSelect)="onRowSelect($event)"
       (unRowSelect)="onRowUnselect($event)"
     >
@@ -141,7 +141,7 @@
 
     <div second>
       <human-my-info-company-detail
-        [employeeCompanyDetail]="employeeCompanyDetail"
+        [workHistoryDetail]="workHistoryDetail"
         (refresh)="getEmployee()"
         (remove)="onRemove()"
         (close)="onClose()"

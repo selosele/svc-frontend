@@ -18,8 +18,8 @@ export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
   /** 휴대폰번호 */
   phoneNo?: string;
 
-  /** 직원 회사 정보 */
-  employeeCompany?: SaveEmployeeCompanyRequestDTO;
+  /** 근무이력 정보 */
+  workHistory?: SaveWorkHistoryRequestDTO;
 
 }
 
@@ -41,16 +41,16 @@ export class EmployeeResponseDTO {
   /** 휴대폰번호 */
   phoneNo?: string;
 
-  /** 직원 회사 정보 */
-  employeeCompanies?: EmployeeCompanyResponseDTO[];
+  /** 근무이력 정보 */
+  workHistories?: WorkHistoryResponseDTO[];
 
 }
 
-/** 직원 회사 추가/수정 요청 DTO */
-export class SaveEmployeeCompanyRequestDTO extends HttpRequestDTOBase {
+/** 근무이력 추가/수정 요청 DTO */
+export class SaveWorkHistoryRequestDTO extends HttpRequestDTOBase {
 
-  /** 직원 회사 ID */
-  employeeCompanyId?: number;
+  /** 근무이력 ID */
+  workHistoryId?: number;
 
   /** 직원 ID */
   employeeId?: number;
@@ -72,11 +72,11 @@ export class SaveEmployeeCompanyRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 직원 회사 응답 DTO */
-export class EmployeeCompanyResponseDTO {
+/** 근무이력 응답 DTO */
+export class WorkHistoryResponseDTO {
 
-  /** 직원 회사 ID */
-  employeeCompanyId?: number;
+  /** 근무이력 ID */
+  workHistoryId?: number;
   
   /** 회사 ID */
   companyId?: number;
@@ -138,8 +138,8 @@ export class GetVacationRequestDTO extends HttpRequestDTOBase {
   /** 휴가 ID */
   vacationId?: number;
 
-  /** 직원 회사 ID */
-  employeeCompanyId?: number;
+  /** 근무이력 ID */
+  workHistoryId?: number;
 
 }
 
@@ -149,8 +149,8 @@ export class SaveVacationRequestDTO extends HttpRequestDTOBase {
   /** 휴가 ID */
   vacationId?: number;
 
-  /** 직원 회사 ID */
-  employeeCompanyId?: number;
+  /** 근무이력 ID */
+  workHistoryId?: number;
 
   /** 휴가 구분 코드 */
   vacationTypeCode?: string;
@@ -175,8 +175,8 @@ export class VacationResponseDTO {
   /** 직원 ID */
   employeeId?: number;
 
-  /** 직원 회사 ID */
-  employeeCompanyId?: number;
+  /** 근무이력 ID */
+  workHistoryId?: number;
 
   /** 휴가 구분 코드 */
   vacationTypeCode?: string;

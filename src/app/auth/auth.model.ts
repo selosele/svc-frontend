@@ -122,8 +122,8 @@ export class AuthenticatedUser {
   /** 직원 ID */
   employeeId?: number;
 
-  /** 직원 회사 ID */
-  employeeCompanyId?: number;
+  /** 근무이력 ID */
+  workHistoryId?: number;
 
   /** 직원명 */
   employeeName?: string;

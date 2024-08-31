@@ -6,14 +6,14 @@
   </ul>
 </layout-page-description>
 
-@if (!employeeCompanyListDataLoad) {
+@if (!workHistoryListDataLoad) {
   <ui-skeleton />
   <ui-skeleton />
   <ui-skeleton />
 }
 @else {
   <ui-tab
-    [tabs]="employeeCompanyTabList"
+    [tabs]="workHistoryTabList"
     [activeIndex]="activeIndex"
     (change)="onChange($event)"
   >
