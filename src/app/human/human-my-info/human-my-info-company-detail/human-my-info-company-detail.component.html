@@ -14,9 +14,7 @@
       [control]="companyDetailForm.get('companyName')"
       [label]="'회사명'"
     />
-  </div>
 
-  <div class="input-box">
     <ui-dropdown
       [control]="companyDetailForm.get('rankCode')"
       [label]="'직위'"
@@ -31,6 +29,12 @@
   </div>
 
   <div class="input-box">
+    <ui-dropdown
+      [control]="companyDetailForm.get('annualTypeCode')"
+      [label]="'연차발생기준'"
+      [data]="annualTypeCodes"
+    />
+
     <ui-date-field
       [control]="companyDetailForm.get('joinYmd')"
       [label]="'입사일자'"

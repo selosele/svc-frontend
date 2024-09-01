@@ -52,6 +52,9 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   /** 직책 코드 데이터 목록 */
   jobTitleCodes: DropdownData[] = this.codeService.getDropdownData('JOB_TITLE_00');
 
+  /** 연차발생기준 코드 데이터 목록 */
+  annualTypeCodes: DropdownData[] = this.codeService.getDropdownData('ANNUAL_TYPE_00');
+
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
@@ -71,13 +74,14 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     this.user = this.authService.getAuthenticatedUser();
     
     this.companyDetailForm = this.fb.group({
-      workHistoryId: [''],                      // 근무이력 ID
-      companyId: [''],                              // 회사 ID
-      companyName: ['', [FormValidator.required]],  // 회사명
-      rankCode: ['', [FormValidator.required]],     // 직위 코드
-      jobTitleCode: ['', [FormValidator.required]], // 직책 코드
-      joinYmd: ['', [FormValidator.required]],      // 입사일자
-      quitYmd: [''],                                // 퇴사일자
+      workHistoryId: [''],                            // 근무이력 ID
+      companyId: [''],                                // 회사 ID
+      companyName: ['', [FormValidator.required]],    // 회사명
+      rankCode: ['', [FormValidator.required]],       // 직위 코드
+      jobTitleCode: ['', [FormValidator.required]],   // 직책 코드
+      annualTypeCode: ['', [FormValidator.required]], // 연차발생기준 코드
+      joinYmd: ['', [FormValidator.required]],        // 입사일자
+      quitYmd: [''],                                  // 퇴사일자
     });
   }
 
