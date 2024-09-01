@@ -87,6 +87,9 @@ export class WorkHistoryResponseDTO {
   /** 회사명 */
   companyName?: string;
 
+  /** 연차발생기준 코드 */
+  annualTypeCode?: string;
+
   /** 입사일자 */
   joinYmd?: string;
 
@@ -98,6 +101,9 @@ export class WorkHistoryResponseDTO {
 
   /** 재직기간(월) */
   workDiffM?: number;
+
+  /** 휴가 사용일수 */
+  vacationUseCount?: number;
 
 }
 
@@ -197,7 +203,7 @@ export class VacationResponseDTO {
   vacationEndYmd?: string;
 
   /** 휴가 사용일수 */
-  vacationDiff?: number;
+  vacationUseCount?: number;
 
   /** 삭제 여부 */
   deleteYn?: string;

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { dateUtil, isEmpty, isNotEmpty } from '@app/shared/utils';
 import { Tab } from '@app/shared/models';
 import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem } from './human.model';
-import { isNotEmpty } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -140,11 +140,38 @@ export class HumanService {
 
   /** 테이블 타이틀을 설정한다. */
   setVacationTableTitle(index: number): void {
-    if (isNotEmpty(this.workHistoryList.value[index].quitYmd)) {
-      this.vacationTableTitle.next(''); // 퇴사한 회사는 휴가 계산을 하지 않는다.
+    const { annualTypeCode, quitYmd } = this.workHistoryList.value[index];
+    if (isNotEmpty(quitYmd)) {
+      this.vacationTableTitle.next('퇴사한 회사는 휴가계산을 제공하지 않습니다.');
       return;
     }
-    this.vacationTableTitle.next('나의 남은 휴가: 12/15 (회계년도, 입사년도별 남은 월차 및 연차를 표출 필요)');
+
+    if (isEmpty(annualTypeCode) || annualTypeCode === '99') {
+      this.vacationTableTitle.next('근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
+      return;
+    }
+
+    this.vacationTableTitle.next(this.calculateVacation(this.workHistoryList.value[index]));
+  }
+
+  /** 잔여 휴가를 계산해서 반환한다. */
+  calculateVacation(workHistory: WorkHistoryResponseDTO) {
+    const { annualTypeCode, joinYmd, vacationUseCount } = workHistory;
+    switch (annualTypeCode) {
+      // 입사일자 기준
+      // TODO: 입사일자 기준이지만 입사 1년이 지나면?
+      case '01':
+        const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
+        const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
+        const vacationRemainCount = (vacationUseCount > nowDateDiff) ? 0 : (nowDateDiff - vacationUseCount);
+        const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
+
+        return `나의 잔여 월차: ${vacationRemainCount}/${nowDateDiff}개 (입사 ${joinYmdFormat}부터 총 ${nowDateDiff}개 월차가 발생하였음)`;
+      // 회계년도 기준
+      case '02':
+        return ``;
+      default: return null;
+    }
   }
 
 }
