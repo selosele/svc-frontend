@@ -5,7 +5,7 @@ import { HumanService } from '@app/human/human.service';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
-import { isEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -67,6 +67,12 @@ export class HumanVacationListComponent implements OnInit {
     },
     { field: 'vacationStartYmd', header: '휴가 시작일자' },
     { field: 'vacationEndYmd',   header: '휴가 종료일자' },
+    { header: '휴가 사용일수',
+      valueGetter: (data) => {
+        const diff = dateUtil(data.vacationEndYmd).diff(dateUtil(data.vacationStartYmd), 'day');
+        return diff === 0 ? `${diff+1}일` : `${diff-1}일`;
+      }
+    },
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
 
