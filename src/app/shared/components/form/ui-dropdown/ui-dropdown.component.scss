@@ -1,3 +1,9 @@
+p-dropdown {
+  &.readonly > .p-dropdown {
+    background-color: var(--primary-50);
+  }
+}
+
 .p-dropdown {
   width: 100%;
 }

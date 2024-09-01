@@ -38,43 +38,6 @@ body {
   height: 100%;
 }
 
-button,
-input {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-input {
-  width: 100%;
-}
-
-textarea {
-  min-height: 5rem;
-}
-
-input,
-textarea {
-  caret-color: auto;
-}
-
-input,
-textarea,
-select {
-  &[readonly] {
-    background-color: var(--primary-50);
-  }
-}
-
-p-dropdown {
-  &.readonly > .p-dropdown {
-    background-color: var(--primary-50);
-  }
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -89,28 +52,4 @@ ol {
 
 p {
   margin: 0;
-}
-
-form {
-  h2 {
-    margin: 0 0 1rem 0;
-
-    & ~ h2 {
-      margin-top: 1.875rem;
-    }
-  }
-}
-
-.block {
-  display: block;
-  width: 100%;
-}
-
-.p-dialog {
-  max-width: 95%;
-}
-
-p-calendar.p-calendar-clearable .p-inputtext {
-  width: calc(100% - 2.357rem);
-  border-right: 0;
 }

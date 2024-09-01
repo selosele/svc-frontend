@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UiFormComponent } from '../ui-form/ui-form.component';
 import { UiButtonComponent } from '../../ui';
@@ -11,7 +11,8 @@ import { UiButtonComponent } from '../../ui';
   ],
   selector: 'ui-split-form',
   templateUrl: './ui-split-form.component.html',
-  styleUrl: './ui-split-form.component.scss'
+  styleUrl: './ui-split-form.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiSplitFormComponent extends UiFormComponent {
 

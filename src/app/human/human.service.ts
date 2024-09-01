@@ -141,7 +141,7 @@ export class HumanService {
   /** 테이블 타이틀을 설정한다. */
   setVacationTableTitle(index: number): void {
     if (isNotEmpty(this.workHistoryList.value[index].quitYmd)) {
-      this.vacationTableTitle.next('');
+      this.vacationTableTitle.next(''); // 퇴사한 회사는 휴가 계산을 하지 않는다.
       return;
     }
     this.vacationTableTitle.next('나의 남은 휴가: 12/15 (회계년도, 입사년도별 남은 월차 및 연차를 표출 필요)');

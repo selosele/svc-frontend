@@ -9,5 +9,7 @@
 @import './partials/font';
 // 공통
 @import './partials/global';
-// input
-@import './partials/input';
+// form
+@import '../shared/components/form/form';
+// ui
+@import '../shared/components/ui/ui';

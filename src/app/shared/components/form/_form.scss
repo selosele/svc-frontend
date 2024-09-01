@@ -1,3 +1,33 @@
+form {
+  h2 {
+    margin: 0 0 1rem 0;
+
+    & ~ h2 {
+      margin-top: 1.875rem;
+    }
+  }
+}
+
+input {
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  caret-color: auto;
+}
+
+input,
+textarea,
+select {
+  &[readonly] {
+    background-color: var(--primary-50);
+  }
+}
+
+textarea {
+  min-height: 5rem;
+  caret-color: auto;
+}
+
 .input-box {
   display: flex;
   flex-wrap: wrap;

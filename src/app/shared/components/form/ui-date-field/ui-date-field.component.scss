@@ -1,3 +1,10 @@
+p-calendar {
+  &.p-calendar-clearable .p-inputtext {
+    width: calc(100% - 2.357rem);
+    border-right: 0;
+  }
+}
+
 .p-calendar {
   width: 100%;
 }
