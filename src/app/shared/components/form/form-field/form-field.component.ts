@@ -24,6 +24,12 @@ export class FormFieldComponent implements OnInit {
   /** block 스타일 input 여부 */
   @Input() block?: boolean;
 
+  /** 툴팁 텍스트 */
+  @Input() tooltip?: string;
+
+  /** 툴팁 텍스트 위치 */
+  @Input() tooltipPosition?: 'top' | 'left' | 'right' | 'bottom';
+
   /** input readonly */
   @Input() readonly? = false;
 

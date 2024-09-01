@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 import { FormFieldComponent } from '../form-field/form-field.component';
 
 @Component({
@@ -10,6 +11,7 @@ import { FormFieldComponent } from '../form-field/form-field.component';
     CommonModule,
     ReactiveFormsModule,
     InputTextModule,
+    TooltipModule,
   ],
   selector: 'ui-text-field',
   templateUrl: './ui-text-field.component.html',

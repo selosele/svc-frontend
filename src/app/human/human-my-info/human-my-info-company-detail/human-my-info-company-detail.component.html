@@ -32,6 +32,8 @@
     <ui-dropdown
       [control]="companyDetailForm.get('annualTypeCode')"
       [label]="'연차발생기준'"
+      [tooltip]="'잘 모르겠다면 기타를 입력하시기 바랍니다.'"
+      [tooltipPosition]="'bottom'"
       [data]="annualTypeCodes"
     />
 
