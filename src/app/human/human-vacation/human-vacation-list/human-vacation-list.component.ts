@@ -68,7 +68,7 @@ export class HumanVacationListComponent implements OnInit {
     { field: 'vacationStartYmd', header: '휴가 시작일자' },
     { field: 'vacationEndYmd',   header: '휴가 종료일자' },
     { header: '휴가 사용일수',
-      valueGetter: (data: VacationResponseDTO) => `${data.vacationDiff}일`
+      valueGetter: (data: VacationResponseDTO) => `${data.vacationUseCount}일`
     },
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
@@ -93,7 +93,8 @@ export class HumanVacationListComponent implements OnInit {
         this.vacationList.push({ key: workHistoryId, value: data });
         this.vacationListCurrent = this.vacationList.find(x => x.key === workHistoryId)?.value;
         this.vacationListDataLoad = true;
-      } else {
+      }
+      else {
         this.vacationList.forEach(x => {
           if (x.key === workHistoryId) x.value = data;
         });

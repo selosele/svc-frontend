@@ -79,7 +79,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
       companyName: ['', [FormValidator.required]],    // 회사명
       rankCode: ['', [FormValidator.required]],       // 직위 코드
       jobTitleCode: ['', [FormValidator.required]],   // 직책 코드
-      annualTypeCode: ['', [FormValidator.required]], // 연차발생기준 코드
+      annualTypeCode: [''],                           // 연차발생기준 코드
       joinYmd: ['', [FormValidator.required]],        // 입사일자
       quitYmd: [''],                                  // 퇴사일자
     });
