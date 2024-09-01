@@ -63,12 +63,12 @@ export class HumanVacationListComponent implements OnInit {
   /** 테이블 컬럼 */
   cols = [
     { header: '휴가 구분',
-      valueGetter: (data) => this.vacationTypeCodes.find(x => x.value === data.vacationTypeCode)?.label
+      valueGetter: (data: VacationResponseDTO) => this.vacationTypeCodes.find(x => x.value === data.vacationTypeCode)?.label
     },
     { field: 'vacationStartYmd', header: '휴가 시작일자' },
     { field: 'vacationEndYmd',   header: '휴가 종료일자' },
     { header: '휴가 사용일수',
-      valueGetter: (data) => `${data.vacationDiff}일`
+      valueGetter: (data: VacationResponseDTO) => `${data.vacationDiff}일`
     },
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
