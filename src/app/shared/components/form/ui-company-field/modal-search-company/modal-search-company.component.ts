@@ -52,9 +52,9 @@ export class ModalSearchCompanyComponent implements OnInit {
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'corporateName',      header: '법인명' },
-    { field: 'companyName',        header: '회사명' },
-    { field: 'registrationNo',     header: '사업자등록번호' },
+    { field: 'corporateName',  header: '법인명' },
+    { field: 'companyName',    header: '회사명' },
+    { field: 'registrationNo', header: '사업자등록번호' },
   ];
 
   ngOnInit(): void {
@@ -68,9 +68,8 @@ export class ModalSearchCompanyComponent implements OnInit {
       registrationNo: ['', [FormValidator.maxLength(10)]]        // 사업자등록번호
     });
 
-    // 모달이 닫히면 데이터 로드 완료 여부 값을 초기화해서 모달이 다시 열리면 다시 조회되도록 해준다.
     this.dialogRef.onClose.subscribe(() => {
-      this.companyListDataLoad = false;
+      this.companyListDataLoad = false; // 모달을 닫고 다시 열면 리스트를 처음부터 다시 조회하도록 해준다.
     });
   }
 
