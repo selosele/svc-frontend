@@ -4,7 +4,7 @@ import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.
 import { AuthService } from '@app/auth/auth.service';
 import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
-import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
+import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -86,24 +86,11 @@ export class HumanMyInfoComponent implements OnInit {
     { field: 'joinYmd',     header: '입사일자' },
     { field: 'quitYmd',     header: '퇴사일자' },
     { header: '재직기간',
-      valueGetter: (data) => {
-        let startDate = dateUtil(data.joinYmd);
-        let endDate = dateUtil(dateUtil().format('YYYYMMDD'));
-        
-        if (isNotBlank(data.quitYmd)) {
-          endDate = dateUtil(data.quitYmd);
-        } else {
-          endDate = dateUtil(dateUtil().format('YYYYMMDD'));
+      valueGetter: (data: WorkHistoryResponseDTO) => {
+        if (data.workDiffY === 0) {
+          return `${data.workDiffM}개월`;
         }
-
-        const diffInYears = endDate.diff(startDate, 'year');
-        const adjustedEndDate = startDate.add(diffInYears, 'year');
-        const diffInMonths = endDate.diff(adjustedEndDate, 'month');
-
-        if (diffInYears === 0) {
-          return `${diffInMonths}개월`;
-        }
-        return `${diffInYears}년 ${diffInMonths}개월`;
+        return `${data.workDiffY}년 ${data.workDiffM}개월`;
       }
     },
   ];

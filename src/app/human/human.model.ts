@@ -93,6 +93,12 @@ export class WorkHistoryResponseDTO {
   /** 퇴사일자 */
   quitYmd?: string;
 
+  /** 재직기간(년도) */
+  workDiffY?: number;
+
+  /** 재직기간(월) */
+  workDiffM?: number;
+
 }
 
 /** 회사 조회 요청 DTO */
