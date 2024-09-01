@@ -42,6 +42,11 @@ export class ModalSearchCompanyComponent implements OnInit {
     return this.humanService.companyListDataLoad.value;
   }
 
+  /** 회사 목록 데이터 로드 완료 여부 값을 설정한다. */
+  set companyListDataLoad(value: boolean) {
+    this.humanService.companyListDataLoad.next(value);
+  }
+
   /** 회사 검색 폼 */
   searchForm: FormGroup;
 
@@ -61,6 +66,11 @@ export class ModalSearchCompanyComponent implements OnInit {
       corporateName: ['', [FormValidator.maxLength(100)]],       // 법인명
       companyName: ['', [FormValidator.maxLength(100)]],         // 회사명
       registrationNo: ['', [FormValidator.maxLength(10)]]        // 사업자등록번호
+    });
+
+    // 모달이 닫히면 데이터 로드 완료 여부 값을 초기화해서 모달이 다시 열리면 다시 조회되도록 해준다.
+    this.dialogRef.onClose.subscribe(() => {
+      this.companyListDataLoad = false;
     });
   }
 
