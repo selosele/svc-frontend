@@ -15,14 +15,4 @@ export const humanRoutes: Routes = [
     loadComponent: () => import('./human-vacation/human-vacation.component').then(x => x.HumanVacationComponent),
   },
   
-  // 일정관리 페이지
-  {
-    path: 'human/schedules',
-    canActivate: [authGuard, menuGuard],
-    data: {
-      roles: [roles.EMPLOYEE],
-    },
-    loadComponent: () => import('./human-schedule/human-schedule.component').then(x => x.HumanScheduleComponent),
-  },
-  
 ];
