@@ -190,6 +190,9 @@ export class VacationResponseDTO {
   /** 휴가 종료일자 */
   vacationEndYmd?: string;
 
+  /** 휴가 사용일수 */
+  vacationDiff?: number;
+
   /** 삭제 여부 */
   deleteYn?: string;
 

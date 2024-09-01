@@ -68,10 +68,7 @@ export class HumanVacationListComponent implements OnInit {
     { field: 'vacationStartYmd', header: '휴가 시작일자' },
     { field: 'vacationEndYmd',   header: '휴가 종료일자' },
     { header: '휴가 사용일수',
-      valueGetter: (data) => {
-        const diff = dateUtil(data.vacationEndYmd).diff(dateUtil(data.vacationStartYmd), 'day');
-        return diff === 0 ? `${diff+1}일` : `${diff-1}일`;
-      }
+      valueGetter: (data) => `${data.vacationDiff}일`
     },
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
