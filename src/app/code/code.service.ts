@@ -61,7 +61,7 @@ export class CodeService {
   }
 
   /** 상위 코드 ID로 드롭다운 데이터를 만들어서 반환한다. */
-  getDropdownData(upCodeId: string): DropdownData[] {
+  createDropdownData(upCodeId: string): DropdownData[] {
     return this.codeList.value
       .filter(x => x.upCodeId === upCodeId)
       .map(x => ({ label: x.codeName, value: x.codeValue })
@@ -69,7 +69,7 @@ export class CodeService {
   }
 
   /** Y/N 드롭다운 데이터를 만들어서 반환한다. */
-  getDropdownYnData(): DropdownData[] {
+  createDropdownYnData(): DropdownData[] {
     return [
       { label: 'Y', value: 'Y' },
       { label: 'N', value: 'N' }

@@ -45,7 +45,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   vacationDetailForm: FormGroup;
 
   /** 휴가 구분 코드 데이터 목록 */
-  vacationTypeCodes: DropdownData[] = this.codeService.getDropdownData('VACATION_TYPE_00');
+  vacationTypeCodes: DropdownData[] = this.codeService.createDropdownData('VACATION_TYPE_00');
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;

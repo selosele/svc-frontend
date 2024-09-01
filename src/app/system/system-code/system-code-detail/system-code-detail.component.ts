@@ -37,7 +37,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   codeDetailForm: FormGroup;
 
   /** 사용 여부 데이터 목록 */
-  useYns: DropdownData[] = this.codeService.getDropdownYnData();
+  useYns: DropdownData[] = this.codeService.createDropdownYnData();
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
