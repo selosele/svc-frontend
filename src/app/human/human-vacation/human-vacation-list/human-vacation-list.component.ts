@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { CodeService } from '@app/code/code.service';
+import { ActivatedRoute } from '@angular/router';
 import { VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
 import { HumanService } from '@app/human/human.service';
-import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
-import { dateUtil, isEmpty } from '@app/shared/utils';
+import { isEmpty } from '@app/shared/utils';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Component({
   standalone: true,
@@ -24,7 +24,7 @@ import { dateUtil, isEmpty } from '@app/shared/utils';
 export class HumanVacationListComponent implements OnInit {
 
   constructor(
-    private codeService: CodeService,
+    private route: ActivatedRoute,
     private humanService: HumanService,
   ) {}
 
@@ -43,7 +43,7 @@ export class HumanVacationListComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 휴가 코드 데이터 목록 */
-  vacationTypeCodes = this.codeService.createCodeData('VACATION_TYPE_00');
+  vacationTypeCodes: DropdownData[];
 
   /** 휴가 목록 데이터 로드 완료 여부 */
   vacationListDataLoad = false;
@@ -74,6 +74,10 @@ export class HumanVacationListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.route.data.subscribe(({ code }) => {
+      this.vacationTypeCodes = code['VACATION_TYPE_00'];
+    });
+
     this.humanService.workHistoryId$.subscribe((data) => {
       if (!data) return;
 

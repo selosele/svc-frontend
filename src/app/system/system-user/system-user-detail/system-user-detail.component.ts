@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
-import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Component({
   standalone: true,
@@ -33,6 +34,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private messageService: UiMessageService,
     private authService: AuthService,
     private codeService: CodeService,
@@ -57,13 +59,13 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   defaultRoles: string[] = [];
 
   /** 성별 코드 데이터 목록 */
-  genderCodes = this.codeService.createCodeData('GENDER_00');
+  genderCodes: DropdownData[];
 
   /** 직위 코드 데이터 목록 */
-  rankCodes = this.codeService.createCodeData('RANK_00');
+  rankCodes: DropdownData[];
 
   /** 직책 코드 데이터 목록 */
-  jobTitleCodes = this.codeService.createCodeData('JOB_TITLE_00');
+  jobTitleCodes: DropdownData[];
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
@@ -83,6 +85,12 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit(): void {
+    this.route.data.subscribe(({ code }) => {
+      this.genderCodes = code['GENDER_00'];
+      this.rankCodes = code['RANK_00'];
+      this.jobTitleCodes = code['JOB_TITLE_00'];
+    });
+
     this.userDetailForm = this.fb.group({
 
       // 사용자 정보

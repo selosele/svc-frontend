@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CodeService } from '@app/code/code.service';
+import { ActivatedRoute } from '@angular/router';
 import { SaveVacationRequestDTO, VacationResponseDTO } from '@app/human/human.model';
 import { HumanService } from '@app/human/human.service';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -28,8 +28,8 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private messageService: UiMessageService,
-    private codeService: CodeService,
     private humanService: HumanService,
   ) {}
 
@@ -45,7 +45,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   vacationDetailForm: FormGroup;
 
   /** 휴가 구분 코드 데이터 목록 */
-  vacationTypeCodes = this.codeService.createCodeData('VACATION_TYPE_00');
+  vacationTypeCodes: DropdownData[];
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
@@ -67,6 +67,10 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       vacationStartYmd: ['', [FormValidator.required]],       // 휴가 시작일자
       vacationEndYmd: ['', [FormValidator.required]],         // 휴가 종료일자
       vacationContent: ['', FormValidator.maxLength(100)],    // 휴가 내용
+    });
+
+    this.route.data.subscribe(({ code }) => {
+      this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
     this.humanService.workHistoryId$.subscribe((data) => {

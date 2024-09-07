@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { CodeService } from '@app/code/code.service';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
@@ -14,8 +14,8 @@ import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/
 import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/ui-date-field.component';
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
-import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detail/human-my-info-company-detail.component';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Component({
   standalone: true,
@@ -40,9 +40,9 @@ export class HumanMyInfoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private messageService: UiMessageService,
     private authService: AuthService,
-    private codeService: CodeService,
     private humanService: HumanService,
   ) {}
 
@@ -72,13 +72,13 @@ export class HumanMyInfoComponent implements OnInit {
   employeeForm: FormGroup;
 
   /** 성별 코드 데이터 목록 */
-  genderCodes = this.codeService.createCodeData('GENDER_00');
+  genderCodes: DropdownData[];
 
   /** 직위 코드 데이터 목록 */
-  rankCodes = this.codeService.createCodeData('RANK_00');
+  rankCodes: DropdownData[];
 
   /** 직책 코드 데이터 목록 */
-  jobTitleCodes = this.codeService.createCodeData('JOB_TITLE_00');
+  jobTitleCodes: DropdownData[];
 
   /** 테이블 컬럼 */
   cols = [
@@ -87,9 +87,9 @@ export class HumanMyInfoComponent implements OnInit {
     { field: 'quitYmd',     header: '퇴사일자' },
     { header: '재직기간',
       valueGetter: (data: WorkHistoryResponseDTO) => {
-        if (data.workDiffY === 0) {
-          return `${data.workDiffM}개월`;
-        }
+        if (data.workDiffY === 0) return `${data.workDiffM}개월`;
+        if (data.workDiffM === 0) return `${data.workDiffY}년`;
+        
         return `${data.workDiffY}년 ${data.workDiffM}개월`;
       }
     },
@@ -102,6 +102,12 @@ export class HumanMyInfoComponent implements OnInit {
   selection: WorkHistoryResponseDTO;
 
   ngOnInit(): void {
+    this.route.data.subscribe(({ code }) => {
+      this.genderCodes = code['GENDER_00'];
+      this.rankCodes = code['RANK_00'];
+      this.jobTitleCodes = code['JOB_TITLE_00'];
+    });
+
     this.user = this.authService.getAuthenticatedUser();
     this.initForm();
 

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { UiSplitFormComponent } from '@app/shared/components/form/ui-split-form/ui-split-form.component';
 import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/ui-date-field.component';
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
@@ -7,14 +8,13 @@ import { UiHiddenFieldComponent } from '@app/shared/components/form/ui-hidden-fi
 import { UiCompanyFieldComponent } from '@app/shared/components/form/ui-company-field/ui-company-field.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { WorkHistoryResponseDTO, SaveWorkHistoryRequestDTO } from '@app/human/human.model';
-import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
-import { CodeService } from '@app/code/code.service';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { HumanService } from '@app/human/human.service';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Component({
   standalone: true,
@@ -34,9 +34,9 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private messageService: UiMessageService,
     private authService: AuthService,
-    private codeService: CodeService,
     private humanService: HumanService,
   ) {}
 
@@ -47,13 +47,13 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   companyDetailForm: FormGroup;
 
   /** 직위 코드 데이터 목록 */
-  rankCodes = this.codeService.createCodeData('RANK_00');
+  rankCodes: DropdownData[];
 
   /** 직책 코드 데이터 목록 */
-  jobTitleCodes = this.codeService.createCodeData('JOB_TITLE_00');
+  jobTitleCodes: DropdownData[];
 
   /** 연차발생기준 코드 데이터 목록 */
-  annualTypeCodes = this.codeService.createCodeData('ANNUAL_TYPE_00');
+  annualTypeCodes: DropdownData[];
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
@@ -71,6 +71,12 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit(): void {
+    this.route.data.subscribe(({ code }) => {
+      this.rankCodes = code['RANK_00'];
+      this.jobTitleCodes = code['JOB_TITLE_00'];
+      this.annualTypeCodes = code['ANNUAL_TYPE_00'];
+    });
+
     this.user = this.authService.getAuthenticatedUser();
     
     this.companyDetailForm = this.fb.group({
