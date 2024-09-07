@@ -1,3 +1,4 @@
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { HttpRequestDTOBase } from '@app/shared/models';
 
 /** 코드 추가/수정 요청 DTO DTO */
@@ -72,5 +73,13 @@ export class CodeTree extends CodeResponseDTO {
 
   /** 확장 여부 */
   expanded?: boolean = false;
+
+}
+
+/** 코드 리졸버 반환 타입 */
+export interface CodeResolverModel {
+
+  /** key: 상위 코드 ID, value: 드롭다운 데이터 목록 */
+  [upcodeId: string]: DropdownData[];
 
 }
