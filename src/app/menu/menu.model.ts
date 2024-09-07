@@ -35,6 +35,9 @@ export class MenuResponseDTO {
   /** 메뉴 뎁스 */
   menuDepth?: number;
   
+  /** 메뉴 표출 여부 */
+  menuShowYn?: string;
+  
   /** 사용 여부 */
   useYn?: string;
   

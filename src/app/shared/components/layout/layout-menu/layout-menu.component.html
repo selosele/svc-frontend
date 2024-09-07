@@ -2,7 +2,7 @@
   <ul class="layout-menu__depth1">
     <ng-container *ngFor="let menu1 of menuTree$ | async">
       <li
-        *ngIf="menu1.data.upMenuId === null"
+        *ngIf="menu1.data.upMenuId === null && menu1.data.menuShowYn === 'Y'"
         [class.active]="((currentUpMenuId$ | async) ?? (currentMenuId$ | async)) === menu1.data.menuId"
         (mouseenter)="toggleSubMenu(menu1.data.menuId, true)"
         (mouseleave)="toggleSubMenu(menu1.data.menuId, false)"
@@ -31,7 +31,10 @@
         @if (menu1?.children.length > 0) {
           <ul [class.active]="activeMenuId === menu1.data.menuId" class="layout-menu__depth2">
             <ng-container *ngFor="let menu2 of menu1.children">
-              <li [class.active]="(currentMenuId$ | async) === menu2.data.menuId">
+              <li
+                *ngIf="menu2.data.menuShowYn === 'Y'"
+                [class.active]="(currentMenuId$ | async) === menu2.data.menuId"
+              >
                 <a
                   [routerLink]="menu2.data.menuUrl"
                   [queryParams]="{ menuId: menu2.data.menuId }"
