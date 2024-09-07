@@ -15,6 +15,22 @@
     [activeIndex]="activeIndex"
     (change)="onChange($event)"
   >
+    <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
+      <div class="input-box">
+        <ui-checkbox-group [label]="'휴가 계산에 포함할 휴가 선택'">
+          <ui-card>
+            @for (code of vacationTypeCodes; track $index) {
+              <ui-checkbox
+                [control]="caculateVacationForm.get('vacationTypeCode')"
+                [label]="code.label"
+                [value]="code.value"
+              />
+            }
+          </ui-card>
+        </ui-checkbox-group>
+      </div>
+    </ui-form>
+
     <human-vacation-list
       [tableTitle]="vacationTableTitle"
     />
