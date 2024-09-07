@@ -47,13 +47,13 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   companyDetailForm: FormGroup;
 
   /** 직위 코드 데이터 목록 */
-  rankCodes: DropdownData[] = this.codeService.createDropdownData('RANK_00');
+  rankCodes: DropdownData[] = this.codeService.createCodeData('RANK_00');
 
   /** 직책 코드 데이터 목록 */
-  jobTitleCodes: DropdownData[] = this.codeService.createDropdownData('JOB_TITLE_00');
+  jobTitleCodes: DropdownData[] = this.codeService.createCodeData('JOB_TITLE_00');
 
   /** 연차발생기준 코드 데이터 목록 */
-  annualTypeCodes: DropdownData[] = this.codeService.createDropdownData('ANNUAL_TYPE_00');
+  annualTypeCodes: DropdownData[] = this.codeService.createCodeData('ANNUAL_TYPE_00');
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;

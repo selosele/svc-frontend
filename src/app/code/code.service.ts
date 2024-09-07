@@ -60,16 +60,16 @@ export class CodeService {
     return this.http.delete<void>(`/common/codes/${codeId}`);
   }
 
-  /** 상위 코드 ID로 드롭다운 데이터를 만들어서 반환한다. */
-  createDropdownData(upCodeId: string): DropdownData[] {
+  /** 상위 코드 ID로 코드 데이터 목록을 만들어서 반환한다. */
+  createCodeData(upCodeId: string): DropdownData[] {
     return this.codeList.value
       .filter(x => x.upCodeId === upCodeId)
       .map(x => ({ label: x.codeName, value: x.codeValue })
     );
   }
 
-  /** Y/N 드롭다운 데이터를 만들어서 반환한다. */
-  createDropdownYnData(): DropdownData[] {
+  /** Y/N 코드 데이터 목록을 만들어서 반환한다. */
+  createYnCodeData(): DropdownData[] {
     return [
       { label: 'Y', value: 'Y' },
       { label: 'N', value: 'N' }

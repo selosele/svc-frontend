@@ -43,7 +43,7 @@ export class HumanVacationListComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 휴가 코드 데이터 목록 */
-  vacationTypeCodes: DropdownData[] = this.codeService.createDropdownData('VACATION_TYPE_00');
+  vacationTypeCodes: DropdownData[] = this.codeService.createCodeData('VACATION_TYPE_00');
 
   /** 휴가 목록 데이터 로드 완료 여부 */
   vacationListDataLoad = false;

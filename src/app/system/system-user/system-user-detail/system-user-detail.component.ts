@@ -45,7 +45,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   userDetailForm: FormGroup;
 
   /** 사용자 활성화 여부 데이터 목록 */
-  userActiveYns: DropdownData[] = this.codeService.createDropdownYnData();
+  userActiveYns: DropdownData[] = this.codeService.createYnCodeData();
 
   /** 사용자 활성화 여부 기본 값 */
   defaultUserActiveYn: string = 'Y';
@@ -57,13 +57,13 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   defaultRoles: string[] = [];
 
   /** 성별 코드 데이터 목록 */
-  genderCodes: DropdownData[] = this.codeService.createDropdownData('GENDER_00');
+  genderCodes: DropdownData[] = this.codeService.createCodeData('GENDER_00');
 
   /** 직위 코드 데이터 목록 */
-  rankCodes: DropdownData[] = this.codeService.createDropdownData('RANK_00');
+  rankCodes: DropdownData[] = this.codeService.createCodeData('RANK_00');
 
   /** 직책 코드 데이터 목록 */
-  jobTitleCodes: DropdownData[] = this.codeService.createDropdownData('JOB_TITLE_00');
+  jobTitleCodes: DropdownData[] = this.codeService.createCodeData('JOB_TITLE_00');
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
