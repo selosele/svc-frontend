@@ -7,11 +7,11 @@ import { AuthService } from '@app/auth/auth.service';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
-  const baseUri = 'api';
+  const BASE_URI = 'api';
   const authService = inject(AuthService);
   const accessToken = authService.getAccessToken();
   const newReq = req.clone({
-    url: `${baseUri}${req.url}`,
+    url: `${BASE_URI}${req.url}`,
     setHeaders: {
       // Content-Type 헤더를 아래처럼 설정 시, API 서버에서 JSON이 아닌 형식의 데이터를 반환하면 오류 발생
       // 'Content-Type': 'application/json; charset=utf-8',

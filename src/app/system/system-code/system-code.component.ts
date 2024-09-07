@@ -50,11 +50,11 @@ export class SystemCodeComponent implements OnInit {
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'codeId',      header: '코드 ID' },
-    { field: 'codeValue',   header: '코드 값' },
-    { field: 'codeName',    header: '코드명' },
-    { field: 'codeOrder',   header: '코드 순서' },
-    { field: 'useYn',       header: '사용 여부' },
+    { field: 'codeId',    header: '코드 ID' },
+    { field: 'codeValue', header: '코드 값' },
+    { field: 'codeName',  header: '코드명' },
+    { field: 'codeOrder', header: '코드 순서' },
+    { field: 'useYn',     header: '사용 여부' },
   ];
 
   ngOnInit(): void {
@@ -65,7 +65,9 @@ export class SystemCodeComponent implements OnInit {
 
   /** 코드 목록을 조회한다. */
   listCode(): void {
-    this.codeService.listCode();
+    this.codeService.listCode().subscribe((data) => {
+
+    });
   }
 
   /** 코드를 추가한다. */
