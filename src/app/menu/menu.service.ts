@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { HttpService } from '@app/shared/services';
 import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/menu/menu.model';
 
 @Injectable({ providedIn: 'root' })
@@ -9,6 +10,7 @@ export class MenuService {
 
   constructor(
     private http: HttpClient,
+    private httpService: HttpService,
     private route: ActivatedRoute,
   ) {}
 
@@ -41,7 +43,9 @@ export class MenuService {
 
   /** 메뉴 목록을 조회한다. */
   listMenu(dto?: GetMenuRequestDTO): void {
-    this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...dto } })
+    const params = this.httpService.createParams(dto);
+
+    this.http.get<MenuResponseDTO[]>('/common/menus', { params })
     .subscribe((data) => {
       this.setMenuList(data);
     });
@@ -49,7 +53,8 @@ export class MenuService {
 
   /** 권한별 메뉴 목록을 조회한다. */
   listMenuByRole$(dto?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
-    return this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...dto } });
+    const params = this.httpService.createParams(dto);
+    return this.http.get<MenuResponseDTO[]>('/common/menus', { params });
   }
 
   /** 메뉴 관련 데이터를 설정한다. */

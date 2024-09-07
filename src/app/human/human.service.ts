@@ -4,12 +4,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { dateUtil, isEmpty, isNotEmpty } from '@app/shared/utils';
 import { Tab } from '@app/shared/models';
 import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem } from './human.model';
+import { HttpService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
 
   constructor(
     private http: HttpClient,
+    private httpService: HttpService,
   ) {}
 
   /** 직원 정보 */
@@ -72,7 +74,9 @@ export class HumanService {
 
   /** 회사 목록을 조회한다. */
   listCompany(dto?: GetCompanyRequestDTO): void {
-    this.http.get<CompanyResponseDTO[]>('/human/companies', { params: { ...dto } })
+    const params = this.httpService.createParams(dto);
+
+    this.http.get<CompanyResponseDTO[]>('/human/companies', { params })
     .subscribe((data) => {
       this.companyList.next(data);
       this.companyListDataLoad.next(true);
@@ -114,7 +118,8 @@ export class HumanService {
 
   /** 휴가 목록을 조회한다. */
   listVacation$(dto: GetVacationRequestDTO): Observable<VacationResponseDTO[]> {
-    return this.http.get<VacationResponseDTO[]>('/human/vacations', { params: { ...dto } });
+    const params = this.httpService.createParams(dto);
+    return this.http.get<VacationResponseDTO[]>('/human/vacations', { params });
   }
 
   /** 휴가를 조회한다. */
