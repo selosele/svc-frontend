@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { CodeResponseDTO, CodeTree, SaveCodeRequestDTO } from './code.model';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
@@ -31,12 +31,13 @@ export class CodeService {
   }
 
   /** 코드 목록을 조회한다. */
-  listCode(): void {
-    this.http.get<CodeResponseDTO[]>('/common/codes')
-    .subscribe((data) => {
-      this.setCodeList(data);
-      this.codeListDataLoad.next(true);
-    });
+  listCode(): Observable<CodeResponseDTO[]> {
+    return this.http.get<CodeResponseDTO[]>('/common/codes').pipe(
+      tap((data) => {
+        this.setCodeList(data);
+        this.codeListDataLoad.next(true);
+      })
+    );
   }
 
   /** 코드를 조회한다. */
