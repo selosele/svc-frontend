@@ -60,6 +60,9 @@ export class UserResponseDTO {
   /** 사용자 활성화 여부 */
   userActiveYn?: string;
 
+  /** 마지막 로그인 일시 */
+  lastLoginDt?: string;
+
   /** 사용자 권한 목록 */
   roles?: UserRoleResponseDTO[];
 

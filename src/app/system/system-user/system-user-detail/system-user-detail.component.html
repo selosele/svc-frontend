@@ -35,6 +35,13 @@
         </ui-button>
       }
     </ui-dropdown>
+
+    @if (isUserNotEmpty) {
+      <ui-text-field
+        [control]="userDetailForm.get('lastLoginDt')"
+        [label]="'마지막 로그인 일시'" [readonly]="true"
+      />
+    }
   </div>
 
   <div class="input-box">
