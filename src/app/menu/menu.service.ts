@@ -14,7 +14,7 @@ export class MenuService {
     private route: ActivatedRoute,
   ) {}
 
-  /** 메뉴접속이력 목록 저장 키 */
+  /** 메뉴접속이력 목록 저장 key */
   readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
 
   /** 메뉴 목록 */

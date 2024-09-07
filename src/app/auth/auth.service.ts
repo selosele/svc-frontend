@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ACCESS_TOKEN_NAME, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
+import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO } from './auth.model';
 import { HttpService, UiDialogService } from '@app/shared/services';
 
@@ -153,12 +153,12 @@ export class AuthService {
 
   /** 액세스 토큰을 설정한다. */
   setAccessToken(accessToken: string): void {
-    window.localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+    window.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   }
 
   /** 액세스 토큰을 삭제한다. */
   removeAccessToken(): void {
-    window.localStorage.removeItem(ACCESS_TOKEN_NAME);
+    window.localStorage.removeItem(ACCESS_TOKEN_KEY);
   }
 
   /** 유효한 JWT인지 확인한다. */
