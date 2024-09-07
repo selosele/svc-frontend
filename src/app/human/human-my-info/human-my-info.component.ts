@@ -72,13 +72,13 @@ export class HumanMyInfoComponent implements OnInit {
   employeeForm: FormGroup;
 
   /** 성별 코드 데이터 목록 */
-  genderCodes: DropdownData[] = this.codeService.createCodeData('GENDER_00');
+  genderCodes = this.codeService.createCodeData('GENDER_00');
 
   /** 직위 코드 데이터 목록 */
-  rankCodes: DropdownData[] = this.codeService.createCodeData('RANK_00');
+  rankCodes = this.codeService.createCodeData('RANK_00');
 
   /** 직책 코드 데이터 목록 */
-  jobTitleCodes: DropdownData[] = this.codeService.createCodeData('JOB_TITLE_00');
+  jobTitleCodes = this.codeService.createCodeData('JOB_TITLE_00');
 
   /** 테이블 컬럼 */
   cols = [
