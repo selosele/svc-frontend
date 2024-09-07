@@ -20,8 +20,16 @@
         />
       </div>
 
+      <div class="input-box">
+        <ui-checkbox
+          [control]="loginForm.get('saveUserAccountYn')"
+          [label]="'아이디 저장'"
+          [value]="'Y'"
+        />
+      </div>
+
       <ui-button [block]="true" [type]="'submit'">
-        GO
+        로그인
       </ui-button>
     </ui-form>
   </div>

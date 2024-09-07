@@ -10,6 +10,9 @@ export class LoginRequestDTO extends HttpRequestDTOBase {
   /** 사용자 비밀번호 */
   userPassword?: string;
 
+  /** 아이디 저장 여부 */
+  saveUserAccountYn?: string[];
+
 }
 
 /** 로그인 응답 DTO */

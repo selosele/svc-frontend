@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, isNotBlank } from '@app/shared/utils';
+import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO } from './auth.model';
 import { HttpService, UiDialogService } from '@app/shared/services';
 
@@ -40,7 +40,18 @@ export class AuthService {
     .subscribe((data) => {
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
+        
+        // 액세스 토큰 설정
         this.setAccessToken(accessToken);
+
+        // 아이디 저장 여부 값에 따른 설정
+        if (dto.saveUserAccountYn[0] === 'Y') {
+          this.setSaveUserAccount(dto.userAccount);
+        } else {
+          this.removeSaveUserAccount();
+        }
+
+        // 메인 화면으로 이동
         this.router.navigateByUrl('/');
       }
     });
@@ -52,7 +63,13 @@ export class AuthService {
     .subscribe(() => {
       this.removeAccessToken();
       this.dialogService.closeAllDialog();
-      window.localStorage.clear();
+
+      Object.keys(window.localStorage).forEach(key => {
+        if (key !== SAVE_USER_ACCOUNT_KEY) { // 필수로 저장되어 있어야 하는 key를 제외하고 전부 삭제
+          window.localStorage.removeItem(key);
+        }
+      });
+
       window.location.href = LOGIN_PAGE_PATH; // 로그아웃 시에는 페이지 새로고침을 발생시켜서 모든 state를 초기화한다.
     });
   }
@@ -169,6 +186,21 @@ export class AuthService {
   /** JWT 만료 여부를 반환한다. */
   isTokenExpired(token: string): boolean {
     return this.jwtHelper.isTokenExpired(token);
+  }
+
+  /** 로컬스토리지에 저장된 아이디 저장 여부 */
+  getSavedUserAccount(): string {
+    return window.localStorage.getItem(SAVE_USER_ACCOUNT_KEY);
+  }
+
+  /** 아이디 저장 여부 값을 설정한다. */
+  setSaveUserAccount(userAccount: string): void {
+    window.localStorage.setItem(SAVE_USER_ACCOUNT_KEY, userAccount);
+  }
+
+  /** 아이디 저장 여부 값을 삭제한다. */
+  removeSaveUserAccount(): void {
+    window.localStorage.removeItem(SAVE_USER_ACCOUNT_KEY);
   }
 
 }
