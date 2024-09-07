@@ -45,14 +45,14 @@ export class CodeService {
   }
 
   /** 코드를 추가한다. */
-  addCode$(saveCodeRequestDTO: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
-    return this.http.post<CodeResponseDTO>('/common/codes', saveCodeRequestDTO);
+  addCode$(dto: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
+    return this.http.post<CodeResponseDTO>('/common/codes', dto);
   }
 
   /** 코드를 수정한다. */
-  updateCode$(saveCodeRequestDTO: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
-    const { codeId } = saveCodeRequestDTO;
-    return this.http.put<CodeResponseDTO>(`/common/codes/${codeId}`, saveCodeRequestDTO);
+  updateCode$(dto: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
+    const { codeId } = dto;
+    return this.http.put<CodeResponseDTO>(`/common/codes/${codeId}`, dto);
   }
 
   /** 코드를 삭제한다. */

@@ -34,8 +34,8 @@ export class AuthService {
   roleListDataLoad$ = this.roleListDataLoad.asObservable();
 
   /** 로그인을 한다. */
-  login(loginRequestDTO: LoginRequestDTO): void {
-    this.http.post<LoginResponseDTO>('/common/auth/login', loginRequestDTO)
+  login(dto: LoginRequestDTO): void {
+    this.http.post<LoginResponseDTO>('/common/auth/login', dto)
     .subscribe((data) => {
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
@@ -66,8 +66,8 @@ export class AuthService {
   }
 
   /** 권한별 사용자 목록을 조회한다. */
-  listUserByRole$(getUserRequestDTO: GetUserRequestDTO): Observable<UserResponseDTO[]> {
-    return this.http.get<UserResponseDTO[]>('/common/auth/users', { params: { ...getUserRequestDTO } });
+  listUserByRole$(dto: GetUserRequestDTO): Observable<UserResponseDTO[]> {
+    return this.http.get<UserResponseDTO[]>('/common/auth/users', { params: { ...dto } });
   }
 
   /** 사용자를 조회한다. */
@@ -76,14 +76,14 @@ export class AuthService {
   }
 
   /** 사용자를 추가한다. */
-  addUser$(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
-    return this.http.post<UserResponseDTO>('/common/auth/users', saveUserRequestDTO);
+  addUser$(dto: SaveUserRequestDTO): Observable<UserResponseDTO> {
+    return this.http.post<UserResponseDTO>('/common/auth/users', dto);
   }
 
   /** 사용자를 수정한다. */
-  updateUser$(saveUserRequestDTO: SaveUserRequestDTO): Observable<UserResponseDTO> {
-    const { userId } = saveUserRequestDTO;
-    return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, saveUserRequestDTO);
+  updateUser$(dto: SaveUserRequestDTO): Observable<UserResponseDTO> {
+    const { userId } = dto;
+    return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, dto);
   }
 
   /** 사용자를 삭제한다. */
@@ -92,9 +92,9 @@ export class AuthService {
   }
 
   /** 사용자 비밀번호를 변경한다. */
-  updatePassword$(updateUserPasswordRequestDTO: UpdateUserPasswordRequestDTO): Observable<number> {
+  updatePassword$(dto: UpdateUserPasswordRequestDTO): Observable<number> {
     const { userId } = this.getAuthenticatedUser();
-    return this.http.put<number>(`/common/auth/users/${userId}/password`, updateUserPasswordRequestDTO);
+    return this.http.put<number>(`/common/auth/users/${userId}/password`, dto);
   }
 
   /** 권한 목록을 조회한다. */

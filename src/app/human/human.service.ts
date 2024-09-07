@@ -65,14 +65,14 @@ export class HumanService {
   }
 
   /** 직원을 수정한다. */
-  updateEmployee$(saveEmployeeRequestDTO: SaveEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
-    const { employeeId } = saveEmployeeRequestDTO;
-    return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, saveEmployeeRequestDTO);
+  updateEmployee$(dto: SaveEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
+    const { employeeId } = dto;
+    return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, dto);
   }
 
   /** 회사 목록을 조회한다. */
-  listCompany(getCompanyRequestDTO?: GetCompanyRequestDTO): void {
-    this.http.get<CompanyResponseDTO[]>('/human/companies', { params: { ...getCompanyRequestDTO } })
+  listCompany(dto?: GetCompanyRequestDTO): void {
+    this.http.get<CompanyResponseDTO[]>('/human/companies', { params: { ...dto } })
     .subscribe((data) => {
       this.companyList.next(data);
       this.companyListDataLoad.next(true);
@@ -96,15 +96,15 @@ export class HumanService {
   }
 
   /** 근무이력을 추가한다. */
-  addWorkHistory$(saveWorkHistoryRequestDTO: SaveWorkHistoryRequestDTO): Observable<void> {
-    const { employeeId } = saveWorkHistoryRequestDTO;
-    return this.http.post<void>(`/human/employees/${employeeId}/companies`, saveWorkHistoryRequestDTO);
+  addWorkHistory$(dto: SaveWorkHistoryRequestDTO): Observable<void> {
+    const { employeeId } = dto;
+    return this.http.post<void>(`/human/employees/${employeeId}/companies`, dto);
   }
 
   /** 근무이력을 수정한다. */
-  updateWorkHistory$(saveWorkHistoryRequestDTO: SaveWorkHistoryRequestDTO): Observable<void> {
-    const { employeeId, workHistoryId } = saveWorkHistoryRequestDTO;
-    return this.http.put<void>(`/human/employees/${employeeId}/companies/${workHistoryId}`, saveWorkHistoryRequestDTO);
+  updateWorkHistory$(dto: SaveWorkHistoryRequestDTO): Observable<void> {
+    const { employeeId, workHistoryId } = dto;
+    return this.http.put<void>(`/human/employees/${employeeId}/companies/${workHistoryId}`, dto);
   }
 
   /** 근무이력을 삭제한다. */
@@ -113,8 +113,8 @@ export class HumanService {
   }
 
   /** 휴가 목록을 조회한다. */
-  listVacation$(getVacationRequestDTO: GetVacationRequestDTO): Observable<VacationResponseDTO[]> {
-    return this.http.get<VacationResponseDTO[]>('/human/vacations', { params: { ...getVacationRequestDTO } });
+  listVacation$(dto: GetVacationRequestDTO): Observable<VacationResponseDTO[]> {
+    return this.http.get<VacationResponseDTO[]>('/human/vacations', { params: { ...dto } });
   }
 
   /** 휴가를 조회한다. */
@@ -123,14 +123,14 @@ export class HumanService {
   }
 
   /** 휴가를 추가한다. */
-  addVacation$(saveVacationRequestDTO: SaveVacationRequestDTO): Observable<VacationResponseDTO> {
-    return this.http.post<VacationResponseDTO>('/human/vacations', saveVacationRequestDTO);
+  addVacation$(dto: SaveVacationRequestDTO): Observable<VacationResponseDTO> {
+    return this.http.post<VacationResponseDTO>('/human/vacations', dto);
   }
 
   /** 휴가를 수정한다. */
-  updateVacation$(saveVacationRequestDTO: SaveVacationRequestDTO): Observable<number> {
-    const { vacationId } = saveVacationRequestDTO;
-    return this.http.put<number>(`/human/vacations/${vacationId}`, saveVacationRequestDTO);
+  updateVacation$(dto: SaveVacationRequestDTO): Observable<number> {
+    const { vacationId } = dto;
+    return this.http.put<number>(`/human/vacations/${vacationId}`, dto);
   }
 
   /** 휴가를 삭제한다. */

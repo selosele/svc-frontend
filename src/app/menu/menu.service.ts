@@ -40,16 +40,16 @@ export class MenuService {
   menuHistoryList$ = this.menuHistoryList.asObservable();
 
   /** 메뉴 목록을 조회한다. */
-  listMenu(getMenuRequestDTO?: GetMenuRequestDTO): void {
-    this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...getMenuRequestDTO } })
+  listMenu(dto?: GetMenuRequestDTO): void {
+    this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...dto } })
     .subscribe((data) => {
       this.setMenuList(data);
     });
   }
 
   /** 권한별 메뉴 목록을 조회한다. */
-  listMenuByRole$(getMenuRequestDTO?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
-    return this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...getMenuRequestDTO } });
+  listMenuByRole$(dto?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
+    return this.http.get<MenuResponseDTO[]>('/common/menus', { params: { ...dto } });
   }
 
   /** 메뉴 관련 데이터를 설정한다. */
