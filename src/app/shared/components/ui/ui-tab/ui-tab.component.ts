@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { TabViewChangeEvent, TabViewModule } from 'primeng/tabview';
-import { Tab, UiTabChangeEvent } from '@app/shared/models';
+import { Tab, UiTabChangeEvent } from './ui-tab.model';
 
 @Component({
   standalone: true,

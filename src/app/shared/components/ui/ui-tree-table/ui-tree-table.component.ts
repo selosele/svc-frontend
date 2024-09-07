@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { TreeTable, TreeTableModule, TreeTableNodeExpandEvent, TreeTableNodeUnSelectEvent } from 'primeng/treetable';
 import { TreeNode, TreeTableNode } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
-import { Column } from '@app/shared/models';
 import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.component';
 import { UiTextComponent } from '../ui-text/ui-text.component';
+import { Column } from './ui-tree-table.model';
 
 @Component({
   standalone: true,

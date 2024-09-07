@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Table, TableModule, TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
-import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.component';
-import { Column } from '@app/shared/models';
 import { SortEvent } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
+import { UiTableButtonsComponent } from '../ui-table-buttons/ui-table-buttons.component';
+import { Column } from './ui-table.model';
 
 @Component({
   standalone: true,
