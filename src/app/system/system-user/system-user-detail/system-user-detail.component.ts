@@ -6,7 +6,7 @@ import { AuthService } from '@app/auth/auth.service';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
-import { isObjectEmpty, isNotObjectEmpty, isEmpty } from '@app/shared/utils';
+import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 
@@ -129,7 +129,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     if (changes.userDetail && this.userDetailForm) {
       this.useRemove = true;
       this.roles = this.authService.roleList.value;
-      this.defaultRoles = this.roles.filter(x => x.roleId === 'ROLE_EMPLOYEE').map(x => x.roleId);
+      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
 
       if (isObjectEmpty(changes.userDetail.currentValue)) {
         this.useRemove = false;
