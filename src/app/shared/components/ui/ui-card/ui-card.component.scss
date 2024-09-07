@@ -1,9 +1,19 @@
 .ui-card {
   display: block;
-  margin-bottom: 1.25rem;
 
-  .p-card .p-card-content {
-    padding: 0;
+  .p-card {
+    &.p-component {
+      box-shadow: none;
+    }
+
+    .p-card-body {
+      padding: 1rem;
+      background-color: var(--primary-50);
+    }
+    
+    .p-card-content {
+      padding: 0;
+    }
   }
 
   ul {
