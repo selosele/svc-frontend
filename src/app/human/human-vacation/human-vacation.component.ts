@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { UiCardComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiCardComponent, UiFlexBoxComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '../human.service';
@@ -16,6 +17,7 @@ import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.m
 @Component({
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
     ReactiveFormsModule,
     UiSkeletonComponent,
@@ -24,6 +26,8 @@ import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.m
     UiCheckboxGroupComponent,
     UiCheckboxComponent,
     UiCardComponent,
+    UiButtonComponent,
+    UiFlexBoxComponent,
     LayoutPageDescriptionComponent,
     HumanVacationListComponent,
   ],
@@ -55,6 +59,9 @@ export class HumanVacationComponent implements OnInit {
   /** 휴가 구분 코드 데이터 목록 */
   vacationTypeCodes: DropdownData[];
 
+  /** 휴가 계산에 포함할 휴가 구분 코드 목록 (기본 값) */
+  defaultVacationTypeCodes = ['01', '02', '03', '04', '05', '06', '12'];
+
   /** 휴가 테이블 타이틀 */
   get vacationTableTitle() {
     return this.humanService.vacationTableTitle.value;
@@ -71,8 +78,13 @@ export class HumanVacationComponent implements OnInit {
   }
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
-  get workHistoryListDataLoad(): boolean {
+  get workHistoryListDataLoad() {
     return this.humanService.workHistoryListDataLoad.value;
+  }
+
+  /** 재직 중인 회사인지 여부 */
+  get isNotQuit$() {
+    return this.humanService.isNotQuit$;
   }
 
   ngOnInit() {
@@ -83,18 +95,21 @@ export class HumanVacationComponent implements OnInit {
     this.user = this.authService.getAuthenticatedUser();
     this.humanService.setWorkHistoryId(parseInt(`${this.user.workHistoryId}`));
 
+    this.caculateVacationForm = this.fb.group({
+      vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
+    });
+
     if (!this.workHistoryListDataLoad) {
       this.listWorkHistory();
     }
-
-    this.caculateVacationForm = this.fb.group({
-      vacationTypeCode: [['01', '02', '03', '04', '05', '06', '12']], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
-    });
   }
 
   /** 근무이력 목록을 조회한다. */
   listWorkHistory(): void {
-    this.humanService.listWorkHistory(this.user.employeeId);
+    this.humanService.listWorkHistory({
+      ...this.caculateVacationForm.value,
+      employeeId: this.user.employeeId,
+    });
   }
 
   /** 탭을 클릭한다. */
@@ -106,7 +121,13 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가를 계산한다. */
   onSubmit(value): void {
+    this.listWorkHistory();
+  }
 
+  /** 휴가 계산 폼을 초기화한다. */
+  onReset(): void {
+    this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes);
+    this.listWorkHistory();
   }
 
 }

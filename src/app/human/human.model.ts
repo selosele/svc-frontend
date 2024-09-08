@@ -46,6 +46,23 @@ export class EmployeeResponseDTO {
 
 }
 
+/** 근무이력 조회 요청 DTO */
+export class GetWorkHistoryRequestDTO extends HttpRequestDTOBase {
+
+  /** 근무이력 ID */
+  workHistoryId?: number;
+
+  /** 직원 ID */
+  employeeId?: number;
+
+  /** 회사 ID */
+  companyId?: number;
+
+  /** 휴가 계산에 포함할 휴가 구분 코드 목록 */
+  vacationTypeCodes?: string[];
+
+}
+
 /** 근무이력 추가/수정 요청 DTO */
 export class SaveWorkHistoryRequestDTO extends HttpRequestDTOBase {
 
@@ -216,7 +233,7 @@ export interface VacationTabViewItem {
   /** key */
   key: number;
 
-  /** 리스트 */
+  /** 휴가 목록 */
   value: VacationResponseDTO[];
 
 }

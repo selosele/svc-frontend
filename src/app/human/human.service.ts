@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { dateUtil, isEmpty, isNotEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 import { HttpService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -52,6 +52,10 @@ export class HumanService {
   vacationTableTitle = new BehaviorSubject<string>(null);
   vacationTableTitle$ = this.vacationList.asObservable();
 
+  /** 재직 중인 회사인지 여부 */
+  isNotQuit = new BehaviorSubject<boolean>(true);
+  isNotQuit$ = this.isNotQuit.asObservable();
+
   /** 근무이력 ID 값을 설정한다. */
   setWorkHistoryId(value: number): void {
     this.workHistoryId.next(value);
@@ -84,8 +88,11 @@ export class HumanService {
   }
 
   /** 근무이력 목록을 조회한다. */
-  listWorkHistory(employeeId: number): void {
-    this.http.get<WorkHistoryResponseDTO[]>(`/human/employees/${employeeId}/companies`)
+  listWorkHistory(dto: GetWorkHistoryRequestDTO): void {
+    const { employeeId } = dto;
+    const params = this.httpService.createParams(dto);
+
+    this.http.get<WorkHistoryResponseDTO[]>(`/human/employees/${employeeId}/companies`, { params })
     .subscribe((data) => {
       this.workHistoryList.next(data);
       this.workHistoryTabList.next(data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
@@ -146,7 +153,8 @@ export class HumanService {
   /** 테이블 타이틀을 설정한다. */
   setVacationTableTitle(index: number): void {
     const { annualTypeCode, quitYmd } = this.workHistoryList.value[index];
-    if (isNotEmpty(quitYmd)) {
+    if (isNotBlank(quitYmd)) {
+      this.isNotQuit.next(false);
       this.vacationTableTitle.next('퇴사한 회사는 휴가계산을 제공하지 않습니다.');
       return;
     }
@@ -156,6 +164,7 @@ export class HumanService {
       return;
     }
 
+    this.isNotQuit.next(true);
     this.vacationTableTitle.next(this.calculateVacation(this.workHistoryList.value[index]));
   }
 

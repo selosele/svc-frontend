@@ -15,21 +15,35 @@
     [activeIndex]="activeIndex"
     (change)="onChange($event)"
   >
-    <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
-      <div class="input-box">
-        <ui-checkbox-group [label]="'휴가 계산에 포함할 휴가 선택'">
-          <ui-card>
-            @for (code of vacationTypeCodes; track $index) {
-              <ui-checkbox
-                [control]="caculateVacationForm.get('vacationTypeCode')"
-                [label]="code.label"
-                [value]="code.value"
+    <ng-container *ngIf="isNotQuit$ | async">
+      <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
+        <div class="input-box">
+          <ui-checkbox-group [label]="'휴가 계산에 포함할 휴가를 선택하세요.'">
+            <ui-flex-box [gap]="'1rem'" [alignItems]="'center'">
+              <ui-card style="flex: 1;">
+                @for (code of vacationTypeCodes; track $index) {
+                  <ui-checkbox
+                    [control]="caculateVacationForm.get('vacationTypeCodes')"
+                    [label]="code.label"
+                    [value]="code.value"
+                    (change)="onSubmit($event)"
+                  />
+                }
+              </ui-card>
+              
+              <ui-button
+                [size]="'large'"
+                [icon]="'pi-undo'"
+                [severity]="'secondary'"
+                [title]="'기본 값으로 복원'"
+                [text]="true"
+                (click)="onReset()"
               />
-            }
-          </ui-card>
-        </ui-checkbox-group>
-      </div>
-    </ui-form>
+            </ui-flex-box>
+          </ui-checkbox-group>
+        </div>
+      </ui-form>
+    </ng-container>
 
     <human-vacation-list
       [tableTitle]="vacationTableTitle"
