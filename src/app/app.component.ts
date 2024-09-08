@@ -54,10 +54,10 @@ export class AppComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
-          if (this.codeService.codeList.value.length === 0)
+          if (!this.codeService.codeListDataLoad.value)
             this.codeService.listCode();
           
-          if (this.authService.roleList.value.length === 0)
+          if (!this.authService.roleListDataLoad.value)
             this.authService.listRole();
           
           this.menuService.setData();

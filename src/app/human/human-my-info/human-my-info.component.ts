@@ -32,7 +32,7 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
     LayoutPageDescriptionComponent,
     HumanMyInfoCompanyDetailComponent
 ],
-  selector: 'modal-human-my-info',
+  selector: 'view-human-my-info',
   templateUrl: './human-my-info.component.html',
   styleUrl: './human-my-info.component.scss'
 })

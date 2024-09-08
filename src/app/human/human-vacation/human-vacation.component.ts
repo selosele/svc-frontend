@@ -88,7 +88,7 @@ export class HumanVacationComponent implements OnInit {
     }
 
     this.caculateVacationForm = this.fb.group({
-      vacationTypeCode: [['01', '02', '03', '04', '05', '06', '12']], // 휴가 계산에 포함할 휴가 구분 코드
+      vacationTypeCode: [['01', '02', '03', '04', '05', '06', '12']], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
   }
 
@@ -105,7 +105,7 @@ export class HumanVacationComponent implements OnInit {
   }
 
   /** 휴가를 계산한다. */
-  onSubmit(values): void {
+  onSubmit(value): void {
 
   }
 
