@@ -40,12 +40,12 @@ export class AppComponent implements OnInit {
   menuList$ = this.menuService.menuList$;
 
   /** 로그인 여부 */
-  get isLogined(): boolean {
+  get isLogined() {
     return this.authService.isLogined();
   }
 
   /** 현재 페이지가 메인 페이지인지 여부 */
-  get isIndexPage(): boolean {
+  get isIndexPage() {
     return this.router.url === '/index';
   }
 

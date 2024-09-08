@@ -38,7 +38,7 @@ export class SystemCodeComponent implements OnInit {
   }
 
   /** 코드 목록 데이터 로드 완료 여부 */
-  get codeListDataLoad(): boolean {
+  get codeListDataLoad() {
     return this.codeService.codeListDataLoad.value;
   }
 

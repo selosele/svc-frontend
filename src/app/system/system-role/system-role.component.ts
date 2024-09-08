@@ -33,7 +33,7 @@ export class SystemRoleComponent implements OnInit {
   }
 
   /** 권한 목록 데이터 로드 완료 여부 */
-  get roleListDataLoad(): boolean {
+  get roleListDataLoad() {
     return this.authService.roleListDataLoad.value;
   }
 

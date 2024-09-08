@@ -53,7 +53,7 @@ export class HumanMyInfoComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 직원 정보 데이터 로드 완료 여부 */
-  get employeeDataLoad(): boolean {
+  get employeeDataLoad() {
     return this.humanService.employeeDataLoad.value;
   }
 

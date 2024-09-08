@@ -38,7 +38,7 @@ export class ModalSearchCompanyComponent implements OnInit {
   }
 
   /** 회사 목록 데이터 로드 완료 여부 */
-  get companyListDataLoad(): boolean {
+  get companyListDataLoad() {
     return this.humanService.companyListDataLoad.value;
   }
 

@@ -71,7 +71,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   useRemove = true;
 
   /** 사용자 정보 존재 여부 */
-  get isUserNotEmpty(): boolean {
+  get isUserNotEmpty() {
     return isNotObjectEmpty(this.userDetail);
   }
 
