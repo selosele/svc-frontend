@@ -9,10 +9,18 @@ export class HttpService {
   createParams(data: any): HttpParams {
     if (isObjectEmpty(data)) return null;
 
-    let params = new HttpParams();
-    Object.keys(data).forEach(key => {
-      params = params.append(key, data[key]);
-    });
+    let params: HttpParams = new HttpParams();
+    for (const key of Object.keys(data)) {
+      if (data[key]) {
+        if (data[key] instanceof Array) {
+          data[key].forEach((item) => {
+            params = params.append(key.toString(), item);
+          });
+        } else {
+          params = params.append(key.toString(), data[key]);
+        }
+      }
+    }
     return params;
   }
 
