@@ -1,0 +1,44 @@
+<layout-page-description>
+  <ul>
+    <li>휴일을 조회/입력할 수 있습니다.</li>
+    <li>휴일관리 배치를 수동으로 돌릴 수 있습니다.</li>
+  </ul>
+</layout-page-description>
+
+@if (!holidayListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-table #table first
+      [useAdd]="false"
+      [useRemove]="false"
+      [cols]="cols"
+      [data]="holidayList"
+      [dataKey]="'ymd'"
+      [selection]="selection"
+      (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'휴일 추가'"
+        [outlined]="true"
+        (click)="addHoliday()"
+      />
+    </ui-table>
+  
+    <div second>
+      <system-holiday-detail
+        [holidayDetail]="holidayDetail"
+        (refresh)="listHoliday()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
+    </div>
+  </ui-splitter>
+}

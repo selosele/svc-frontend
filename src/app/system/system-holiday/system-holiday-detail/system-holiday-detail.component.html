@@ -1,0 +1,35 @@
+<ui-split-form
+  [form]="holidayDetailForm"
+  [useRemove]="useRemove"
+  (submit)="onSubmit($event)"
+  (remove)="onRemove($event)"
+  (close)="onClose()"
+>
+  <ui-content-title [text]="'휴일 정보'" />
+
+  <div class="input-box">
+    <ui-date-field
+      [control]="holidayDetailForm.get('ymd')"
+      [label]="'일자'"
+      [dateFormat]="'yymmdd'"
+    />
+
+    <ui-text-field
+      [control]="holidayDetailForm.get('holidayName')"
+      [label]="'휴일명'"
+    />
+
+    <ui-dropdown
+      [control]="holidayDetailForm.get('useYn')"
+      [label]="'사용 여부'"
+      [data]="useYns"
+    />
+  </div>
+
+  <div class="input-box">
+    <ui-textarea
+      [control]="holidayDetailForm.get('holidayContent')"
+      [label]="'휴일 내용'"
+    />
+  </div>
+</ui-split-form>
