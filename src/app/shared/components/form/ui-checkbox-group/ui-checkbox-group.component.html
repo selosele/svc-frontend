@@ -1,5 +1,7 @@
-<span class="custom-label">
-  {{ label }}
-</span>
+@if (label) {
+  <span class="custom-label">
+    {{ label }}
+  </span>
+}
 
 <ng-content></ng-content>
