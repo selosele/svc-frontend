@@ -1,6 +1,8 @@
 <ui-split-form
   [form]="holidayDetailForm"
+  [useRemove]="useRemove"
   (submit)="onSubmit($event)"
+  (remove)="onRemove($event)"
   (close)="onClose()"
 >
   <ui-content-title [text]="'휴일 정보'" />
