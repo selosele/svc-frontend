@@ -10,6 +10,9 @@ export const menuGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   menuService.menuList$.subscribe((menuList) => {
     if (menuList.length === 0) return;
 
+    /** 메뉴 관련 데이터를 설정한다. */
+    menuService.setData();
+
     /** 현재 메뉴 ID */
     const menuId = parseInt(route.queryParams['menuId']);
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { StoreService } from '@app/shared/services';
 import { HolidayResponseDTO, SaveHolidayRequestDTO } from './holiday.model';
 
 @Injectable({ providedIn: 'root' })
@@ -8,15 +9,16 @@ export class HolidayService {
 
   constructor(
     private http: HttpClient,
+    private store: StoreService,
   ) {}
 
   /** 휴일 목록 */
-  holidayList = new BehaviorSubject<HolidayResponseDTO[]>([]);
-  holidayList$ = this.holidayList.asObservable();
+  holidayList = this.store.createState<HolidayResponseDTO[]>('holidayList', []);
+  holidayList$ = this.holidayList?.asObservable();
 
   /** 휴일 목록 데이터 로드 완료 여부 */
-  holidayListDataLoad = new BehaviorSubject<boolean>(false);
-  holidayListDataLoad$ = this.holidayListDataLoad.asObservable();
+  holidayListDataLoad = this.store.createState<boolean>('holidayListDataLoad', false);
+  holidayListDataLoad$ = this.holidayListDataLoad?.asObservable();
 
   /** 휴일 목록을 조회한다. */
   listHoliday(): void {

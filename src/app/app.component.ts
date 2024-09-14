@@ -5,8 +5,8 @@ import { filter } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
-import { UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
+import { UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 
 @Component({
   standalone: true,
@@ -54,13 +54,17 @@ export class AppComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
-          if (!this.codeService.codeListDataLoad.value)
-            this.codeService.listCode$();
+          if (!this.codeService.codeListDataLoad.value) {
+            this.codeService.listCode$().subscribe();
+          }
           
-          if (!this.authService.roleListDataLoad.value)
+          if (!this.authService.roleListDataLoad.value) {
             this.authService.listRole();
+          }
           
-          this.menuService.setData();
+          if (!this.menuService.menuListDataLoad.value) {
+            this.menuService.listMenu();
+          }
         }
       });
   }

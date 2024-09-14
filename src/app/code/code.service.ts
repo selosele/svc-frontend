@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CodeResponseDTO, CodeTree, SaveCodeRequestDTO } from './code.model';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { StoreService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
 
   constructor(
     private http: HttpClient,
+    private store: StoreService,
   ) {}
 
   /** 코드 목록 */
-  codeList = new BehaviorSubject<CodeResponseDTO[]>([]);
-  codeList$ = this.codeList.asObservable();
+  codeList = this.store.createState<CodeResponseDTO[]>('codeList', []);
+  codeList$ = this.codeList?.asObservable();
 
   /** 코드 목록 데이터 로드 완료 여부 */
-  codeListDataLoad = new BehaviorSubject<boolean>(false);
-  codeListDataLoad$ = this.codeListDataLoad.asObservable();
+  codeListDataLoad = this.store.createState<boolean>('codeListDataLoad', false);
+  codeListDataLoad$ = this.codeListDataLoad?.asObservable();
 
   /** 코드 트리 목록 */
-  codeTree = new BehaviorSubject<CodeTree[]>([]);
-  codeTree$ = this.codeTree.asObservable();
+  codeTree = this.store.createState<CodeTree[]>('codeTree', []);
+  codeTree$ = this.codeTree?.asObservable();
 
   /** 코드 목록 데이터를 설정한다. */
   setCodeList(codeList: CodeResponseDTO[]): void {

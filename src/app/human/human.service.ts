@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
-import { HttpService } from '@app/shared/services';
+import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO } from './human.model';
 
@@ -12,49 +12,50 @@ export class HumanService {
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
+    private store: StoreService,
   ) {}
 
   /** 직원 정보 */
-  employee = new BehaviorSubject<EmployeeResponseDTO>(null);
-  employee$ = this.employee.asObservable();
+  employee = this.store.createState<EmployeeResponseDTO>('employee', null);
+  employee$ = this.employee?.asObservable();
 
   /** 직원 정보 데이터 로드 완료 여부 */
-  employeeDataLoad = new BehaviorSubject<boolean>(false);
-  employeeDataLoad$ = this.employeeDataLoad.asObservable();
+  employeeDataLoad = this.store.createState<boolean>('employeeDataLoad', false);
+  employeeDataLoad$ = this.employeeDataLoad?.asObservable();
 
   /** 회사 목록 */
-  companyList = new BehaviorSubject<CompanyResponseDTO[]>(null);
-  companyList$ = this.companyList.asObservable();
+  companyList = this.store.createState<CompanyResponseDTO[]>('companyList', []);
+  companyList$ = this.companyList?.asObservable();
 
   /** 회사 목록 데이터 로드 완료 여부 */
-  companyListDataLoad = new BehaviorSubject<boolean>(false);
-  companyListDataLoad$ = this.companyListDataLoad.asObservable();
+  companyListDataLoad = this.store.createState<boolean>('companyListDataLoad', false);
+  companyListDataLoad$ = this.companyListDataLoad?.asObservable();
 
   /** 근무이력 목록 */
-  workHistoryList = new BehaviorSubject<WorkHistoryResponseDTO[]>(null);
-  workHistoryList$ = this.workHistoryList.asObservable();
-  workHistoryTabList = new BehaviorSubject<Tab[]>(null);
-  workHistoryTabList$ = this.workHistoryTabList.asObservable();
+  workHistoryList = this.store.createState<WorkHistoryResponseDTO[]>('workHistoryList', []);
+  workHistoryList$ = this.workHistoryList?.asObservable();
+  workHistoryTabList = this.store.createState<Tab[]>('workHistoryTabList', []);
+  workHistoryTabList$ = this.workHistoryTabList?.asObservable();
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
-  workHistoryListDataLoad = new BehaviorSubject<boolean>(false);
-  workHistoryListDataLoad$ = this.workHistoryListDataLoad.asObservable();
+  workHistoryListDataLoad = this.store.createState<boolean>('workHistoryListDataLoad', false);
+  workHistoryListDataLoad$ = this.workHistoryListDataLoad?.asObservable();
 
   /** 근무이력 ID */
-  workHistoryId = new BehaviorSubject<number>(null);
-  workHistoryId$ = this.workHistoryId.asObservable();
+  workHistoryId = this.store.createState<number>('workHistoryId', null);
+  workHistoryId$ = this.workHistoryId?.asObservable();
 
   /** 휴가 목록 */
-  vacationList = new BehaviorSubject<VacationTabViewItem[]>(null);
-  vacationList$ = this.vacationList.asObservable();
+  vacationList = this.store.createState<VacationTabViewItem[]>('vacationList', []);
+  vacationList$ = this.vacationList?.asObservable();
 
   /** 휴가 탭별 테이블 타이틀 */
-  vacationTableTitle = new BehaviorSubject<string>(null);
-  vacationTableTitle$ = this.vacationList.asObservable();
+  vacationTableTitle = this.store.createState<string>('vacationTableTitle', null);
+  vacationTableTitle$ = this.vacationList?.asObservable();
 
   /** 재직 중인 회사인지 여부 */
-  isNotQuit = new BehaviorSubject<boolean>(true);
-  isNotQuit$ = this.isNotQuit.asObservable();
+  isNotQuit = this.store.createState<boolean>('isNotQuit', true);
+  isNotQuit$ = this.isNotQuit?.asObservable();
 
   /** 근무이력 ID 값을 설정한다. */
   setWorkHistoryId(value: number): void {

@@ -2,37 +2,38 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpService, StoreService, UiDialogService } from '@app/shared/services';
 import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO } from './auth.model';
-import { HttpService, UiDialogService } from '@app/shared/services';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   constructor(
+    private router: Router,
+    private store: StoreService,
     private http: HttpClient,
     private httpService: HttpService,
-    private router: Router,
     private jwtHelper: JwtHelperService,
     private dialogService: UiDialogService,
   ) {}
 
   /** 사용자 목록 */
-  userList = new BehaviorSubject<UserResponseDTO[]>([]);
-  userList$ = this.userList.asObservable();
+  userList = this.store.createState<UserResponseDTO[]>('userList', []);
+  userList$ = this.userList?.asObservable();
 
   /** 사용자 목록 데이터 로드 완료 여부 */
-  userListDataLoad = new BehaviorSubject<boolean>(false);
-  userListDataLoad$ = this.userListDataLoad.asObservable();
+  userListDataLoad = this.store.createState<boolean>('userListDataLoad', false);
+  userListDataLoad$ = this.userListDataLoad?.asObservable();
 
   /** 권한 목록 */
-  roleList = new BehaviorSubject<RoleResponseDTO[]>([]);
-  roleList$ = this.roleList.asObservable();
+  roleList = this.store.createState<RoleResponseDTO[]>('roleList', []);
+  roleList$ = this.roleList?.asObservable();
 
   /** 권한 목록 데이터 로드 완료 여부 */
-  roleListDataLoad = new BehaviorSubject<boolean>(false);
-  roleListDataLoad$ = this.roleListDataLoad.asObservable();
+  roleListDataLoad = this.store.createState<boolean>('roleListDataLoad', false);
+  roleListDataLoad$ = this.roleListDataLoad?.asObservable();
 
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
@@ -70,7 +71,8 @@ export class AuthService {
         }
       });
 
-      window.location.href = LOGIN_PAGE_PATH; // 로그아웃 시에는 페이지 새로고침을 발생시켜서 모든 state를 초기화한다.
+      this.store.resetAll(); // 모든 상태를 초기화
+      this.router.navigateByUrl(LOGIN_PAGE_PATH);
     });
   }
 

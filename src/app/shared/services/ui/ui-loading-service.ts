@@ -1,24 +1,30 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { StoreService } from '../store/store.service';
 
 @Injectable({ providedIn: 'root' })
 export class UiLoadingService {
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  loading$ = this.loadingSubject.asObservable();
+  constructor(
+    private store: StoreService,
+  ) {}
+
+  private loading = this.store.createState<boolean>('loading', false);
+  loading$ = this.loading.asObservable();
 
   /** 로딩 실행 중 여부를 반환한다. */
   isLoading(): boolean {
-    return this.loadingSubject.value;
+    return this.loading?.value;
   }
 
   /** 로딩 상태를 설정한다. */
   setLoading(loading: boolean): void {
 
-    // setTimeout을 추가해서 ExpressionChangedAfterItHasBeenCheckedError 방지
-    // modal 표출 후 http 요청을 전송할 때 발생하는 오류
+    /**
+     * setTimeout을 추가해서 ExpressionChangedAfterItHasBeenCheckedError 방지
+     * modal 표출 후 HTTP 요청을 전송할 때 발생하는 오류
+     */
     setTimeout(() => {
-      this.loadingSubject.next(loading);
+      this.loading.next(loading);
     }, 0);
   }
 
