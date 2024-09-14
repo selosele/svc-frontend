@@ -43,9 +43,4 @@ export class HolidayService {
     return this.http.put<HolidayResponseDTO>(`/common/holidays/${ymd}`, dto);
   }
 
-  /** 휴일을 삭제한다. */
-  removeHoliday$(ymd: string): Observable<void> {
-    return this.http.delete<void>(`/common/holidays/${ymd}`);
-  }
-
 }

@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         if (this.authService.isLogined()) {
           if (!this.codeService.codeListDataLoad.value)
-            this.codeService.listCode();
+            this.codeService.listCode$();
           
           if (!this.authService.roleListDataLoad.value)
             this.authService.listRole();

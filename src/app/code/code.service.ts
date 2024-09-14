@@ -31,7 +31,7 @@ export class CodeService {
   }
 
   /** 코드 목록을 조회한다. */
-  listCode(): Observable<CodeResponseDTO[]> {
+  listCode$(): Observable<CodeResponseDTO[]> {
     return this.http.get<CodeResponseDTO[]>('/common/codes').pipe(
       tap((data) => {
         this.setCodeList(data);

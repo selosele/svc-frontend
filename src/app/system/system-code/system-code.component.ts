@@ -65,7 +65,7 @@ export class SystemCodeComponent implements OnInit {
 
   /** 코드 목록을 조회한다. */
   listCode(): void {
-    this.codeService.listCode().subscribe((data) => {
+    this.codeService.listCode$().subscribe((data) => {
 
     });
   }

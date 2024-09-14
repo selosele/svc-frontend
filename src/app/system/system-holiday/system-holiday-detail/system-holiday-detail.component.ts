@@ -40,9 +40,6 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
   /** 사용 여부 데이터 목록 */
   useYns = this.codeService.createYnCodeData();
 
-  /** 삭제 버튼 사용 여부 */
-  useRemove = true;
-
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
 
@@ -69,10 +66,7 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.holidayDetail && this.holidayDetailForm) {
-      this.useRemove = true;
-      
       if (isObjectEmpty(changes.holidayDetail.currentValue)) {
-        this.useRemove = false;
         this.holidayDetailForm.reset();
         return;
       }
@@ -104,18 +98,6 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
         this.refresh.emit();
       });
     }
-  }
-
-  /** 휴일을 삭제한다. */
-  async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('휴일을 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
-    if (!confirm) return;
-
-    this.holidayService.removeHoliday$(this.holidayDetail.ymd)
-    .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
-      this.remove.emit();
-    });
   }
 
   /** 닫기 버튼을 클릭한다. */

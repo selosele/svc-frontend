@@ -11,7 +11,7 @@ export const codeResolver: ResolveFn<CodeResolverModel[]> = (route: ActivatedRou
 
   // 코드 목록을 불러오지 않았을 때만 HTTP 요청을 통해 목록을 가져온다.
   if (!codeService.codeListDataLoad.value) {
-    return codeService.listCode().pipe(
+    return codeService.listCode$().pipe(
       map(() => {
         return codeKeys.reduce((acc, upCodeId) => {
           acc[upCodeId] = codeService.createCodeData(upCodeId);
