@@ -41,6 +41,9 @@ export class EmployeeResponseDTO {
   /** 휴대폰번호 */
   phoneNo?: string;
 
+  /** 사용자 마지막 로그인 일시 */
+  lastLoginDt?: string;
+
   /** 근무이력 정보 */
   workHistories?: WorkHistoryResponseDTO[];
 

@@ -3,6 +3,7 @@
     <li>내 정보를 조회/입력할 수 있습니다.</li>
     <li>비밀번호 변경 또는 직원 정보 변경 시, 자동으로 로그아웃 처리되며 재로그인이 필요합니다.</li>
     <li>권한 조회/변경은 시스템 관리자에게 문의하시기 바랍니다.</li>
+    <li>마지막 로그인 일시: {{ employeeForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</li>
   </ul>
 </layout-page-description>
 
