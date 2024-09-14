@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { UiButtonComponent, UiCardComponent, UiFlexBoxComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '../human.service';
@@ -27,7 +27,6 @@ import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.m
     UiCheckboxComponent,
     UiCardComponent,
     UiButtonComponent,
-    UiFlexBoxComponent,
     LayoutPageDescriptionComponent,
     HumanVacationListComponent,
   ],

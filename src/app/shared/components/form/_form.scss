@@ -39,9 +39,17 @@ textarea {
     flex: 1;
   }
 
+  button {
+    height: 100%;
+  }
+
   .search-button {
     display: inline-flex;
     align-items: end;
+
+    button {
+      height: auto;
+    }
   }
 }
 
