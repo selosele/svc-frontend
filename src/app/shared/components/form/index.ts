@@ -2,6 +2,7 @@ export * from './form-field/form-field.component';
 export * from './form-validator/form-validator.component';
 export * from './ui-checkbox/ui-checkbox.component';
 export * from './ui-checkbox-group/ui-checkbox-group.component';
+export * from './ui-checkbox-list/ui-checkbox-list.component';
 export * from './ui-company-field/ui-company-field.component';
 export * from './ui-date-field/ui-date-field.component';
 export * from './ui-dropdown/ui-dropdown.component';
