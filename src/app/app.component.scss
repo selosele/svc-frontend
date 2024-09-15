@@ -2,7 +2,7 @@
   padding: 6.375rem 1.5rem 2rem 1.5rem;
 
   &__inner {
-    min-height: 100vh;
+    min-height: calc(100vh - 6.375rem);
     padding: 1.25rem 1.25rem 2rem 1.25rem;
     border-radius: 0.625rem;
     background-color: var(--surface-0);
