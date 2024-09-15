@@ -125,11 +125,26 @@ export class AuthenticatedUser {
   /** 사용자 계정 */
   userAccount?: string;
 
-  /** 직원 ID */
-  employeeId?: number;
-
   /** 근무이력 ID */
   workHistoryId?: number;
+
+  /** 회사명 */
+  companyName?: string;
+
+  /** 직위 코드 */
+  rankCode?: string;
+
+  /** 직위 코드명 */
+  rankCodeName?: string;
+
+  /** 직책 코드 */
+  jobTitleCode?: string;
+
+  /** 직책 코드명 */
+  jobTitleCodeName?: string;
+
+  /** 직원 ID */
+  employeeId?: number;
 
   /** 직원명 */
   employeeName?: string;
