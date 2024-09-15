@@ -97,7 +97,7 @@ export class HumanVacationComponent implements OnInit {
     });
 
     this.user = this.authService.getAuthenticatedUser();
-    this.humanService.setWorkHistoryId(parseInt(`${this.user.workHistoryId}`));
+    this.humanService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
@@ -112,7 +112,7 @@ export class HumanVacationComponent implements OnInit {
   listWorkHistory(): void {
     this.humanService.listWorkHistory({
       ...this.caculateVacationForm.value,
-      employeeId: this.user.employeeId,
+      employeeId: this.user?.employeeId,
     });
   }
 
