@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
+import { MenuItem } from 'primeng/api';
 import { HttpService, StoreService } from '@app/shared/services';
 import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/menu/menu.model';
 
@@ -39,6 +40,9 @@ export class MenuService {
   /** 메뉴접속이력 목록 */
   private menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
 
+  /** breadcrumb 목록 */
+  private breadcrumbList = this.store.create<MenuItem[]>('breadcrumbList', []);
+
   /** 메뉴 목록을 조회한다. */
   listMenu(dto?: GetMenuRequestDTO): void {
     const params = this.httpService.createParams(dto);
@@ -69,6 +73,30 @@ export class MenuService {
       this.setCurrentMenuId(menuId);
       this.setCurrentUpMenuId(menuList.find(x => x.menuId === menuId)?.upMenuId);
       this.setCurrentPageTitle(menuList.find(x => x.menuId === menuId)?.menuName);
+    });
+  }
+
+  /** breadcrumb 데이터를 설정한다. */
+  setBreadcrumb(): void {
+    combineLatest([
+      this.route.queryParams,
+      this.store.select<MenuResponseDTO[]>('menuList').asObservable()
+    ])
+    .subscribe(([queryParams, menuList]) => {
+      if (menuList.length === 0) return;
+
+      const menuId = Number(queryParams?.menuId);
+      const upMenuId = menuList.find(x => x.menuId === menuId)?.upMenuId;
+
+      this.store.update('breadcrumbList', [
+        
+        // 홈
+        { icon: 'pi pi-home', route: '/index' },
+        // 상위 메뉴
+        ...menuList.filter(x => x.menuId === upMenuId).map(x => ({ label: x.menuName })),
+        // 현재 메뉴
+        ...menuList.filter(x => x.menuId === menuId).map(x => ({ label: x.menuName, route: x.menuUrl, queryParams: { menuId: x.menuId } })),
+      ]);
     });
   }
 

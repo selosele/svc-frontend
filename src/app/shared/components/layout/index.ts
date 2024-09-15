@@ -1,3 +1,4 @@
+export * from './layout-breadcrumb/layout-breadcrumb.component';
 export * from './layout-header/layout-header.component';
 export * from './layout-menu/layout-menu.component';
 export * from './layout-menu-history/layout-menu-history.component';
