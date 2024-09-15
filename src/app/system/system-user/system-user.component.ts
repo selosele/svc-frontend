@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { AuthService } from '@app/auth/auth.service';
+import { StoreService } from '@app/shared/services';
 import { UserResponseDTO } from '@app/auth/auth.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
 
@@ -22,6 +23,7 @@ import { SystemUserDetailComponent } from './system-user-detail/system-user-deta
 export class SystemUserComponent implements OnInit {
 
   constructor(
+    private store: StoreService,
     private authService: AuthService,
   ) {}
 
@@ -33,12 +35,12 @@ export class SystemUserComponent implements OnInit {
 
   /** 사용자 목록 */
   get userList(): UserResponseDTO[] {
-    return this.authService.userList?.value;
+    return this.store.select<UserResponseDTO[]>('userList').value;
   }
 
   /** 사용자 목록 데이터 로드 완료 여부 */
   get userListDataLoad() {
-    return this.authService.userListDataLoad?.value;
+    return this.store.select<boolean>('userListDataLoad').value;
   }
 
   /** 사용자 정보 */

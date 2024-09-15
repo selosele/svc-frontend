@@ -6,6 +6,7 @@ import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComp
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
 import { isEmpty } from '@app/shared/utils';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -25,12 +26,13 @@ export class HumanVacationListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private store: StoreService,
     private humanService: HumanService,
   ) {}
 
   /** 근무이력 ID */
-  get workHistoryId(): number {
-    return this.humanService.workHistoryId.value;
+  get workHistoryId() {
+    return this.store.select<number>('workHistoryId').value;
   }
 
   /** 테이블 타이틀 */
@@ -78,7 +80,7 @@ export class HumanVacationListComponent implements OnInit {
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.humanService.workHistoryId$.subscribe((data) => {
+    this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
 
       const currentItem = this.vacationList.find(x => x.key === data);

@@ -4,6 +4,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableCom
 import { SystemHolidayDetailComponent } from './system-holiday-detail/system-holiday-detail.component';
 import { HolidayResponseDTO } from '@app/holiday/holiday.model';
 import { HolidayService } from '@app/holiday/holiday.service';
+import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -22,6 +23,7 @@ import { HolidayService } from '@app/holiday/holiday.service';
 export class SystemHolidayComponent {
 
   constructor(
+    private store: StoreService,
     private holidayService: HolidayService,
   ) {}
 
@@ -33,12 +35,12 @@ export class SystemHolidayComponent {
 
   /** 휴일 목록 */
   get holidayList(): HolidayResponseDTO[] {
-    return this.holidayService.holidayList.value;
+    return this.store.select<HolidayResponseDTO[]>('holidayList').value;
   }
 
   /** 휴일 목록 데이터 로드 완료 여부 */
   get holidayListDataLoad() {
-    return this.holidayService.holidayListDataLoad.value;
+    return this.store.select<boolean>('holidayListDataLoad').value;
   }
 
   /** 휴일 정보 */

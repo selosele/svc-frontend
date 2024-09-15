@@ -5,12 +5,12 @@ import { BehaviorSubject } from 'rxjs';
 export class StoreService {
 
   /** 상태 저장 공간 */
-  private store: Map<string, { subject: BehaviorSubject<any>, initialValue: any }> = new Map();
+  private store: Map<string, { subject: BehaviorSubject<any>, initialValue?: any }> = new Map();
 
   /** 상태를 생성해서 반환한다(상태가 존재하면 기존 상태를 반환). */
   create<T>(key: string, defaultValue: T): BehaviorSubject<T> {
     if (this.store.has(key)) {
-      return this.store.get(key).subject;
+      return this.select(key);
     }
     const subject = new BehaviorSubject<T>(defaultValue);
     this.store.set(key, { subject, initialValue: defaultValue });
@@ -22,6 +22,11 @@ export class StoreService {
     return this.store.get(key).subject as BehaviorSubject<T>;
   }
 
+  /** 상태를 변경한다. */
+  update<T>(key: string, value: T): void {
+    this.select<T>(key).next(value as T);
+  }
+
   /** 모든 상태를 초기 값으로 초기화한다. */
   resetAll(): void {
     this.store.forEach((value, key) => {
@@ -30,7 +35,7 @@ export class StoreService {
   }
 
   /** 모든 상태를 삭제한다. */
-  clearAll(): void {
+  deleteAll(): void {
     this.store.clear();
   }
 

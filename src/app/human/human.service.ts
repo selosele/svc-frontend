@@ -16,58 +16,49 @@ export class HumanService {
   ) {}
 
   /** 직원 정보 */
-  employee = this.store.create<EmployeeResponseDTO>('employee', null);
-  employee$ = this.employee?.asObservable();
+  private employee = this.store.create<EmployeeResponseDTO>('employee', null);
 
   /** 직원 정보 데이터 로드 완료 여부 */
-  employeeDataLoad = this.store.create<boolean>('employeeDataLoad', false);
-  employeeDataLoad$ = this.employeeDataLoad?.asObservable();
+  private employeeDataLoad = this.store.create<boolean>('employeeDataLoad', false);
 
   /** 회사 목록 */
-  companyList = this.store.create<CompanyResponseDTO[]>('companyList', []);
-  companyList$ = this.companyList?.asObservable();
+  private companyList = this.store.create<CompanyResponseDTO[]>('companyList', []);
 
   /** 회사 목록 데이터 로드 완료 여부 */
-  companyListDataLoad = this.store.create<boolean>('companyListDataLoad', false);
-  companyListDataLoad$ = this.companyListDataLoad?.asObservable();
+  private companyListDataLoad = this.store.create<boolean>('companyListDataLoad', false);
 
   /** 근무이력 목록 */
-  workHistoryList = this.store.create<WorkHistoryResponseDTO[]>('workHistoryList', []);
-  workHistoryList$ = this.workHistoryList?.asObservable();
-  workHistoryTabList = this.store.create<Tab[]>('workHistoryTabList', []);
-  workHistoryTabList$ = this.workHistoryTabList?.asObservable();
+  private workHistoryList = this.store.create<WorkHistoryResponseDTO[]>('workHistoryList', []);
+
+  /** 근무이력 탭 목록 */
+  private workHistoryTabList = this.store.create<Tab[]>('workHistoryTabList', []);
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
-  workHistoryListDataLoad = this.store.create<boolean>('workHistoryListDataLoad', false);
-  workHistoryListDataLoad$ = this.workHistoryListDataLoad?.asObservable();
+  private workHistoryListDataLoad = this.store.create<boolean>('workHistoryListDataLoad', false);
 
   /** 근무이력 ID */
-  workHistoryId = this.store.create<number>('workHistoryId', null);
-  workHistoryId$ = this.workHistoryId?.asObservable();
+  private workHistoryId = this.store.create<number>('workHistoryId', null);
 
   /** 휴가 목록 */
-  vacationList = this.store.create<VacationTabViewItem[]>('vacationList', []);
-  vacationList$ = this.vacationList?.asObservable();
+  private vacationList = this.store.create<VacationTabViewItem[]>('vacationList', []);
 
   /** 휴가 탭별 테이블 타이틀 */
-  vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
-  vacationTableTitle$ = this.vacationList?.asObservable();
+  private vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
 
   /** 재직 중인 회사인지 여부 */
-  isNotQuit = this.store.create<boolean>('isNotQuit', true);
-  isNotQuit$ = this.isNotQuit?.asObservable();
+  private isNotQuit = this.store.create<boolean>('isNotQuit', true);
 
   /** 근무이력 ID 값을 설정한다. */
   setWorkHistoryId(value: number): void {
-    this.workHistoryId.next(value);
+    this.store.update<number>('workHistoryId', value);
   }
 
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
     this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`)
     .subscribe((data) => {
-      this.employee.next(data);
-      this.employeeDataLoad.next(true);
+      this.store.update<EmployeeResponseDTO>('employee', data);
+      this.store.update<boolean>('employeeDataLoad', true);
     });
   }
 
@@ -83,8 +74,8 @@ export class HumanService {
 
     this.http.get<CompanyResponseDTO[]>('/human/companies', { params })
     .subscribe((data) => {
-      this.companyList.next(data);
-      this.companyListDataLoad.next(true);
+      this.store.update<CompanyResponseDTO[]>('companyList', data);
+      this.store.update<boolean>('companyListDataLoad', true);
     });
   }
 
@@ -95,9 +86,9 @@ export class HumanService {
 
     this.http.get<WorkHistoryResponseDTO[]>(`/human/employees/${employeeId}/companies`, { params })
     .subscribe((data) => {
-      this.workHistoryList.next(data);
-      this.workHistoryTabList.next(data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
-      this.workHistoryListDataLoad.next(true);
+      this.store.update<WorkHistoryResponseDTO[]>('workHistoryList', data);
+      this.store.update<Tab[]>('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
+      this.store.update<boolean>('workHistoryListDataLoad', true);
       this.setVacationTableTitle(0);
     });
   }
@@ -153,20 +144,23 @@ export class HumanService {
 
   /** 테이블 타이틀을 설정한다. */
   setVacationTableTitle(index: number): void {
-    const { annualTypeCode, quitYmd } = this.workHistoryList.value[index];
+    const { annualTypeCode, quitYmd } = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
     if (isNotBlank(quitYmd)) {
-      this.isNotQuit.next(false);
-      this.vacationTableTitle.next('퇴사한 회사는 휴가계산을 제공하지 않습니다.');
+      this.store.update<boolean>('isNotQuit', false);
+      this.store.update<string>('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
       return;
     }
 
     if (isEmpty(annualTypeCode) || annualTypeCode === '99') {
-      this.vacationTableTitle.next('근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
+      this.store.update<string>('vacationTableTitle', '근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
       return;
     }
 
-    this.isNotQuit.next(true);
-    this.vacationTableTitle.next(this.calculateVacation(this.workHistoryList.value[index]));
+    this.store.update('isNotQuit', true);
+    this.store.update(
+      'vacationTableTitle',
+      this.calculateVacation(this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index])
+    );
   }
 
   /** 잔여 휴가를 계산해서 반환한다. */

@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MenuService } from '@app/menu/menu.service';
+import { StoreService } from '@app/shared/services';
+import { MenuTree } from '@app/menu/menu.model';
 
 @Component({
   standalone: true,
@@ -17,17 +18,17 @@ import { MenuService } from '@app/menu/menu.service';
 export class LayoutMenuComponent {
 
   constructor(
-    private menuService: MenuService,
+    private store: StoreService,
   ) {}
 
   /** 메뉴 트리 목록 */
-  menuTree$? = this.menuService.menuTree$;
+  menuTree$? = this.store.select<MenuTree[]>('menuTree').asObservable();
 
   /** 현재 메뉴 ID */
-  currentMenuId$? = this.menuService.currentMenuId$;
+  currentMenuId$? = this.store.select<number>('currentMenuId').asObservable();
 
   /** 현재 상위 메뉴 ID */
-  currentUpMenuId$? = this.menuService.currentUpMenuId$;
+  currentUpMenuId$? = this.store.select<number>('currentUpMenuId').asObservable();
 
   /** 마우스를 올려서 활성화된 메뉴 ID */
   activeMenuId?: number;

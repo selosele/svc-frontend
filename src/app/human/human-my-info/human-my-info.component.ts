@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
-import { UiMessageService } from '@app/shared/services';
+import { StoreService, UiMessageService } from '@app/shared/services';
 import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
@@ -16,7 +17,6 @@ import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detail/human-my-info-company-detail.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
-import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -43,6 +43,7 @@ export class HumanMyInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private store: StoreService,
     private messageService: UiMessageService,
     private authService: AuthService,
     private humanService: HumanService,
@@ -56,12 +57,13 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 직원 정보 데이터 로드 완료 여부 */
   get employeeDataLoad() {
-    return this.humanService.employeeDataLoad.value;
+    return this.store.select<boolean>('employeeDataLoad').value;
   }
 
   /** 근무이력 목록 */
   get workHistoryList(): WorkHistoryResponseDTO[] {
-    return this.humanService.employee.value.workHistories;
+    const employee = this.store.select<EmployeeResponseDTO>('employee').value;
+    return employee.workHistories;
   }
   
   /** 인증된 사용자 정보 */
@@ -113,7 +115,7 @@ export class HumanMyInfoComponent implements OnInit {
     this.user = this.authService.getAuthenticatedUser();
     this.initForm();
 
-    if (isEmpty(this.humanService.employee.value)) {
+    if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value)) {
       this.getEmployee();
     }
     this.setMyInfoForm();
@@ -237,7 +239,7 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 직원 정보 폼을 설정한다. */
   private setMyInfoForm(): void {
-    this.humanService.employee$.subscribe((data) => {
+    this.store.select<EmployeeResponseDTO>('employee').asObservable().subscribe((data) => {
       this.setMyInfoFormData(data);
     });
   }

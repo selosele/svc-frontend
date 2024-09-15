@@ -8,6 +8,7 @@ import { UiFormComponent } from '../../ui-form/ui-form.component';
 import { UiTextFieldComponent } from '../../ui-text-field/ui-text-field.component';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '../../../ui';
 import { LayoutPageDescriptionComponent } from '../../../layout';
+import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -28,23 +29,24 @@ export class ModalSearchCompanyComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private humanService: HumanService,
+    private store: StoreService,
     private dialogRef: DynamicDialogRef,
+    private humanService: HumanService,
   ) {}
 
   /** 회사 목록 */
   get companyList(): CompanyResponseDTO[] {
-    return this.humanService.companyList.value;
+    return this.store.select<CompanyResponseDTO[]>('companyList').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 */
   get companyListDataLoad() {
-    return this.humanService.companyListDataLoad.value;
+    return this.store.select<boolean>('companyListDataLoad').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 값을 설정한다. */
   set companyListDataLoad(value: boolean) {
-    this.humanService.companyListDataLoad.next(value);
+    this.store.update<boolean>('companyListDataLoad', value);
   }
 
   /** 회사 검색 폼 */

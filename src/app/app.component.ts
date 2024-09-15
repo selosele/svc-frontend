@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
+import { StoreService } from './shared/services';
 import { AuthService } from './auth/auth.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
 import { LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
 import { UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
+import { MenuResponseDTO } from './menu/menu.model';
 
 @Component({
   standalone: true,
@@ -28,16 +30,17 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private store: StoreService,
     private authService: AuthService,
     private codeService: CodeService,
     private menuService: MenuService,
   ) {}
 
   /** 페이지 타이틀 */
-  currentPageTitle$ = this.menuService.currentPageTitle$;
+  currentPageTitle$ = this.store.select<string>('currentPageTitle').asObservable();
 
   /** 메뉴 목록 */
-  menuList$ = this.menuService.menuList$;
+  menuList$ = this.store.select<MenuResponseDTO[]>('menuList').asObservable();
 
   /** 로그인 여부 */
   get isLogined() {
@@ -54,15 +57,15 @@ export class AppComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
-          if (!this.codeService.codeListDataLoad.value) {
+          if (!this.store.select<boolean>('codeListDataLoad').value) {
             this.codeService.listCode$().subscribe();
           }
           
-          if (!this.authService.roleListDataLoad.value) {
+          if (!this.store.select<boolean>('roleListDataLoad').value) {
             this.authService.listRole();
           }
           
-          if (!this.menuService.menuListDataLoad.value) {
+          if (!this.store.select<boolean>('menuListDataLoad').value) {
             this.menuService.listMenu();
           }
         }

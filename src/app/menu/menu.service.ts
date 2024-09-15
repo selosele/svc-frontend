@@ -20,31 +20,24 @@ export class MenuService {
 
   /** 메뉴 목록 */
   private menuList = this.store.create<MenuResponseDTO[]>('menuList', []);
-  menuList$ = this.menuList?.asObservable();
 
   /** 메뉴 목록 데이터 로드 완료 여부 */
-  menuListDataLoad = this.store.create<boolean>('menuListDataLoad', false);
-  menuListDataLoad$ = this.menuListDataLoad?.asObservable();
+  private menuListDataLoad = this.store.create<boolean>('menuListDataLoad', false);
 
   /** 메뉴 트리 목록 */
   private menuTree = this.store.create<MenuTree[]>('menuTree', []);
-  menuTree$ = this.menuTree?.asObservable();
 
   /** 현재 메뉴 ID */
   private currentMenuId = this.store.create<number>('currentMenuId', null);
-  currentMenuId$ = this.currentMenuId?.asObservable();
 
   /** 현재 상위 메뉴 ID */
   private currentUpMenuId = this.store.create<number>('currentUpMenuId', null);
-  currentUpMenuId$ = this.currentUpMenuId?.asObservable();
 
   /** 현재 페이지 타이틀 */
   private currentPageTitle = this.store.create<string>('currentPageTitle', null);
-  currentPageTitle$ = this.currentPageTitle?.asObservable();
 
   /** 메뉴접속이력 목록 */
-  menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
-  menuHistoryList$ = this.menuHistoryList?.asObservable();
+  private menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
 
   /** 메뉴 목록을 조회한다. */
   listMenu(dto?: GetMenuRequestDTO): void {
@@ -64,7 +57,11 @@ export class MenuService {
 
   /** 메뉴 관련 데이터를 설정한다. */
   setData(): void {
-    combineLatest([this.route.queryParams, this.menuList$]).subscribe(([queryParams, menuList]) => {
+    combineLatest([
+      this.route.queryParams,
+      this.store.select<MenuResponseDTO[]>('menuList').asObservable()
+    ])
+    .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
 
       const menuId = Number(queryParams?.menuId);
@@ -78,31 +75,31 @@ export class MenuService {
   /** 메뉴 목록 데이터를 설정한다. */
   setMenuList(menuList: MenuResponseDTO[]): void {
     const menuTree = this.createMenuTree(menuList);
-    this.menuTree.next(menuTree);
-    this.menuList.next(menuList);
-    this.menuListDataLoad.next(true);
+    this.store.update<MenuTree[]>('menuTree', menuTree);
+    this.store.update<MenuResponseDTO[]>('menuList', menuList);
+    this.store.update<boolean>('menuListDataLoad', true);
   }
 
   /** 현재 메뉴 ID 데이터를 설정한다. */
   setCurrentMenuId(currentMenuId: number): void {
-    this.currentMenuId.next(currentMenuId);
+    this.store.update<number>('currentMenuId', currentMenuId);
   }
 
   /** 현재 상위 메뉴 ID 데이터를 설정한다. */
   setCurrentUpMenuId(currentUpMenuId: number): void {
-    this.currentUpMenuId.next(currentUpMenuId);
+    this.store.update<number>('currentUpMenuId', currentUpMenuId);
   }
 
   /** 현재 페이지 타이틀 데이터를 설정한다. */
   setCurrentPageTitle(currentPageTitle: string): void {
-    this.currentPageTitle.next(currentPageTitle);
+    this.store.update<string>('currentPageTitle', currentPageTitle);
   }
 
   /** 메뉴접속이력 목록 데이터를 설정한다. */
   setMenuHistoryList(list: MenuResponseDTO[]): void {
-    this.currentMenuId$.subscribe((menuId) => {
+    this.store.select<number>('currentMenuId').asObservable().subscribe((menuId) => {
       list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
-      this.menuHistoryList.next(list);
+      this.store.update<MenuResponseDTO[]>('menuHistoryList', list);
       window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
     });
   }

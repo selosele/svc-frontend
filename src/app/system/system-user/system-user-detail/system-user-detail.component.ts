@@ -7,7 +7,7 @@ import { AuthService } from '@app/auth/auth.service';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
-import { UiMessageService } from '@app/shared/services';
+import { StoreService, UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
@@ -35,6 +35,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private store: StoreService,
     private messageService: UiMessageService,
     private authService: AuthService,
     private codeService: CodeService,
@@ -136,7 +137,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userDetail && this.userDetailForm) {
       this.useRemove = true;
-      this.roles = this.authService.roleList.value;
+      this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
 
       if (isObjectEmpty(changes.userDetail.currentValue)) {

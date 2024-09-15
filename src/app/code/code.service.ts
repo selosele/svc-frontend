@@ -14,22 +14,19 @@ export class CodeService {
   ) {}
 
   /** 코드 목록 */
-  codeList = this.store.create<CodeResponseDTO[]>('codeList', []);
-  codeList$ = this.codeList?.asObservable();
+  private codeList = this.store.create<CodeResponseDTO[]>('codeList', []);
 
   /** 코드 목록 데이터 로드 완료 여부 */
-  codeListDataLoad = this.store.create<boolean>('codeListDataLoad', false);
-  codeListDataLoad$ = this.codeListDataLoad?.asObservable();
+  private codeListDataLoad = this.store.create<boolean>('codeListDataLoad', false);
 
   /** 코드 트리 목록 */
-  codeTree = this.store.create<CodeTree[]>('codeTree', []);
-  codeTree$ = this.codeTree?.asObservable();
+  private codeTree = this.store.create<CodeTree[]>('codeTree', []);
 
   /** 코드 목록 데이터를 설정한다. */
   setCodeList(codeList: CodeResponseDTO[]): void {
     const codeTree = this.createCodeTree(codeList);
-    this.codeTree.next(codeTree);
-    this.codeList.next(codeList);
+    this.store.update<CodeTree[]>('codeTree', codeTree);
+    this.store.update<CodeResponseDTO[]>('codeList', codeList);
   }
 
   /** 코드 목록을 조회한다. */
@@ -37,7 +34,7 @@ export class CodeService {
     return this.http.get<CodeResponseDTO[]>('/common/codes').pipe(
       tap((data) => {
         this.setCodeList(data);
-        this.codeListDataLoad.next(true);
+        this.store.update<boolean>('codeListDataLoad', true);
       })
     );
   }
@@ -65,7 +62,7 @@ export class CodeService {
 
   /** 상위 코드 ID로 코드 데이터 목록을 만들어서 반환한다. */
   createCodeData(upCodeId: string): DropdownData[] {
-    return this.codeList.value
+    return this.store.select<CodeResponseDTO[]>('codeList').value
       .filter(x => x.upCodeId === upCodeId)
       .map(x => ({ label: x.codeName, value: x.codeValue })
     );

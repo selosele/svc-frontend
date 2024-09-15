@@ -6,6 +6,7 @@ import { UiButtonComponent } from '../../ui';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuItem } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
+import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 export class LayoutMenuHistoryComponent implements OnInit {
 
   constructor(
+    private store: StoreService,
     private route: ActivatedRoute,
     private menuService: MenuService,
   ) {}
@@ -35,7 +37,7 @@ export class LayoutMenuHistoryComponent implements OnInit {
 
   /** 메뉴접속이력 목록 */
   get menuHistoryList() {
-    return this.menuService.menuHistoryList.value;
+    return this.store.select<MenuResponseDTO[]>('menuHistoryList').value;
   }
 
   /** 메뉴 ID */

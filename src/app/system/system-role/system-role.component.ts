@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { AuthService } from '@app/auth/auth.service';
 import { RoleResponseDTO } from '@app/auth/auth.model';
-import { UiDialogService } from '@app/shared/services';
+import { StoreService, UiDialogService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
 import { SystemRoleDetailComponent } from './system-role-detail/system-role-detail.component';
-import { combineLatest } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -22,6 +22,7 @@ import { combineLatest } from 'rxjs';
 export class SystemRoleComponent implements OnInit {
 
   constructor(
+    private store: StoreService,
     private dialogService: UiDialogService,
     private authService: AuthService,
     private menuService: MenuService,
@@ -29,12 +30,12 @@ export class SystemRoleComponent implements OnInit {
 
   /** 권한 목록 */
   get roleList(): RoleResponseDTO[] {
-    return this.authService.roleList.value;
+    return this.store.select<RoleResponseDTO[]>('roleList').value;
   }
 
   /** 권한 목록 데이터 로드 완료 여부 */
   get roleListDataLoad() {
-    return this.authService.roleListDataLoad.value;
+    return this.store.select<boolean>('roleListDataLoad').value;
   }
 
   /** 테이블 선택된 행 */

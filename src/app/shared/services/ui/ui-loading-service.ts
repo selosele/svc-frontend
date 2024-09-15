@@ -8,8 +8,8 @@ export class UiLoadingService {
     private store: StoreService,
   ) {}
 
+  /** 로딩 상태 */
   private loading = this.store.create<boolean>('loading', false);
-  loading$ = this.loading.asObservable();
 
   /** 로딩 실행 중 여부를 반환한다. */
   isLoading(): boolean {
@@ -24,7 +24,7 @@ export class UiLoadingService {
      * modal 표출 후 HTTP 요청을 전송할 때 발생하는 오류
      */
     setTimeout(() => {
-      this.loading.next(loading);
+      this.store.update<boolean>('loading', loading);
     }, 0);
   }
 

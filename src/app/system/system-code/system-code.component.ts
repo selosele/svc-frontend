@@ -5,6 +5,7 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CodeService } from '../../code/code.service';
 import { CodeTree } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
+import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ import { SystemCodeDetailComponent } from './system-code-detail/system-code-deta
 export class SystemCodeComponent implements OnInit {
 
   constructor(
+    private store: StoreService,
     private codeService: CodeService,
   ) {}
 
@@ -34,12 +36,12 @@ export class SystemCodeComponent implements OnInit {
 
   /** 코드 트리 목록 */
   get codeTree(): CodeTree[] {
-    return this.codeService.codeTree.value;
+    return this.store.select<CodeTree[]>('codeTree').value;
   }
 
   /** 코드 목록 데이터 로드 완료 여부 */
   get codeListDataLoad() {
-    return this.codeService.codeListDataLoad.value;
+    return this.store.select<boolean>('codeListDataLoad').value;
   }
 
   /** 코드 정보 */

@@ -13,6 +13,8 @@ import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.com
 import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-checkbox.component';
 import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbox-group/ui-checkbox-group.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
+import { WorkHistoryResponseDTO } from '../human.model';
+import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -39,6 +41,7 @@ export class HumanVacationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private store: StoreService,
     private authService: AuthService,
     private humanService: HumanService,
   ) {}
@@ -63,27 +66,27 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 테이블 타이틀 */
   get vacationTableTitle() {
-    return this.humanService.vacationTableTitle.value;
+    return this.store.select<string>('vacationTableTitle').value;
   }
 
   /** 근무이력 탭 목록 */
   get workHistoryTabList() {
-    return this.humanService.workHistoryTabList.value;
+    return this.store.select<Tab[]>('workHistoryTabList').value;
   }
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.humanService.workHistoryList.value;
+    return this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value;
   }
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
   get workHistoryListDataLoad() {
-    return this.humanService.workHistoryListDataLoad.value;
+    return this.store.select<boolean>('workHistoryListDataLoad').value;
   }
 
   /** 재직 중인 회사인지 여부 */
   get isNotQuit$() {
-    return this.humanService.isNotQuit$;
+    return this.store.select<boolean>('isNotQuit').asObservable();
   }
 
   ngOnInit() {

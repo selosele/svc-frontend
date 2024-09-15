@@ -21,9 +21,8 @@ export class UiSplitterComponent {
   /** 가로/세로 */
   @Input() layout: 'horizontal' | 'vertical' = 'horizontal';
 
-  private splitterActiveSubject = new BehaviorSubject<boolean>(false);
-
   /** splitter 활성화 여부 */
+  private splitterActiveSubject = new BehaviorSubject<boolean>(false);
   isSplitterActive$ = this.splitterActiveSubject.asObservable();
 
   /** splitter 스타일 */

@@ -13,19 +13,17 @@ export class HolidayService {
   ) {}
 
   /** 휴일 목록 */
-  holidayList = this.store.create<HolidayResponseDTO[]>('holidayList', []);
-  holidayList$ = this.holidayList?.asObservable();
+  private holidayList = this.store.create<HolidayResponseDTO[]>('holidayList', []);
 
   /** 휴일 목록 데이터 로드 완료 여부 */
-  holidayListDataLoad = this.store.create<boolean>('holidayListDataLoad', false);
-  holidayListDataLoad$ = this.holidayListDataLoad?.asObservable();
+  private holidayListDataLoad = this.store.create<boolean>('holidayListDataLoad', false);
 
   /** 휴일 목록을 조회한다. */
   listHoliday(): void {
     this.http.get<HolidayResponseDTO[]>('/common/holidays')
     .subscribe((data) => {
-      this.holidayList.next(data);
-      this.holidayListDataLoad.next(true);
+      this.store.update<HolidayResponseDTO[]>('holidayList', data);
+      this.store.update<boolean>('holidayListDataLoad', true);
     });
   }
 

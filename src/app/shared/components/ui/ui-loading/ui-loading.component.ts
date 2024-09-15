@@ -2,7 +2,7 @@ import { Component, HostListener, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { UiLoadingService } from '@app/shared/services';
+import { StoreService, UiLoadingService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -19,11 +19,12 @@ import { UiLoadingService } from '@app/shared/services';
 export class UiLoadingComponent {
 
   constructor(
+    private store: StoreService,
     private loadingService: UiLoadingService,
   ) {}
 
   /** 로딩 상태 */
-  loading$ = this.loadingService.loading$;
+  loading$ = this.store.select<boolean>('loading').asObservable();
 
   /** 취소 버튼을 클릭해서 로딩을 종료한다. */
   onClick(): void {

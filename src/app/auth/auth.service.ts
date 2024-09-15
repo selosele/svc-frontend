@@ -20,20 +20,16 @@ export class AuthService {
   ) {}
 
   /** 사용자 목록 */
-  userList = this.store.create<UserResponseDTO[]>('userList', []);
-  userList$ = this.userList?.asObservable();
+  private userList = this.store.create<UserResponseDTO[]>('userList', []);
 
   /** 사용자 목록 데이터 로드 완료 여부 */
-  userListDataLoad = this.store.create<boolean>('userListDataLoad', false);
-  userListDataLoad$ = this.userListDataLoad?.asObservable();
+  private userListDataLoad = this.store.create<boolean>('userListDataLoad', false);
 
   /** 권한 목록 */
-  roleList = this.store.create<RoleResponseDTO[]>('roleList', []);
-  roleList$ = this.roleList?.asObservable();
+  private roleList = this.store.create<RoleResponseDTO[]>('roleList', []);
 
   /** 권한 목록 데이터 로드 완료 여부 */
-  roleListDataLoad = this.store.create<boolean>('roleListDataLoad', false);
-  roleListDataLoad$ = this.roleListDataLoad?.asObservable();
+  private roleListDataLoad = this.store.create<boolean>('roleListDataLoad', false);
 
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
@@ -80,8 +76,8 @@ export class AuthService {
   listUser(): void {
     this.http.get<UserResponseDTO[]>('/common/auth/users')
     .subscribe((data) => {
-      this.userList.next(data);
-      this.userListDataLoad.next(true);
+      this.store.update<UserResponseDTO[]>('userList', data);
+      this.store.update<boolean>('userListDataLoad', true);
     });
   }
 
@@ -122,17 +118,17 @@ export class AuthService {
   listRole(): void {
     this.http.get<RoleResponseDTO[]>('/common/auth/roles')
     .subscribe((data) => {
-      this.roleList.next(data);
-      this.roleListDataLoad.next(true);
+      this.store.update<RoleResponseDTO[]>('roleList', data);
+      this.store.update<boolean>('roleListDataLoad', true);
     });
   }
 
   /** 로그인 여부를 반환한다. */
   isLogined(): boolean {
     const accessToken = this.getAccessToken();
-    if (isNotBlank(accessToken) && this.isTokenValid(accessToken))
+    if (isNotBlank(accessToken) && this.isTokenValid(accessToken)) {
       return true;
-
+    }
     return false;
   }
 
