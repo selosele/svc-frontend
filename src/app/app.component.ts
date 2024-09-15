@@ -6,9 +6,8 @@ import { StoreService } from './shared/services';
 import { AuthService } from './auth/auth.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
-import { LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
+import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
 import { UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
-import { MenuResponseDTO } from './menu/menu.model';
 
 @Component({
   standalone: true,
@@ -21,6 +20,7 @@ import { MenuResponseDTO } from './menu/menu.model';
     UiAlertComponent,
     LayoutHeaderComponent,
     LayoutMenuHistoryComponent,
+    LayoutBreadcrumbComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,9 +38,6 @@ export class AppComponent implements OnInit {
 
   /** 페이지 타이틀 */
   currentPageTitle$ = this.store.select<string>('currentPageTitle').asObservable();
-
-  /** 메뉴 목록 */
-  menuList$ = this.store.select<MenuResponseDTO[]>('menuList').asObservable();
 
   /** 로그인 여부 */
   get isLogined() {
