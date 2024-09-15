@@ -20,19 +20,19 @@ export class AuthService {
   ) {}
 
   /** 사용자 목록 */
-  userList = this.store.createState<UserResponseDTO[]>('userList', []);
+  userList = this.store.create<UserResponseDTO[]>('userList', []);
   userList$ = this.userList?.asObservable();
 
   /** 사용자 목록 데이터 로드 완료 여부 */
-  userListDataLoad = this.store.createState<boolean>('userListDataLoad', false);
+  userListDataLoad = this.store.create<boolean>('userListDataLoad', false);
   userListDataLoad$ = this.userListDataLoad?.asObservable();
 
   /** 권한 목록 */
-  roleList = this.store.createState<RoleResponseDTO[]>('roleList', []);
+  roleList = this.store.create<RoleResponseDTO[]>('roleList', []);
   roleList$ = this.roleList?.asObservable();
 
   /** 권한 목록 데이터 로드 완료 여부 */
-  roleListDataLoad = this.store.createState<boolean>('roleListDataLoad', false);
+  roleListDataLoad = this.store.create<boolean>('roleListDataLoad', false);
   roleListDataLoad$ = this.roleListDataLoad?.asObservable();
 
   /** 로그인을 한다. */

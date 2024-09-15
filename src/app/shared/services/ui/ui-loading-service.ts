@@ -8,7 +8,7 @@ export class UiLoadingService {
     private store: StoreService,
   ) {}
 
-  private loading = this.store.createState<boolean>('loading', false);
+  private loading = this.store.create<boolean>('loading', false);
   loading$ = this.loading.asObservable();
 
   /** 로딩 실행 중 여부를 반환한다. */

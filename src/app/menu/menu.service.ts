@@ -19,31 +19,31 @@ export class MenuService {
   readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
 
   /** 메뉴 목록 */
-  private menuList = this.store.createState<MenuResponseDTO[]>('menuList', []);
+  private menuList = this.store.create<MenuResponseDTO[]>('menuList', []);
   menuList$ = this.menuList?.asObservable();
 
   /** 메뉴 목록 데이터 로드 완료 여부 */
-  menuListDataLoad = this.store.createState<boolean>('menuListDataLoad', false);
+  menuListDataLoad = this.store.create<boolean>('menuListDataLoad', false);
   menuListDataLoad$ = this.menuListDataLoad?.asObservable();
 
   /** 메뉴 트리 목록 */
-  private menuTree = this.store.createState<MenuTree[]>('menuTree', []);
+  private menuTree = this.store.create<MenuTree[]>('menuTree', []);
   menuTree$ = this.menuTree?.asObservable();
 
   /** 현재 메뉴 ID */
-  private currentMenuId = this.store.createState<number>('currentMenuId', null);
+  private currentMenuId = this.store.create<number>('currentMenuId', null);
   currentMenuId$ = this.currentMenuId?.asObservable();
 
   /** 현재 상위 메뉴 ID */
-  private currentUpMenuId = this.store.createState<number>('currentUpMenuId', null);
+  private currentUpMenuId = this.store.create<number>('currentUpMenuId', null);
   currentUpMenuId$ = this.currentUpMenuId?.asObservable();
 
   /** 현재 페이지 타이틀 */
-  private currentPageTitle = this.store.createState<string>('currentPageTitle', null);
+  private currentPageTitle = this.store.create<string>('currentPageTitle', null);
   currentPageTitle$ = this.currentPageTitle?.asObservable();
 
   /** 메뉴접속이력 목록 */
-  menuHistoryList = this.store.createState<MenuResponseDTO[]>('menuHistoryList', []);
+  menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
   menuHistoryList$ = this.menuHistoryList?.asObservable();
 
   /** 메뉴 목록을 조회한다. */

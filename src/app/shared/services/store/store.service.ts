@@ -8,7 +8,7 @@ export class StoreService {
   private store: Map<string, { subject: BehaviorSubject<any>, initialValue: any }> = new Map();
 
   /** 상태를 생성해서 반환한다(상태가 존재하면 기존 상태를 반환). */
-  createState<T>(key: string, defaultValue: T): BehaviorSubject<T> {
+  create<T>(key: string, defaultValue: T): BehaviorSubject<T> {
     if (this.store.has(key)) {
       return this.store.get(key).subject;
     }

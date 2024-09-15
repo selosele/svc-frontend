@@ -13,11 +13,11 @@ export class HolidayService {
   ) {}
 
   /** 휴일 목록 */
-  holidayList = this.store.createState<HolidayResponseDTO[]>('holidayList', []);
+  holidayList = this.store.create<HolidayResponseDTO[]>('holidayList', []);
   holidayList$ = this.holidayList?.asObservable();
 
   /** 휴일 목록 데이터 로드 완료 여부 */
-  holidayListDataLoad = this.store.createState<boolean>('holidayListDataLoad', false);
+  holidayListDataLoad = this.store.create<boolean>('holidayListDataLoad', false);
   holidayListDataLoad$ = this.holidayListDataLoad?.asObservable();
 
   /** 휴일 목록을 조회한다. */

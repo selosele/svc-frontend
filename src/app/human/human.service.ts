@@ -16,45 +16,45 @@ export class HumanService {
   ) {}
 
   /** 직원 정보 */
-  employee = this.store.createState<EmployeeResponseDTO>('employee', null);
+  employee = this.store.create<EmployeeResponseDTO>('employee', null);
   employee$ = this.employee?.asObservable();
 
   /** 직원 정보 데이터 로드 완료 여부 */
-  employeeDataLoad = this.store.createState<boolean>('employeeDataLoad', false);
+  employeeDataLoad = this.store.create<boolean>('employeeDataLoad', false);
   employeeDataLoad$ = this.employeeDataLoad?.asObservable();
 
   /** 회사 목록 */
-  companyList = this.store.createState<CompanyResponseDTO[]>('companyList', []);
+  companyList = this.store.create<CompanyResponseDTO[]>('companyList', []);
   companyList$ = this.companyList?.asObservable();
 
   /** 회사 목록 데이터 로드 완료 여부 */
-  companyListDataLoad = this.store.createState<boolean>('companyListDataLoad', false);
+  companyListDataLoad = this.store.create<boolean>('companyListDataLoad', false);
   companyListDataLoad$ = this.companyListDataLoad?.asObservable();
 
   /** 근무이력 목록 */
-  workHistoryList = this.store.createState<WorkHistoryResponseDTO[]>('workHistoryList', []);
+  workHistoryList = this.store.create<WorkHistoryResponseDTO[]>('workHistoryList', []);
   workHistoryList$ = this.workHistoryList?.asObservable();
-  workHistoryTabList = this.store.createState<Tab[]>('workHistoryTabList', []);
+  workHistoryTabList = this.store.create<Tab[]>('workHistoryTabList', []);
   workHistoryTabList$ = this.workHistoryTabList?.asObservable();
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
-  workHistoryListDataLoad = this.store.createState<boolean>('workHistoryListDataLoad', false);
+  workHistoryListDataLoad = this.store.create<boolean>('workHistoryListDataLoad', false);
   workHistoryListDataLoad$ = this.workHistoryListDataLoad?.asObservable();
 
   /** 근무이력 ID */
-  workHistoryId = this.store.createState<number>('workHistoryId', null);
+  workHistoryId = this.store.create<number>('workHistoryId', null);
   workHistoryId$ = this.workHistoryId?.asObservable();
 
   /** 휴가 목록 */
-  vacationList = this.store.createState<VacationTabViewItem[]>('vacationList', []);
+  vacationList = this.store.create<VacationTabViewItem[]>('vacationList', []);
   vacationList$ = this.vacationList?.asObservable();
 
   /** 휴가 탭별 테이블 타이틀 */
-  vacationTableTitle = this.store.createState<string>('vacationTableTitle', null);
+  vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
   vacationTableTitle$ = this.vacationList?.asObservable();
 
   /** 재직 중인 회사인지 여부 */
-  isNotQuit = this.store.createState<boolean>('isNotQuit', true);
+  isNotQuit = this.store.create<boolean>('isNotQuit', true);
   isNotQuit$ = this.isNotQuit?.asObservable();
 
   /** 근무이력 ID 값을 설정한다. */

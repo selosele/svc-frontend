@@ -14,15 +14,15 @@ export class CodeService {
   ) {}
 
   /** 코드 목록 */
-  codeList = this.store.createState<CodeResponseDTO[]>('codeList', []);
+  codeList = this.store.create<CodeResponseDTO[]>('codeList', []);
   codeList$ = this.codeList?.asObservable();
 
   /** 코드 목록 데이터 로드 완료 여부 */
-  codeListDataLoad = this.store.createState<boolean>('codeListDataLoad', false);
+  codeListDataLoad = this.store.create<boolean>('codeListDataLoad', false);
   codeListDataLoad$ = this.codeListDataLoad?.asObservable();
 
   /** 코드 트리 목록 */
-  codeTree = this.store.createState<CodeTree[]>('codeTree', []);
+  codeTree = this.store.create<CodeTree[]>('codeTree', []);
   codeTree$ = this.codeTree?.asObservable();
 
   /** 코드 목록 데이터를 설정한다. */
