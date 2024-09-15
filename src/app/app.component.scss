@@ -2,14 +2,14 @@
   padding: 6.375rem 1.5rem 2rem 1.5rem;
 
   &__inner {
-    min-height: calc(100vh - 6.375rem);
-    padding: 1.25rem 1.25rem 2rem 1.25rem;
+    /* min-height: calc(100vh - 6.375rem); */
+    padding: 1rem;
     border-radius: 0.625rem;
     background-color: var(--surface-0);
     box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
   }
 
   &__title {
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 1rem 0;
   }
 }
