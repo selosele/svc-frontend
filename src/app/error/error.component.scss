@@ -1,0 +1,28 @@
+.error {
+  position: relative;
+  padding: 2rem 1rem;
+  text-align: center;
+
+  &:before {
+    content: "404";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2rem;
+  }
+
+  .error__text {
+    margin: 1rem 0;
+  }
+
+  .error__title {
+    font-size: 2rem;
+  }
+}
