@@ -4,12 +4,11 @@
   <ui-skeleton />
 }
 @else {
-  <ui-splitter #splitter>
+  <ui-splitter [layout]="'vertical'" #splitter>
     <ui-table #table first
       [title]="tableTitle"
       [useAdd]="false"
       [useRemove]="false"
-      [useRowIndex]="true"
       [cols]="cols"
       [data]="vacationListCurrent"
       [dataKey]="'vacationId'"

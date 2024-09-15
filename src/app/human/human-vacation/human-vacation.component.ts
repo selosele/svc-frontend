@@ -12,6 +12,7 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-checkbox.component';
 import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbox-group/ui-checkbox-group.component';
+import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { WorkHistoryResponseDTO } from '../human.model';
 import { StoreService } from '@app/shared/services';
@@ -25,6 +26,7 @@ import { StoreService } from '@app/shared/services';
     UiSkeletonComponent,
     UiTabComponent,
     UiFormComponent,
+    UiCheckboxListComponent,
     UiCheckboxGroupComponent,
     UiCheckboxComponent,
     UiCardComponent,

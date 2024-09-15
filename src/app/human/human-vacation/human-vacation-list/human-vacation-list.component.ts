@@ -68,9 +68,8 @@ export class HumanVacationListComponent implements OnInit {
       valueGetter: (data: VacationResponseDTO) => this.vacationTypeCodes.find(x => x.value === data.vacationTypeCode)?.label
     },
     { field: 'vacationStartYmd', header: '휴가 시작일자' },
-    { field: 'vacationEndYmd',   header: '휴가 종료일자' },
-    { header: '휴가 사용일수',
-      valueGetter: (data: VacationResponseDTO) => `${data.vacationUseCount}일`
+    { header: '휴가 종료일자',
+      valueGetter: (data: VacationResponseDTO) => `${data.vacationEndYmd} (${data.vacationUseCount}일)`
     },
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
