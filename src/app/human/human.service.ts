@@ -164,7 +164,7 @@ export class HumanService {
   }
 
   /** 잔여 휴가를 계산해서 반환한다. */
-  calculateVacation(workHistory: WorkHistoryResponseDTO) {
+  calculateVacation(workHistory: WorkHistoryResponseDTO): string {
     const { annualTypeCode, joinYmd, vacationUseCount } = workHistory;
     switch (annualTypeCode) {
       // 입사일자 기준
