@@ -223,6 +223,7 @@ export class HumanMyInfoComponent implements OnInit {
       genderCode: ['', [FormValidator.required]],         // 성별 코드
       birthYmd: ['', [FormValidator.required]],           // 생년월일
       phoneNo: ['', [FormValidator.required]],            // 휴대폰번호
+      emailAddr: ['', [FormValidator.required]],          // 이메일주소
       lastLoginDt: [''],                                  // 사용자 마지막 로그인 일시
 
       // 근무이력 정보

@@ -18,6 +18,9 @@ export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
   /** 휴대폰번호 */
   phoneNo?: string;
 
+  /** 이메일주소 */
+  emailAddr?: string;
+
   /** 근무이력 정보 */
   workHistory?: SaveWorkHistoryRequestDTO;
 
@@ -40,6 +43,9 @@ export class EmployeeResponseDTO {
 
   /** 휴대폰번호 */
   phoneNo?: string;
+
+  /** 이메일주소 */
+  emailAddr?: string;
 
   /** 사용자 마지막 로그인 일시 */
   lastLoginDt?: string;

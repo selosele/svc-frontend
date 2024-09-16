@@ -96,9 +96,10 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
       // 사용자 정보
       userId: [''],                                           // 사용자 ID
-      userAccount: ['', [
+      userAccount: ['', [                                     // 사용자 계정
         FormValidator.required,
-        FormValidator.maxLength(20)                           // 사용자 계정
+        FormValidator.minLength(3),
+        FormValidator.maxLength(20),
       ]],
       userPassword: ['', [                                    // 사용자 비밀번호
         FormValidator.required,
@@ -118,6 +119,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         genderCode: ['', [FormValidator.required]],           // 성별 코드
         birthYmd: ['', [FormValidator.required]],             // 생년월일
         phoneNo: ['', [FormValidator.required]],              // 휴대폰번호
+        emailAddr: ['', [FormValidator.required]],            // 이메일주소
 
         // 회사 정보
         workHistory: this.fb.group({
