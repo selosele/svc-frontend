@@ -119,7 +119,10 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         genderCode: ['', [FormValidator.required]],           // 성별 코드
         birthYmd: ['', [FormValidator.required]],             // 생년월일
         phoneNo: ['', [FormValidator.required]],              // 휴대폰번호
-        emailAddr: ['', [FormValidator.required]],            // 이메일주소
+        emailAddr: ['', [                                     // 이메일주소
+          FormValidator.required,
+          FormValidator.email,
+        ]],
 
         // 회사 정보
         workHistory: this.fb.group({

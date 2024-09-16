@@ -8,4 +8,5 @@ export const validationMessage = {
   numeric: () => `숫자만 입력 가능합니다.`,
   between: (start: number, end: number) => `${start}에서 ${end} 사이여야 합니다.`,
   betweenLength: (start: number, end: number) => `${start}글자에서 ${end}글자 사이여야 합니다.`,
+  email: () => '유효한 형식의 이메일주소를 입력하세요.',
 };

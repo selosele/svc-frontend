@@ -97,6 +97,7 @@ export class FormFieldComponent implements OnInit {
         case 'numeric':       this.errorMessage = validationMessage.numeric(); break;
         case 'between':       this.errorMessage = validationMessage.between(errors[key].start, errors[key].end); break;
         case 'betweenLength': this.errorMessage = validationMessage.betweenLength(errors[key].start, errors[key].end); break;
+        case 'email':         this.errorMessage = validationMessage.email(); break;
         default :             this.errorMessage = ''; break;
       }
     });
