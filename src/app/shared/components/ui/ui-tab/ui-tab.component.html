@@ -1,5 +1,9 @@
 <div class="ui-tab">
-  <p-tabView [activeIndex]="activeIndex" (onChange)="onChange($event)">
+  <p-tabView
+    [activeIndex]="activeIndex"
+    (onChange)="onChange($event)"
+    (activeIndexChange)="onActiveIndexChange($event)"
+  >
     <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
       <div *ngIf="tab?.content">
         {{ tab.content }}
