@@ -51,7 +51,6 @@ export class SystemUserComponent implements OnInit {
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'userId',       header: '사용자 ID' },
     { field: 'userAccount',  header: '사용자 계정' },
     { field: 'employeeName', header: '직원명' },
     { field: 'companyName',  header: '회사명' },

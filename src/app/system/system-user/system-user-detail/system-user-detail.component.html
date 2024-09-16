@@ -7,7 +7,18 @@
 >
   <ui-content-title [text]="'사용자 정보'" />
 
+  @if (isUserNotEmpty) {
+    <p class="mt-2">마지막 로그인 일시: {{ userDetailForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</p>
+  }
+
   <div class="input-box">
+    @if (isUserNotEmpty) {
+      <ui-text-field
+        [control]="userDetailForm.get('userId')"
+        [label]="'사용자 ID'" [readonly]="true"
+      />
+    }
+
     <ui-text-field
       [control]="userDetailForm.get('userAccount')"
       [label]="'사용자 계정'" [readonly]="isUserNotEmpty" [placeholder]="'20자 이내'"
@@ -35,13 +46,6 @@
         </ui-button>
       }
     </ui-dropdown>
-
-    @if (isUserNotEmpty) {
-      <ui-text-field
-        [control]="userDetailForm.get('lastLoginDt')"
-        [label]="'마지막 로그인 일시'" [readonly]="true"
-      />
-    }
   </div>
 
   <div class="input-box">
