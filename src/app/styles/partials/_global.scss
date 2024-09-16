@@ -53,3 +53,11 @@ ol {
 p {
   margin: 0;
 }
+
+.link {
+  color: var(--primary-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
