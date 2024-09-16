@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { LoginRequestDTO } from '../auth.model';
+import { RouterModule } from '@angular/router';
 import { FormValidator, UiCheckboxComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
+import { UiDialogService } from '@app/shared/services';
 import { isNotBlank } from '@app/shared/utils';
+import { AuthService } from '../auth.service';
+import { LoginRequestDTO } from '../auth.model';
+import { FindMyInfoComponent } from '../find-my-info/find-my-info.component';
 
 @Component({
   standalone: true,
   imports: [
+    RouterModule,
     UiFormComponent,
     UiButtonComponent,
     UiTextFieldComponent,
@@ -22,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private dialogService: UiDialogService,
     private authService: AuthService,
   ) {}
 
@@ -54,6 +59,14 @@ export class LoginComponent implements OnInit {
   /** 로그인을 한다. */
   onSubmit(value: LoginRequestDTO): void {
     this.authService.login(value);
+  }
+
+  /** 아이디/비밀번호 찾기 Modal을 표출한다. */
+  showFindMyInfoModal(event: Event): void {
+    this.dialogService.open(FindMyInfoComponent, {
+      focusOnShow: false,
+      header: '아이디/비밀번호 찾기',
+    });
   }
   
 }

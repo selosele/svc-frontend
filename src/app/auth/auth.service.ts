@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { HttpService, StoreService, UiDialogService } from '@app/shared/services';
 import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO } from './auth.model';
+import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserAccountResponseDTO, FindUserAccountRequestDTO } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -121,6 +121,11 @@ export class AuthService {
       this.store.update<RoleResponseDTO[]>('roleList', data);
       this.store.update<boolean>('roleListDataLoad', true);
     });
+  }
+
+  /** 사용자의 아이디를 찾는다. */
+  getUserFindAccount(dto: FindUserAccountRequestDTO): Observable<number> {
+    return this.http.post<number>('/common/auth/find-user-account', dto);
   }
 
   /** 로그인 여부를 반환한다. */

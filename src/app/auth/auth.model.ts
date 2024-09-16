@@ -116,6 +116,34 @@ export class UserRoleResponseDTO {
     
 }
 
+/** 사용자 아이디 찾기 요청 DTO */
+export class FindUserAccountRequestDTO extends HttpRequestDTOBase {
+
+  /** 직원명 */
+  employeeName?: string;
+
+  /** 이메일주소 */
+  emailAddr?: string;
+    
+}
+
+/** 사용자 아이디 찾기 응답 DTO */
+export class FindUserAccountResponseDTO {
+
+  /** 사용자 계정 */
+  userAccount?: number;
+
+  /** 직원명 */
+  employeeName?: string;
+
+  /** 등록일시 */
+  createDt?: string;
+
+  /** 마지막 로그인 일시 */
+  lastLoginDt?: string;
+    
+}
+
 /** 인증된 사용자 정보 */
 export class AuthenticatedUser {
 
