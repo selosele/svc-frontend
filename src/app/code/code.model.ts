@@ -56,9 +56,6 @@ export class CodeResponseDTO {
   
   /** 사용 여부 */
   useYn?: string;
-  
-  /** 삭제 여부 */
-  deleteYn?: string;
     
 }
 
