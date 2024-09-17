@@ -1,63 +1,68 @@
-<ui-tab
-  [tabs]="tabList"
-  [activeIndex]="activeIndex"
-  (activeIndexChange)="onActiveIndexChange($event)"
->
-  @if (activeIndex === 0) {
-    <layout-page-description>
-      <ul>
-        <li>시스템에 등록된 실명 및 이메일주소를 입력하면 가입된 아이디가 이메일주소로 발송됩니다.</li>
-        <li>이메일주소가 등록되어 있지 않은 경우, 시스템관리자에게 문의하시기 바랍니다.</li>
-      </ul>
-    </layout-page-description>
+<div>
+  <ui-content-title [text]="'아이디 찾기'" />
 
-    <ui-content-title [text]="'아이디 찾기'" />
+  <layout-page-description>
+    <ul>
+      <li>시스템에 등록된 실명 및 이메일주소를 입력하면 가입된 아이디가 이메일주소로 발송됩니다.</li>
+      <li>이메일주소가 등록되어 있지 않은 경우, 시스템관리자에게 문의하시기 바랍니다.</li>
+    </ul>
+  </layout-page-description>
+  
+  <ui-form [form]="findAccountForm" (submit)="onSubmitFindAccount($event)">
+    <div class="input-box">
+      <ui-text-field
+        [control]="findAccountForm.get('employeeName')"
+        [label]="'실명'"
+      />
+  
+      <ui-text-field
+        [control]="findAccountForm.get('emailAddr')"
+        [label]="'이메일주소'"
+      />
+    </div>
 
-    <ui-form [form]="findAccountForm" (submit)="onSubmitFindAccount($event)">
-      <div class="input-box">
+    <div class="ui-form__buttons">
+      <ui-button [type]="'submit'">아이디 찾기</ui-button>
+    </div>
+  </ui-form>
+</div>
+
+<div class="mt-5">
+  <ui-content-title [text]="'비밀번호 찾기'" />
+  
+  <layout-page-description>
+    <ul>
+      <li>시스템에 등록된 아이디 및 이메일주소를 입력하면 본인인증 후, 1일간 유효한 임시 비밀번호가 이메일주소로 발송됩니다.</li>
+      <li>이메일주소가 등록되어 있지 않은 경우, 시스템관리자에게 문의하시기 바랍니다.</li>
+    </ul>
+  </layout-page-description>
+  
+  <ui-form [form]="findPasswordForm" (submit)="onSubmitFindPassword($event)">
+    <div class="input-box">
+      <ui-text-field
+        [control]="findPasswordForm.get('userAccount')"
+        [label]="'아이디'"
+      />
+  
+      <ui-text-field
+        [control]="findPasswordForm.get('emailAddr')"
+        [label]="'이메일주소'"
+      />
+
+      @if (userCertHistory !== null) {
         <ui-text-field
-          [control]="findAccountForm.get('employeeName')"
-          [label]="'실명'"
-        />
+          [control]="findPasswordForm.get('certCode')"
+          [label]="'인증코드'"
+        >
+          <ui-button button [type]="'button'" [severity]="'success'" (click)="countUserCertHistory()">
+            확인
+          </ui-button>
+        </ui-text-field>
+      }
+    </div>
 
-        <ui-text-field
-          [control]="findAccountForm.get('emailAddr')"
-          [label]="'이메일주소'"
-        />
-      </div>
-
-      <ui-button [block]="true" [type]="'submit'">아이디 찾기</ui-button>
-    </ui-form>
-  }
-  @else if (activeIndex === 1) {
-    <layout-page-description>
-      <ul>
-        <li>시스템에 등록된 아이디 및 이메일주소를 입력하면 본인인증 후, 초기화된 임의의 비밀번호가 이메일주소로 발송됩니다.</li>
-        <li>이메일주소가 등록되어 있지 않은 경우, 시스템관리자에게 문의하시기 바랍니다.</li>
-      </ul>
-    </layout-page-description>
-
-    <ui-content-title [text]="'비밀번호 찾기'" />
-    
-    <ui-form [form]="findPasswordForm" (submit)="onSubmitFindPassword($event)">
-      <div class="input-box">
-        <ui-text-field
-          [control]="findPasswordForm.get('userAccount')"
-          [label]="'아이디'"
-        />
-
-        <ui-text-field
-          [control]="findPasswordForm.get('employeeName')"
-          [label]="'실명'"
-        />
-
-        <ui-text-field
-          [control]="findPasswordForm.get('emailAddr')"
-          [label]="'이메일주소'"
-        />
-      </div>
-
-      <ui-button [block]="true" [type]="'submit'">비밀번호 찾기</ui-button>
-    </ui-form>
-  }
-</ui-tab>
+    <div class="ui-form__buttons">
+      <ui-button [type]="'submit'">비밀번호 찾기</ui-button>
+    </div>
+  </ui-form>
+</div>

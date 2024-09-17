@@ -130,6 +130,64 @@ export class FindUserInfoRequestDTO extends HttpRequestDTOBase {
     
 }
 
+/** 사용자 본인인증 내역 조회 요청 DTO */
+export class GetUserCertHistoryRequestDTO extends HttpRequestDTOBase {
+
+  /** 본인인증 내역 ID */
+  certHistoryId?: number;
+
+  /** 사용자 계정 */
+  userAccount?: string;
+
+  /** 휴대폰번호 */
+  phoneNo?: string;
+
+  /** 이메일주소 */
+  emailAddr?: string;
+
+  /** 본인인증 코드 */
+  certCode?: string;
+
+  /** 본인인증 방법 코드 */
+  certMethodCode?: string;
+
+  /** 본인인증 구분 코드 */
+  certTypeCode?: string;
+    
+}
+
+/** 사용자 본인인증 내역 응답 DTO */
+export class UserCertHistoryResponseDTO {
+
+  /** 직원명 */
+  certHistoryId?: number;
+
+  /** 사용자 계정 */
+  userAccount?: string;
+
+  /** 휴대폰번호 */
+  phoneNo?: string;
+
+  /** 이메일주소 */
+  emailAddr?: string;
+
+  /** 본인인증 코드 */
+  certCode?: string;
+
+  /** 본인인증 방법 코드 */
+  certMethodCode?: string;
+
+  /** 본인인증 구분 코드 */
+  certTypeCode?: string;
+
+  /** 유효시간(초) */
+  validTime?: string;
+
+  /** 등록일시 */
+  createDt?: string;
+    
+}
+
 /** 인증된 사용자 정보 */
 export class AuthenticatedUser {
 

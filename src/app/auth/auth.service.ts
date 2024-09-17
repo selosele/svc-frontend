@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
 import { HttpService, StoreService, UiDialogService } from '@app/shared/services';
 import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO } from './auth.model';
+import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO, GetUserCertHistoryRequestDTO } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -30,6 +29,9 @@ export class AuthService {
 
   /** 권한 목록 데이터 로드 완료 여부 */
   private roleListDataLoad = this.store.create<boolean>('roleListDataLoad', false);
+
+  /** 사용자 본인인증 내역 */
+  private userCertHistory = this.store.create<UserCertHistoryResponseDTO>('userCertHistory', null);
 
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
@@ -82,34 +84,34 @@ export class AuthService {
   }
 
   /** 권한별 사용자 목록을 조회한다. */
-  listUserByRole$(dto: GetUserRequestDTO): Observable<UserResponseDTO[]> {
+  listUserByRole$(dto: GetUserRequestDTO) {
     const params = this.httpService.createParams(dto);
     return this.http.get<UserResponseDTO[]>('/common/auth/users', { params });
   }
 
   /** 사용자를 조회한다. */
-  getUser$(userId: number): Observable<UserResponseDTO> {
+  getUser$(userId: number) {
     return this.http.get<UserResponseDTO>(`/common/auth/users/${userId}`);
   }
 
   /** 사용자를 추가한다. */
-  addUser$(dto: SaveUserRequestDTO): Observable<UserResponseDTO> {
+  addUser$(dto: SaveUserRequestDTO) {
     return this.http.post<UserResponseDTO>('/common/auth/users', dto);
   }
 
   /** 사용자를 수정한다. */
-  updateUser$(dto: SaveUserRequestDTO): Observable<UserResponseDTO> {
+  updateUser$(dto: SaveUserRequestDTO) {
     const { userId } = dto;
     return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, dto);
   }
 
   /** 사용자를 삭제한다. */
-  removeUser$(userId: number): Observable<void> {
+  removeUser$(userId: number) {
     return this.http.delete<void>(`/common/auth/users/${userId}`);
   }
 
   /** 사용자 비밀번호를 변경한다. */
-  updatePassword$(dto: UpdateUserPasswordRequestDTO): Observable<number> {
+  updatePassword$(dto: UpdateUserPasswordRequestDTO) {
     const { userId } = this.getAuthenticatedUser();
     return this.http.put<number>(`/common/auth/users/${userId}/password`, dto);
   }
@@ -124,13 +126,20 @@ export class AuthService {
   }
 
   /** 사용자의 아이디를 찾는다. */
-  findUserAccount(dto: FindUserInfoRequestDTO): Observable<boolean> {
+  findUserAccount$(dto: FindUserInfoRequestDTO) {
     return this.http.post<boolean>('/common/auth/find-user-account', dto);
   }
 
   /** 사용자의 비밀번호를 찾는다. */
-  findUserPassword(dto: FindUserInfoRequestDTO): Observable<boolean> {
-    return this.http.post<boolean>('/common/auth/find-user-password', dto);
+  findUserPassword$(dto: FindUserInfoRequestDTO) {
+    return this.http.post<UserCertHistoryResponseDTO>('/common/auth/find-user-password', dto);
+  }
+
+  /** 사용자 본인인증 내역이 존재하는지 확인한다. */
+  countUserCertHistory$(dto: GetUserCertHistoryRequestDTO) {
+    const { userAccount } = dto;
+    const params = this.httpService.createParams(dto);
+    return this.http.get<number>(`/common/auth/certs/${userAccount}`, { params });
   }
 
   /** 로그인 여부를 반환한다. */
