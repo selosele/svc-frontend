@@ -63,9 +63,8 @@ export class FindMyInfoComponent implements OnInit {
   /** 아이디 찾기 폼을 전송한다. */
   onSubmitFindAccount(value: FindUserAccountRequestDTO): void {
     this.authService.getUserFindAccount(value)
-    .subscribe((data) => {
-      if (data === 0) this.messageService.toastError('메일 발송에 실패했습니다. 다시 시도해주세요.');
-      if (data === 1) this.messageService.toastSuccess('메일 발송에 성공했습니다. 메일을 확인해주세요.');
+    .subscribe(() => {
+      this.messageService.toastSuccess('메일 발송에 성공했습니다. 메일을 확인해주세요.');
     });
   }
 
