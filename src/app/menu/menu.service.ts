@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { HttpService, StoreService } from '@app/shared/services';
 import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/menu/menu.model';
@@ -54,7 +54,7 @@ export class MenuService {
   }
 
   /** 권한별 메뉴 목록을 조회한다. */
-  listMenuByRole$(dto?: GetMenuRequestDTO): Observable<MenuResponseDTO[]> {
+  listMenuByRole$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);
     return this.http.get<MenuResponseDTO[]>('/common/menus', { params });
   }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
@@ -63,7 +62,7 @@ export class HumanService {
   }
 
   /** 직원을 수정한다. */
-  updateEmployee$(dto: SaveEmployeeRequestDTO): Observable<EmployeeResponseDTO> {
+  updateEmployee$(dto: SaveEmployeeRequestDTO) {
     const { employeeId } = dto;
     return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, dto);
   }
@@ -94,51 +93,51 @@ export class HumanService {
   }
 
   /** 근무이력을 조회한다. */
-  getWorkHistory$(employeeId: number, workHistoryId: number): Observable<WorkHistoryResponseDTO> {
+  getWorkHistory$(employeeId: number, workHistoryId: number) {
     return this.http.get<WorkHistoryResponseDTO>(`/human/employees/${employeeId}/companies/${workHistoryId}`);
   }
 
   /** 근무이력을 추가한다. */
-  addWorkHistory$(dto: SaveWorkHistoryRequestDTO): Observable<void> {
+  addWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId } = dto;
     return this.http.post<void>(`/human/employees/${employeeId}/companies`, dto);
   }
 
   /** 근무이력을 수정한다. */
-  updateWorkHistory$(dto: SaveWorkHistoryRequestDTO): Observable<void> {
+  updateWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId, workHistoryId } = dto;
     return this.http.put<void>(`/human/employees/${employeeId}/companies/${workHistoryId}`, dto);
   }
 
   /** 근무이력을 삭제한다. */
-  removeWorkHistory$(employeeId: number, workHistoryId: number): Observable<void> {
+  removeWorkHistory$(employeeId: number, workHistoryId: number) {
     return this.http.delete<void>(`/human/employees/${employeeId}/companies/${workHistoryId}`);
   }
 
   /** 휴가 목록을 조회한다. */
-  listVacation$(dto: GetVacationRequestDTO): Observable<VacationResponseDTO[]> {
+  listVacation$(dto: GetVacationRequestDTO) {
     const params = this.httpService.createParams(dto);
     return this.http.get<VacationResponseDTO[]>('/human/vacations', { params });
   }
 
   /** 휴가를 조회한다. */
-  getVacation$(vacationId: number): Observable<VacationResponseDTO> {
+  getVacation$(vacationId: number) {
     return this.http.get<VacationResponseDTO>(`/human/vacations/${vacationId}`);
   }
 
   /** 휴가를 추가한다. */
-  addVacation$(dto: SaveVacationRequestDTO): Observable<VacationResponseDTO> {
+  addVacation$(dto: SaveVacationRequestDTO) {
     return this.http.post<VacationResponseDTO>('/human/vacations', dto);
   }
 
   /** 휴가를 수정한다. */
-  updateVacation$(dto: SaveVacationRequestDTO): Observable<number> {
+  updateVacation$(dto: SaveVacationRequestDTO) {
     const { vacationId } = dto;
     return this.http.put<number>(`/human/vacations/${vacationId}`, dto);
   }
 
   /** 휴가를 삭제한다. */
-  removeVacation$(vacationId: number): Observable<void> {
+  removeVacation$(vacationId: number) {
     return this.http.delete<void>(`/human/vacations/${vacationId}`);
   }
 

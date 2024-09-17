@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { CodeResponseDTO, CodeTree, SaveCodeRequestDTO } from './code.model';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { StoreService } from '@app/shared/services';
@@ -30,7 +30,7 @@ export class CodeService {
   }
 
   /** 코드 목록을 조회한다. */
-  listCode$(): Observable<CodeResponseDTO[]> {
+  listCode$() {
     return this.http.get<CodeResponseDTO[]>('/common/codes').pipe(
       tap((data) => {
         this.setCodeList(data);
@@ -40,23 +40,23 @@ export class CodeService {
   }
 
   /** 코드를 조회한다. */
-  getCode$(codeId: string): Observable<CodeResponseDTO> {
+  getCode$(codeId: string) {
     return this.http.get<CodeResponseDTO>(`/common/codes/${codeId}`);
   }
 
   /** 코드를 추가한다. */
-  addCode$(dto: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
+  addCode$(dto: SaveCodeRequestDTO) {
     return this.http.post<CodeResponseDTO>('/common/codes', dto);
   }
 
   /** 코드를 수정한다. */
-  updateCode$(dto: SaveCodeRequestDTO): Observable<CodeResponseDTO> {
+  updateCode$(dto: SaveCodeRequestDTO) {
     const { codeId } = dto;
     return this.http.put<CodeResponseDTO>(`/common/codes/${codeId}`, dto);
   }
 
   /** 코드를 삭제한다. */
-  removeCode$(codeId: string): Observable<void> {
+  removeCode$(codeId: string) {
     return this.http.delete<void>(`/common/codes/${codeId}`);
   }
 

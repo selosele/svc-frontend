@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { StoreService } from '@app/shared/services';
 import { HolidayResponseDTO, SaveHolidayRequestDTO } from './holiday.model';
 
@@ -28,23 +27,23 @@ export class HolidayService {
   }
 
   /** 휴일을 조회한다. */
-  getHoliday$(ymd: string): Observable<HolidayResponseDTO> {
+  getHoliday$(ymd: string) {
     return this.http.get<HolidayResponseDTO>(`/common/holidays/${ymd}`);
   }
 
   /** 휴일을 추가한다. */
-  addHoliday$(dto: SaveHolidayRequestDTO): Observable<HolidayResponseDTO> {
+  addHoliday$(dto: SaveHolidayRequestDTO) {
     return this.http.post<HolidayResponseDTO>('/common/holidays', dto);
   }
 
   /** 휴일을 수정한다. */
-  updateHoliday$(dto: SaveHolidayRequestDTO): Observable<HolidayResponseDTO> {
+  updateHoliday$(dto: SaveHolidayRequestDTO) {
     const { ymd } = dto;
     return this.http.put<HolidayResponseDTO>(`/common/holidays/${ymd}`, dto);
   }
 
   /** 휴일을 삭제한다. */
-  removeHoliday$(ymd: string): Observable<void> {
+  removeHoliday$(ymd: string) {
     return this.http.delete<void>(`/common/holidays/${ymd}`);
   }
 
