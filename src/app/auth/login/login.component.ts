@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   /** 로컬스토리지에 저장된 사용자 계정 */
   savedUserAccount: string;
     
-  ngOnInit(): void {
+  ngOnInit() {
     this.loginForm = this.fb.group({
       userAccount:  ['', [FormValidator.required]], // 사용자 계정
       userPassword: ['', [                          // 사용자 비밀번호

@@ -40,7 +40,7 @@ export class LayoutHeaderComponent implements OnInit {
   /** 스크롤다운 여부 */
   isScrollDown = true;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
     this.lastScrollTop = window.scrollY;
   }

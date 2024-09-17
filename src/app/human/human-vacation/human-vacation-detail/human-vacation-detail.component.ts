@@ -60,7 +60,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   /** 닫기 버튼 클릭 이벤트 */
   @Output() close = new EventEmitter<void>();
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.vacationDetailForm = this.fb.group({
       vacationId: [''],                                       // 휴가 ID
       workHistoryId: [''],                                // 근무이력 ID

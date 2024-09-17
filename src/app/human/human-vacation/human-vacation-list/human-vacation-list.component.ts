@@ -74,7 +74,7 @@ export class HumanVacationListComponent implements OnInit {
     { field: 'vacationContent',  header: '휴가 내용' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.data.subscribe(({ code }) => {
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });

@@ -48,7 +48,7 @@ export class FormFieldComponent implements OnInit {
   /** input 오류 메시지 */
   errorMessage: string;
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (isObjectEmpty(this.foundControl)) {
       this.foundControl = this.findControl(this.control);
       this.formControl = this.foundControl?.control;

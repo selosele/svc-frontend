@@ -48,7 +48,7 @@ export class SystemRoleComponent implements OnInit {
     { field: 'roleOrder', header: '권한 순서' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (!this.roleListDataLoad) {
       this.listRole();
     }

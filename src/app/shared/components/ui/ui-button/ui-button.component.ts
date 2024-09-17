@@ -45,7 +45,7 @@ export class UiButtonComponent implements OnInit {
   /** 버튼 클릭 이벤트 */
   @Output() click? = new EventEmitter<Event>();
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.icon = `pi ${this.icon}`;
   }
 

@@ -105,7 +105,7 @@ export class HumanMyInfoComponent implements OnInit {
   /** 테이블 선택된 행 */
   selection: WorkHistoryResponseDTO;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.data.subscribe(({ code }) => {
       this.genderCodes = code['GENDER_00'];
       this.rankCodes = code['RANK_00'];

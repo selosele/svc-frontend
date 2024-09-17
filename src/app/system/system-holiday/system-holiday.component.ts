@@ -57,7 +57,7 @@ export class SystemHolidayComponent {
     { field: 'useYn',          header: '사용 여부' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (!this.holidayListDataLoad) {
       this.listHoliday();
     }

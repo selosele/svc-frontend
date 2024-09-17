@@ -24,7 +24,7 @@ export class UiCheckboxComponent extends FormFieldComponent {
   /** 체크박스 blur 이벤트 */
   @Output() blur? = new EventEmitter<Event>();
 
-  override ngOnInit(): void {
+  override ngOnInit() {
     super.ngOnInit();
   }
 

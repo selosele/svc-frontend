@@ -59,7 +59,7 @@ export class SystemCodeComponent implements OnInit {
     { field: 'useYn',     header: '사용 여부' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (!this.codeListDataLoad) {
       this.listCode();
     }

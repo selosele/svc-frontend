@@ -20,7 +20,7 @@ import { FormFieldComponent } from '../form-field/form-field.component';
 })
 export class UiTextareaComponent extends FormFieldComponent {
 
-  override ngOnInit(): void {
+  override ngOnInit() {
     super.ngOnInit();
   }
 

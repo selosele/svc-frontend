@@ -85,7 +85,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 닫기 버튼 클릭 이벤트 */
   @Output() close = new EventEmitter<void>();
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.data.subscribe(({ code }) => {
       this.genderCodes = code['GENDER_00'];
       this.rankCodes = code['RANK_00'];

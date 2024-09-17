@@ -31,7 +31,7 @@ export class UiCompanyFieldComponent extends FormFieldComponent {
     super();
   }
 
-  override ngOnInit(): void {
+  override ngOnInit() {
     super.ngOnInit();
   }
 

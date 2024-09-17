@@ -59,7 +59,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     { field: 'registrationNo', header: '사업자등록번호' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (!this.companyListDataLoad) {
       this.listCompany();
     }

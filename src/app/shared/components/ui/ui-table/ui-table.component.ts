@@ -82,7 +82,7 @@ export class UiTableComponent implements OnInit {
   /** 테이블 행 정렬 여부 */
   private isSorted: boolean = null;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.initialValue = deepCopy(this.data);
   }
 

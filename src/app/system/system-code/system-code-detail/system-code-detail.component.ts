@@ -50,7 +50,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   /** 닫기 버튼 클릭 이벤트 */
   @Output() close = new EventEmitter<void>();
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.codeDetailForm = this.fb.group({
       originalCodeId: [''],                              // 기존 코드 ID
       codeId: ['', [                                     // 코드 ID

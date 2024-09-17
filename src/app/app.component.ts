@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
     return this.router.url === '/index';
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {

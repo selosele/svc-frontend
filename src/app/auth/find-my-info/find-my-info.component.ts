@@ -45,7 +45,7 @@ export class FindMyInfoComponent implements OnInit {
   /** 아이디 찾기 폼 */
   findAccountForm: FormGroup;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.findAccountForm = this.fb.group({
       employeeName: ['', [FormValidator.required]], // 실명
       emailAddr: ['', [                             // 이메일주소

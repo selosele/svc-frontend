@@ -46,7 +46,7 @@ export class LayoutMenuHistoryComponent implements OnInit {
   /** 컨텍스트 메뉴로 선택한 메뉴 ID */
   cmMenuId: number;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.contextMenus = [
       { label: '삭제', icon: 'pi pi-trash', command: () => this.onRemove(this.cmMenuId) },
       { label: '전체 삭제', icon: 'pi pi-trash', command: () => this.removeAll() },

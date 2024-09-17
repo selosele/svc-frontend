@@ -61,7 +61,7 @@ export class SystemUserComponent implements OnInit {
     { field: 'rolesString',  header: '권한' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (!this.userListDataLoad) {
       this.listUser();
     }

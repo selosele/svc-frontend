@@ -84,7 +84,7 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 행 정렬 여부 */
   private isSorted: boolean | null = null;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.initialValue = deepCopy(this.data);
   }
 

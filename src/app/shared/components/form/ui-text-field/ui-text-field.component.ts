@@ -23,7 +23,7 @@ export class UiTextFieldComponent extends FormFieldComponent {
   /** input type */
   @Input() type? = 'text';
 
-  override ngOnInit(): void {
+  override ngOnInit() {
     super.ngOnInit();
   }
 

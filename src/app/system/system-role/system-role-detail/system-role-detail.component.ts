@@ -47,7 +47,7 @@ export class SystemRoleDetailComponent implements OnInit {
     { field: 'useYn',         header: '사용여부' },
   ];
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.userList = this.config.data['userList'];
     this.menuTree = this.config.data['menuTree'];
   }

@@ -39,7 +39,7 @@ export class UiDateFieldComponent extends FormFieldComponent {
   /** 캘린더 팝업 위치 */
   @Input() appendTo = 'body';
 
-  override ngOnInit(): void {
+  override ngOnInit() {
     super.ngOnInit();
 
     // readonly일 때는 캘린더를 표출할 수 없도록 한다.

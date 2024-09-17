@@ -34,7 +34,7 @@ export class UiAlertComponent implements OnInit {
     return this.config?.data?.['type'];
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (this.type === 'alert') {
       this.visible = true;
     }
