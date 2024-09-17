@@ -39,5 +39,25 @@
 
     <ui-content-title [text]="'비밀번호 찾기'" />
     
+    <ui-form [form]="findPasswordForm" (submit)="onSubmitFindPassword($event)">
+      <div class="input-box">
+        <ui-text-field
+          [control]="findPasswordForm.get('userAccount')"
+          [label]="'아이디'"
+        />
+
+        <ui-text-field
+          [control]="findPasswordForm.get('employeeName')"
+          [label]="'실명'"
+        />
+
+        <ui-text-field
+          [control]="findPasswordForm.get('emailAddr')"
+          [label]="'이메일주소'"
+        />
+      </div>
+
+      <ui-button [block]="true" [type]="'submit'">비밀번호 찾기</ui-button>
+    </ui-form>
   }
 </ui-tab>

@@ -6,7 +6,7 @@ import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiContentTitleComponent, UiTabComponent } from '@app/shared/components/ui';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { FindUserAccountRequestDTO } from '../auth.model';
+import { FindUserInfoRequestDTO } from '../auth.model';
 import { AuthService } from '../auth.service';
 import { UiMessageService } from '@app/shared/services';
 
@@ -45,8 +45,20 @@ export class FindMyInfoComponent implements OnInit {
   /** 아이디 찾기 폼 */
   findAccountForm: FormGroup;
 
+  /** 비밀번호 찾기 폼 */
+  findPasswordForm: FormGroup;
+
   ngOnInit() {
     this.findAccountForm = this.fb.group({
+      employeeName: ['', [FormValidator.required]], // 실명
+      emailAddr: ['', [                             // 이메일주소
+        FormValidator.required,
+        FormValidator.email,
+      ]],
+    });
+
+    this.findPasswordForm = this.fb.group({
+      userAccount: ['', [FormValidator.required]],  // 사용자 계정
       employeeName: ['', [FormValidator.required]], // 실명
       emailAddr: ['', [                             // 이메일주소
         FormValidator.required,
@@ -61,8 +73,16 @@ export class FindMyInfoComponent implements OnInit {
   }
 
   /** 아이디 찾기 폼을 전송한다. */
-  onSubmitFindAccount(value: FindUserAccountRequestDTO): void {
-    this.authService.getUserFindAccount(value)
+  onSubmitFindAccount(value: FindUserInfoRequestDTO): void {
+    this.authService.findUserAccount(value)
+    .subscribe(() => {
+      this.messageService.toastSuccess('메일 발송에 성공했습니다. 메일을 확인해주세요.');
+    });
+  }
+
+  /** 비밀번호 찾기 폼을 전송한다. */
+  onSubmitFindPassword(value: FindUserInfoRequestDTO): void {
+    this.authService.findUserPassword(value)
     .subscribe(() => {
       this.messageService.toastSuccess('메일 발송에 성공했습니다. 메일을 확인해주세요.');
     });
