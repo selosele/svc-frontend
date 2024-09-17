@@ -116,7 +116,7 @@ export class AuthService {
 
   /** 권한 목록을 조회한다. */
   listRole(): void {
-    this.http.get<RoleResponseDTO[]>('/common/auth/roles')
+    this.http.get<RoleResponseDTO[]>('/common/roles')
     .subscribe((data) => {
       this.store.update<RoleResponseDTO[]>('roleList', data);
       this.store.update<boolean>('roleListDataLoad', true);
@@ -124,8 +124,8 @@ export class AuthService {
   }
 
   /** 사용자의 아이디를 찾는다. */
-  getUserFindAccount(dto: FindUserAccountRequestDTO): Observable<number> {
-    return this.http.post<number>('/common/auth/find-user-account', dto);
+  getUserFindAccount(dto: FindUserAccountRequestDTO): Observable<boolean> {
+    return this.http.post<boolean>('/common/auth/find-user-account', dto);
   }
 
   /** 로그인 여부를 반환한다. */
