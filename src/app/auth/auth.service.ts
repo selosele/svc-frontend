@@ -76,7 +76,7 @@ export class AuthService {
 
   /** 사용자 목록을 조회한다. */
   listUser(): void {
-    this.http.get<UserResponseDTO[]>('/common/auth/users')
+    this.http.get<UserResponseDTO[]>('/common/users')
     .subscribe((data) => {
       this.store.update<UserResponseDTO[]>('userList', data);
       this.store.update<boolean>('userListDataLoad', true);
@@ -86,34 +86,34 @@ export class AuthService {
   /** 권한별 사용자 목록을 조회한다. */
   listUserByRole$(dto: GetUserRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<UserResponseDTO[]>('/common/auth/users', { params });
+    return this.http.get<UserResponseDTO[]>('/common/users', { params });
   }
 
   /** 사용자를 조회한다. */
   getUser$(userId: number) {
-    return this.http.get<UserResponseDTO>(`/common/auth/users/${userId}`);
+    return this.http.get<UserResponseDTO>(`/common/users/${userId}`);
   }
 
   /** 사용자를 추가한다. */
   addUser$(dto: SaveUserRequestDTO) {
-    return this.http.post<UserResponseDTO>('/common/auth/users', dto);
+    return this.http.post<UserResponseDTO>('/common/users', dto);
   }
 
   /** 사용자를 수정한다. */
   updateUser$(dto: SaveUserRequestDTO) {
     const { userId } = dto;
-    return this.http.put<UserResponseDTO>(`/common/auth/users/${userId}`, dto);
+    return this.http.put<UserResponseDTO>(`/common/users/${userId}`, dto);
   }
 
   /** 사용자를 삭제한다. */
   removeUser$(userId: number) {
-    return this.http.delete<void>(`/common/auth/users/${userId}`);
+    return this.http.delete<void>(`/common/users/${userId}`);
   }
 
   /** 사용자 비밀번호를 변경한다. */
   updatePassword$(dto: UpdateUserPasswordRequestDTO) {
     const { userId } = this.getAuthenticatedUser();
-    return this.http.put<number>(`/common/auth/users/${userId}/password`, dto);
+    return this.http.put<number>(`/common/users/${userId}/password`, dto);
   }
 
   /** 권한 목록을 조회한다. */
