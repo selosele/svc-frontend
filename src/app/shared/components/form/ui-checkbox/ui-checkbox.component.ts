@@ -28,13 +28,13 @@ export class UiCheckboxComponent extends FormFieldComponent {
     super.ngOnInit();
   }
 
-  /** 체크박스 값을 변경한다. */
+  /** 체크박스 change 이벤트 */
   onChange(event: CheckboxChangeEvent): void {
     this.setErrorMessage();
     this.change.emit(event);
   }
 
-  /** 체크박스가 focus를 상실했을 때 발생한다. */
+  /** 체크박스 blur 이벤트 */
   onBlur(event: Event): void {
     this.setErrorMessage();
     this.blur.emit(event);
