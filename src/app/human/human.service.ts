@@ -79,7 +79,7 @@ export class HumanService {
   }
 
   /** 근무이력 목록을 조회한다. */
-  listWorkHistory(dto: GetWorkHistoryRequestDTO): void {
+  listWorkHistory(index: number, dto: GetWorkHistoryRequestDTO): void {
     const { employeeId } = dto;
     const params = this.httpService.createParams(dto);
 
@@ -88,7 +88,7 @@ export class HumanService {
       this.store.update<WorkHistoryResponseDTO[]>('workHistoryList', data);
       this.store.update<Tab[]>('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
       this.store.update<boolean>('workHistoryListDataLoad', true);
-      this.setVacationTableTitle(0);
+      this.setVacationTableTitle(index);
     });
   }
 
@@ -143,7 +143,9 @@ export class HumanService {
 
   /** 테이블 타이틀을 설정한다. */
   setVacationTableTitle(index: number): void {
-    const { annualTypeCode, quitYmd } = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
+    const workHistory = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
+    const { annualTypeCode, quitYmd } = workHistory;
+
     if (isNotBlank(quitYmd)) {
       this.store.update<boolean>('isNotQuit', false);
       this.store.update<string>('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
@@ -155,10 +157,10 @@ export class HumanService {
       return;
     }
 
-    this.store.update('isNotQuit', true);
-    this.store.update(
+    this.store.update<boolean>('isNotQuit', true);
+    this.store.update<string>(
       'vacationTableTitle',
-      this.calculateVacation(this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index])
+      this.calculateVacation(workHistory)
     );
   }
 

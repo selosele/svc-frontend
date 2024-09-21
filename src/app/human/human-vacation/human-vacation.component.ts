@@ -55,7 +55,7 @@ export class HumanVacationComponent implements OnInit {
   tabs: Tab[] = [];
 
   /** 선택된 회사 탭 index */
-  activeIndex: number;
+  activeIndex = 0;
 
   /** 휴가 계산 폼 */
   caculateVacationForm: FormGroup;
@@ -110,7 +110,7 @@ export class HumanVacationComponent implements OnInit {
 
   /** 근무이력 목록을 조회한다. */
   listWorkHistory(): void {
-    this.humanService.listWorkHistory({
+    this.humanService.listWorkHistory(this.activeIndex, {
       ...this.caculateVacationForm.value,
       employeeId: this.user?.employeeId,
     });
