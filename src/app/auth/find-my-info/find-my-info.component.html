@@ -52,7 +52,8 @@
       @if (userCertHistory !== null) {
         <ui-text-field
           [control]="findPasswordForm.get('certCode')"
-          [label]="'인증코드'"
+          [label]="certCodeLabel"
+          (keyup.enter)="onEnterKey($event)"
         >
           <ui-button button [type]="'button'" [severity]="'success'" (click)="countUserCertHistory()">
             확인

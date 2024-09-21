@@ -130,16 +130,20 @@ export class AuthService {
     return this.http.post<boolean>('/common/auth/find-user-account', dto);
   }
 
-  /** 사용자의 비밀번호를 찾는다. */
-  findUserPassword$(dto: FindUserInfoRequestDTO) {
-    return this.http.post<UserCertHistoryResponseDTO>('/common/auth/find-user-password', dto);
+  /** 사용자의 비밀번호를 찾는다(인증코드 발송). */
+  findUserPassword1$(dto: FindUserInfoRequestDTO) {
+    return this.http.post<UserCertHistoryResponseDTO>('/common/auth/find-user-password1', dto);
+  }
+
+  /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급). */
+  findUserPassword2$(dto: FindUserInfoRequestDTO) {
+    return this.http.post<boolean>('/common/auth/find-user-password2', dto);
   }
 
   /** 사용자 본인인증 내역이 존재하는지 확인한다. */
   countUserCertHistory$(dto: GetUserCertHistoryRequestDTO) {
     const { userAccount } = dto;
-    const params = this.httpService.createParams(dto);
-    return this.http.get<number>(`/common/auth/certs/${userAccount}`, { params });
+    return this.http.post<number>(`/common/auth/certs/${userAccount}`, dto);
   }
 
   /** 로그인 여부를 반환한다. */

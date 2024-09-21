@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
@@ -8,6 +9,7 @@ import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/componen
 import { FindUserInfoRequestDTO, GetUserCertHistoryRequestDTO, UserCertHistoryResponseDTO } from '../auth.model';
 import { AuthService } from '../auth.service';
 import { StoreService, UiMessageService } from '@app/shared/services';
+import { dateUtil } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -38,6 +40,12 @@ export class FindMyInfoComponent implements OnInit {
   /** 비밀번호 찾기 폼 */
   findPasswordForm: FormGroup;
 
+  /** 인증코드 label */
+  certCodeLabel = '인증코드';
+
+  /** 인증코드 timer */
+  timer = null;
+
   /** 사용자 본인인증 내역 */
   get userCertHistory() {
     return this.store.select<UserCertHistoryResponseDTO>('userCertHistory').value;
@@ -66,16 +74,33 @@ export class FindMyInfoComponent implements OnInit {
   onSubmitFindAccount(value: FindUserInfoRequestDTO): void {
     this.authService.findUserAccount$(value)
     .subscribe(() => {
-      this.messageService.toastSuccess('메일 발송에 성공했습니다. 메일을 확인해주세요.');
+      this.messageService.toastSuccess('아이디를 메일로 발송했습니다. 메일을 확인해주세요.');
     });
   }
 
   /** 비밀번호 찾기 폼을 전송한다. */
   onSubmitFindPassword(value: FindUserInfoRequestDTO): void {
-    this.authService.findUserPassword$(value)
+    this.authService.findUserPassword1$(value)
     .subscribe((data) => {
+      this.timer && clearInterval(this.timer);
+
+      let remainingSeconds = Number(data.validTime);
+      let formattedTime = new BehaviorSubject<string>(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
+
+      this.timer = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          formattedTime.next(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
+        } else {
+          clearInterval(this.timer);
+        }
+      }, 1000);
+
+      formattedTime.subscribe((time) => {
+        this.certCodeLabel = `인증코드(${time})`;
+      });
       this.store.update<UserCertHistoryResponseDTO>('userCertHistory', data);
-      this.messageService.toastSuccess('메일 발송에 성공했습니다. 메일을 확인해주세요.');
+      this.messageService.toastSuccess('인증코드를 메일로 발송했습니다. 메일을 확인해주세요.');
     });
   }
 
@@ -88,9 +113,20 @@ export class FindMyInfoComponent implements OnInit {
         return;
       }
       
-      // TODO: 임시 비밀번호 발급 로직 개발
-      
+      // 임시 비밀번호 발급
+      this.authService.findUserPassword2$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
+      .subscribe(() => {
+        this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했습니다. 메일을 확인해주세요.');
+      });
     });
+  }
+
+  /** 사용자 본인인증 내역이 존재하는지 확인한다(Enter키 입력 시). */
+  onEnterKey(event: Event): void {
+    // TODO: form의 enter키 submit 이벤트가 전파되는 이슈가 있어 수정 예정
+    event.stopPropagation();
+    event.preventDefault();
+    return this.countUserCertHistory();
   }
 
 }
