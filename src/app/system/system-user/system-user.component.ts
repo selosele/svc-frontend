@@ -55,7 +55,12 @@ export class SystemUserComponent implements OnInit {
     { field: 'employeeName', header: '직원명' },
     { field: 'companyName',  header: '회사명' },
     { header: '직위/직책',
-      valueGetter: (data) => `${data.rankCodeName}/${data.jobTitleCodeName}`
+      valueGetter: (data) => {
+        if (data.jobTitleCode === '9999') {
+          return data.rankCodeName;
+        }
+        return `${data.rankCodeName}/${data.jobTitleCodeName}`;
+      }
     },
     { field: 'userActiveYn', header: '사용자 활성화 여부' },
     { field: 'rolesString',  header: '권한' },
