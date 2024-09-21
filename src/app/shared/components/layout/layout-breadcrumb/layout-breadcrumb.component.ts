@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import { StoreService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
@@ -11,7 +10,6 @@ import { MenuService } from '@app/menu/menu.service';
   imports: [
     CommonModule,
     RouterModule,
-    BreadcrumbModule,
   ],
   selector: 'layout-breadcrumb',
   templateUrl: './layout-breadcrumb.component.html',

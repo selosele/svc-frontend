@@ -1,17 +1,23 @@
 <div class="layout-breadcrumb">
-  <p-breadcrumb class="max-w-full" [model]="items">
-    <ng-template pTemplate="item" let-item>
-      <ng-container *ngIf="item.route; else elseBlock">
-        <a [routerLink]="item.route" [queryParams]="item.queryParams" class="p-menuitem-link">
-          <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
-          <span class="text-primary font-semibold">{{ item.label }}</span>
-        </a>
-      </ng-container>
-      <ng-template #elseBlock>
-        <a [href]="item.url">
-          <span class="text-color">{{ item.label }}</span>
-        </a>
-      </ng-template>
-    </ng-template>
-  </p-breadcrumb>
+  <ul>
+    @for (item of items; track $index) {
+      <li>
+        @if ($index > 0) {
+          <span [ngClass]="'separator pi pi-chevron-right'"></span>
+        }
+
+        @if (item.route) {
+          <a [routerLink]="item.route" [queryParams]="item.queryParams">
+            <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
+            <span class="text-primary font-semibold">{{ item.label }}</span>
+          </a>
+        }
+        @else {
+          <span>
+            <span class="text-color">{{ item.label }}</span>
+          </span>
+        }
+      </li>
+    }
+  </ul>
 </div>
