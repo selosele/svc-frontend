@@ -77,6 +77,12 @@
   
     <div class="input-box">
       <ui-text-field
+        [control]="employeeForm.get('workHistory.corporateName')"
+        [label]="'법인명'"
+        [readonly]="true"
+      />
+      
+      <ui-text-field
         [control]="employeeForm.get('workHistory.companyName')"
         [label]="'회사명'"
         [readonly]="true"
