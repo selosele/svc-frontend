@@ -82,6 +82,7 @@ export class ModalSearchCompanyComponent implements OnInit {
 
   /** 회사를 검색한다. */
   onSubmit(value: GetCompanyRequestDTO): void {
+    this.companyListDataLoad = false;
     this.humanService.listCompany(value);
   }
 
