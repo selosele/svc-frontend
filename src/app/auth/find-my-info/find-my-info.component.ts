@@ -107,8 +107,8 @@ export class FindMyInfoComponent implements OnInit {
   /** 사용자 본인인증 내역이 존재하는지 확인한다. */
   countUserCertHistory(): void {
     this.authService.countUserCertHistory$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
-    .subscribe((data) => {
-      if (data === 0) {
+    .subscribe((count) => {
+      if (count === 0) {
         this.messageService.toastError('인증코드가 틀렸거나 유효시간이 만료되었습니다.');
         return;
       }
