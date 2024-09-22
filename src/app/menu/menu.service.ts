@@ -68,7 +68,8 @@ export class MenuService {
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
 
-      const menuId = Number(queryParams?.menuId);
+      let menuId = Number(queryParams?.menuId);
+      if (isNaN(menuId)) menuId = null;
 
       this.setCurrentMenuId(menuId);
       this.setCurrentUpMenuId(menuList.find(x => x.menuId === menuId)?.upMenuId);
@@ -125,11 +126,9 @@ export class MenuService {
 
   /** 메뉴접속이력 목록 데이터를 설정한다. */
   setMenuHistoryList(list: MenuResponseDTO[]): void {
-    this.store.select<number>('currentMenuId').asObservable().subscribe((menuId) => {
-      list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
-      this.store.update<MenuResponseDTO[]>('menuHistoryList', list);
-      window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
-    });
+    //list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
+    this.store.update<MenuResponseDTO[]>('menuHistoryList', list);
+    window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
   }
 
   /** 메뉴 트리를 생성한다. */

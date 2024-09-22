@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MenuResponseDTO } from '../../../../menu/menu.model';
-import { UiButtonComponent } from '../../ui';
-import { MenuService } from '@app/menu/menu.service';
+import { combineLatest } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { StoreService } from '@app/shared/services';
+import { MenuService } from '@app/menu/menu.service';
+import { MenuResponseDTO } from '../../../../menu/menu.model';
+import { UiButtonComponent } from '../../ui';
+import { isEmpty, isNotEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -40,6 +42,12 @@ export class LayoutMenuHistoryComponent implements OnInit {
     return this.store.select<MenuResponseDTO[]>('menuHistoryList').value;
   }
 
+  /** 메뉴접속이력 로컬스토리지 목록 */
+  get menuHistoryStorageList(): MenuResponseDTO[] {
+    return JSON.parse(window.localStorage.getItem(this.menuService.MENU_HISTORY_LIST_KEY))
+      ?? [];
+  }
+
   /** 메뉴 ID */
   menuId: number;
 
@@ -52,13 +60,32 @@ export class LayoutMenuHistoryComponent implements OnInit {
       { label: '전체 삭제', icon: 'pi pi-trash', command: () => this.removeAll() },
     ];
 
-    this.route.queryParams.subscribe((params) => {
-      this.menuId = Number(params?.menuId);
+    if (this.menuHistoryStorageList.length > 0) {
+      this.store.update<MenuResponseDTO[]>('menuHistoryList', this.menuHistoryStorageList);
+    }
 
-      const menuHistoryList = JSON.parse(window.localStorage.getItem(this.menuService.MENU_HISTORY_LIST_KEY))
-        ?? [];
+    combineLatest([
+      this.route.queryParams,
+      this.store.select<MenuResponseDTO[]>('menuList').asObservable()
+    ])
+    .subscribe(([queryParams, menuList]) => {
+      if (menuList.length === 0) return;
 
-      this.menuService.setMenuHistoryList(menuHistoryList as MenuResponseDTO[]);
+      this.menuId = Number(queryParams?.menuId);
+      if (isEmpty(this.menuId) || isNaN(this.menuId)) return;
+
+      // 현재 메뉴 URL을 가져온다.
+      const menuUrl = menuList.find(x => x.menuId === this.menuId)?.menuUrl;
+    
+      // 현재 메뉴명을 가져온다.
+      const menuName = menuList.find(x => x.menuId === this.menuId)?.menuName;
+
+      // 같은 메뉴접속이력 데이터가 존재하는지 확인한다.
+      const hasExist = isNotEmpty(this.menuHistoryStorageList.find(x => x.menuId === this.menuId));
+      if (hasExist) return;
+  
+      // 메뉴접속이력 데이터를 쌓아 넣는다.
+      this.menuService.setMenuHistoryList([...this.menuHistoryStorageList, { menuId: this.menuId, menuUrl, menuName }]);
     });
   }
 
