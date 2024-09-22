@@ -9,7 +9,8 @@ export class HttpService {
   createParams(data: any): HttpParams {
     if (isObjectEmpty(data)) return null;
 
-    let params: HttpParams = new HttpParams();
+    let params = new HttpParams();
+    
     for (const key of Object.keys(data)) {
       if (data[key]) {
         if (data[key] instanceof Array) {

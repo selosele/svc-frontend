@@ -63,9 +63,9 @@ export class AuthService {
       this.removeAccessToken();
       this.dialogService.closeAllDialog();
 
-      Object.keys(window.localStorage).forEach(key => {
-        if (key !== SAVE_USER_ACCOUNT_KEY) { // 필수로 저장되어 있어야 하는 key를 제외하고 전부 삭제
-          window.localStorage.removeItem(key);
+      Object.keys(window.localStorage).forEach((key) => {
+        if (key !== SAVE_USER_ACCOUNT_KEY) {
+          window.localStorage.removeItem(key); // 필수로 저장되어 있어야 하는 key를 제외하고 전부 삭제
         }
       });
 
