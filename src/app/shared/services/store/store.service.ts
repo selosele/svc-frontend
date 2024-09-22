@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { StoreMap } from '@app/shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
 
   /** 상태 저장 공간 */
-  private store: Map<string, { subject: BehaviorSubject<any>, initialValue?: any }> = new Map();
+  private store: StoreMap = new Map();
 
   /** 상태를 생성해서 반환한다(상태가 존재하면 기존 상태를 반환). */
   create<T>(key: string, defaultValue: T): BehaviorSubject<T> {
