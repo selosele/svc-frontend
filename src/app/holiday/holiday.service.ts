@@ -18,8 +18,8 @@ export class HolidayService {
   private holidayListDataLoad = this.store.create<boolean>('holidayListDataLoad', false);
 
   /** 휴일 목록을 조회한다. */
-  listHoliday(): void {
-    this.http.get<HolidayResponseDTO[]>('/common/holidays')
+  listHoliday(userId: number): void {
+    this.http.get<HolidayResponseDTO[]>(`/common/holidays/${userId}`)
     .subscribe((data) => {
       this.store.update<HolidayResponseDTO[]>('holidayList', data);
       this.store.update<boolean>('holidayListDataLoad', true);
@@ -27,24 +27,25 @@ export class HolidayService {
   }
 
   /** 휴일을 조회한다. */
-  getHoliday$(ymd: string) {
-    return this.http.get<HolidayResponseDTO>(`/common/holidays/${ymd}`);
+  getHoliday$(userId: number, ymd: string) {
+    return this.http.get<HolidayResponseDTO>(`/common/holidays/${userId}/${ymd}`);
   }
 
   /** 휴일을 추가한다. */
   addHoliday$(dto: SaveHolidayRequestDTO) {
-    return this.http.post<HolidayResponseDTO>('/common/holidays', dto);
+    const { userId } = dto;
+    return this.http.post<HolidayResponseDTO>(`/common/holidays/${userId}`, dto);
   }
 
   /** 휴일을 수정한다. */
   updateHoliday$(dto: SaveHolidayRequestDTO) {
-    const { ymd } = dto;
-    return this.http.put<HolidayResponseDTO>(`/common/holidays/${ymd}`, dto);
+    const { ymd, userId } = dto;
+    return this.http.put<HolidayResponseDTO>(`/common/holidays/${userId}/${ymd}`, dto);
   }
 
   /** 휴일을 삭제한다. */
-  removeHoliday$(ymd: string) {
-    return this.http.delete<void>(`/common/holidays/${ymd}`);
+  removeHoliday$(userId: number, ymd: string) {
+    return this.http.delete<void>(`/common/holidays/${userId}/${ymd}`);
   }
 
 }
