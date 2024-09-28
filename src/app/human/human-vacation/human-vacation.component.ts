@@ -8,6 +8,7 @@ import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '../human.service';
 import { HumanVacationListComponent } from './human-vacation-list/human-vacation-list.component';
+import { MyHolidayComponent } from '@app/holiday/my-holiday/my-holiday.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-checkbox.component';
@@ -15,7 +16,7 @@ import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbo
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { WorkHistoryResponseDTO } from '../human.model';
-import { StoreService } from '@app/shared/services';
+import { StoreService, UiDialogService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -44,6 +45,7 @@ export class HumanVacationComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: StoreService,
+    private dialogService: UiDialogService,
     private authService: AuthService,
     private humanService: HumanService,
   ) {}
@@ -134,6 +136,14 @@ export class HumanVacationComponent implements OnInit {
   onReset(): void {
     this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes);
     this.listWorkHistory();
+  }
+
+  /** 휴일 관리 modal을 표출한다. */
+  showHolidayModal(event: Event): void {
+    this.dialogService.open(MyHolidayComponent, {
+      focusOnShow: false,
+      header: '내 휴일 관리',
+    });
   }
 
 }

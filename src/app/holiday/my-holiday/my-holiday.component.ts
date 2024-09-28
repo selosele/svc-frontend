@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
-import { SystemHolidayDetailComponent } from './system-holiday-detail/system-holiday-detail.component';
+import { MyHolidayDetailComponent } from './my-holiday-detail/my-holiday-detail.component';
 import { HolidayResponseDTO } from '@app/holiday/holiday.model';
+import { AuthenticatedUser } from '@app/auth/auth.model';
 import { HolidayService } from '@app/holiday/holiday.service';
 import { StoreService } from '@app/shared/services';
+import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -14,16 +16,17 @@ import { StoreService } from '@app/shared/services';
     UiTableComponent,
     UiSplitterComponent,
     LayoutPageDescriptionComponent,
-    SystemHolidayDetailComponent,
+    MyHolidayDetailComponent,
   ],
-  selector: 'view-system-holiday',
-  templateUrl: './system-holiday.component.html',
-  styleUrl: './system-holiday.component.scss'
+  selector: 'modal-my-holiday',
+  templateUrl: './my-holiday.component.html',
+  styleUrl: './my-holiday.component.scss'
 })
-export class SystemHolidayComponent {
+export class MyHolidayComponent {
 
   constructor(
     private store: StoreService,
+    private authService: AuthService,
     private holidayService: HolidayService,
   ) {}
 
@@ -43,6 +46,9 @@ export class SystemHolidayComponent {
     return this.store.select<boolean>('holidayListDataLoad').value;
   }
 
+  /** 인증된 사용자 정보 */
+  user: AuthenticatedUser;
+
   /** 휴일 정보 */
   holidayDetail: HolidayResponseDTO = null;
 
@@ -58,6 +64,8 @@ export class SystemHolidayComponent {
   ];
 
   ngOnInit() {
+    this.user = this.authService.getAuthenticatedUser();
+
     if (!this.holidayListDataLoad) {
       this.listHoliday();
     }
@@ -65,7 +73,7 @@ export class SystemHolidayComponent {
 
   /** 휴일 목록을 조회한다. */
   listHoliday(): void {
-    this.holidayService.listHoliday(null);
+    this.holidayService.listHoliday(this.user.userId);
   }
 
   /** 휴일을 추가한다. */
@@ -76,7 +84,7 @@ export class SystemHolidayComponent {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.holidayService.getHoliday$(null, event.data['ymd'])
+    this.holidayService.getHoliday$(this.user.userId, event.data['ymd'])
     .subscribe((data) => {
       this.holidayDetail = data;
       this.splitter.show();

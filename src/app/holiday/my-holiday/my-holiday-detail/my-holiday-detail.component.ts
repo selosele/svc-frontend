@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
+import { AuthService } from '@app/auth/auth.service';
 import { HolidayService } from '@app/holiday/holiday.service';
 import { HolidayResponseDTO, SaveHolidayRequestDTO } from '@app/holiday/holiday.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { AuthenticatedUser } from '@app/auth/auth.model';
 
 @Component({
   standalone: true,
@@ -16,17 +18,19 @@ import { isEmpty, isObjectEmpty } from '@app/shared/utils';
     UiTextareaComponent,
     UiDropdownComponent,
     UiDateFieldComponent,
+    UiHiddenFieldComponent,
     UiContentTitleComponent,
   ],
-  selector: 'system-holiday-detail',
-  templateUrl: './system-holiday-detail.component.html',
-  styleUrl: './system-holiday-detail.component.scss'
+  selector: 'my-holiday-detail',
+  templateUrl: './my-holiday-detail.component.html',
+  styleUrl: './my-holiday-detail.component.scss'
 })
-export class SystemHolidayDetailComponent implements OnInit, OnChanges {
+export class MyHolidayDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
     private messageService: UiMessageService,
+    private authService: AuthService,
     private codeService: CodeService,
     private holidayService: HolidayService,
   ) {}
@@ -43,6 +47,9 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
+  /** 인증된 사용자 정보 */
+  user: AuthenticatedUser;
+
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
 
@@ -53,11 +60,15 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
+    this.user = this.authService.getAuthenticatedUser();
+
     this.holidayDetailForm = this.fb.group({
+      originalYmd: [''],                                    // 기존 일자
       ymd: ['', [                                           // 일자
         FormValidator.required,
         FormValidator.maxLength(8)
       ]],
+      userId: ['', FormValidator.required],                 // 사용자 ID
       holidayName: ['', [                                   // 휴일명
         FormValidator.required,
         FormValidator.maxLength(30)
@@ -73,23 +84,26 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
       
       if (isObjectEmpty(changes.holidayDetail.currentValue)) {
         this.useRemove = false;
-        this.holidayDetailForm.reset();
+        this.holidayDetailForm.reset({ userId: this.user.userId });
         return;
       }
 
-      this.holidayDetailForm.patchValue(this.holidayDetail);
+      this.holidayDetailForm.patchValue({
+        originalYmd: this.holidayDetail.ymd,
+        ...this.holidayDetail,
+      });
     }
   }
 
   /** 휴일 정보를 저장한다. */
   async onSubmit(value: SaveHolidayRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.ymd) ? '추가' : '수정';
+    const crudName = isEmpty(value.originalYmd) ? '추가' : '수정';
 
     const confirm = await this.messageService.confirm1(`휴일 정보를 ${crudName}하시겠습니까?`);
     if (!confirm) return;
 
     // 휴일 ID가 없으면 추가 API를 타고
-    if (isEmpty(value.ymd)) {
+    if (isEmpty(value.originalYmd)) {
       this.holidayService.addHoliday$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
@@ -111,7 +125,7 @@ export class SystemHolidayDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('휴일을 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.holidayService.removeHoliday$(null, this.holidayDetail.ymd)
+    this.holidayService.removeHoliday$(this.user.userId, this.holidayDetail.ymd)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

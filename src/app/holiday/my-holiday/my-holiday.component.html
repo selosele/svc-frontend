@@ -1,7 +1,6 @@
 <layout-page-description>
   <ul>
-    <li>휴일을 조회/입력할 수 있습니다.</li>
-    <li>휴일관리 배치를 수동으로 돌릴 수 있습니다.</li>
+    <li>휴가 계산에 제외할 내 휴일을 조회/입력할 수 있습니다.</li>
   </ul>
 </layout-page-description>
 
@@ -11,7 +10,7 @@
   <ui-skeleton />
 }
 @else {
-  <ui-splitter #splitter>
+  <ui-splitter [layout]="'vertical'" #splitter>
     <ui-table #table first
       [useAdd]="false"
       [useRemove]="false"
@@ -33,7 +32,7 @@
     </ui-table>
   
     <div second>
-      <system-holiday-detail
+      <my-holiday-detail
         [holidayDetail]="holidayDetail"
         (refresh)="listHoliday()"
         (remove)="onRemove()"

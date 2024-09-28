@@ -7,6 +7,9 @@
 >
   <ui-content-title [text]="'휴일 정보'" />
 
+  <ui-hidden-field [control]="holidayDetailForm.get('originalYmd')" />
+  <ui-hidden-field [control]="holidayDetailForm.get('userId')" />
+
   <div class="input-box">
     <ui-date-field
       [control]="holidayDetailForm.get('ymd')"

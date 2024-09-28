@@ -35,13 +35,5 @@ export const systemRoutes: Routes = [
     },
     loadComponent: () => import('./system-code/system-code.component').then(x => x.SystemCodeComponent),
   },
-  // 휴일관리 페이지
-  {
-    path: 'system/holidays',
-    canActivate: [authGuard, menuGuard],
-    data: {
-      roles: [roles.SYSTEM_ADMIN],
-    },
-    loadComponent: () => import('./system-holiday/system-holiday.component').then(x => x.SystemHolidayComponent),
-  },
+  
 ];

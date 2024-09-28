@@ -23,6 +23,9 @@ export class GetHolidayRequestDTO extends HttpRequestDTOBase {
 /** 휴일 추가/수정 요청 DTO */
 export class SaveHolidayRequestDTO extends HttpRequestDTOBase {
 
+  /** 기존 일자 */
+  originalYmd?: string;
+
   /** 일자 */
   ymd?: string;
 
