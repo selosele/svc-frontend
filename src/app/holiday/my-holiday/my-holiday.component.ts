@@ -73,7 +73,7 @@ export class MyHolidayComponent {
 
   /** 휴일 목록을 조회한다. */
   listHoliday(): void {
-    this.holidayService.listHoliday(this.user.userId);
+    this.holidayService.listHoliday(this.user?.userId);
   }
 
   /** 휴일을 추가한다. */
@@ -84,7 +84,7 @@ export class MyHolidayComponent {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.holidayService.getHoliday$(this.user.userId, event.data['ymd'])
+    this.holidayService.getHoliday$(this.user?.userId, event.data['ymd'])
     .subscribe((data) => {
       this.holidayDetail = data;
       this.splitter.show();
