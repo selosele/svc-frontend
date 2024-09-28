@@ -3,10 +3,10 @@
 
   <ui-table-buttons
     [title]="title"
-		[useAdd]="useAdd"
-		[useRemove]="useRemove"
+    [useAdd]="useAdd"
+    [useRemove]="useRemove"
     [useRefresh]="useRefresh"
-		(refresh)="onRefresh($event)"
+    (refresh)="onRefresh($event)"
 	>
 		<ng-content select="[buttons]"></ng-content>
 	</ui-table-buttons>
