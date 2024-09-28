@@ -6,6 +6,9 @@ export class SaveHolidayRequestDTO extends HttpRequestDTOBase {
   /** 일자 */
   ymd?: string;
 
+  /** 사용자 ID */
+  userId?: number;
+
   /** 연도 */
   yyyy?: string;
 
@@ -29,6 +32,9 @@ export class HolidayResponseDTO {
 
   /** 일자 */
   ymd?: string;
+
+  /** 사용자 ID */
+  userId?: number;
 
   /** 연도 */
   yyyy?: string;
