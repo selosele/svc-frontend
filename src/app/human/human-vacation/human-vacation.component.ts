@@ -122,8 +122,6 @@ export class HumanVacationComponent implements OnInit {
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
-    if (!(event instanceof UiTabChangeEvent)) return;
-
     this.activeIndex = event.index;
     this.humanService.setWorkHistoryId(event.activeKey);
     this.humanService.setVacationTableTitle(this.activeIndex);

@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
+import { StoreService } from '@app/shared/services';
 import { HumanService } from '@app/human/human.service';
 import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
 import { isEmpty } from '@app/shared/utils';
-import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
-import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -87,6 +87,7 @@ export class HumanVacationListComponent implements OnInit {
         this.listVacation(data);
       }
       this.vacationListCurrent = currentItem?.value;
+      this.splitter?.hide();
     });
   }
 

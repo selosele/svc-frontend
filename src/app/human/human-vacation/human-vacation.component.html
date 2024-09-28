@@ -14,7 +14,7 @@
   <ui-tab
     [tabs]="workHistoryTabList"
     [activeIndex]="activeIndex"
-    (change)="onChange($event)"
+    (activeIndexChange)="onChange($event)"
   >
     <ng-container *ngIf="isNotQuit$ | async">
       <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
