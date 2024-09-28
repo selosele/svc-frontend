@@ -18,7 +18,7 @@ import { AuthService } from '@app/auth/auth.service';
     LayoutPageDescriptionComponent,
     MyHolidayDetailComponent,
   ],
-  selector: 'modal-my-holiday',
+  selector: 'view-my-holiday',
   templateUrl: './my-holiday.component.html',
   styleUrl: './my-holiday.component.scss'
 })

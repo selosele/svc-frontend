@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '../human.service';
@@ -32,8 +32,10 @@ import { StoreService, UiDialogService } from '@app/shared/services';
     UiCheckboxComponent,
     UiCardComponent,
     UiButtonComponent,
+    UiContentTitleComponent,
     LayoutPageDescriptionComponent,
     HumanVacationListComponent,
+    MyHolidayComponent,
   ],
   selector: 'view-human-vacation',
   templateUrl: './human-vacation.component.html',
@@ -136,14 +138,6 @@ export class HumanVacationComponent implements OnInit {
   onReset(): void {
     this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes);
     this.listWorkHistory();
-  }
-
-  /** 휴일 관리 modal을 표출한다. */
-  showHolidayModal(event: Event): void {
-    this.dialogService.open(MyHolidayComponent, {
-      focusOnShow: false,
-      header: '내 휴일 관리',
-    });
   }
 
 }
