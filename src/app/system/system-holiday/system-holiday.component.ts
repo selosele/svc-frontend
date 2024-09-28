@@ -65,7 +65,7 @@ export class SystemHolidayComponent {
 
   /** 휴일 목록을 조회한다. */
   listHoliday(): void {
-    this.holidayService.listHoliday();
+    this.holidayService.listHoliday(null);
   }
 
   /** 휴일을 추가한다. */
@@ -76,7 +76,7 @@ export class SystemHolidayComponent {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.holidayService.getHoliday$(event.data['ymd'])
+    this.holidayService.getHoliday$(null, event.data['ymd'])
     .subscribe((data) => {
       this.holidayDetail = data;
       this.splitter.show();
