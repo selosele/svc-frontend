@@ -63,7 +63,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.vacationDetailForm = this.fb.group({
       vacationId: [''],                                       // 휴가 ID
-      workHistoryId: [''],                                // 근무이력 ID
+      workHistoryId: [''],                                    // 근무이력 ID
       vacationTypeCode: ['', [FormValidator.required]],       // 휴가 구분 코드
       vacationStartYmd: ['', [FormValidator.required]],       // 휴가 시작일자
       vacationEndYmd: ['', [FormValidator.required]],         // 휴가 종료일자
