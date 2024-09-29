@@ -134,7 +134,7 @@
     />
   </div>
 
-  @if (isUserNotEmpty) {
+  @if (isUserNotEmpty && !isUserSelf) {
     <ui-button button (click)="superLogin()">로그인</ui-button>
   }
 </ui-split-form>

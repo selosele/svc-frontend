@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
+import { AuthenticatedUser, RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
@@ -71,6 +71,12 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
+  /** 인증된 사용자 정보 */
+  user: AuthenticatedUser;
+
+  /** 사용자 정보가 본인의 정보와 일치하는지 여부 */
+  isUserSelf = false;
+
   /** 사용자 정보 존재 여부 */
   get isUserNotEmpty() {
     return isNotObjectEmpty(this.userDetail);
@@ -86,6 +92,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
+    this.user = this.authService.getAuthenticatedUser();
+
     this.route.data.subscribe(({ code }) => {
       this.genderCodes = code['GENDER_00'];
       this.rankCodes = code['RANK_00'];
@@ -141,6 +149,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userDetail && this.userDetailForm) {
+      this.isUserSelf = Number(this.user.userId) === this.userDetail.userId;
+
       this.useRemove = true;
       this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
