@@ -60,10 +60,11 @@ export class AuthService {
   superLogin(dto: LoginRequestDTO): void {
     this.http.post<LoginResponseDTO>('/common/auth/superlogin', dto)
     .subscribe(async (data) => {
-      this.clearAuthInfo();
-      
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
+
+        // 로그인 정보 삭제
+        this.clearAuthInfo();
         
         // 액세스 토큰 설정
         this.setAccessToken(accessToken);
@@ -84,7 +85,7 @@ export class AuthService {
     });
   }
 
-  /** 로그아웃 시, 로그인 정보를 삭제한다. */
+  /** 로그인 정보를 삭제한다. */
   clearAuthInfo(): void {
     this.removeAccessToken();
     this.dialogService.closeAllDialog();
