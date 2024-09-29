@@ -40,6 +40,9 @@ export class UiTableComponent implements OnInit {
   /** 테이블 체크박스 사용여부 */
   @Input() useCheckbox = false;
 
+  /** 테이블 라디오버튼 사용여부 */
+  @Input() useRadio = false;
+
   /** 테이블 행 선택 모드 */
   @Input() selectionMode: 'single' | 'multiple' = 'single';
 

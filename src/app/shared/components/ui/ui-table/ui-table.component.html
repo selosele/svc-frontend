@@ -28,12 +28,11 @@
     >
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngIf="useRowIndex">
-            No
-          </th>
+          <th *ngIf="useRowIndex">No</th>
           <th *ngIf="useCheckbox">
             <p-tableHeaderCheckbox />
           </th>
+          <th *ngIf="useRadio"></th>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
             {{ col.header }}
             <p-sortIcon [field]="col.field" />
@@ -48,6 +47,9 @@
           </td>
           <td *ngIf="useCheckbox">
             <p-tableCheckbox [value]="rowData" />
+          </td>
+          <td *ngIf="useRadio">
+            <p-tableRadioButton [value]="rowData" />
           </td>
           <td *ngFor="let col of columns">
             <ng-container *ngIf="col.field">
