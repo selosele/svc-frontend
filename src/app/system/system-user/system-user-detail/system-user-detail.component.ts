@@ -151,7 +151,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     if (changes.userDetail && this.userDetailForm) {
       this.isUserSelf = Number(this.user.userId) === this.userDetail.userId;
 
-      this.useRemove = true;
+      this.useRemove = !this.isUserSelf;
       this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
 
