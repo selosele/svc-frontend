@@ -2,6 +2,8 @@
   <ng-content></ng-content>
 
   <div class="ui-splitter__buttons">
+    <ng-content select="[button]"></ng-content>
+
     @if (useSubmit) {
       <ui-button button
         [type]="'submit'"
