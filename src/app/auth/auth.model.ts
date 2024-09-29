@@ -13,6 +13,9 @@ export class LoginRequestDTO extends HttpRequestDTOBase {
   /** 아이디 저장 여부 */
   saveUserAccountYn?: string[];
 
+  /** 슈퍼로그인 여부 */
+  isSuperLogin?: string;
+
 }
 
 /** 로그인 응답 DTO */

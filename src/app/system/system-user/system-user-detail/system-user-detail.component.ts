@@ -236,6 +236,17 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     });
   }
 
+  /** 특정 사용자를 시스템관리자 권한으로 로그인한다. */
+  async superLogin(): Promise<void> {
+    const confirm = await this.messageService.confirm1(`${this.userDetail.userAccount} 계정을 시스템관리자 권한으로 로그인하시겠습니까?`);
+    if (!confirm) return;
+
+    this.authService.superLogin({
+      userAccount: this.userDetail.userAccount,
+      isSuperLogin: 'Y',
+    });
+  }
+
   /** 닫기 버튼을 클릭한다. */
   onClose(): void {
     this.close.emit();

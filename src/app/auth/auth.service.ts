@@ -56,22 +56,46 @@ export class AuthService {
     });
   }
 
+  /** 특정 사용자를 시스템관리자 권한으로 로그인한다. */
+  superLogin(dto: LoginRequestDTO): void {
+    this.http.post<LoginResponseDTO>('/common/auth/superlogin', dto)
+    .subscribe(async (data) => {
+      this.clearAuthInfo();
+      
+      const accessToken = data.accessToken;
+      if (isNotBlank(accessToken)) {
+        
+        // 액세스 토큰 설정
+        this.setAccessToken(accessToken);
+
+        // 메인 화면으로 이동
+        await this.router.navigateByUrl('/');
+        window.location.reload();
+      }
+    });
+  }
+
   /** 로그아웃을 한다. */
   logout(): void {
     this.http.post<void>('/common/auth/logout', {})
     .subscribe(() => {
-      this.removeAccessToken();
-      this.dialogService.closeAllDialog();
-
-      Object.keys(window.localStorage).forEach((key) => {
-        if (key !== SAVE_USER_ACCOUNT_KEY) {
-          window.localStorage.removeItem(key); // 필수로 저장되어 있어야 하는 key를 제외하고 전부 삭제
-        }
-      });
-
-      this.store.resetAll(); // 모든 상태를 초기화
+      this.clearAuthInfo();
       this.router.navigateByUrl(LOGIN_PAGE_PATH);
     });
+  }
+
+  /** 로그아웃 시, 로그인 정보를 삭제한다. */
+  clearAuthInfo(): void {
+    this.removeAccessToken();
+    this.dialogService.closeAllDialog();
+
+    Object.keys(window.localStorage).forEach((key) => {
+      if (key !== SAVE_USER_ACCOUNT_KEY) {
+        window.localStorage.removeItem(key); // 필수로 저장되어 있어야 하는 key를 제외하고 전부 삭제
+      }
+    });
+
+    this.store.resetAll(); // 모든 상태를 초기화
   }
 
   /** 사용자 목록을 조회한다. */

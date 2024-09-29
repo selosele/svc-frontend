@@ -133,4 +133,8 @@
       [dateFormat]="'yymmdd'"
     />
   </div>
+
+  @if (isUserNotEmpty) {
+    <ui-button button (click)="superLogin()">로그인</ui-button>
+  }
 </ui-split-form>
