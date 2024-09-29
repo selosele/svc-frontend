@@ -34,13 +34,13 @@ export class HolidayService {
   /** 휴일을 추가한다. */
   addHoliday$(dto: SaveHolidayRequestDTO) {
     const { userId } = dto;
-    return this.http.post<HolidayResponseDTO>(`/common/holidays/${userId}`, dto);
+    return this.http.post<number>(`/common/holidays/${userId}`, dto);
   }
 
   /** 휴일을 수정한다. */
   updateHoliday$(dto: SaveHolidayRequestDTO) {
     const { ymd, userId } = dto;
-    return this.http.put<HolidayResponseDTO>(`/common/holidays/${userId}/${ymd}`, dto);
+    return this.http.put<number>(`/common/holidays/${userId}/${ymd}`, dto);
   }
 
   /** 휴일을 삭제한다. */
