@@ -117,7 +117,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠습니까?`);
     if (!confirm) return;
 
-    value.employeeId = this.user.employeeId;
+    value.employeeId = this.user?.employeeId;
 
     // 근무이력 ID가 없으면 추가 API를 타고
     if (isEmpty(value.workHistoryId)) {

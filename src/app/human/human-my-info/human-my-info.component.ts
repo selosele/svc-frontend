@@ -123,7 +123,7 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 직원을 조회한다. */
   getEmployee(): void {
-    this.humanService.getEmployee(this.user.employeeId);
+    this.humanService.getEmployee(this.user?.employeeId);
     this.setMyInfoForm();
   }
 
@@ -180,7 +180,7 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.humanService.getWorkHistory$(this.user.userId, event.data['workHistoryId'])
+    this.humanService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
     .subscribe((data) => {
       this.workHistoryDetail = data;
       this.splitter.show();

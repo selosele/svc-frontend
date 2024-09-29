@@ -84,7 +84,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
       
       if (isObjectEmpty(changes.holidayDetail.currentValue)) {
         this.useRemove = false;
-        this.holidayDetailForm.reset({ userId: this.user.userId });
+        this.holidayDetailForm.reset({ userId: this.user?.userId });
         return;
       }
 
@@ -125,7 +125,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('휴일을 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.holidayService.removeHoliday$(this.user.userId, this.holidayDetail.ymd)
+    this.holidayService.removeHoliday$(this.user?.userId, this.holidayDetail.ymd)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();
