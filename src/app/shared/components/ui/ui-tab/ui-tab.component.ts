@@ -25,7 +25,7 @@ export class UiTabComponent {
   /** 탭 클릭 이벤트 */
   @Output() change = new EventEmitter<UiTabChangeEvent>();
 
-  /** 선택된 탭 index 변경 이벤트 */
+  /** 탭 index 변경 이벤트 */
   @Output() activeIndexChange = new EventEmitter<UiTabChangeEvent>();
 
   /** 탭을 클릭한다. */
