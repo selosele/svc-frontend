@@ -54,14 +54,18 @@ export class AppComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.authService.isLogined()) {
+
+          // 코드 목록 조회
           if (!this.store.select<boolean>('codeListDataLoad').value) {
             this.codeService.listCode$().subscribe();
           }
           
+          // 권한 목록 조회
           if (!this.store.select<boolean>('roleListDataLoad').value) {
             this.authService.listRole();
           }
           
+          // 메뉴 목록 조회
           if (!this.store.select<boolean>('menuListDataLoad').value) {
             this.menuService.listMenu();
           }
