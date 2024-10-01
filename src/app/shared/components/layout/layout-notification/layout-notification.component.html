@@ -1,0 +1,20 @@
+<div class="layout-notification">
+  <button
+    type="button"
+    class="layout-notification__icon-text"
+    [title]="notificationHtmlTitle"
+    (click)="showNotificationList()"
+  >
+    <i class="pi pi-bell"></i>
+    <span>{{ notificationCount }}</span>
+  </button>
+
+  @if (isListVisible) {
+    <div class="layout-notification__list">
+      <ui-accordion
+        [tabs]="tabs"
+        (activeIndexChange)="onChange($event)"
+      />
+    </div>
+  }
+</div>

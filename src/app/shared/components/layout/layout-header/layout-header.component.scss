@@ -32,7 +32,9 @@
   }
 
   &__user-info {
-    a {
+    position: relative;
+
+    > a {
       color: var(--primary-color);
       text-decoration: underline;
     }

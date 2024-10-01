@@ -5,6 +5,7 @@ import { AuthService } from '@app/auth/auth.service';
 import { UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
+import { LayoutNotificationComponent } from '../layout-notification/layout-notification.component';
 import { UiButtonComponent } from '../../ui';
 import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.component';
 
@@ -15,6 +16,7 @@ import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.com
     UiButtonComponent,
     LayoutSiteTitleComponent,
     LayoutMenuComponent,
+    LayoutNotificationComponent,
   ],
   selector: 'layout-header',
   templateUrl: './layout-header.component.html',
@@ -46,7 +48,7 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   /** 로그아웃을 한다. */
-  logout(event: Event): void {
+  logout(): void {
     this.authService.logout();
   }
 
