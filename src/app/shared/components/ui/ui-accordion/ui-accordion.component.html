@@ -1,0 +1,9 @@
+<div class="ui-accordion">
+  <p-accordion [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)">
+    <p-accordionTab [header]="tab.title" *ngFor="let tab of tabs">
+      <p class="m-0">
+        {{ tab.content }}
+      </p>
+    </p-accordionTab>
+  </p-accordion>
+</div>

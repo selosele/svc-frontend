@@ -1,3 +1,4 @@
+export * from './ui-accordion/ui-accordion.component';
 export * from './ui-alert/ui-alert.component';
 export * from './ui-button/ui-button.component';
 export * from './ui-card/ui-card.component';
