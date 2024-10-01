@@ -84,7 +84,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
       
       if (isObjectEmpty(changes.holidayDetail.currentValue)) {
         this.useRemove = false;
-        this.holidayDetailForm.reset({ userId: this.user?.userId });
+        this.holidayDetailForm.reset({ userId: this.user?.userId, useYn: 'Y' });
         return;
       }
 
