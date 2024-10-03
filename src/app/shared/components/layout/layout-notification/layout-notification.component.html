@@ -1,20 +1,79 @@
-<div class="layout-notification">
-  <button
-    type="button"
-    class="layout-notification__icon-text"
-    [title]="notificationHtmlTitle"
-    (click)="showNotificationList()"
-  >
-    <i class="pi pi-bell"></i>
-    <span>{{ notificationCount }}</span>
-  </button>
-
-  @if (isListVisible) {
-    <div class="layout-notification__list">
-      <ui-accordion
-        [tabs]="tabs"
-        (activeIndexChange)="onChange($event)"
-      />
-    </div>
-  }
-</div>
+@if (notificationCount > 0) {
+  <div class="layout-notification">
+    <button
+      type="button"
+      class="layout-notification__icon-text"
+      [title]="notificationHtmlTitle"
+      (click)="showNotificationList()"
+    >
+      <i class="pi pi-bell"></i>
+      <span>{{ notificationCount }}</span>
+    </button>
+  
+    @if (isListVisible) {
+      <div class="layout-notification__list">
+        <div class="flex justify-content-between align-items-center mb-2">
+          <p>{{ notificationCount }}개의 읽지 않은 알림</p>
+  
+          <div class="flex justify-content-end">
+            <!-- <ui-button
+              [icon]="'pi-trash'"
+              [size]="'small'"
+              [title]="'알림 선택 삭제'"
+              [text]="true"
+            /> -->
+    
+            <ui-button
+              [icon]="'pi-refresh'"
+              [size]="'small'"
+              [title]="'알림 새로고침'"
+              [text]="true"
+              (click)="listNotification()"
+            />
+          </div>
+        </div>
+  
+        <ul>
+          @for (item of notificationList; track $index) {
+            <li class="layout-notification__list-item" [class.read]="item.notificationReadDt">
+              <div class="layout-notification__list-header">
+                <strong class="flex align-items-center gap-1">
+                  @if (item.notificationTypeCode == '02') {
+                    <i class="pi pi-exclamation-circle text-red-600"></i>
+                  }
+                  {{ item.notificationTitle }}
+                </strong>
+                
+                <div class="flex gap-3">
+                  @if (!item.notificationReadDt) {
+                    <ui-button
+                      [icon]="'pi-check'"
+                      [severity]="'success'"
+                      [title]="'알림 확인처리'"
+                      [text]="true"
+                      class="layout-notification__list-button"
+                      (click)="updateNotificationReadDt(item.notificationId)"
+                    />
+                  }
+                  
+                  <ui-button
+                    [icon]="'pi-times'"
+                    [severity]="'secondary'"
+                    [title]="'알림 삭제'"
+                    [text]="true"
+                    class="layout-notification__list-button"
+                    (click)="removeNotification(item.notificationId)"
+                  />
+                </div>
+              </div>
+              
+              <p class="layout-notification__list-content">
+                {{ item.notiticationContent }}
+              </p>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+}
