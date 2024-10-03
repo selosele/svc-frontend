@@ -1,6 +1,10 @@
 <div class="ui-accordion">
   <p-accordion [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)">
-    <p-accordionTab [header]="tab.title" *ngFor="let tab of tabs">
+    <p-accordionTab *ngFor="let tab of tabs">
+      <ng-template pTemplate="header">
+        {{ tab.title }}
+      </ng-template>
+
       <p class="m-0">
         {{ tab.content }}
       </p>
