@@ -61,7 +61,7 @@ export class LayoutMenuHistoryComponent implements OnInit {
     ];
 
     if (this.menuHistoryStorageList.length > 0) {
-      this.store.update<MenuResponseDTO[]>('menuHistoryList', this.menuHistoryStorageList);
+      this.store.update('menuHistoryList', this.menuHistoryStorageList);
     }
 
     combineLatest([

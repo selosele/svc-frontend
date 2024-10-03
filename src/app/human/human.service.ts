@@ -49,15 +49,15 @@ export class HumanService {
 
   /** 근무이력 ID 값을 설정한다. */
   setWorkHistoryId(value: number): void {
-    this.store.update<number>('workHistoryId', value);
+    this.store.update('workHistoryId', value);
   }
 
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
     this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`)
     .subscribe((data) => {
-      this.store.update<EmployeeResponseDTO>('employee', data);
-      this.store.update<boolean>('employeeDataLoad', true);
+      this.store.update('employee', data);
+      this.store.update('employeeDataLoad', true);
     });
   }
 
@@ -73,8 +73,8 @@ export class HumanService {
 
     this.http.get<CompanyResponseDTO[]>('/human/companies', { params })
     .subscribe((data) => {
-      this.store.update<CompanyResponseDTO[]>('companyList', data);
-      this.store.update<boolean>('companyListDataLoad', true);
+      this.store.update('companyList', data);
+      this.store.update('companyListDataLoad', true);
     });
   }
 
@@ -85,9 +85,9 @@ export class HumanService {
 
     this.http.get<WorkHistoryResponseDTO[]>(`/human/employees/${employeeId}/companies`, { params })
     .subscribe((data) => {
-      this.store.update<WorkHistoryResponseDTO[]>('workHistoryList', data);
-      this.store.update<Tab[]>('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
-      this.store.update<boolean>('workHistoryListDataLoad', true);
+      this.store.update('workHistoryList', data);
+      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
+      this.store.update('workHistoryListDataLoad', true);
       this.setVacationTableTitle(index);
     });
   }
@@ -147,21 +147,18 @@ export class HumanService {
     const { annualTypeCode, quitYmd } = workHistory;
 
     if (isNotBlank(quitYmd)) {
-      this.store.update<boolean>('isNotQuit', false);
-      this.store.update<string>('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
+      this.store.update('isNotQuit', false);
+      this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
       return;
     }
 
     if (isEmpty(annualTypeCode) || annualTypeCode === '99') {
-      this.store.update<string>('vacationTableTitle', '근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
+      this.store.update('vacationTableTitle', '근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
       return;
     }
 
-    this.store.update<boolean>('isNotQuit', true);
-    this.store.update<string>(
-      'vacationTableTitle',
-      this.calculateVacation(workHistory)
-    );
+    this.store.update('isNotQuit', true);
+    this.store.update('vacationTableTitle', this.calculateVacation(workHistory));
   }
 
   /** 잔여 휴가를 계산해서 반환한다. */

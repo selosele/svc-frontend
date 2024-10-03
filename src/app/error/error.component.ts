@@ -24,7 +24,7 @@ export class ErrorComponent {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.store.update<string>('currentPageTitle', null);
+        this.store.update('currentPageTitle', null);
       });
   }
 

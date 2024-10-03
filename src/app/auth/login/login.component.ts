@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
     });
 
     modal.onClose.subscribe((data) => {
-      this.store.update<UserCertHistoryResponseDTO>('userCertHistory', null);
+      this.store.update('userCertHistory', null);
     });
   }
   

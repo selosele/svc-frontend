@@ -24,8 +24,8 @@ export class StoreService {
   }
 
   /** 상태를 변경한다. */
-  update<T>(key: string, value: T): void {
-    this.select<T>(key).next(value as T);
+  update(key: string, value: any): void {
+    this.select(key).next(value);
   }
 
   /** 모든 상태를 초기 값으로 초기화한다. */

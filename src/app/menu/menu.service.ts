@@ -104,30 +104,30 @@ export class MenuService {
   /** 메뉴 목록 데이터를 설정한다. */
   setMenuList(menuList: MenuResponseDTO[]): void {
     const menuTree = this.createMenuTree(menuList);
-    this.store.update<MenuTree[]>('menuTree', menuTree);
-    this.store.update<MenuResponseDTO[]>('menuList', menuList);
-    this.store.update<boolean>('menuListDataLoad', true);
+    this.store.update('menuTree', menuTree);
+    this.store.update('menuList', menuList);
+    this.store.update('menuListDataLoad', true);
   }
 
   /** 현재 메뉴 ID 데이터를 설정한다. */
   setCurrentMenuId(currentMenuId: number): void {
-    this.store.update<number>('currentMenuId', currentMenuId);
+    this.store.update('currentMenuId', currentMenuId);
   }
 
   /** 현재 상위 메뉴 ID 데이터를 설정한다. */
   setCurrentUpMenuId(currentUpMenuId: number): void {
-    this.store.update<number>('currentUpMenuId', currentUpMenuId);
+    this.store.update('currentUpMenuId', currentUpMenuId);
   }
 
   /** 현재 페이지 타이틀 데이터를 설정한다. */
   setCurrentPageTitle(currentPageTitle: string): void {
-    this.store.update<string>('currentPageTitle', currentPageTitle);
+    this.store.update('currentPageTitle', currentPageTitle);
   }
 
   /** 메뉴접속이력 목록 데이터를 설정한다. */
   setMenuHistoryList(list: MenuResponseDTO[]): void {
     //list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
-    this.store.update<MenuResponseDTO[]>('menuHistoryList', list);
+    this.store.update('menuHistoryList', list);
     window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
   }
 

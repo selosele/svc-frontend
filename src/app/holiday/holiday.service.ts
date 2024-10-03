@@ -21,8 +21,8 @@ export class HolidayService {
   listHoliday(userId: number): void {
     this.http.get<HolidayResponseDTO[]>(`/common/holidays/${userId}`)
     .subscribe((data) => {
-      this.store.update<HolidayResponseDTO[]>('holidayList', data);
-      this.store.update<boolean>('holidayListDataLoad', true);
+      this.store.update('holidayList', data);
+      this.store.update('holidayListDataLoad', true);
     });
   }
 

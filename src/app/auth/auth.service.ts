@@ -103,8 +103,8 @@ export class AuthService {
   listUser(): void {
     this.http.get<UserResponseDTO[]>('/common/users')
     .subscribe((data) => {
-      this.store.update<UserResponseDTO[]>('userList', data);
-      this.store.update<boolean>('userListDataLoad', true);
+      this.store.update('userList', data);
+      this.store.update('userListDataLoad', true);
     });
   }
 
@@ -145,8 +145,8 @@ export class AuthService {
   listRole(): void {
     this.http.get<RoleResponseDTO[]>('/common/roles')
     .subscribe((data) => {
-      this.store.update<RoleResponseDTO[]>('roleList', data);
-      this.store.update<boolean>('roleListDataLoad', true);
+      this.store.update('roleList', data);
+      this.store.update('roleListDataLoad', true);
     });
   }
 

@@ -24,7 +24,7 @@ export class UiLoadingService {
      * modal 표출 후 HTTP 요청을 전송할 때 발생하는 오류
      */
     setTimeout(() => {
-      this.store.update<boolean>('loading', loading);
+      this.store.update('loading', loading);
     }, 0);
   }
 

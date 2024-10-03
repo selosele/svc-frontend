@@ -25,8 +25,8 @@ export class CodeService {
   /** 코드 목록 데이터를 설정한다. */
   setCodeList(codeList: CodeResponseDTO[]): void {
     const codeTree = this.createCodeTree(codeList);
-    this.store.update<CodeTree[]>('codeTree', codeTree);
-    this.store.update<CodeResponseDTO[]>('codeList', codeList);
+    this.store.update('codeTree', codeTree);
+    this.store.update('codeList', codeList);
   }
 
   /** 코드 목록을 조회한다. */
@@ -34,7 +34,7 @@ export class CodeService {
     return this.http.get<CodeResponseDTO[]>('/common/codes').pipe(
       tap((data) => {
         this.setCodeList(data);
-        this.store.update<boolean>('codeListDataLoad', true);
+        this.store.update('codeListDataLoad', true);
       })
     );
   }

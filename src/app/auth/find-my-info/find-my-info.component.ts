@@ -99,7 +99,7 @@ export class FindMyInfoComponent implements OnInit {
       formattedTime.subscribe((time) => {
         this.certCodeLabel = `인증코드(${time})`;
       });
-      this.store.update<UserCertHistoryResponseDTO>('userCertHistory', data);
+      this.store.update('userCertHistory', data);
       this.messageService.toastSuccess('인증코드를 메일로 발송했습니다. 메일을 확인해주세요.');
     });
   }

@@ -46,7 +46,7 @@ export class ModalSearchCompanyComponent implements OnInit {
 
   /** 회사 목록 데이터 로드 완료 여부 값을 설정한다. */
   set companyListDataLoad(value: boolean) {
-    this.store.update<boolean>('companyListDataLoad', value);
+    this.store.update('companyListDataLoad', value);
   }
 
   /** 회사 검색 폼 */
