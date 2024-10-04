@@ -1,6 +1,6 @@
 import { HttpRequestDTOBase } from '@app/shared/models';
 
-/** 알림 추가/수정 요청 DTO */
+/** 알림 수정/삭제 요청 DTO */
 export class SaveNotificationRequestDTO extends HttpRequestDTOBase {
 
   /** 알림 ID */
@@ -28,6 +28,9 @@ export class NotificationResultDTO {
   
   /** 알림 유형 코드 */
   notificationTypeCode?: string;
+  
+  /** 알림 종류 코드 */
+  notificationKindCode?: string;
   
   /** 알림 확인일시 */
   notificationReadDt?: string;
