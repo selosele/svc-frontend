@@ -22,7 +22,7 @@ export class NotificationService {
 
   /** 알림 개수 및 목록을 조회한다. */
   listNotification(): void {
-    this.http.get<NotificationResponseDTO>('/common/notifications')
+    this.http.get<NotificationResponseDTO>('/co/notifications')
     .subscribe((data) => {
       this.store.update('notificationList', data.list);
       this.store.update('notificationCount', data.total);
@@ -33,12 +33,12 @@ export class NotificationService {
   /** 알림을 확인처리한다. */
   updateNotificationReadDt$(dto: SaveNotificationRequestDTO) {
     const { notificationId } = dto;
-    return this.http.put<number>(`/common/notifications/${notificationId}`, dto);
+    return this.http.put<number>(`/co/notifications/${notificationId}`, dto);
   }
 
   /** 알림을 삭제한다. */
   removeNotification$(notificationId: number) {
-    return this.http.delete<void>(`/common/notifications/${notificationId}`);
+    return this.http.delete<void>(`/co/notifications/${notificationId}`);
   }
 
 }

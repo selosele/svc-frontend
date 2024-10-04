@@ -31,7 +31,7 @@ export class CodeService {
 
   /** 코드 목록을 조회한다. */
   listCode$() {
-    return this.http.get<CodeResponseDTO[]>('/common/codes').pipe(
+    return this.http.get<CodeResponseDTO[]>('/co/codes').pipe(
       tap((data) => {
         this.setCodeList(data);
         this.store.update('codeListDataLoad', true);
@@ -41,23 +41,23 @@ export class CodeService {
 
   /** 코드를 조회한다. */
   getCode$(codeId: string) {
-    return this.http.get<CodeResponseDTO>(`/common/codes/${codeId}`);
+    return this.http.get<CodeResponseDTO>(`/co/codes/${codeId}`);
   }
 
   /** 코드를 추가한다. */
   addCode$(dto: SaveCodeRequestDTO) {
-    return this.http.post<CodeResponseDTO>('/common/codes', dto);
+    return this.http.post<CodeResponseDTO>('/co/codes', dto);
   }
 
   /** 코드를 수정한다. */
   updateCode$(dto: SaveCodeRequestDTO) {
     const { codeId } = dto;
-    return this.http.put<CodeResponseDTO>(`/common/codes/${codeId}`, dto);
+    return this.http.put<CodeResponseDTO>(`/co/codes/${codeId}`, dto);
   }
 
   /** 코드를 삭제한다. */
   removeCode$(codeId: string) {
-    return this.http.delete<void>(`/common/codes/${codeId}`);
+    return this.http.delete<void>(`/co/codes/${codeId}`);
   }
 
   /** 상위 코드 ID로 코드 데이터 목록을 만들어서 반환한다. */

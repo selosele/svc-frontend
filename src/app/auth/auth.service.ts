@@ -35,7 +35,7 @@ export class AuthService {
 
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
-    this.http.post<LoginResponseDTO>('/common/auth/login', dto)
+    this.http.post<LoginResponseDTO>('/co/auth/login', dto)
     .subscribe((data) => {
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
@@ -58,7 +58,7 @@ export class AuthService {
 
   /** 특정 사용자로 로그인한다. */
   superLogin(dto: LoginRequestDTO): void {
-    this.http.post<LoginResponseDTO>('/common/auth/superlogin', dto)
+    this.http.post<LoginResponseDTO>('/co/auth/superlogin', dto)
     .subscribe(async (data) => {
       const accessToken = data.accessToken;
       if (isNotBlank(accessToken)) {
@@ -78,7 +78,7 @@ export class AuthService {
 
   /** 로그아웃을 한다. */
   logout(): void {
-    this.http.post<void>('/common/auth/logout', {})
+    this.http.post<void>('/co/auth/logout', {})
     .subscribe(() => {
       this.clearAuthInfo();
       this.router.navigateByUrl(LOGIN_PAGE_PATH);
@@ -101,7 +101,7 @@ export class AuthService {
 
   /** 사용자 목록을 조회한다. */
   listUser(): void {
-    this.http.get<UserResponseDTO[]>('/common/users')
+    this.http.get<UserResponseDTO[]>('/co/users')
     .subscribe((data) => {
       this.store.update('userList', data);
       this.store.update('userListDataLoad', true);
@@ -111,39 +111,39 @@ export class AuthService {
   /** 권한별 사용자 목록을 조회한다. */
   listUserByRole$(dto: GetUserRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<UserResponseDTO[]>('/common/users', { params });
+    return this.http.get<UserResponseDTO[]>('/co/users', { params });
   }
 
   /** 사용자를 조회한다. */
   getUser$(userId: number) {
-    return this.http.get<UserResponseDTO>(`/common/users/${userId}`);
+    return this.http.get<UserResponseDTO>(`/co/users/${userId}`);
   }
 
   /** 사용자를 추가한다. */
   addUser$(dto: SaveUserRequestDTO) {
-    return this.http.post<UserResponseDTO>('/common/users', dto);
+    return this.http.post<UserResponseDTO>('/co/users', dto);
   }
 
   /** 사용자를 수정한다. */
   updateUser$(dto: SaveUserRequestDTO) {
     const { userId } = dto;
-    return this.http.put<UserResponseDTO>(`/common/users/${userId}`, dto);
+    return this.http.put<UserResponseDTO>(`/co/users/${userId}`, dto);
   }
 
   /** 사용자를 삭제한다. */
   removeUser$(userId: number) {
-    return this.http.delete<void>(`/common/users/${userId}`);
+    return this.http.delete<void>(`/co/users/${userId}`);
   }
 
   /** 사용자 비밀번호를 변경한다. */
   updatePassword$(dto: UpdateUserPasswordRequestDTO) {
     const { userId } = this.getAuthenticatedUser();
-    return this.http.put<number>(`/common/users/${userId}/password`, dto);
+    return this.http.put<number>(`/co/users/${userId}/password`, dto);
   }
 
   /** 권한 목록을 조회한다. */
   listRole(): void {
-    this.http.get<RoleResponseDTO[]>('/common/roles')
+    this.http.get<RoleResponseDTO[]>('/co/roles')
     .subscribe((data) => {
       this.store.update('roleList', data);
       this.store.update('roleListDataLoad', true);
@@ -152,23 +152,23 @@ export class AuthService {
 
   /** 사용자의 아이디를 찾는다. */
   findUserAccount$(dto: FindUserInfoRequestDTO) {
-    return this.http.post<boolean>('/common/auth/find-user-account', dto);
+    return this.http.post<boolean>('/co/auth/find-user-account', dto);
   }
 
   /** 사용자의 비밀번호를 찾는다(인증코드 발송). */
   findUserPassword1$(dto: FindUserInfoRequestDTO) {
-    return this.http.post<UserCertHistoryResponseDTO>('/common/auth/find-user-password1', dto);
+    return this.http.post<UserCertHistoryResponseDTO>('/co/auth/find-user-password1', dto);
   }
 
   /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급). */
   findUserPassword2$(dto: FindUserInfoRequestDTO) {
-    return this.http.post<boolean>('/common/auth/find-user-password2', dto);
+    return this.http.post<boolean>('/co/auth/find-user-password2', dto);
   }
 
   /** 사용자 본인인증 내역이 존재하는지 확인한다. */
   countUserCertHistory$(dto: GetUserCertHistoryRequestDTO) {
     const { userAccount } = dto;
-    return this.http.post<number>(`/common/auth/certs/${userAccount}`, dto);
+    return this.http.post<number>(`/co/auth/certs/${userAccount}`, dto);
   }
 
   /** 로그인 여부를 반환한다. */

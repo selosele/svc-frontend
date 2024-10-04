@@ -47,7 +47,7 @@ export class MenuService {
   listMenu(dto?: GetMenuRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<MenuResponseDTO[]>('/common/menus', { params })
+    this.http.get<MenuResponseDTO[]>('/co/menus', { params })
     .subscribe((data) => {
       this.setMenuList(data);
     });
@@ -56,7 +56,7 @@ export class MenuService {
   /** 권한별 메뉴 목록을 조회한다. */
   listMenuByRole$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<MenuResponseDTO[]>('/common/menus', { params });
+    return this.http.get<MenuResponseDTO[]>('/co/menus', { params });
   }
 
   /** 메뉴 관련 데이터를 설정한다. */
