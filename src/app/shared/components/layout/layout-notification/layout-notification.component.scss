@@ -35,14 +35,13 @@
     position: absolute;
     top: calc(100% + 2rem);
     right: 0;
-    width: 18.75rem;
-    padding: 1rem;
+    width: 21.875rem;
     border: 1px solid var(--surface-300);
     background-color: var(--surface-0);
     box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
 
     &-item {
-      padding: 0.625rem;
+      padding: 1rem;
 
       &.read {
         opacity: 0.4;
@@ -59,10 +58,6 @@
       align-items: center;
       gap: 0.625rem;
       width: 100%;
-    }
-
-    &-content {
-      margin-top: 0.3125rem;
     }
 
     &-button {

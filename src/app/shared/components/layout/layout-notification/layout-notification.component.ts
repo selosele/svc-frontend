@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { UiButtonComponent } from '../../ui';
+import { StoreService } from '@app/shared/services';
 import { NotificationService } from '@app/notification/notification.service';
 import { NotificationResultDTO } from '@app/notification/notification.model';
-import { StoreService } from '@app/shared/services';
+import { dateUtil } from '@app/shared/utils';
 
 @Component({
   standalone: true,
   imports: [
+    CommonModule,
     UiButtonComponent,
   ],
   selector: 'layout-notification',
@@ -49,12 +52,12 @@ export class LayoutNotificationComponent implements OnInit {
   }
 
   /** 알림 목록을 표출한다. */
-  showNotificationList(): void {
+  toggleNotificationList(): void {
     this.isListVisible = !this.isListVisible;
   }
 
   /** 알림을 확인처리한다. */
-  updateNotificationReadDt(notificationId: number) {
+  updateNotificationReadDt(notificationId: number): void {
     this.notificationService.updateNotificationReadDt$({ notificationId })
     .subscribe(() => {
       this.listNotification();
@@ -62,11 +65,22 @@ export class LayoutNotificationComponent implements OnInit {
   }
 
   /** 알림을 삭제한다. */
-  removeNotification(notificationId: number) {
+  removeNotification(notificationId: number): void {
     this.notificationService.removeNotification$(notificationId)
     .subscribe(() => {
       this.listNotification();
     });
+  }
+
+  /** 알림 등록일시를 반환한다. */
+  getCreateDt(value: string): string {
+    const createDt = dateUtil(value);
+
+    // 하루가 안지났으면 시간단위로 반환
+    if (!dateUtil().isAfter(createDt, 'day')) {
+      return createDt.format('HH:mm:ss');  
+    }
+    return createDt.format('YYYY.MM.DD.');
   }
 
 }
