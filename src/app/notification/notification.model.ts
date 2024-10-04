@@ -34,6 +34,9 @@ export class NotificationResultDTO {
   
   /** 알림 확인일시 */
   notificationReadDt?: string;
+  
+  /** 등록일시 */
+  createDt?: string;
 
 }
 
