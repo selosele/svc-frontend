@@ -54,7 +54,7 @@ export class HumanService {
 
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
-    this.http.get<EmployeeResponseDTO>(`/human/employees/${employeeId}`)
+    this.http.get<EmployeeResponseDTO>(`/hm/employees/${employeeId}`)
     .subscribe((data) => {
       this.store.update('employee', data);
       this.store.update('employeeDataLoad', true);
@@ -64,14 +64,14 @@ export class HumanService {
   /** 직원을 수정한다. */
   updateEmployee$(dto: SaveEmployeeRequestDTO) {
     const { employeeId } = dto;
-    return this.http.put<EmployeeResponseDTO>(`/human/employees/${employeeId}`, dto);
+    return this.http.put<EmployeeResponseDTO>(`/hm/employees/${employeeId}`, dto);
   }
 
   /** 회사 목록을 조회한다. */
   listCompany(dto?: GetCompanyRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<CompanyResponseDTO[]>('/human/companies', { params })
+    this.http.get<CompanyResponseDTO[]>('/hm/companies', { params })
     .subscribe((data) => {
       this.store.update('companyList', data);
       this.store.update('companyListDataLoad', true);
@@ -83,7 +83,7 @@ export class HumanService {
     const { employeeId } = dto;
     const params = this.httpService.createParams(dto);
 
-    this.http.get<WorkHistoryResponseDTO[]>(`/human/employees/${employeeId}/companies`, { params })
+    this.http.get<WorkHistoryResponseDTO[]>(`/hm/employees/${employeeId}/companies`, { params })
     .subscribe((data) => {
       this.store.update('workHistoryList', data);
       this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
@@ -94,51 +94,51 @@ export class HumanService {
 
   /** 근무이력을 조회한다. */
   getWorkHistory$(employeeId: number, workHistoryId: number) {
-    return this.http.get<WorkHistoryResponseDTO>(`/human/employees/${employeeId}/companies/${workHistoryId}`);
+    return this.http.get<WorkHistoryResponseDTO>(`/hm/employees/${employeeId}/companies/${workHistoryId}`);
   }
 
   /** 근무이력을 추가한다. */
   addWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId } = dto;
-    return this.http.post<void>(`/human/employees/${employeeId}/companies`, dto);
+    return this.http.post<void>(`/hm/employees/${employeeId}/companies`, dto);
   }
 
   /** 근무이력을 수정한다. */
   updateWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId, workHistoryId } = dto;
-    return this.http.put<void>(`/human/employees/${employeeId}/companies/${workHistoryId}`, dto);
+    return this.http.put<void>(`/hm/employees/${employeeId}/companies/${workHistoryId}`, dto);
   }
 
   /** 근무이력을 삭제한다. */
   removeWorkHistory$(employeeId: number, workHistoryId: number) {
-    return this.http.delete<void>(`/human/employees/${employeeId}/companies/${workHistoryId}`);
+    return this.http.delete<void>(`/hm/employees/${employeeId}/companies/${workHistoryId}`);
   }
 
   /** 휴가 목록을 조회한다. */
   listVacation$(dto: GetVacationRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<VacationResponseDTO[]>('/human/vacations', { params });
+    return this.http.get<VacationResponseDTO[]>('/hm/vacations', { params });
   }
 
   /** 휴가를 조회한다. */
   getVacation$(vacationId: number) {
-    return this.http.get<VacationResponseDTO>(`/human/vacations/${vacationId}`);
+    return this.http.get<VacationResponseDTO>(`/hm/vacations/${vacationId}`);
   }
 
   /** 휴가를 추가한다. */
   addVacation$(dto: SaveVacationRequestDTO) {
-    return this.http.post<VacationResponseDTO>('/human/vacations', dto);
+    return this.http.post<VacationResponseDTO>('/hm/vacations', dto);
   }
 
   /** 휴가를 수정한다. */
   updateVacation$(dto: SaveVacationRequestDTO) {
     const { vacationId } = dto;
-    return this.http.put<number>(`/human/vacations/${vacationId}`, dto);
+    return this.http.put<number>(`/hm/vacations/${vacationId}`, dto);
   }
 
   /** 휴가를 삭제한다. */
   removeVacation$(vacationId: number) {
-    return this.http.delete<void>(`/human/vacations/${vacationId}`);
+    return this.http.delete<void>(`/hm/vacations/${vacationId}`);
   }
 
   /** 테이블 타이틀을 설정한다. */

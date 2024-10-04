@@ -8,7 +8,7 @@ export const humanRoutes: Routes = [
 
   // 마이페이지
   {
-    path: 'human/my-info',
+    path: 'hm/my-info',
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
@@ -19,7 +19,7 @@ export const humanRoutes: Routes = [
   },
   // 휴가관리 페이지
   {
-    path: 'human/vacations',
+    path: 'hm/vacations',
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
