@@ -10,26 +10,21 @@
   text-align: center;
   align-content: center;
 
-  &:before {
-    content: "404";
+  &__code {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 1rem;
-    border-radius: 50%;
-    border: 2px solid var(--primary-color);
+    margin: 0 auto 1.5rem;
     color: var(--primary-color);
     font-weight: 700;
+    font-size: 4.5rem;
+  }
+
+  &__title {
     font-size: 2rem;
   }
 
-  .error__title {
-    font-size: 2rem;
-  }
-
-  .error__text {
+  &__text {
     margin: 1rem 0;
   }
 }
