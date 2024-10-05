@@ -34,7 +34,7 @@ export class HolidayService {
   /** 휴일을 추가한다. */
   addHoliday$(dto: SaveHolidayRequestDTO) {
     const { userId } = dto;
-    return this.http.post<number>(`/co/holidays/${userId}`, dto);
+    return this.http.post<string>(`/co/holidays/${userId}`, dto);
   }
 
   /** 휴일을 수정한다. */

@@ -100,13 +100,13 @@ export class HumanService {
   /** 근무이력을 추가한다. */
   addWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId } = dto;
-    return this.http.post<void>(`/hm/employees/${employeeId}/companies`, dto);
+    return this.http.post<number>(`/hm/employees/${employeeId}/companies`, dto);
   }
 
   /** 근무이력을 수정한다. */
   updateWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId, workHistoryId } = dto;
-    return this.http.put<void>(`/hm/employees/${employeeId}/companies/${workHistoryId}`, dto);
+    return this.http.put<number>(`/hm/employees/${employeeId}/companies/${workHistoryId}`, dto);
   }
 
   /** 근무이력을 삭제한다. */
