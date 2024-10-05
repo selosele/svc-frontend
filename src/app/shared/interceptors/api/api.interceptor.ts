@@ -22,8 +22,12 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const loadingService = inject(UiLoadingService);
   const messsageService = inject(UiMessageService);
 
+  const LOADING_DELAY = 500;
+  let loadingTimeout = null;
+
   if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
-    loadingService.setLoading(true); // HTTP 요청이 진행 중일 때 로딩 레이어를 표출
+    // HTTP 요청이 500ms 이상 걸리고 요청이 진행 중일 때 로딩 레이어를 표출
+    loadingTimeout = setTimeout(() => loadingService.setLoading(true), LOADING_DELAY);
   }
   
   return next(newReq).pipe(
@@ -34,6 +38,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
       return throwError(() => err);
     }),
     finalize(() => {
+      clearTimeout(loadingTimeout);
       loadingService.setLoading(false); // HTTP 요청 종료 시 로딩 레이어 삭제
     })
   );
