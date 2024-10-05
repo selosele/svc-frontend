@@ -104,20 +104,11 @@ export class FindMyInfoComponent implements OnInit {
     });
   }
 
-  /** 사용자 본인인증 내역이 존재하는지 확인한다. */
-  countUserCertHistory(): void {
-    this.authService.countUserCertHistory$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
-    .subscribe((count) => {
-      if (count === 0) {
-        this.messageService.toastError('인증코드가 틀렸거나 유효시간이 만료되었습니다.');
-        return;
-      }
-      
-      // 임시 비밀번호 발급
-      this.authService.findUserPassword2$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
-      .subscribe(() => {
-        this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했습니다. 메일을 확인해주세요.');
-      });
+  /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급). */
+  findUserPassword2(): void {
+    this.authService.findUserPassword2$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
+    .subscribe(() => {
+      this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했습니다. 메일을 확인해주세요.');
     });
   }
 
@@ -126,7 +117,7 @@ export class FindMyInfoComponent implements OnInit {
     // TODO: form의 enter키 submit 이벤트가 전파되는 이슈가 있어 수정 예정
     event.stopPropagation();
     event.preventDefault();
-    return this.countUserCertHistory();
+    return this.findUserPassword2();
   }
 
 }

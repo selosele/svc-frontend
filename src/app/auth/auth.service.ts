@@ -165,12 +165,6 @@ export class AuthService {
     return this.http.post<boolean>('/co/auth/find-user-password2', dto);
   }
 
-  /** 사용자 본인인증 내역이 존재하는지 확인한다. */
-  countUserCertHistory$(dto: GetUserCertHistoryRequestDTO) {
-    const { userAccount } = dto;
-    return this.http.post<number>(`/co/auth/certs/${userAccount}`, dto);
-  }
-
   /** 로그인 여부를 반환한다. */
   isLogined(): boolean {
     const accessToken = this.getAccessToken();
