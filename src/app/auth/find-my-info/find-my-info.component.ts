@@ -112,7 +112,7 @@ export class FindMyInfoComponent implements OnInit {
     });
   }
 
-  /** 사용자 본인인증 내역이 존재하는지 확인한다(Enter키 입력 시). */
+  /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급) - Enter키 입력 시 */
   onEnterKey(event: Event): void {
     // TODO: form의 enter키 submit 이벤트가 전파되는 이슈가 있어 수정 예정
     event.stopPropagation();
