@@ -26,7 +26,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   let loadingTimeout = null;
 
   if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
-    // HTTP 요청이 500ms 이상 걸리고 요청이 진행 중일 때 로딩 레이어를 표출
+    // HTTP 요청이 0.5초 이상 걸리고 요청이 진행 중일 때 로딩 레이어를 표출
     loadingTimeout = setTimeout(() => loadingService.setLoading(true), LOADING_DELAY);
   }
   
