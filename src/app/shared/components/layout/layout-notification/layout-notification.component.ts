@@ -40,7 +40,9 @@ export class LayoutNotificationComponent implements OnInit {
   }
 
   /** 알림 표출 상태 */
-  isListVisible = false;
+  get isNotificationLayerVisible() {
+    return this.store.select<string>('isNotificationLayerVisible').value;
+  }
 
   ngOnInit() {
     this.listNotification();
@@ -53,7 +55,7 @@ export class LayoutNotificationComponent implements OnInit {
 
   /** 알림 목록을 표출한다. */
   toggleNotificationList(): void {
-    this.isListVisible = !this.isListVisible;
+    this.store.update('isNotificationLayerVisible', !this.isNotificationLayerVisible);
   }
 
   /** 알림을 확인처리한다. */

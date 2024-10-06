@@ -69,6 +69,9 @@ export class AppComponent implements OnInit {
           if (!this.store.select<boolean>('menuListDataLoad').value) {
             this.menuService.listMenu();
           }
+
+          // 알림창 닫기
+          this.store.update('isNotificationLayerVisible', false);
         }
       });
   }

@@ -20,6 +20,9 @@ export class NotificationService {
   /** 알림 HTML 타이틀 */
   private notificationHtmlTitle = this.store.create<string>('notificationHtmlTitle', null);
 
+  /** 알림창 표출 상태 */
+  private isNotificationLayerVisible = this.store.create<boolean>('isNotificationLayerVisible', false);
+
   /** 알림 개수 및 목록을 조회한다. */
   listNotification(): void {
     this.http.get<NotificationResponseDTO>('/co/notifications')
