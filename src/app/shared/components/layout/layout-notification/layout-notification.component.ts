@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiButtonComponent } from '../../ui';
 import { StoreService } from '@app/shared/services';
@@ -22,6 +22,7 @@ export class LayoutNotificationComponent implements OnInit {
   constructor(
     private store: StoreService,
     private notificationService: NotificationService,
+    private eRef: ElementRef, // ElementRef로 컴포넌트의 DOM 요소 참조
   ) {}
 
   /** 알림 개수 */
@@ -83,6 +84,15 @@ export class LayoutNotificationComponent implements OnInit {
       return createDt.format('HH:mm:ss');  
     }
     return createDt.format('YYYY.MM.DD.');
+  }
+
+  /** 알림창 바깥 화면을 클릭해서 알림창을 닫는다. */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    // 클릭된 요소가 알림창 내부에 있는지 확인
+    if (this.isNotificationLayerVisible && !this.eRef.nativeElement.contains(event.target)) {
+      this.store.update('isNotificationLayerVisible', false);
+    }
   }
 
 }
