@@ -61,6 +61,15 @@ export class UiTableComponent implements OnInit {
   /** 테이블 로딩 */
   @Input() loading?: boolean = false;
 
+  /** 테이블 페이징 */
+  @Input() paginator?: boolean = false;
+
+  /** 테이블 페이징 row 개수 */
+  @Input() rows?: number = 5;
+
+  /** 테이블 페이징 row 페이지 옵션 */
+  @Input() rowsPerPageOptions?: number[] = [5, 10, 15];
+
   /** 테이블 정렬 모드 */
   @Input() sortMode?: 'single' | 'multiple' = 'single';
 

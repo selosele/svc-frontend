@@ -19,6 +19,7 @@
       [data]="holidayList"
       [dataKey]="'ymd'"
       [selection]="selection"
+      [paginator]="true"
       (refresh)="onRefresh()"
       (rowSelect)="onRowSelect($event)"
       (unRowSelect)="onRowUnselect($event)"

@@ -54,6 +54,15 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 로딩 */
   @Input() loading?: boolean = false;
 
+  /** 트리테이블 페이징 */
+  @Input() paginator?: boolean = false;
+
+  /** 트리테이블 페이징 row 개수 */
+  @Input() rows?: number = 5;
+
+  /** 트리테이블 페이징 row 페이지 옵션 */
+  @Input() rowsPerPageOptions?: number[] = [5, 10, 15];
+
   /** 트리테이블 정렬 모드 */
   @Input() sortMode?: 'single' | 'multiple' = 'single';
 
