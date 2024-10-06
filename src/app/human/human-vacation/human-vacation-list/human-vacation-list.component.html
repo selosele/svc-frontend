@@ -13,6 +13,7 @@
       [data]="vacationListCurrent"
       [dataKey]="'vacationId'"
       [selection]="selection"
+      [paginator]="true"
       (refresh)="onRefresh()"
       (rowSelect)="onRowSelect($event)"
       (unRowSelect)="onRowUnselect($event)"
