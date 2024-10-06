@@ -51,7 +51,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   userActiveYns = this.codeService.createYnCodeData();
 
   /** 사용자 활성화 여부 기본 값 */
-  defaultUserActiveYn: string = 'Y';
+  defaultUserActiveYn = 'Y';
 
   /** 모든 권한 목록 */
   roles: RoleResponseDTO[] = [];
