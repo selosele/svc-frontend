@@ -1,10 +1,10 @@
-<div *ngIf="loading$ | async" class="progress-spinner">
+<div *ngIf="loading$ | async" class="ui-loading">
   <p-progressSpinner ariaLabel="로딩" />
 
-  <!-- <div class="progress-spinner__bottom">
+  <!-- <div class="ui-loading__bottom">
     <p-button
       [raised]="true" severity="secondary" type="button"
-      class="progress-spinner__button"
+      class="ui-loading__button"
       (click)="onClick()"
     >
       취소

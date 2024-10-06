@@ -22,12 +22,11 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const loadingService = inject(UiLoadingService);
   const messsageService = inject(UiMessageService);
 
-  const LOADING_DELAY = 500;
   let loadingTimeout = null;
 
   if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
-    // HTTP 요청이 0.5초 이상 걸리고 요청이 진행 중일 때 로딩 레이어를 표출
-    loadingTimeout = setTimeout(() => loadingService.setLoading(true), LOADING_DELAY);
+    // HTTP 요청이 0.5초 이상 걸릴 때 로딩 레이어를 표출
+    loadingTimeout = setTimeout(() => loadingService.setLoading(true), 500);
   }
   
   return next(newReq).pipe(
