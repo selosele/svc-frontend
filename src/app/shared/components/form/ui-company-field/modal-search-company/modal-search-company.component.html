@@ -2,6 +2,7 @@
   <ul>
     <li>회사를 검색할 수 있습니다.</li>
     <li>행을 더블 클릭하면 행의 법인명, 회사명이 입력 필드에 반영됩니다.</li>
+    <li>찾으시는 회사가 없다면 <strong>회사 등록</strong> 버튼을 클릭하여 회사를 등록할 수 있습니다.</li>
   </ul>
 </layout-page-description>
 
@@ -35,14 +36,32 @@
     <ui-skeleton />
   }
   @else {
-    <ui-table #table
-      [useAdd]="false"
-      [useRemove]="false"
-      [cols]="cols"
-      [data]="companyList"
-      [dataKey]="'companyId'"
-      (refresh)="onRefresh()"
-      (rowDblclick)="onRowDblClick($event)"
-    />
+    <ui-splitter [layout]="'vertical'" #splitter>
+      <ui-table #table first
+        [useAdd]="false"
+        [useRemove]="false"
+        [cols]="cols"
+        [data]="companyList"
+        [dataKey]="'companyId'"
+        [paginator]="true"
+        (refresh)="onRefresh()"
+        (rowDblclick)="onRowDblClick($event)"
+      >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'회사 등록'"
+        [outlined]="true"
+        (click)="addCompany()"
+      />
+      </ui-table>
+
+      <div second>
+        <search-company-detail
+          (refresh)="listCompany()"
+          (close)="onClose()"
+        />
+      </div>
+    </ui-splitter>
   }
 </ui-form>
