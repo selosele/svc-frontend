@@ -16,10 +16,13 @@ export class UiFormComponent {
   /** form */
   @Input() form: FormGroup;
 
-  /** form 데이터 전송 이벤트 */
+  /** Enter키를 통한 submit 이벤트 발생 여부 */
+  @Input() enterKeySubmit = true;
+
+  /** form submit 이벤트 */
   @Output() submit = new EventEmitter<any>();
 
-  /** form 데이터를 전송한다. */
+  /** form을 submit한다. */
   protected onSubmit(event: Event): void {
     event.stopPropagation();
     event.preventDefault(); // submit시, 이벤트 2번 발생 문제로 인해 추가
@@ -29,6 +32,12 @@ export class UiFormComponent {
       return;
     }
     this.submit.emit(this.form.value);
+  }
+
+  /** Enter키를 통한 submit 이벤트를 방지한다. */
+  protected onEnterKey(event: Event): void {
+    if (this.enterKeySubmit) return;
+    event.preventDefault();
   }
 
   /** form 필드 유효성 검증을 한다. */
