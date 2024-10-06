@@ -36,10 +36,10 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 휴일 정보 */
-  @Input() holidayDetail: HolidayResponseDTO = null;
+  @Input() detail: HolidayResponseDTO = null;
 
   /** 휴일 상세 조회 폼 */
-  holidayDetailForm: FormGroup;
+  detailForm: FormGroup;
 
   /** 사용 여부 데이터 목록 */
   useYns = this.codeService.createYnCodeData();
@@ -62,7 +62,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
 
-    this.holidayDetailForm = this.fb.group({
+    this.detailForm = this.fb.group({
       originalYmd: [''],                                    // 기존 일자
       ymd: ['', [                                           // 일자
         FormValidator.required,
@@ -79,18 +79,18 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.holidayDetail && this.holidayDetailForm) {
+    if (changes.detail && this.detailForm) {
       this.useRemove = true;
       
-      if (isObjectEmpty(changes.holidayDetail.currentValue)) {
+      if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
-        this.holidayDetailForm.reset({ userId: this.user?.userId, useYn: 'Y' });
+        this.detailForm.reset({ userId: this.user?.userId, useYn: 'Y' });
         return;
       }
 
-      this.holidayDetailForm.patchValue({
-        originalYmd: this.holidayDetail.ymd,
-        ...this.holidayDetail,
+      this.detailForm.patchValue({
+        originalYmd: this.detail.ymd,
+        ...this.detail,
       });
     }
   }
@@ -125,7 +125,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('휴일을 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.holidayService.removeHoliday$(this.user?.userId, this.holidayDetail.ymd)
+    this.holidayService.removeHoliday$(this.user?.userId, this.detail.ymd)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

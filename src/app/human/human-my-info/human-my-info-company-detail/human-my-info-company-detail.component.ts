@@ -41,10 +41,10 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 회사 정보 */
-  @Input() workHistoryDetail: WorkHistoryResponseDTO = null;
+  @Input() detail: WorkHistoryResponseDTO = null;
 
   /** 회사 상세 조회 폼 */
-  companyDetailForm: FormGroup;
+  detailForm: FormGroup;
 
   /** 직위 코드 데이터 목록 */
   rankCodes: DropdownData[];
@@ -79,7 +79,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
     this.user = this.authService.getAuthenticatedUser();
     
-    this.companyDetailForm = this.fb.group({
+    this.detailForm = this.fb.group({
       workHistoryId: [''],                            // 근무이력 ID
       companyId: [''],                                // 회사 ID
       companyName: ['', [FormValidator.required]],    // 회사명
@@ -92,16 +92,16 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.workHistoryDetail && this.companyDetailForm) {
+    if (changes.detail && this.detailForm) {
       this.useRemove = true;
-      this.companyDetailForm.reset();
+      this.detailForm.reset();
 
-      if (isObjectEmpty(changes.workHistoryDetail.currentValue)) {
+      if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
         return;
       }
       
-      this.companyDetailForm.patchValue(this.workHistoryDetail);
+      this.detailForm.patchValue(this.detail);
     }
   }
 
@@ -143,7 +143,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     if (!confirm) return;
 
     const { employeeId } = this.user;
-    const workHistoryId = this.companyDetailForm.get('workHistoryId').value;
+    const workHistoryId = this.detailForm.get('workHistoryId').value;
 
     this.humanService.removeWorkHistory$(employeeId, workHistoryId)
     .subscribe(() => {

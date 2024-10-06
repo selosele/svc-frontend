@@ -42,10 +42,10 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 사용자 정보 */
-  @Input() userDetail: UserResponseDTO = null;
+  @Input() detail: UserResponseDTO = null;
 
   /** 사용자 상세 조회 폼 */
-  userDetailForm: FormGroup;
+  detailForm: FormGroup;
 
   /** 사용자 활성화 여부 데이터 목록 */
   userActiveYns = this.codeService.createYnCodeData();
@@ -79,7 +79,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 정보 존재 여부 */
   get isUserNotEmpty() {
-    return isNotObjectEmpty(this.userDetail);
+    return isNotObjectEmpty(this.detail);
   }
 
   /** 데이터 새로고침 이벤트 */
@@ -100,7 +100,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       this.jobTitleCodes = code['JOB_TITLE_00'];
     });
 
-    this.userDetailForm = this.fb.group({
+    this.detailForm = this.fb.group({
 
       // 사용자 정보
       userId: [''],                                           // 사용자 ID
@@ -148,16 +148,16 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   }
   
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.userDetail && this.userDetailForm) {
-      this.isUserSelf = Number(this.user.userId) === this.userDetail.userId;
+    if (changes.detail && this.detailForm) {
+      this.isUserSelf = Number(this.user.userId) === this.detail.userId;
 
       this.useRemove = !this.isUserSelf;
       this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
 
-      if (isObjectEmpty(changes.userDetail.currentValue)) {
+      if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
-        this.userDetailForm.reset({
+        this.detailForm.reset({
           userActiveYn: this.defaultUserActiveYn,
           roles: this.defaultRoles,
           employee: {
@@ -166,24 +166,24 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
             },
           },
         });
-        this.userDetailForm.get('userPassword').setValidators([
+        this.detailForm.get('userPassword').setValidators([
           FormValidator.required,
           FormValidator.maxLength(12)
         ]);
-        this.userDetailForm.get('userPassword').updateValueAndValidity();
+        this.detailForm.get('userPassword').updateValueAndValidity();
         return;
       }
 
-      this.userDetailForm.get('userPassword').clearValidators();
-      this.userDetailForm.get('userPassword').patchValue(null);
-      this.userDetailForm.get('userPassword').updateValueAndValidity();
+      this.detailForm.get('userPassword').clearValidators();
+      this.detailForm.get('userPassword').patchValue(null);
+      this.detailForm.get('userPassword').updateValueAndValidity();
 
-      this.userDetailForm.patchValue({
-        ...this.userDetail,
-        roles: this.userDetail?.roles?.map(x => x.roleId) || this.defaultRoles,
+      this.detailForm.patchValue({
+        ...this.detail,
+        roles: this.detail?.roles?.map(x => x.roleId) || this.defaultRoles,
         employee: {
-          ...this.userDetail?.employee,
-          workHistory: this.userDetail?.employee?.workHistories[0],
+          ...this.detail?.employee,
+          workHistory: this.detail?.employee?.workHistories[0],
         },
       });
     }
@@ -195,15 +195,15 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm1(`사용자를 ${activeStatus}하시겠습니까?`);
     if (!confirm) return;
 
-    this.authService.updateUser$({ userId: this.userDetail?.userId, userActiveYn })
+    this.authService.updateUser$({ userId: this.detail?.userId, userActiveYn })
     .subscribe((data) => {
       this.messageService.toastSuccess(`정상적으로 ${activeStatus}되었습니다.`);
 
-      this.userDetail = data;
-      this.userDetailForm.patchValue({
-        ...this.userDetailForm.value,
-        ...this.userDetail,
-        roles: this.userDetail?.roles?.map((x: UserRoleResponseDTO) => x.roleId),
+      this.detail = data;
+      this.detailForm.patchValue({
+        ...this.detailForm.value,
+        ...this.detail,
+        roles: this.detail?.roles?.map((x: UserRoleResponseDTO) => x.roleId),
       });
       this.refresh.emit();
     });
@@ -239,7 +239,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.authService.removeUser$(this.userDetail.userId)
+    this.authService.removeUser$(this.detail.userId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();
@@ -248,11 +248,11 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 특정 사용자로 로그인한다. */
   async superLogin(): Promise<void> {
-    const confirm = await this.messageService.confirm1(`${this.userDetail.userAccount} 계정으로 로그인하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`${this.detail.userAccount} 계정으로 로그인하시겠습니까?`);
     if (!confirm) return;
 
     this.authService.superLogin({
-      userAccount: this.userDetail.userAccount,
+      userAccount: this.detail.userAccount,
       isSuperLogin: 'Y',
     });
   }

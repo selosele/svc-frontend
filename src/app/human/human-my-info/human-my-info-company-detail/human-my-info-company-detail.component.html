@@ -1,28 +1,28 @@
 <ui-split-form
-  [form]="companyDetailForm"
+  [form]="detailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
   (remove)="onRemove($event)"
   (close)="onClose()"
 >
-  <ui-hidden-field [control]="companyDetailForm.get('workHistoryId')" />
+  <ui-hidden-field [control]="detailForm.get('workHistoryId')" />
 
   <ui-content-title [text]="'회사 정보'" />
 
   <div class="input-box">
     <ui-company-field
-      [control]="companyDetailForm.get('companyName')"
+      [control]="detailForm.get('companyName')"
       [label]="'회사명'"
     />
 
     <ui-dropdown
-      [control]="companyDetailForm.get('rankCode')"
+      [control]="detailForm.get('rankCode')"
       [label]="'직위'"
       [data]="rankCodes"
     />
 
     <ui-dropdown
-      [control]="companyDetailForm.get('jobTitleCode')"
+      [control]="detailForm.get('jobTitleCode')"
       [label]="'직책'"
       [data]="jobTitleCodes"
     />
@@ -30,7 +30,7 @@
 
   <div class="input-box">
     <ui-dropdown
-      [control]="companyDetailForm.get('annualTypeCode')"
+      [control]="detailForm.get('annualTypeCode')"
       [label]="'연차발생기준'"
       [tooltip]="'잘 모르겠다면 기타를 선택하거나 비워두셔도 무방합니다. 단, 휴가계산기능이 제공되지 않는 점 양해 부탁드립니다.'"
       [tooltipPosition]="'bottom'"
@@ -38,13 +38,13 @@
     />
 
     <ui-date-field
-      [control]="companyDetailForm.get('joinYmd')"
+      [control]="detailForm.get('joinYmd')"
       [label]="'입사일자'"
       [dateFormat]="'yymmdd'"
     />
 
     <ui-date-field
-      [control]="companyDetailForm.get('quitYmd')"
+      [control]="detailForm.get('quitYmd')"
       [label]="'퇴사일자'"
       [dateFormat]="'yymmdd'"
     />

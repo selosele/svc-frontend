@@ -1,5 +1,5 @@
 <ui-split-form
-  [form]="holidayDetailForm"
+  [form]="detailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
   (remove)="onRemove($event)"
@@ -7,23 +7,23 @@
 >
   <ui-content-title [text]="'휴일 정보'" />
 
-  <ui-hidden-field [control]="holidayDetailForm.get('originalYmd')" />
-  <ui-hidden-field [control]="holidayDetailForm.get('userId')" />
+  <ui-hidden-field [control]="detailForm.get('originalYmd')" />
+  <ui-hidden-field [control]="detailForm.get('userId')" />
 
   <div class="input-box">
     <ui-date-field
-      [control]="holidayDetailForm.get('ymd')"
+      [control]="detailForm.get('ymd')"
       [label]="'일자'"
       [dateFormat]="'yymmdd'"
     />
 
     <ui-text-field
-      [control]="holidayDetailForm.get('holidayName')"
+      [control]="detailForm.get('holidayName')"
       [label]="'휴일명'"
     />
 
     <ui-dropdown
-      [control]="holidayDetailForm.get('useYn')"
+      [control]="detailForm.get('useYn')"
       [label]="'사용 여부'"
       [data]="useYns"
     />
@@ -31,7 +31,7 @@
 
   <div class="input-box">
     <ui-textarea
-      [control]="holidayDetailForm.get('holidayContent')"
+      [control]="detailForm.get('holidayContent')"
       [label]="'휴일 내용'"
     />
   </div>

@@ -30,10 +30,10 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 코드 정보 */
-  @Input() codeDetail: CodeResponseDTO = null;
+  @Input() detail: CodeResponseDTO = null;
 
   /** 코드 상세 조회 폼 */
-  codeDetailForm: FormGroup;
+  detailForm: FormGroup;
 
   /** 사용 여부 데이터 목록 */
   useYns = this.codeService.createYnCodeData();
@@ -51,7 +51,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
-    this.codeDetailForm = this.fb.group({
+    this.detailForm = this.fb.group({
       originalCodeId: [''],                              // 기존 코드 ID
       codeId: ['', [                                     // 코드 ID
         FormValidator.required,
@@ -80,18 +80,18 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.codeDetail && this.codeDetailForm) {
+    if (changes.detail && this.detailForm) {
       this.useRemove = true;
       
-      if (isObjectEmpty(changes.codeDetail.currentValue)) {
+      if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
-        this.codeDetailForm.reset();
+        this.detailForm.reset();
         return;
       }
 
-      this.codeDetailForm.patchValue({
-        originalCodeId: this.codeDetail.codeId,
-        ...this.codeDetail
+      this.detailForm.patchValue({
+        originalCodeId: this.detail.codeId,
+        ...this.detail
       });
     }
   }
@@ -126,7 +126,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.codeService.removeCode$(this.codeDetail.codeId)
+    this.codeService.removeCode$(this.detail.codeId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

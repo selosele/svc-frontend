@@ -45,7 +45,7 @@ export class SystemCodeComponent implements OnInit {
   }
 
   /** 코드 정보 */
-  codeDetail: CodeTree = null;
+  detail: CodeTree = null;
 
   /** 테이블 선택된 행 */
   selection: TreeNode;
@@ -74,7 +74,7 @@ export class SystemCodeComponent implements OnInit {
 
   /** 코드를 추가한다. */
   addCode(): void {
-    this.codeDetail = {};
+    this.detail = {};
     this.splitter.show();
   }
 
@@ -82,14 +82,14 @@ export class SystemCodeComponent implements OnInit {
   onNodeSelect(event: any) {
     this.codeService.getCode$(event.node.data['codeId'])
     .subscribe((data) => {
-      this.codeDetail = data;
+      this.detail = data;
       this.splitter.show();
     });
   }
 
   /** 테이블 행을 선택 해제한다. */
   onNodeUnselect(event: any) {
-    this.codeDetail = {};
+    this.detail = {};
     this.splitter.hide();
   }
 

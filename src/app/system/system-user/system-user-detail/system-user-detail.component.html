@@ -1,5 +1,5 @@
 <ui-split-form
-  [form]="userDetailForm"
+  [form]="detailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
   (remove)="onRemove($event)"
@@ -8,31 +8,31 @@
   <ui-content-title [text]="'사용자 정보'" />
 
   @if (isUserNotEmpty) {
-    <p class="mt-2">마지막 로그인 일시: {{ userDetailForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</p>
+    <p class="mt-2">마지막 로그인 일시: {{ detailForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</p>
   }
 
   <div class="input-box">
     @if (isUserNotEmpty) {
       <ui-text-field
-        [control]="userDetailForm.get('userId')"
+        [control]="detailForm.get('userId')"
         [label]="'사용자 ID'" [readonly]="true"
       />
     }
 
     <ui-text-field
-      [control]="userDetailForm.get('userAccount')"
+      [control]="detailForm.get('userAccount')"
       [label]="'사용자 계정'" [readonly]="isUserNotEmpty" [placeholder]="'20자 이내'"
     />
 
     @if (!isUserNotEmpty) {
       <ui-text-field
-        [control]="userDetailForm.get('userPassword')"
+        [control]="detailForm.get('userPassword')"
         [label]="'사용자 비밀번호'" type="password" [placeholder]="'12자 이내'"
       />
     }
 
     <ui-dropdown
-      [control]="userDetailForm.get('userActiveYn')"
+      [control]="detailForm.get('userActiveYn')"
       [label]="'사용자 활성화 여부'"
       [data]="userActiveYns"
       [readonly]="isUserNotEmpty"
@@ -40,9 +40,9 @@
       @if (isUserNotEmpty) {
         <ui-button button
           [severity]="'secondary'"
-          (click)="updateUserActiveYn($event, userDetail?.userActiveYn === 'Y' ? 'N' : 'Y')"
+          (click)="updateUserActiveYn($event, detail?.userActiveYn === 'Y' ? 'N' : 'Y')"
         >
-          {{ userDetail?.userActiveYn === 'Y' ? '비활성화' : '활성화' }}
+          {{ detail?.userActiveYn === 'Y' ? '비활성화' : '활성화' }}
         </ui-button>
       }
     </ui-dropdown>
@@ -52,7 +52,7 @@
     <ui-checkbox-group [label]="'사용자 권한'">
       @for (role of roles; track $index) {
         <ui-checkbox
-          [control]="userDetailForm.get('roles')"
+          [control]="detailForm.get('roles')"
           [label]="role.roleName"
           [value]="role.roleId"
         />
@@ -64,24 +64,24 @@
 
   <div class="input-box">
     <ui-text-field
-      [control]="userDetailForm.get('employee.employeeName')"
+      [control]="detailForm.get('employee.employeeName')"
       [label]="'직원명'" [placeholder]="'30자 이내'"
     />
 
     <ui-dropdown
-      [control]="userDetailForm.get('employee.genderCode')"
+      [control]="detailForm.get('employee.genderCode')"
       [label]="'성별'"
       [data]="genderCodes"
     />
 
     <ui-dropdown
-      [control]="userDetailForm.get('employee.workHistory.rankCode')"
+      [control]="detailForm.get('employee.workHistory.rankCode')"
       [label]="'직위'"
       [data]="rankCodes"
     />
 
     <ui-dropdown
-      [control]="userDetailForm.get('employee.workHistory.jobTitleCode')"
+      [control]="detailForm.get('employee.workHistory.jobTitleCode')"
       [label]="'직책'"
       [data]="jobTitleCodes"
     />
@@ -89,46 +89,46 @@
 
   <div class="input-box">
     <ui-date-field
-      [control]="userDetailForm.get('employee.birthYmd')"
+      [control]="detailForm.get('employee.birthYmd')"
       [label]="'생년월일'"
       [dateFormat]="'yymmdd'"
     />
 
     <ui-text-field
-      [control]="userDetailForm.get('employee.phoneNo')"
+      [control]="detailForm.get('employee.phoneNo')"
       [label]="'휴대폰번호'" [placeholder]="'- 제외'"
     />
 
     <ui-text-field
-      [control]="userDetailForm.get('employee.emailAddr')"
+      [control]="detailForm.get('employee.emailAddr')"
       [label]="'이메일주소'"
     />
   </div>
 
   <div class="input-box">
-    <ui-hidden-field [control]="userDetailForm.get('employee.workHistory.workHistoryId')" />
-    <ui-hidden-field [control]="userDetailForm.get('employee.workHistory.companyId')" />
+    <ui-hidden-field [control]="detailForm.get('employee.workHistory.workHistoryId')" />
+    <ui-hidden-field [control]="detailForm.get('employee.workHistory.companyId')" />
     
     <ui-company-field
-      [control]="userDetailForm.get('employee.workHistory.corporateName')"
+      [control]="detailForm.get('employee.workHistory.corporateName')"
       [label]="'회사(법인)명'"
     />
 
     <ui-company-field
-      [control]="userDetailForm.get('employee.workHistory.companyName')"
+      [control]="detailForm.get('employee.workHistory.companyName')"
       [label]="'회사명'"
     />
   </div>
 
   <div class="input-box">
     <ui-date-field
-      [control]="userDetailForm.get('employee.workHistory.joinYmd')"
+      [control]="detailForm.get('employee.workHistory.joinYmd')"
       [label]="'입사일자'"
       [dateFormat]="'yymmdd'"
     />
 
     <ui-date-field
-      [control]="userDetailForm.get('employee.workHistory.quitYmd')"
+      [control]="detailForm.get('employee.workHistory.quitYmd')"
       [label]="'퇴사일자'"
       [dateFormat]="'yymmdd'"
     />

@@ -57,7 +57,7 @@ export class HumanVacationListComponent implements OnInit {
   vacationListCurrent: VacationResponseDTO[] = [];
 
   /** 휴가 정보 */
-  vacationDetail: VacationResponseDTO = null;
+  detail: VacationResponseDTO = null;
 
   /** 테이블 선택된 행 */
   selection: VacationResponseDTO;
@@ -111,7 +111,7 @@ export class HumanVacationListComponent implements OnInit {
 
   /** 휴가를 등록한다. */
   addVacation(): void {
-    this.vacationDetail = {};
+    this.detail = {};
     this.splitter.show();
   }
 
@@ -119,14 +119,14 @@ export class HumanVacationListComponent implements OnInit {
   onRowSelect(event: any): void {
     this.humanService.getVacation$(event.data['vacationId'])
     .subscribe((data) => {
-      this.vacationDetail = data;
+      this.detail = data;
       this.splitter.show();
     });
   }
 
   /** 테이블 행을 선택 해제한다. */
   onRowUnselect(event: any): void {
-    this.vacationDetail = {};
+    this.detail = {};
     this.splitter.hide();
   }
   

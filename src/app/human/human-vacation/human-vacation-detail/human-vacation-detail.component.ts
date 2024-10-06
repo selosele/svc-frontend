@@ -40,10 +40,10 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   }
 
   /** 휴가 정보 */
-  @Input() vacationDetail: VacationResponseDTO = null;
+  @Input() detail: VacationResponseDTO = null;
 
   /** 휴가 상세 조회 폼 */
-  vacationDetailForm: FormGroup;
+  detailForm: FormGroup;
 
   /** 휴가 구분 코드 데이터 목록 */
   vacationTypeCodes: DropdownData[];
@@ -61,7 +61,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
-    this.vacationDetailForm = this.fb.group({
+    this.detailForm = this.fb.group({
       vacationId: [''],                                       // 휴가 ID
       workHistoryId: [''],                                    // 근무이력 ID
       vacationTypeCode: ['', [FormValidator.required]],       // 휴가 구분 코드
@@ -76,24 +76,24 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
-      this.vacationDetailForm.get('workHistoryId').patchValue(data);
+      this.detailForm.get('workHistoryId').patchValue(data);
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.vacationDetail && this.vacationDetailForm) {
+    if (changes.detail && this.detailForm) {
       this.useRemove = true;
 
-      if (isObjectEmpty(changes.vacationDetail.currentValue)) {
+      if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
-        this.vacationDetailForm.reset({
+        this.detailForm.reset({
           workHistoryId: this.workHistoryId,
         });
         return;
       }
 
-      this.vacationDetailForm.patchValue({
-        ...this.vacationDetail,
+      this.detailForm.patchValue({
+        ...this.detail,
         workHistoryId: this.workHistoryId,
       });
     }
@@ -101,8 +101,8 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
   /** 휴가 정보 저장 유효성 검증을 한다. */
   isValid(): boolean {
-    const startYmd: string = this.vacationDetailForm.get('vacationStartYmd').value;
-    const endYmd: string = this.vacationDetailForm.get('vacationEndYmd').value;
+    const startYmd: string = this.detailForm.get('vacationStartYmd').value;
+    const endYmd: string = this.detailForm.get('vacationEndYmd').value;
 
     // 휴가 시작일자가 종료일자보다 큰지 확인
     if (dateUtil(startYmd).isAfter(endYmd)) {
@@ -145,7 +145,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('휴가를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
     if (!confirm) return;
 
-    this.humanService.removeVacation$(this.vacationDetail.vacationId)
+    this.humanService.removeVacation$(this.detail.vacationId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
       this.remove.emit();

@@ -1,58 +1,58 @@
 <ui-split-form
-  [form]="codeDetailForm"
+  [form]="detailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
   (remove)="onRemove($event)"
   (close)="onClose()"
 >
-  <ui-hidden-field [control]="codeDetailForm.get('originalCodeId')" />
+  <ui-hidden-field [control]="detailForm.get('originalCodeId')" />
 
   <ui-content-title [text]="'코드 정보'" />
 
   <div class="input-box">
     <ui-text-field
-      [control]="codeDetailForm.get('codeId')"
+      [control]="detailForm.get('codeId')"
       [label]="'코드 ID'"
     />
 
     <ui-text-field
-      [control]="codeDetailForm.get('upCodeId')"
+      [control]="detailForm.get('upCodeId')"
       [label]="'상위 코드 ID'"
     />
   </div>
 
   <div class="input-box">
     <ui-text-field
-      [control]="codeDetailForm.get('codeValue')"
+      [control]="detailForm.get('codeValue')"
       [label]="'코드 값'"
     />
 
     <ui-text-field
-      [control]="codeDetailForm.get('codeName')"
+      [control]="detailForm.get('codeName')"
       [label]="'코드명'"
     />
   </div>
 
   <div class="input-box">
     <ui-textarea
-      [control]="codeDetailForm.get('codeContent')"
+      [control]="detailForm.get('codeContent')"
       [label]="'코드 내용'"
     />
   </div>
 
   <div class="input-box">
     <ui-text-field
-      [control]="codeDetailForm.get('codeOrder')"
+      [control]="detailForm.get('codeOrder')"
       [label]="'코드 순서'"
     />
 
     <ui-text-field
-      [control]="codeDetailForm.get('codeDepth')"
+      [control]="detailForm.get('codeDepth')"
       [label]="'코드 뎁스'"
     />
 
     <ui-dropdown
-      [control]="codeDetailForm.get('useYn')"
+      [control]="detailForm.get('useYn')"
       [label]="'사용 여부'"
       [data]="useYns"
     />

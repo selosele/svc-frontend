@@ -44,7 +44,7 @@ export class SystemUserComponent implements OnInit {
   }
 
   /** 사용자 정보 */
-  userDetail: UserResponseDTO = null;
+  detail: UserResponseDTO = null;
 
   /** 테이블 선택된 행 */
   selection: UserResponseDTO;
@@ -79,7 +79,7 @@ export class SystemUserComponent implements OnInit {
 
   /** 사용자를 추가한다. */
   addUser(): void {
-    this.userDetail = {};
+    this.detail = {};
     this.splitter.show();
   }
 
@@ -87,14 +87,14 @@ export class SystemUserComponent implements OnInit {
   onRowSelect(event: any): void {
     this.authService.getUser$(event.data['userId'])
     .subscribe((data) => {
-      this.userDetail = data;
+      this.detail = data;
       this.splitter.show();
     });
   }
 
   /** 테이블 행을 선택 해제한다. */
   onRowUnselect(event: any): void {
-    this.userDetail = {};
+    this.detail = {};
     this.splitter.hide();
   }
   

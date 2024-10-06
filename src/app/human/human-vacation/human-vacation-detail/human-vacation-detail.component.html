@@ -1,30 +1,30 @@
 <ui-split-form
-  [form]="vacationDetailForm"
+  [form]="detailForm"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
   (remove)="onRemove($event)"
   (close)="onClose()"
 >
-  <ui-hidden-field [control]="vacationDetailForm.get('vacationId')" />
-  <ui-hidden-field [control]="vacationDetailForm.get('workHistoryId')" />
+  <ui-hidden-field [control]="detailForm.get('vacationId')" />
+  <ui-hidden-field [control]="detailForm.get('workHistoryId')" />
 
   <ui-content-title [text]="'휴가 정보'" />
 
   <div class="input-box">
     <ui-dropdown
-      [control]="vacationDetailForm.get('vacationTypeCode')"
+      [control]="detailForm.get('vacationTypeCode')"
       [label]="'휴가 구분'"
       [data]="vacationTypeCodes"
     />
 
     <ui-date-field
-      [control]="vacationDetailForm.get('vacationStartYmd')"
+      [control]="detailForm.get('vacationStartYmd')"
       [label]="'휴가 시작일자'"
       [dateFormat]="'yymmdd'"
     />
 
     <ui-date-field
-      [control]="vacationDetailForm.get('vacationEndYmd')"
+      [control]="detailForm.get('vacationEndYmd')"
       [label]="'휴가 종료일자'"
       [dateFormat]="'yymmdd'"
     />
@@ -32,7 +32,7 @@
 
   <div class="input-box">
     <ui-textarea
-      [control]="vacationDetailForm.get('vacationContent')"
+      [control]="detailForm.get('vacationContent')"
       [label]="'휴가 내용'"
     />
   </div>
