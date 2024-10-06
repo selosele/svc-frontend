@@ -53,9 +53,8 @@
         <ui-text-field
           [control]="findPasswordForm.get('certCode')"
           [label]="certCodeLabel"
-          (keyup.enter)="onEnterKey($event)"
         >
-          <ui-button button [type]="'button'" [severity]="'success'" (click)="findUserPassword2()">
+          <ui-button button [type]="'submit'" [severity]="'success'">
             확인
           </ui-button>
         </ui-text-field>

@@ -80,44 +80,39 @@ export class FindMyInfoComponent implements OnInit {
 
   /** 비밀번호 찾기 폼을 전송한다. */
   onSubmitFindPassword(value: FindUserInfoRequestDTO): void {
-    this.authService.findUserPassword1$(value)
-    .subscribe((data) => {
-      this.timer && clearInterval(this.timer);
 
-      let remainingSeconds = Number(data.validTime);
-      let formattedTime = new BehaviorSubject<string>(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
-
-      this.timer = setInterval(() => {
-        if (remainingSeconds > 0) {
-          remainingSeconds--;
-          formattedTime.next(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
-        } else {
-          clearInterval(this.timer);
-        }
-      }, 1000);
-
-      formattedTime.subscribe((time) => {
-        this.certCodeLabel = `인증코드(${time})`;
+    // 1. 인증코드 발송
+    if (this.userCertHistory === null) {
+      this.authService.findUserPassword1$(value)
+      .subscribe((data) => {
+        this.timer && clearInterval(this.timer);
+  
+        let remainingSeconds = Number(data.validTime);
+        let formattedTime = new BehaviorSubject<string>(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
+  
+        this.timer = setInterval(() => {
+          if (remainingSeconds > 0) {
+            remainingSeconds--;
+            formattedTime.next(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
+          } else {
+            clearInterval(this.timer);
+          }
+        }, 1000);
+  
+        formattedTime.subscribe((time) => {
+          this.certCodeLabel = `인증코드(${time})`;
+        });
+        this.store.update('userCertHistory', data);
+        this.messageService.toastSuccess('인증코드를 메일로 발송했습니다. 메일을 확인해주세요.');
       });
-      this.store.update('userCertHistory', data);
-      this.messageService.toastSuccess('인증코드를 메일로 발송했습니다. 메일을 확인해주세요.');
-    });
-  }
-
-  /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급). */
-  findUserPassword2(): void {
-    this.authService.findUserPassword2$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
-    .subscribe(() => {
-      this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했습니다. 메일을 확인해주세요.');
-    });
-  }
-
-  /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급) - Enter키 입력 시 */
-  onEnterKey(event: Event): void {
-    // TODO: form의 enter키 submit 이벤트가 전파되는 이슈가 있어 수정 예정
-    event.stopPropagation();
-    event.preventDefault();
-    return this.findUserPassword2();
+    }
+    // 2. 임시 비밀번호 발급
+    else {
+      this.authService.findUserPassword2$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
+      .subscribe(() => {
+        this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했습니다. 메일을 확인해주세요.');
+      });
+    }
   }
 
 }
