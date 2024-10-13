@@ -131,6 +131,9 @@ export class WorkHistoryResponseDTO {
   /** 휴가 사용일수 */
   vacationUseCount?: number;
 
+  /** 잔여 휴가 개수 */
+  vacationRemainCount?: number;
+
 }
 
 /** 회사 조회 요청 DTO */

@@ -163,14 +163,13 @@ export class HumanService {
 
   /** 잔여 휴가를 계산해서 반환한다. */
   calculateVacation(workHistory: WorkHistoryResponseDTO): string {
-    const { annualTypeCode, joinYmd, vacationUseCount } = workHistory;
+    const { annualTypeCode, joinYmd, vacationRemainCount } = workHistory;
     switch (annualTypeCode) {
       // 입사일자 기준
       // TODO: 입사일자 기준이지만 입사 1년이 지나면?
       case '01':
         const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
         const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
-        const vacationRemainCount = (vacationUseCount > nowDateDiff) ? 0 : (nowDateDiff - vacationUseCount);
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
 
         return `나의 잔여 월차: ${vacationRemainCount}/${nowDateDiff}개 (입사 ${joinYmdFormat}부터 총 ${nowDateDiff}개 월차가 발생하였음)`;
