@@ -23,11 +23,11 @@
             <div class="col">
               <ui-card style="flex: 1;">
                 <ui-checkbox-list>
-                  @for (code of vacationTypeCodes; track $index) {
+                  @for (i of vacationTypeCodes; track $index) {
                     <ui-checkbox
                       [control]="caculateVacationForm.get('vacationTypeCodes')"
-                      [label]="code.label"
-                      [value]="code.value"
+                      [label]="i.label"
+                      [value]="i.value"
                       (change)="onSubmit($event)"
                     />
                   }

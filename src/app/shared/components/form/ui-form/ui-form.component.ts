@@ -42,7 +42,7 @@ export class UiFormComponent {
 
   /** form 필드 유효성 검증을 한다. */
   private validateAllFormFields(formGroup: FormGroup): void {
-    Object.keys(formGroup.controls).forEach(field => {
+    Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
 
       if (control instanceof FormControl) {

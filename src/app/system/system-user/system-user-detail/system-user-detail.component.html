@@ -50,11 +50,11 @@
 
   <div class="input-box">
     <ui-checkbox-group [label]="'사용자 권한'">
-      @for (role of roles; track $index) {
+      @for (i of roles; track $index) {
         <ui-checkbox
           [control]="detailForm.get('roles')"
-          [label]="role.roleName"
-          [value]="role.roleId"
+          [label]="i.roleName"
+          [value]="i.roleId"
         />
       }
     </ui-checkbox-group>

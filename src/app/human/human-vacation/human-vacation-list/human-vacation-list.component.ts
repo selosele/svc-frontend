@@ -101,7 +101,7 @@ export class HumanVacationListComponent implements OnInit {
         this.vacationListDataLoad = true;
       }
       else {
-        this.vacationList.forEach(x => {
+        this.vacationList.forEach((x) => {
           if (x.key === workHistoryId) x.value = data;
         });
         this.vacationListCurrent = data;

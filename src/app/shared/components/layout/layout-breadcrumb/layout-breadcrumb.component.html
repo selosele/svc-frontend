@@ -1,20 +1,20 @@
 <div class="layout-breadcrumb">
   <ul>
-    @for (item of items; track $index) {
+    @for (i of items; track $index) {
       <li>
         @if ($index > 0) {
           <span [ngClass]="'separator pi pi-chevron-right'"></span>
         }
 
-        @if (item.route) {
-          <a [routerLink]="item.route" [queryParams]="item.queryParams">
-            <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
-            <span class="text-primary font-semibold">{{ item.label }}</span>
+        @if (i.route) {
+          <a [routerLink]="i.route" [queryParams]="i.queryParams">
+            <span [ngClass]="[i.icon ? i.icon : '', 'text-color']"></span>
+            <span class="text-primary font-semibold">{{ i.label }}</span>
           </a>
         }
         @else {
           <span>
-            <span class="text-color">{{ item.label }}</span>
+            <span class="text-color">{{ i.label }}</span>
           </span>
         }
       </li>

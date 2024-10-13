@@ -14,8 +14,8 @@ export class HttpService {
     for (const key of Object.keys(data)) {
       if (data[key]) {
         if (data[key] instanceof Array) {
-          data[key].forEach((item) => {
-            params = params.append(key.toString(), item);
+          data[key].forEach((i) => {
+            params = params.append(key.toString(), i);
           });
         } else {
           params = params.append(key.toString(), data[key]);

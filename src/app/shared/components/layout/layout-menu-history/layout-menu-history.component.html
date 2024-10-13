@@ -6,17 +6,17 @@
 
     <div class="col col-10">
       <ul class="layout-menu-history__list">
-        <ng-container *ngFor="let item of menuHistoryList">
-          <li [class.active]="item.menuId === menuId" (contextmenu)="onContextMenu($event, item.menuId)">
-            <a [routerLink]="item.menuUrl" [queryParams]="{ menuId: item.menuId }" [title]="'최근 방문한 페이지'">
-              {{ item.menuName }}
+        <ng-container *ngFor="let i of menuHistoryList">
+          <li [class.active]="i.menuId === menuId" (contextmenu)="onContextMenu($event, i.menuId)">
+            <a [routerLink]="i.menuUrl" [queryParams]="{ menuId: i.menuId }" [title]="'최근 방문한 페이지'">
+              {{ i.menuName }}
             </a>
             <ui-button
               [size]="'small'"
               [icon]="'pi-times'"
               [severity]="'secondary'"
               [title]="'최근 방문한 페이지 삭제'"
-              (click)="onRemove(item.menuId)"
+              (click)="onRemove(i.menuId)"
             />
           </li>
         </ng-container>
