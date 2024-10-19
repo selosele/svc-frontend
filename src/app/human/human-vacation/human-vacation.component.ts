@@ -68,7 +68,7 @@ export class HumanVacationComponent implements OnInit {
   vacationTypeCodes: DropdownData[];
 
   /** 휴가 계산에 포함할 휴가 구분 코드 목록 (기본 값) */
-  defaultVacationTypeCodes = ['01', '02', '03', '04', '05', '06', '12'];
+  defaultVacationTypeCodes = ['ANNUAL', 'MONTH', 'MORNING', 'AFTERNOON', 'PAID', 'UNPAID', 'SICK'];
 
   /** 휴가 테이블 타이틀 */
   get vacationTableTitle() {
