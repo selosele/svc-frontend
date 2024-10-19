@@ -52,9 +52,6 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   /** 직책 코드 데이터 목록 */
   jobTitleCodes: DropdownData[];
 
-  /** 연차발생기준 코드 데이터 목록 */
-  annualTypeCodes: DropdownData[];
-
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
@@ -74,7 +71,6 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     this.route.data.subscribe(({ code }) => {
       this.rankCodes = code['RANK_00'];
       this.jobTitleCodes = code['JOB_TITLE_00'];
-      this.annualTypeCodes = code['ANNUAL_TYPE_00'];
     });
 
     this.user = this.authService.getAuthenticatedUser();
@@ -85,7 +81,6 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
       companyName: ['', [FormValidator.required]],    // 회사명
       rankCode: ['', [FormValidator.required]],       // 직위 코드
       jobTitleCode: ['', [FormValidator.required]],   // 직책 코드
-      annualTypeCode: [''],                           // 연차발생기준 코드
       joinYmd: ['', [FormValidator.required]],        // 입사일자
       quitYmd: [''],                                  // 퇴사일자
     });

@@ -29,14 +29,6 @@
   </div>
 
   <div class="input-box">
-    <ui-dropdown
-      [control]="detailForm.get('annualTypeCode')"
-      [label]="'연차발생기준'"
-      [tooltip]="'잘 모르겠다면 기타를 선택하거나 비워두셔도 무방합니다. 단, 휴가계산기능이 제공되지 않는 점 양해 부탁드립니다.'"
-      [tooltipPosition]="'bottom'"
-      [data]="annualTypeCodes"
-    />
-
     <ui-date-field
       [control]="detailForm.get('joinYmd')"
       [label]="'입사일자'"

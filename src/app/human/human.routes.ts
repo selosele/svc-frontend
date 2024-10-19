@@ -13,7 +13,7 @@ export const humanRoutes: Routes = [
     resolve: { code: codeResolver },
     data: {
       roles: [roles.EMPLOYEE],
-      codeKeys: ['GENDER_00', 'RANK_00', 'JOB_TITLE_00', 'ANNUAL_TYPE_00'],
+      codeKeys: ['GENDER_00', 'RANK_00', 'JOB_TITLE_00'],
     },
     loadComponent: () => import('./human-my-info/human-my-info.component').then(x => x.HumanMyInfoComponent),
   },
