@@ -79,17 +79,11 @@ export class HumanService {
   }
 
   /** 근무이력 목록을 조회한다. */
-  listWorkHistory(index: number, dto: GetWorkHistoryRequestDTO): void {
+  listWorkHistory(dto: GetWorkHistoryRequestDTO) {
     const { employeeId } = dto;
     const params = this.httpService.createParams(dto);
 
-    this.http.get<WorkHistoryResponseDTO[]>(`/hm/employees/${employeeId}/companies`, { params })
-    .subscribe((data) => {
-      this.store.update('workHistoryList', data);
-      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
-      this.store.update('workHistoryListDataLoad', true);
-      this.setVacationTableTitle(index);
-    });
+    return this.http.get<WorkHistoryResponseDTO[]>(`/hm/employees/${employeeId}/companies`, { params });
   }
 
   /** 근무이력을 조회한다. */

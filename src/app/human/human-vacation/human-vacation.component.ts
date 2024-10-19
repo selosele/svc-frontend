@@ -11,12 +11,14 @@ import { HumanVacationListComponent } from './human-vacation-list/human-vacation
 import { MyHolidayComponent } from '@app/holiday/my-holiday/my-holiday.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
+import { UiDropdownComponent } from '@app/shared/components/form';
 import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-checkbox.component';
 import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbox-group/ui-checkbox-group.component';
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { WorkHistoryResponseDTO } from '../human.model';
-import { StoreService, UiDialogService } from '@app/shared/services';
+import { StoreService } from '@app/shared/services';
+import { UiTextFieldComponent } from "../../shared/components/form/ui-text-field/ui-text-field.component";
 
 @Component({
   standalone: true,
@@ -27,6 +29,7 @@ import { StoreService, UiDialogService } from '@app/shared/services';
     UiSkeletonComponent,
     UiTabComponent,
     UiFormComponent,
+    UiDropdownComponent,
     UiCheckboxListComponent,
     UiCheckboxGroupComponent,
     UiCheckboxComponent,
@@ -36,7 +39,8 @@ import { StoreService, UiDialogService } from '@app/shared/services';
     LayoutPageDescriptionComponent,
     HumanVacationListComponent,
     MyHolidayComponent,
-  ],
+    UiTextFieldComponent
+],
   selector: 'view-human-vacation',
   templateUrl: './human-vacation.component.html',
   styleUrl: './human-vacation.component.scss'
@@ -47,7 +51,6 @@ export class HumanVacationComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: StoreService,
-    private dialogService: UiDialogService,
     private authService: AuthService,
     private humanService: HumanService,
   ) {}
@@ -63,6 +66,9 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 폼 */
   caculateVacationForm: FormGroup;
+
+  /** 연차발생기준 코드 데이터 목록 */
+  annualTypeCodes: DropdownData[];
 
   /** 휴가 구분 코드 데이터 목록 */
   vacationTypeCodes: DropdownData[];
@@ -97,6 +103,7 @@ export class HumanVacationComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(({ code }) => {
+      this.annualTypeCodes = code['ANNUAL_TYPE_00'];
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
@@ -104,8 +111,12 @@ export class HumanVacationComponent implements OnInit {
     this.humanService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({
+      joinYmd: [''],                                      // 입사일자
+      annualTypeCode: [this.annualTypeCodes],             // 연차발생기준 코드
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
+
+    this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD'); // 연차발생기준 코드 기본값 설정: 입사일자
 
     if (!this.workHistoryListDataLoad) {
       this.listWorkHistory();
@@ -114,9 +125,16 @@ export class HumanVacationComponent implements OnInit {
 
   /** 근무이력 목록을 조회한다. */
   listWorkHistory(): void {
-    this.humanService.listWorkHistory(this.activeIndex, {
+    this.humanService.listWorkHistory({
       ...this.caculateVacationForm.value,
       employeeId: this.user?.employeeId,
+    })
+    .subscribe((data) => {
+      this.store.update('workHistoryList', data);
+      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
+      this.store.update('workHistoryListDataLoad', true);
+      this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
+      this.humanService.setVacationTableTitle(this.activeIndex);
     });
   }
 

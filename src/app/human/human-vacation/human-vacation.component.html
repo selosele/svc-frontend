@@ -18,6 +18,23 @@
   >
     <ng-container *ngIf="isNotQuit$ | async">
       <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
+        <div class="grid">
+          <div class="input-box">
+            <ui-text-field
+              [control]="caculateVacationForm.get('joinYmd')"
+              [label]="'입사일자'"
+              [readonly]="true"
+            />
+
+            <ui-dropdown
+              [control]="caculateVacationForm.get('annualTypeCode')"
+              [label]="'연차발생기준'"
+              [data]="annualTypeCodes"
+              (change)="onSubmit($event)"
+            />
+          </div>
+        </div>
+
         <ui-checkbox-group [label]="'휴가 계산에 포함할 휴가를 선택하세요.'">
           <div class="grid">
             <div class="col">

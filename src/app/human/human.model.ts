@@ -67,6 +67,9 @@ export class GetWorkHistoryRequestDTO extends HttpRequestDTOBase {
   /** 회사 ID */
   companyId?: number;
 
+  /** 연차발생기준 코드 */
+  annualTypeCode?: string;
+
   /** 휴가 계산에 포함할 휴가 구분 코드 목록 */
   vacationTypeCodes?: string[];
 
