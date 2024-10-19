@@ -248,7 +248,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 특정 사용자로 로그인한다. */
   async superLogin(): Promise<void> {
-    const confirm = await this.messageService.confirm1(`${this.detail.userAccount} 계정으로 로그인하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`${this.detail.userAccount}(${this.detail.employee.employeeName}) 계정으로 로그인하시겠습니까?`);
     if (!confirm) return;
 
     this.authService.superLogin({
