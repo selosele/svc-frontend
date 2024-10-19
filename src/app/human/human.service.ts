@@ -158,11 +158,11 @@ export class HumanService {
     }
 
     this.store.update('isNotQuit', true);
-    this.store.update('vacationTableTitle', this.calculateVacation(workHistory));
+    this.store.update('vacationTableTitle', this.showVacationCount(workHistory));
   }
 
-  /** 잔여 휴가를 계산해서 반환한다. */
-  calculateVacation(workHistory: WorkHistoryResponseDTO): string {
+  /** 잔여 휴가를 표출한다. */
+  showVacationCount(workHistory: WorkHistoryResponseDTO): string {
     const { annualTypeCode, joinYmd, vacationRemainCount } = workHistory;
     switch (annualTypeCode) {
       // 입사일자 기준
