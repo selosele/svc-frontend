@@ -1,7 +1,7 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
+import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { FormFieldComponent } from '../form-field/form-field.component';
 import { DropdownData } from './ui-dropdown.model';
 
@@ -25,8 +25,26 @@ export class UiDropdownComponent extends FormFieldComponent {
   /** 리스트 팝업 위치 */
   @Input() appendTo = 'body';
 
+  /** 드롭다운 change 이벤트 */
+  @Output() change? = new EventEmitter<DropdownChangeEvent>();
+
+  /** 드롭다운 blur 이벤트 */
+  @Output() blur? = new EventEmitter<Event>();
+
   override ngOnInit() {
     super.ngOnInit();
+  }
+
+  /** 드롭다운 change 이벤트 */
+  onChange(event: DropdownChangeEvent): void {
+    this.setErrorMessage();
+    this.change.emit(event);
+  }
+
+  /** 드롭다운 blur 이벤트 */
+  onBlur(event: Event): void {
+    this.setErrorMessage();
+    this.blur.emit(event);
   }
 
 }

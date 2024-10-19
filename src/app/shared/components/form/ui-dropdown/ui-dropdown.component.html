@@ -14,8 +14,8 @@
     [placeholder]="placeholder"
     [class.block]="block"
     [class.readonly]="readonly"
-    (onChange)="setErrorMessage()"
-    (onBlur)="setErrorMessage()"
+    (onChange)="onChange($event)"
+    (onBlur)="onBlur($event)"
   />
   <ng-content select="[button]"></ng-content>
 </div>
