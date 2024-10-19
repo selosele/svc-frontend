@@ -56,7 +56,7 @@ export class SystemUserComponent implements OnInit {
     { field: 'companyName',  header: '회사명' },
     { header: '직위/직책',
       valueGetter: (data) => {
-        if (data.jobTitleCode === '9999') {
+        if (data.jobTitleCode === 'ETC') {
           return data.rankCodeName;
         }
         return `${data.rankCodeName}/${data.jobTitleCodeName}`;
