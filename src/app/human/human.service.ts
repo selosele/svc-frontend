@@ -138,16 +138,11 @@ export class HumanService {
   /** 테이블 타이틀을 설정한다. */
   setVacationTableTitle(index: number): void {
     const workHistory = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
-    const { annualTypeCode, quitYmd } = workHistory;
+    const { quitYmd } = workHistory;
 
     if (isNotBlank(quitYmd)) {
       this.store.update('isNotQuit', false);
       this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
-      return;
-    }
-
-    if (isEmpty(annualTypeCode) || annualTypeCode === 'ETC') {
-      this.store.update('vacationTableTitle', '근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
       return;
     }
 
