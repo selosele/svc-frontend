@@ -152,7 +152,7 @@ export class HumanService {
       return;
     }
 
-    if (isEmpty(annualTypeCode) || annualTypeCode === '99') {
+    if (isEmpty(annualTypeCode) || annualTypeCode === 'ETC') {
       this.store.update('vacationTableTitle', '근무이력에 연차발생기준이 입력되어 있지 않아 휴가계산을 사용할 수 없습니다.');
       return;
     }
@@ -167,14 +167,14 @@ export class HumanService {
     switch (annualTypeCode) {
       // 입사일자 기준
       // TODO: 입사일자 기준이지만 입사 1년이 지나면?
-      case '01':
+      case 'JOIN_YMD':
         const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
         const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
 
         return `나의 잔여 월차: ${vacationRemainCount}/${nowDateDiff}개 (입사 ${joinYmdFormat}부터 총 ${nowDateDiff}개 월차가 발생하였음)`;
       // 회계년도 기준
-      case '02':
+      case 'FISCAL_YEAR':
         return ``;
       default: return null;
     }
