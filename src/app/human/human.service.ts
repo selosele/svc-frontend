@@ -159,11 +159,11 @@ export class HumanService {
         const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
         const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-
         return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${nowDateDiff}개 (입사 ${joinYmdFormat}부터 총 ${nowDateDiff}개의 월차가 발생)`;
       // 회계년도 기준
       case 'FISCAL_YEAR':
-        return ``;
+
+        return `잔여 연차: `;
       default: return null;
     }
   }
