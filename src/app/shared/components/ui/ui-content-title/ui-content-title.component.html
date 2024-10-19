@@ -1,4 +1,4 @@
 <h2 [ngStyle]="{ 'margin': '0' }">
   <ng-content></ng-content>
-  <span *ngIf="text">{{ text }}</span>
+  <span *ngIf="text" [innerHTML]="text"></span>
 </h2>
