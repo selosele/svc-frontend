@@ -160,7 +160,6 @@ export class HumanService {
     const { annualTypeCode, joinYmd, vacationRemainCount } = workHistory;
     switch (annualTypeCode) {
       // 입사일자 기준
-      // TODO: 입사일자 기준이지만 입사 1년이 지나면?
       case 'JOIN_YMD':
         const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
         const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
