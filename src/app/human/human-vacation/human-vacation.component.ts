@@ -125,7 +125,7 @@ export class HumanVacationComponent implements OnInit {
 
   /** 근무이력 목록을 조회한다. */
   listWorkHistory(): void {
-    this.humanService.listWorkHistory({
+    this.humanService.listWorkHistory$({
       ...this.caculateVacationForm.value,
       employeeId: this.user?.employeeId,
     })

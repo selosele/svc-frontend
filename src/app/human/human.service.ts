@@ -79,7 +79,7 @@ export class HumanService {
   }
 
   /** 근무이력 목록을 조회한다. */
-  listWorkHistory(dto: GetWorkHistoryRequestDTO) {
+  listWorkHistory$(dto: GetWorkHistoryRequestDTO) {
     const { employeeId } = dto;
     const params = this.httpService.createParams(dto);
 
