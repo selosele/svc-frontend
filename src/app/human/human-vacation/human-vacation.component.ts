@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DropdownChangeEvent } from 'primeng/dropdown';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { AuthenticatedUser } from '@app/auth/auth.model';
@@ -17,8 +18,9 @@ import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbo
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { WorkHistoryResponseDTO } from '../human.model';
-import { StoreService } from '@app/shared/services';
+import { StoreService, UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from "../../shared/components/form/ui-text-field/ui-text-field.component";
+import { dateUtil } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -51,6 +53,7 @@ export class HumanVacationComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: StoreService,
+    private messageService: UiMessageService,
     private authService: AuthService,
     private humanService: HumanService,
   ) {}
@@ -116,8 +119,7 @@ export class HumanVacationComponent implements OnInit {
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
 
-    this.caculateVacationForm.get('joinYmd').patchValue(this.workHistoryList?.[this.activeIndex]?.joinYmd);
-    this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD'); // 연차발생기준 코드 기본값 설정: 입사일자
+    this.setAnnualTypeCode();
 
     if (!this.workHistoryListDataLoad) {
       this.listWorkHistory();
@@ -142,9 +144,35 @@ export class HumanVacationComponent implements OnInit {
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
+
+    this.setAnnualTypeCode();
+    this.listWorkHistory();
+    
     this.humanService.setWorkHistoryId(event.activeKey);
     this.humanService.setVacationTableTitle(this.activeIndex);
-    this.caculateVacationForm.get('joinYmd').patchValue(this.workHistoryList?.[this.activeIndex]?.joinYmd);
+  }
+
+  /** 연차발생기준을 선택한다. */
+  onAnnualTypeCodeChange(event: DropdownChangeEvent): void {
+    const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
+    const joinYmd = this.caculateVacationForm.get('joinYmd').value;
+    
+    // 근속 1년 미만 and 회계년도를 선택했을경우
+    // TODO: 근속 1년 미만이지만 회계년도 기준으로 연차를 부여하는 회사도 있으므로 아래 로직은 주석처리
+    // if (nowDate.diff(dateUtil(joinYmd), 'year') < 1 && event.value === 'FISCAL_YEAR') {
+    //   this.messageService.toastInfo('근속 1년 미만일 경우 회계년도 기준으로 조회할 수 없습니다.');
+    //   this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD');
+    //   return;
+    // }
+
+    // 근속 1년 이상일경우 and 입사일자를 선택했을경우
+    if (nowDate.diff(dateUtil(joinYmd), 'year') >= 1 && event.value === 'JOIN_YMD') {
+      this.messageService.toastInfo('근속 1년 이상일 경우 입사일자 기준으로 조회할 수 없습니다.');
+      this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
+      return;
+    }
+
+    this.listWorkHistory();
   }
 
   /** 휴가를 계산한다. */
@@ -156,6 +184,22 @@ export class HumanVacationComponent implements OnInit {
   onReset(): void {
     this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes);
     this.listWorkHistory();
+  }
+
+  /** 연차발생기준 코드 값을 설정한다. */
+  setAnnualTypeCode(): void {
+    const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd;
+    this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
+
+    // 근속 1년 미만일경우
+    if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
+      this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD');
+    }
+    // 근속 1년 이상일경우
+    else {
+      this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
+    }
   }
 
 }
