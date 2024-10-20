@@ -126,21 +126,6 @@ export class HumanVacationComponent implements OnInit {
     }
   }
 
-  /** 근무이력 목록을 조회한다. */
-  listWorkHistory(): void {
-    this.humanService.listWorkHistory$({
-      ...this.caculateVacationForm.value,
-      employeeId: this.user?.employeeId,
-    })
-    .subscribe((data) => {
-      this.store.update('workHistoryList', data);
-      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
-      this.store.update('workHistoryListDataLoad', true);
-      this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
-      this.humanService.setVacationTableTitle(this.activeIndex);
-    });
-  }
-
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
@@ -186,8 +171,23 @@ export class HumanVacationComponent implements OnInit {
     this.listWorkHistory();
   }
 
+  /** 근무이력 목록을 조회한다. */
+  private listWorkHistory(): void {
+    this.humanService.listWorkHistory$({
+      ...this.caculateVacationForm.value,
+      employeeId: this.user?.employeeId,
+    })
+    .subscribe((data) => {
+      this.store.update('workHistoryList', data);
+      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
+      this.store.update('workHistoryListDataLoad', true);
+      this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
+      this.humanService.setVacationTableTitle(this.activeIndex);
+    });
+  }
+
   /** 연차발생기준 코드 값을 설정한다. */
-  setAnnualTypeCode(): void {
+  private setAnnualTypeCode(): void {
     const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
     const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd;
     this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
