@@ -3,3 +3,16 @@ button {
   font-size: inherit;
   cursor: pointer;
 }
+
+.grid > .col,
+.grid > [class*=col] {
+  > ui-button {
+    width: 100%;
+
+    > button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}

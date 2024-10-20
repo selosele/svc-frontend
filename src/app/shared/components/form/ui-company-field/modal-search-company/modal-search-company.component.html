@@ -7,27 +7,36 @@
 </layout-page-description>
 
 <ui-form [form]="searchForm" (submit)="onSubmit($event)">
-  <div class="input-box search-box">
-    <ui-text-field
-      [control]="searchForm.get('corporateName')"
-      [label]="'법인명'"
-    />
+  <!-- <div class="input-box search-box"> -->
+  <div class="grid">
+    <div class="col">
+      <ui-text-field
+        [control]="searchForm.get('corporateName')"
+        [label]="'법인명'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="searchForm.get('companyName')"
-      [label]="'회사명'"
-    />
+    <div class="col">
+      <ui-text-field
+        [control]="searchForm.get('companyName')"
+        [label]="'회사명'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="searchForm.get('registrationNo')"
-      [label]="'사업자등록번호'"
-    />
+    <div class="col">
+      <ui-text-field
+        [control]="searchForm.get('registrationNo')"
+        [label]="'사업자등록번호'"
+      />
+    </div>
 
-    <ui-button
-      [type]="'submit'"
-      [icon]="'pi-search'"
-      [class]="'search-button'"
-    />
+    <div class="col-1 flex align-items-end">
+      <ui-button
+        [type]="'submit'"
+        [icon]="'pi-search'"
+        [class]="'search-button'"
+      />
+    </div>
   </div>
 
   @if (!companyListDataLoad) {

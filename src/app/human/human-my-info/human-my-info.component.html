@@ -16,21 +16,27 @@
   <ui-content-title [text]="'비밀번호 변경'" />
 
   <ui-form [form]="changePasswordForm" (submit)="onSubmitPassword($event)">
-    <div class="input-box">
-      <ui-text-field
-        [control]="changePasswordForm.get('currentPassword')"
-        [label]="'현재 비밀번호'" type="password" [placeholder]="'12자 이내'"
-      />
+    <div class="grid mt-2">
+      <div class="col">
+        <ui-text-field
+          [control]="changePasswordForm.get('currentPassword')"
+          [label]="'현재 비밀번호'" type="password" [placeholder]="'12자 이내'"
+        />
+      </div>
 
-      <ui-text-field
-        [control]="changePasswordForm.get('newPassword')"
-        [label]="'새 비밀번호'" type="password" [placeholder]="'12자 이내'"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="changePasswordForm.get('newPassword')"
+          [label]="'새 비밀번호'" type="password" [placeholder]="'12자 이내'"
+        />
+      </div>
 
-      <ui-text-field
-        [control]="changePasswordForm.get('newPasswordConfirm')"
-        [label]="'새 비밀번호 확인'" type="password" [placeholder]="'12자 이내'"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="changePasswordForm.get('newPasswordConfirm')"
+          [label]="'새 비밀번호 확인'" type="password" [placeholder]="'12자 이내'"
+        />
+      </div>
     </div>
 
     <div class="ui-form__buttons">
@@ -46,68 +52,88 @@
   <ui-content-title [text]="'직원 정보'" />
 
   <ui-form [form]="employeeForm" (submit)="onSubmitEmployee($event)">
-    <div class="input-box">
-      <ui-text-field
-        [control]="employeeForm.get('employeeName')"
-        [label]="'직원명'" [placeholder]="'30자 이내'"
-      />
+    <div class="grid mt-2">
+      <div class="col">
+        <ui-text-field
+          [control]="employeeForm.get('employeeName')"
+          [label]="'직원명'" [placeholder]="'30자 이내'"
+        />
+      </div>
   
-      <ui-dropdown
-        [control]="employeeForm.get('genderCode')"
-        [label]="'성별'"
-        [data]="genderCodes"
-      />
+      <div class="col">
+        <ui-dropdown
+          [control]="employeeForm.get('genderCode')"
+          [label]="'성별'"
+          [data]="genderCodes"
+        />
+      </div>
 
-      <ui-date-field
-        [control]="employeeForm.get('birthYmd')"
-        [label]="'생년월일'"
-        [dateFormat]="'yymmdd'"
-      />
+      <div class="col">
+        <ui-date-field
+          [control]="employeeForm.get('birthYmd')"
+          [label]="'생년월일'"
+          [dateFormat]="'yymmdd'"
+        />
+      </div>
 
-      <ui-text-field
-        [control]="employeeForm.get('phoneNo')"
-        [label]="'휴대폰번호'" [placeholder]="'- 제외'"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="employeeForm.get('phoneNo')"
+          [label]="'휴대폰번호'" [placeholder]="'- 제외'"
+        />
+      </div>
 
-      <ui-text-field
-        [control]="employeeForm.get('emailAddr')"
-        [label]="'이메일주소'"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="employeeForm.get('emailAddr')"
+          [label]="'이메일주소'"
+        />
+      </div>
     </div>
-  
-    <div class="input-box">
-      <ui-text-field
-        [control]="employeeForm.get('workHistory.corporateName')"
-        [label]="'회사(법인)명'"
-        [readonly]="true"
-      />
+
+    <div class="grid">
+      <div class="col">
+        <ui-text-field
+          [control]="employeeForm.get('workHistory.corporateName')"
+          [label]="'회사(법인)명'"
+          [readonly]="true"
+        />
+      </div>
       
-      <ui-text-field
-        [control]="employeeForm.get('workHistory.companyName')"
-        [label]="'회사명'"
-        [readonly]="true"
-      />
-
-      <ui-dropdown
-        [control]="employeeForm.get('workHistory.rankCode')"
-        [label]="'직위'"
-        [data]="rankCodes"
-        [readonly]="true"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="employeeForm.get('workHistory.companyName')"
+          [label]="'회사명'"
+          [readonly]="true"
+        />
+      </div>
   
-      <ui-dropdown
-        [control]="employeeForm.get('workHistory.jobTitleCode')"
-        [label]="'직책'"
-        [data]="jobTitleCodes"
-        [readonly]="true"
-      />
-
-      <ui-date-field
-        [control]="employeeForm.get('workHistory.joinYmd')"
-        [label]="'입사일자'"
-        [dateFormat]="'yymmdd'"
-        [readonly]="true"
-      />
+      <div class="col">
+        <ui-dropdown
+          [control]="employeeForm.get('workHistory.rankCode')"
+          [label]="'직위'"
+          [data]="rankCodes"
+          [readonly]="true"
+        />
+      </div>
+  
+      <div class="col">
+        <ui-dropdown
+          [control]="employeeForm.get('workHistory.jobTitleCode')"
+          [label]="'직책'"
+          [data]="jobTitleCodes"
+          [readonly]="true"
+        />
+      </div>
+  
+      <div class="col">
+        <ui-date-field
+          [control]="employeeForm.get('workHistory.joinYmd')"
+          [label]="'입사일자'"
+          [dateFormat]="'yymmdd'"
+          [readonly]="true"
+        />
+      </div>
     </div>
 
     <div class="ui-form__buttons">

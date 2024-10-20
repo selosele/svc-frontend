@@ -9,36 +9,46 @@
 
   <ui-content-title [text]="'회사 정보'" />
 
-  <div class="input-box">
-    <ui-company-field
-      [control]="detailForm.get('companyName')"
-      [label]="'회사명'"
-    />
+  <div class="grid mt-2">
+    <div class="col">
+      <ui-company-field
+        [control]="detailForm.get('companyName')"
+        [label]="'회사명'"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('rankCode')"
-      [label]="'직위'"
-      [data]="rankCodes"
-    />
+    <div class="col">
+      <ui-dropdown
+        [control]="detailForm.get('rankCode')"
+        [label]="'직위'"
+        [data]="rankCodes"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('jobTitleCode')"
-      [label]="'직책'"
-      [data]="jobTitleCodes"
-    />
+    <div class="col">
+      <ui-dropdown
+        [control]="detailForm.get('jobTitleCode')"
+        [label]="'직책'"
+        [data]="jobTitleCodes"
+      />
+    </div>
   </div>
 
-  <div class="input-box">
-    <ui-date-field
-      [control]="detailForm.get('joinYmd')"
-      [label]="'입사일자'"
-      [dateFormat]="'yymmdd'"
-    />
+  <div class="grid">
+    <div class="col-4">
+      <ui-date-field
+        [control]="detailForm.get('joinYmd')"
+        [label]="'입사일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
 
-    <ui-date-field
-      [control]="detailForm.get('quitYmd')"
-      [label]="'퇴사일자'"
-      [dateFormat]="'yymmdd'"
-    />
+    <div class="col-4">
+      <ui-date-field
+        [control]="detailForm.get('quitYmd')"
+        [label]="'퇴사일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
   </div>
 </ui-split-form>

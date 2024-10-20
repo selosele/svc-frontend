@@ -11,127 +11,153 @@
     <p class="mt-2">마지막 로그인 일시: {{ detailForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</p>
   }
 
-  <div class="input-box">
+  <div class="grid mt-2 mb-4">
     @if (isUserNotEmpty) {
-      <ui-text-field
-        [control]="detailForm.get('userId')"
-        [label]="'사용자 ID'" [readonly]="true"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="detailForm.get('userId')"
+          [label]="'사용자 ID'" [readonly]="true"
+        />
+      </div>
     }
 
-    <ui-text-field
-      [control]="detailForm.get('userAccount')"
-      [label]="'사용자 계정'" [readonly]="isUserNotEmpty" [placeholder]="'20자 이내'"
-    />
+    <div class="col">
+      <ui-text-field
+        [control]="detailForm.get('userAccount')"
+        [label]="'사용자 계정'" [readonly]="isUserNotEmpty" [placeholder]="'20자 이내'"
+      />
+    </div>
 
     @if (!isUserNotEmpty) {
-      <ui-text-field
-        [control]="detailForm.get('userPassword')"
-        [label]="'사용자 비밀번호'" type="password" [placeholder]="'12자 이내'"
-      />
+      <div class="col">
+        <ui-text-field
+          [control]="detailForm.get('userPassword')"
+          [label]="'사용자 비밀번호'" type="password" [placeholder]="'12자 이내'"
+        />
+      </div>
     }
 
-    <ui-dropdown
-      [control]="detailForm.get('userActiveYn')"
-      [label]="'사용자 활성화 여부'"
-      [data]="userActiveYns"
-      [readonly]="isUserNotEmpty"
-    >
-      @if (isUserNotEmpty) {
+    <div class="col">
+      <ui-dropdown
+        [control]="detailForm.get('userActiveYn')"
+        [label]="'사용자 계정 활성화'"
+        [data]="userActiveYns"
+        [readonly]="isUserNotEmpty"
+      />
+    </div>
+
+    @if (isUserNotEmpty && !isUserSelf) {
+      <div class="col flex align-items-end">
         <ui-button button
           [severity]="'secondary'"
           (click)="updateUserActiveYn($event, detail?.userActiveYn === 'Y' ? 'N' : 'Y')"
         >
-          {{ detail?.userActiveYn === 'Y' ? '비활성화' : '활성화' }}
+          {{ detail?.userActiveYn === 'Y' ? '잠금설정' : '잠금해제' }}
         </ui-button>
-      }
-    </ui-dropdown>
-  </div>
+      </div>
+    }
 
-  <div class="input-box">
-    <ui-checkbox-group [label]="'사용자 권한'">
-      @for (i of roles; track $index) {
-        <ui-checkbox
-          [control]="detailForm.get('roles')"
-          [label]="i.roleName"
-          [value]="i.roleId"
-        />
-      }
-    </ui-checkbox-group>
+    <div class="col-12">
+      <ui-checkbox-group [label]="'사용자 권한'">
+        @for (i of roles; track $index) {
+          <ui-checkbox
+            [control]="detailForm.get('roles')"
+            [label]="i.roleName"
+            [value]="i.roleId"
+          />
+        }
+      </ui-checkbox-group>
+    </div>
   </div>
 
   <ui-content-title [text]="'직원 정보'" />
 
-  <div class="input-box">
-    <ui-text-field
-      [control]="detailForm.get('employee.employeeName')"
-      [label]="'직원명'" [placeholder]="'30자 이내'"
-    />
+  <div class="grid mt-2">
+    <div class="col-3">
+      <ui-text-field
+        [control]="detailForm.get('employee.employeeName')"
+        [label]="'직원명'" [placeholder]="'30자 이내'"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('employee.genderCode')"
-      [label]="'성별'"
-      [data]="genderCodes"
-    />
+    <div class="col-3">
+      <ui-dropdown
+        [control]="detailForm.get('employee.genderCode')"
+        [label]="'성별'"
+        [data]="genderCodes"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('employee.workHistory.rankCode')"
-      [label]="'직위'"
-      [data]="rankCodes"
-    />
+    <div class="col-3">
+      <ui-dropdown
+        [control]="detailForm.get('employee.workHistory.rankCode')"
+        [label]="'직위'"
+        [data]="rankCodes"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('employee.workHistory.jobTitleCode')"
-      [label]="'직책'"
-      [data]="jobTitleCodes"
-    />
-  </div>
+    <div class="col-3">
+      <ui-dropdown
+        [control]="detailForm.get('employee.workHistory.jobTitleCode')"
+        [label]="'직책'"
+        [data]="jobTitleCodes"
+      />
+    </div>
 
-  <div class="input-box">
-    <ui-date-field
-      [control]="detailForm.get('employee.birthYmd')"
-      [label]="'생년월일'"
-      [dateFormat]="'yymmdd'"
-    />
+    <div class="col-4">
+      <ui-date-field
+        [control]="detailForm.get('employee.birthYmd')"
+        [label]="'생년월일'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="detailForm.get('employee.phoneNo')"
-      [label]="'휴대폰번호'" [placeholder]="'- 제외'"
-    />
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('employee.phoneNo')"
+        [label]="'휴대폰번호'" [placeholder]="'- 제외'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="detailForm.get('employee.emailAddr')"
-      [label]="'이메일주소'"
-    />
-  </div>
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('employee.emailAddr')"
+        [label]="'이메일주소'"
+      />
+    </div>
 
-  <div class="input-box">
-    <ui-hidden-field [control]="detailForm.get('employee.workHistory.workHistoryId')" />
-    <ui-hidden-field [control]="detailForm.get('employee.workHistory.companyId')" />
-    
-    <ui-company-field
-      [control]="detailForm.get('employee.workHistory.corporateName')"
-      [label]="'회사(법인)명'"
-    />
+    <div class="col-6">
+      <ui-hidden-field [control]="detailForm.get('employee.workHistory.workHistoryId')" />
+      <ui-hidden-field [control]="detailForm.get('employee.workHistory.companyId')" />
+      
+      <ui-company-field
+        [control]="detailForm.get('employee.workHistory.corporateName')"
+        [label]="'회사(법인)명'"
+      />
+    </div>
 
-    <ui-company-field
-      [control]="detailForm.get('employee.workHistory.companyName')"
-      [label]="'회사명'"
-    />
-  </div>
+    <div class="col-6">
+      <ui-company-field
+        [control]="detailForm.get('employee.workHistory.companyName')"
+        [label]="'회사명'"
+      />
+    </div>
 
-  <div class="input-box">
-    <ui-date-field
-      [control]="detailForm.get('employee.workHistory.joinYmd')"
-      [label]="'입사일자'"
-      [dateFormat]="'yymmdd'"
-    />
-
-    <ui-date-field
-      [control]="detailForm.get('employee.workHistory.quitYmd')"
-      [label]="'퇴사일자'"
-      [dateFormat]="'yymmdd'"
-    />
+    <div class="col-6">
+      <ui-date-field
+        [control]="detailForm.get('employee.workHistory.joinYmd')"
+        [label]="'입사일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
+  
+    <div class="col-6">
+      <ui-date-field
+        [control]="detailForm.get('employee.workHistory.quitYmd')"
+        [label]="'퇴사일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
   </div>
 
   @if (isUserNotEmpty && !isUserSelf) {

@@ -10,30 +10,36 @@
 
   <ui-content-title [text]="'휴가 정보'" />
 
-  <div class="input-box">
-    <ui-dropdown
-      [control]="detailForm.get('vacationTypeCode')"
-      [label]="'휴가 구분'"
-      [data]="vacationTypeCodes"
-    />
+  <div class="grid mt-2">
+    <div class="col">
+      <ui-dropdown
+        [control]="detailForm.get('vacationTypeCode')"
+        [label]="'휴가 구분'"
+        [data]="vacationTypeCodes"
+      />
+    </div>
 
-    <ui-date-field
-      [control]="detailForm.get('vacationStartYmd')"
-      [label]="'휴가 시작일자'"
-      [dateFormat]="'yymmdd'"
-    />
+    <div class="col">
+      <ui-date-field
+        [control]="detailForm.get('vacationStartYmd')"
+        [label]="'휴가 시작일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
 
-    <ui-date-field
-      [control]="detailForm.get('vacationEndYmd')"
-      [label]="'휴가 종료일자'"
-      [dateFormat]="'yymmdd'"
-    />
-  </div>
-
-  <div class="input-box">
-    <ui-textarea
-      [control]="detailForm.get('vacationContent')"
-      [label]="'휴가 내용'"
-    />
+    <div class="col">
+      <ui-date-field
+        [control]="detailForm.get('vacationEndYmd')"
+        [label]="'휴가 종료일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
+    
+    <div class="col-12">
+      <ui-textarea
+        [control]="detailForm.get('vacationContent')"
+        [label]="'휴가 내용'"
+      />
+    </div>
   </div>
 </ui-split-form>

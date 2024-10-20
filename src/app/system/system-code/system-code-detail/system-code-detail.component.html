@@ -9,52 +9,62 @@
 
   <ui-content-title [text]="'코드 정보'" />
 
-  <div class="input-box">
-    <ui-text-field
-      [control]="detailForm.get('codeId')"
-      [label]="'코드 ID'"
-    />
+  <div class="grid mt-2">
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('codeId')"
+        [label]="'코드 ID'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="detailForm.get('upCodeId')"
-      [label]="'상위 코드 ID'"
-    />
-  </div>
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('upCodeId')"
+        [label]="'상위 코드 ID'"
+      />
+    </div>
 
-  <div class="input-box">
-    <ui-text-field
-      [control]="detailForm.get('codeValue')"
-      [label]="'코드 값'"
-    />
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('codeValue')"
+        [label]="'코드 값'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="detailForm.get('codeName')"
-      [label]="'코드명'"
-    />
-  </div>
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('codeName')"
+        [label]="'코드명'"
+      />
+    </div>
 
-  <div class="input-box">
-    <ui-textarea
-      [control]="detailForm.get('codeContent')"
-      [label]="'코드 내용'"
-    />
-  </div>
+    <div class="col-12">
+      <ui-textarea
+        [control]="detailForm.get('codeContent')"
+        [label]="'코드 내용'"
+      />
+    </div>
 
-  <div class="input-box">
-    <ui-text-field
-      [control]="detailForm.get('codeOrder')"
-      [label]="'코드 순서'"
-    />
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('codeOrder')"
+        [label]="'코드 순서'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="detailForm.get('codeDepth')"
-      [label]="'코드 뎁스'"
-    />
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('codeDepth')"
+        [label]="'코드 뎁스'"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('useYn')"
-      [label]="'사용 여부'"
-      [data]="useYns"
-    />
+    <div class="col-4">
+      <ui-dropdown
+        [control]="detailForm.get('useYn')"
+        [label]="'사용 여부'"
+        [data]="useYns"
+      />
+    </div>
   </div>
 </ui-split-form>

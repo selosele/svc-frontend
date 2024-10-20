@@ -10,29 +10,35 @@
   <ui-hidden-field [control]="detailForm.get('originalYmd')" />
   <ui-hidden-field [control]="detailForm.get('userId')" />
 
-  <div class="input-box">
-    <ui-date-field
-      [control]="detailForm.get('ymd')"
-      [label]="'일자'"
-      [dateFormat]="'yymmdd'"
-    />
+  <div class="grid mt-2">
+    <div class="col">
+      <ui-date-field
+        [control]="detailForm.get('ymd')"
+        [label]="'일자'"
+        [dateFormat]="'yymmdd'"
+      />
+    </div>
 
-    <ui-text-field
-      [control]="detailForm.get('holidayName')"
-      [label]="'휴일명'"
-    />
+    <div class="col">
+      <ui-text-field
+        [control]="detailForm.get('holidayName')"
+        [label]="'휴일명'"
+      />
+    </div>
 
-    <ui-dropdown
-      [control]="detailForm.get('useYn')"
-      [label]="'사용 여부'"
-      [data]="useYns"
-    />
-  </div>
-
-  <div class="input-box">
-    <ui-textarea
-      [control]="detailForm.get('holidayContent')"
-      [label]="'휴일 내용'"
-    />
+    <div class="col">
+      <ui-dropdown
+        [control]="detailForm.get('useYn')"
+        [label]="'사용 여부'"
+        [data]="useYns"
+      />
+    </div>
+    
+    <div class="col-12">
+      <ui-textarea
+        [control]="detailForm.get('holidayContent')"
+        [label]="'휴일 내용'"
+      />
+    </div>
   </div>
 </ui-split-form>

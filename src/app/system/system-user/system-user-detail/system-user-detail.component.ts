@@ -191,13 +191,12 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 활성화 여부를 수정한다. */
   async updateUserActiveYn(event: Event, userActiveYn: string): Promise<void> {
-    const activeStatus = `${userActiveYn === 'Y' ? '활성화' : '비활성화'}`;
-    const confirm = await this.messageService.confirm1(`사용자를 ${activeStatus}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠그시겠습니까?' : '잠금해제하시겠습니까?'}`);
     if (!confirm) return;
 
     this.authService.updateUser$({ userId: this.detail?.userId, userActiveYn })
     .subscribe((data) => {
-      this.messageService.toastSuccess(`정상적으로 ${activeStatus}되었습니다.`);
+      this.messageService.toastSuccess('정상적으로 처리되었습니다.');
 
       this.detail = data;
       this.detailForm.patchValue({

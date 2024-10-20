@@ -116,6 +116,7 @@ export class HumanVacationComponent implements OnInit {
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
 
+    this.caculateVacationForm.get('joinYmd').patchValue(this.workHistoryList?.[this.activeIndex]?.joinYmd);
     this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD'); // 연차발생기준 코드 기본값 설정: 입사일자
 
     if (!this.workHistoryListDataLoad) {
@@ -143,6 +144,7 @@ export class HumanVacationComponent implements OnInit {
     this.activeIndex = event.index;
     this.humanService.setWorkHistoryId(event.activeKey);
     this.humanService.setVacationTableTitle(this.activeIndex);
+    this.caculateVacationForm.get('joinYmd').patchValue(this.workHistoryList?.[this.activeIndex]?.joinYmd);
   }
 
   /** 휴가를 계산한다. */
