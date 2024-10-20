@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
+import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO } from './human.model';
@@ -152,22 +152,37 @@ export class HumanService {
 
   /** 잔여 휴가를 표출한다. */
   showVacationCount(workHistory: WorkHistoryResponseDTO): string {
-    const { annualTypeCode, joinYmd, vacationRemainCount } = workHistory;
+    const { annualTypeCode, joinYmd, workDiffM, vacationRemainCount } = workHistory;
     switch (annualTypeCode) {
 
       // 입사일자 기준
       case 'JOIN_YMD':
-        const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
-        const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${nowDateDiff}개 (입사 ${joinYmdFormat}부터 총 ${nowDateDiff}개의 월차가 발생)`;
+        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM}개 (입사 ${joinYmdFormat}부터 총 ${workDiffM}개의 월차가 발생)`;
       
       // 회계년도 기준
       case 'FISCAL_YEAR':
-
-        return `잔여 연차: `;
-      default: return null;
+        return `잔여 연차: <strong class="text-primary">${vacationRemainCount}</strong>/${this.getTotalAnnualCount(joinYmd)}개`;
+      
+      default:
+        return null;
     }
+  }
+
+  /** total 연차개수를 반환한다. */
+  private getTotalAnnualCount(joinYmd: string): number {
+    const nextFiscalYmd = dateUtil(dateUtil().add(1, 'year').startOf('year')).format('YYYYMMDD'); // 내년 회계년도 날짜
+    const joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속년수 계산
+
+    // 입사일자가 1년 미만이면 내년 회계년도에 비례한 남은 개월수를 반환한다.
+    if (dateUtil(nextFiscalYmd).diff(joinYmd, 'year') < 1) {
+      return dateUtil(nextFiscalYmd).diff(joinYmd, 'month');
+    }
+
+    // 위 조건을 충족하지 않으면 15개의 연차를 반환한다.
+    // 단, 3년 이상 근속했을 경우 근속 2년마다 1일씩 가산(최대 25일까지)된 연차가 반환된다.
+    const extraDays = Math.floor((joinYmdDiff - 3) / 2) + 1; // 3년 이상일 경우부터 가산
+    return Math.min(15 + Math.max(0, extraDays), 25);        // 최대 25일까지 제한
   }
 
 }

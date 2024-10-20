@@ -157,6 +157,15 @@ export class HumanVacationComponent implements OnInit {
       return;
     }
 
+    // 회계년도를 선택했을경우
+    if (event.value === 'FISCAL_YEAR') {
+      this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'MONTH'));
+    }
+    // 입사일자를 선택했을경우
+    else if (event.value === 'JOIN_YMD') {
+      this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'ANNUAL'));
+    }
+
     this.listWorkHistory();
   }
 
@@ -189,16 +198,18 @@ export class HumanVacationComponent implements OnInit {
   /** 연차발생기준 코드 값을 설정한다. */
   private setAnnualTypeCode(): void {
     const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
-    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd;
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user.joinYmd;
     this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
 
     // 근속 1년 미만일경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
       this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD');
+      this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'ANNUAL'));
     }
     // 근속 1년 이상일경우
     else {
       this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
+      this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'MONTH'));
     }
   }
 
