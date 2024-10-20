@@ -141,9 +141,9 @@ export class HumanService {
     const { quitYmd } = workHistory;
 
     if (isNotBlank(quitYmd)) {
-      this.store.update('isNotQuit', false);
-      this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
-      return;
+      // this.store.update('isNotQuit', false);
+      // this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
+      // return;
     }
 
     this.store.update('isNotQuit', true);
@@ -154,12 +154,14 @@ export class HumanService {
   showVacationCount(workHistory: WorkHistoryResponseDTO): string {
     const { annualTypeCode, joinYmd, vacationRemainCount } = workHistory;
     switch (annualTypeCode) {
+
       // 입사일자 기준
       case 'JOIN_YMD':
         const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
         const nowDateDiff = nowDate.diff(dateUtil(joinYmd), 'month');
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
         return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${nowDateDiff}개 (입사 ${joinYmdFormat}부터 총 ${nowDateDiff}개의 월차가 발생)`;
+      
       // 회계년도 기준
       case 'FISCAL_YEAR':
 
