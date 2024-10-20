@@ -218,6 +218,9 @@ export class AuthenticatedUser {
   /** 직책 코드명 */
   jobTitleCodeName?: string;
 
+  /** 입사일자 */
+  joinYmd?: string;
+
   /** 직원 ID */
   employeeId?: number;
 
