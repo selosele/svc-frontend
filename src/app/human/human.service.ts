@@ -146,7 +146,7 @@ export class HumanService {
       // return;
     }
 
-    this.store.update('isNotQuit', true);
+    // this.store.update('isNotQuit', true);
     this.store.update('vacationTableTitle', this.showVacationCount(workHistory));
   }
 

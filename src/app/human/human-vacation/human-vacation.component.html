@@ -16,7 +16,7 @@
     [activeIndex]="activeIndex"
     (activeIndexChange)="onChange($event)"
   >
-    <ng-container *ngIf="isNotQuit$ | async">
+    <!-- <ng-container *ngIf="isNotQuit$ | async"> -->
       <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
         <div class="grid">
           <div class="input-box">
@@ -65,7 +65,7 @@
           </div>
         </ui-checkbox-group>
       </ui-form>
-    </ng-container>
+    <!-- </ng-container> -->
 
     <human-vacation-list
       [tableTitle]="vacationTableTitle"
