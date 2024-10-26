@@ -242,6 +242,37 @@ export class VacationResponseDTO {
 
 }
 
+/** 휴가 계산 설정 추가 요청 DTO */
+export class AddVacationCalcRequestDTO extends HttpRequestDTOBase {
+
+  /** 직원 ID */
+  employeeId?: number;
+  
+  /** 휴가 내용 */
+  annualTypeCode?: string;
+
+  /** 휴가 구분 코드 */
+  vacationTypeCode?: string;
+
+}
+
+/** 휴가 계산 설정 응답 DTO */
+export class VacationCalcResponseDTO {
+
+  /** 휴가 계산 설정 ID */
+  vacationCalcId?: number;
+
+  /** 직원 ID */
+  employeeId?: number;
+  
+  /** 휴가 내용 */
+  annualTypeCode?: string;
+
+  /** 휴가 구분 코드 */
+  vacationTypeCode?: string;
+
+}
+
 /** 탭별 휴가 목록 */
 export interface VacationTabViewItem {
 
