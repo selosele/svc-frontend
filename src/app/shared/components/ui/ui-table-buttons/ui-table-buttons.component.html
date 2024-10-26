@@ -1,7 +1,13 @@
 <div class="ui-table__buttons">
-  @if (title) {
-    <ui-content-title [text]="title" />
-  }
+  <div>
+    @if (title) {
+      <ui-content-title [text]="title" />
+    }
+  
+    @if (text) {
+      <div [innerHTML]="text" class="mt-2"></div>
+    }
+  </div>
 
   <div class="ui-table__buttons-right">
     <ng-content></ng-content>
