@@ -181,8 +181,13 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 폼을 초기화한다. */
   onReset(): void {
-    this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes);
+    this.setAnnualTypeCode();
     this.listWorkHistory();
+  }
+
+  /** 휴가 계산 설정을 저장한다. */
+  onSave(): void {
+
   }
 
   /** 근무이력 목록을 조회한다. */
@@ -216,6 +221,16 @@ export class HumanVacationComponent implements OnInit {
       this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
       this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'MONTH'));
     }
+    
+    // this.humanService.listVacationCalc$(this.user?.employeeId)
+    // .subscribe((data) => {
+
+    //   // 사용자 지정 휴가계산설정이 있을 경우
+    //   if (data?.length > 0) {
+    //     this.caculateVacationForm.get('annualTypeCode').patchValue(data[0].annualTypeCode);
+    //     this.caculateVacationForm.get('vacationTypeCodes').patchValue(data.map(x => x.vacationTypeCode));
+    //   }
+    // });
   }
 
 }
