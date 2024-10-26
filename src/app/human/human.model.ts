@@ -131,9 +131,6 @@ export class WorkHistoryResponseDTO {
   /** 재직기간(월) */
   workDiffM?: number;
 
-  /** 휴가 사용일수 */
-  vacationUseCount?: number;
-
   /** 잔여 휴가 개수 */
   vacationRemainCount?: number;
 
