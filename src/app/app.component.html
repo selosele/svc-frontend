@@ -3,11 +3,11 @@
     <layout-header />
     
     <div class="page-wrapper">
-      @if (!isIndexPage) {
-        <layout-breadcrumb />
-      }
-
       <div class="page-wrapper__inner">
+        @if (!isIndexPage) {
+          <layout-breadcrumb />
+        }
+
         <h1 class="page-wrapper__title" *ngIf="currentPageTitle$ | async">
           {{ currentPageTitle$ | async }}
         </h1>

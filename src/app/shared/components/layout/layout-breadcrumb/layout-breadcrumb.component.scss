@@ -1,10 +1,8 @@
 .layout-breadcrumb {
   margin-bottom: 1.25rem;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 0.625rem;
   border: 1px solid var(--surface-300);
-  background-color: var(--surface-0);
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
 
   > ul {
     display: flex;
