@@ -208,6 +208,9 @@ export class SaveVacationRequestDTO extends HttpRequestDTOBase {
   /** 휴가 내용 */
   vacationContent?: string;
 
+  /** 휴가 사용일수 */
+  vacationUseCount?: number;
+
 }
 
 /** 휴가 응답 DTO */

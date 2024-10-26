@@ -67,6 +67,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       vacationTypeCode: ['', [FormValidator.required]],       // 휴가 구분 코드
       vacationStartYmd: ['', [FormValidator.required]],       // 휴가 시작일자
       vacationEndYmd: ['', [FormValidator.required]],         // 휴가 종료일자
+      vacationUseCount: ['', [FormValidator.required]],       // 휴가 사용일수
       vacationContent: ['', FormValidator.maxLength(100)],    // 휴가 내용
     });
 
