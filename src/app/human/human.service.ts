@@ -44,6 +44,9 @@ export class HumanService {
   /** 휴가 탭별 테이블 타이틀 */
   private vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
 
+  /** 휴가 탭별 테이블 텍스트 */
+  private vacationTableText = this.store.create<string>('vacationTableText', null);
+
   /** 재직 중인 회사인지 여부 */
   private isNotQuit = this.store.create<boolean>('isNotQuit', true);
 
@@ -135,8 +138,8 @@ export class HumanService {
     return this.http.delete<void>(`/hm/vacations/${vacationId}`);
   }
 
-  /** 테이블 타이틀을 설정한다. */
-  setVacationTableTitle(index: number): void {
+  /** 테이블 문구를 설정한다. */
+  setVacationTableContent(index: number): void {
     const workHistory = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
     const { quitYmd } = workHistory;
 
@@ -148,6 +151,29 @@ export class HumanService {
 
     // this.store.update('isNotQuit', true);
     this.store.update('vacationTableTitle', this.showVacationCount(workHistory));
+    this.store.update('vacationTableText', this.setVacationTableText(workHistory));
+  }
+
+  /** 테이블 텍스트를 설정한다. */
+  setVacationTableText(workHistory: WorkHistoryResponseDTO): string {
+    const { annualTypeCode, joinYmd, workDiffM } = workHistory;
+    switch (annualTypeCode) {
+
+      // 입사일자 기준
+      case 'JOIN_YMD':
+        const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
+        return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM}</strong>개의 월차가 발생하였음`;
+      
+      // 회계년도 기준
+      case 'FISCAL_YEAR':
+        return `
+          근로기준법 제60조 4항에 의거, 3년 이상 근속했을 경우 2년마다 1일씩 가산된 유급휴가가 부여된다.<br>
+          이 때, 가산일수와 기본일수를 합한 총 유급휴가 일수의 한도는 25일이다.
+        `;
+      
+      default:
+        return null;
+    }
   }
 
   /** 잔여 휴가를 표출한다. */
@@ -157,8 +183,7 @@ export class HumanService {
 
       // 입사일자 기준
       case 'JOIN_YMD':
-        const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM}개 (입사 ${joinYmdFormat}부터 총 ${workDiffM}개의 월차가 발생)`;
+        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM}개`;
       
       // 회계년도 기준
       case 'FISCAL_YEAR':

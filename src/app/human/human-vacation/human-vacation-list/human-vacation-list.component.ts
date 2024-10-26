@@ -38,6 +38,9 @@ export class HumanVacationListComponent implements OnInit {
   /** 테이블 타이틀 */
   @Input() tableTitle: string;
 
+  /** 테이블 텍스트 */
+  @Input() tableText: string;
+
   /** table */
   @ViewChild('table') table: UiTableComponent;
 

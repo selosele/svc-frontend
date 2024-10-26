@@ -84,6 +84,11 @@ export class HumanVacationComponent implements OnInit {
     return this.store.select<string>('vacationTableTitle').value;
   }
 
+  /** 휴가 테이블 텍스트 */
+  get vacationTableText() {
+    return this.store.select<string>('vacationTableText').value;
+  }
+
   /** 근무이력 탭 목록 */
   get workHistoryTabList() {
     return this.store.select<Tab[]>('workHistoryTabList').value;
@@ -134,7 +139,7 @@ export class HumanVacationComponent implements OnInit {
     this.listWorkHistory();
     
     this.humanService.setWorkHistoryId(event.activeKey);
-    this.humanService.setVacationTableTitle(this.activeIndex);
+    this.humanService.setVacationTableContent(this.activeIndex);
   }
 
   /** 연차발생기준을 선택한다. */
@@ -191,7 +196,7 @@ export class HumanVacationComponent implements OnInit {
       this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
       this.store.update('workHistoryListDataLoad', true);
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
-      this.humanService.setVacationTableTitle(this.activeIndex);
+      this.humanService.setVacationTableContent(this.activeIndex);
     });
   }
 
