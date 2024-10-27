@@ -17,7 +17,7 @@ import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-
 import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbox-group/ui-checkbox-group.component';
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { WorkHistoryResponseDTO } from '../human.model';
+import { AddVacationCalcRequestDTO, WorkHistoryResponseDTO } from '../human.model';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from "../../shared/components/form/ui-text-field/ui-text-field.component";
 import { dateUtil } from '@app/shared/utils';
@@ -206,7 +206,7 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 설정을 저장한다. */
   onSave(): void {
-    this.humanService.addVacationCalc$(this.caculateVacationForm.value)
+    this.humanService.addVacationCalc$(this.caculateVacationForm.value as AddVacationCalcRequestDTO)
     .subscribe(() => {
       this.messageService.toastSuccess('휴가계산 설정이 저장되었습니다.');
     });
