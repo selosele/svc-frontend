@@ -138,9 +138,15 @@ export class HumanVacationComponent implements OnInit {
         this.setAnnualTypeCode();
       }
 
-      if (!this.workHistoryListDataLoad) {
+      this.setJoinYmd();
+
+      // TODO: 2024.10.27. 다른 페이지로 갔다가 다시 휴가관리 페이지로 이동시, 탭은 첫 번째 탭이 활성화돼 있는데
+      // 페이지 이동 전에 클릭했던 탭의 콘텐츠가 활성화돼 있는 이슈로 인해 주석처리
+      // 예) 페이지 이동 전에 두 번째 탭 클릭 -> 다시 페이지 이동시 첫 번째 탭 활성화 및 두 번째 탭의 콘텐츠 활성화되어 있는 이슈
+      // 상태관리 로직 개선 예정
+      //if (!this.workHistoryListDataLoad) {
         this.listWorkHistory();
-      }
+      //}
     });
   }
 
@@ -225,7 +231,6 @@ export class HumanVacationComponent implements OnInit {
   private setAnnualTypeCode(): void {
     const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
     const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user.joinYmd;
-    this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
 
     // 근속 1년 미만일경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
@@ -237,6 +242,12 @@ export class HumanVacationComponent implements OnInit {
       this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
       this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'MONTH'));
     }
+  }
+
+  /** 입사일자 값을 설정한다. */
+  private setJoinYmd(): void {
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user.joinYmd;
+    this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
   }
 
 }
