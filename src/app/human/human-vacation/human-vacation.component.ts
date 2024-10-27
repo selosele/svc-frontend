@@ -119,16 +119,29 @@ export class HumanVacationComponent implements OnInit {
     this.humanService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({
+      employeeId: [this.user.employeeId],                 // 직원 ID
       joinYmd: [''],                                      // 입사일자
       annualTypeCode: [this.annualTypeCodes],             // 연차발생기준 코드
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
 
-    this.setAnnualTypeCode();
+    this.humanService.listVacationCalc$(this.user?.employeeId)
+    .subscribe((data) => {
 
-    if (!this.workHistoryListDataLoad) {
-      this.listWorkHistory();
-    }
+      // 사용자 지정 휴가계산설정이 있으면 설정해주고
+      if (data?.length > 0) {
+        this.caculateVacationForm.get('annualTypeCode').patchValue(data[0].annualTypeCode);
+        this.caculateVacationForm.get('vacationTypeCodes').patchValue(data.map(x => x.vacationTypeCode));
+      }
+      // 없으면 기본 값을 설정한다.
+      else {
+        this.setAnnualTypeCode();
+      }
+
+      if (!this.workHistoryListDataLoad) {
+        this.listWorkHistory();
+      }
+    });
   }
 
   /** 탭을 클릭한다. */
@@ -187,7 +200,10 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 설정을 저장한다. */
   onSave(): void {
-
+    this.humanService.addVacationCalc$(this.caculateVacationForm.value)
+    .subscribe(() => {
+      this.messageService.toastSuccess('휴가계산 설정이 저장되었습니다.');
+    });
   }
 
   /** 근무이력 목록을 조회한다. */
@@ -221,16 +237,6 @@ export class HumanVacationComponent implements OnInit {
       this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
       this.caculateVacationForm.get('vacationTypeCodes').patchValue(this.defaultVacationTypeCodes.filter(x => x != 'MONTH'));
     }
-    
-    // this.humanService.listVacationCalc$(this.user?.employeeId)
-    // .subscribe((data) => {
-
-    //   // 사용자 지정 휴가계산설정이 있을 경우
-    //   if (data?.length > 0) {
-    //     this.caculateVacationForm.get('annualTypeCode').patchValue(data[0].annualTypeCode);
-    //     this.caculateVacationForm.get('vacationTypeCodes').patchValue(data.map(x => x.vacationTypeCode));
-    //   }
-    // });
   }
 
 }

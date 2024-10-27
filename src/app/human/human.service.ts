@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -141,6 +141,12 @@ export class HumanService {
   /** 휴가 계산 설정 목록을 조회한다. */
   listVacationCalc$(employeeId: number) {
     return this.http.get<VacationCalcResponseDTO[]>(`/hm/vacations/calcs/${employeeId}`);
+  }
+
+  /** 휴가 계산 설정을 추가한다. */
+  addVacationCalc$(dto: AddVacationCalcRequestDTO) {
+    const { employeeId } = dto;
+    return this.http.post<number>(`/hm/vacations/calcs/${employeeId}`, dto);
   }
 
   /** 테이블 문구를 설정한다. */

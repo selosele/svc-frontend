@@ -251,8 +251,8 @@ export class AddVacationCalcRequestDTO extends HttpRequestDTOBase {
   /** 휴가 내용 */
   annualTypeCode?: string;
 
-  /** 휴가 구분 코드 */
-  vacationTypeCode?: string;
+  /** 휴가 구분 코드 목록 */
+  vacationTypeCodes?: string[];
 
 }
 
