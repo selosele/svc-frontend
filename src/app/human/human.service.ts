@@ -175,7 +175,7 @@ export class HumanService {
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
         return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM}</strong>개의 월차가 발생하였음`;
       
-      // 회계년도 기준
+      // 회계연도 기준
       case 'FISCAL_YEAR':
         return `
           근로기준법 제60조 4항에 의거, 3년 이상 근속했을 경우 2년마다 1일씩 가산된 유급휴가가 부여된다.<br>
@@ -196,7 +196,7 @@ export class HumanService {
       case 'JOIN_YMD':
         return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM}개`;
       
-      // 회계년도 기준
+      // 회계연도 기준
       case 'FISCAL_YEAR':
         return `잔여 연차: <strong class="text-primary">${vacationRemainCount}</strong>/${this.getTotalAnnualCount(joinYmd)}개`;
       
@@ -207,10 +207,10 @@ export class HumanService {
 
   /** total 연차개수를 반환한다. */
   private getTotalAnnualCount(joinYmd: string): number {
-    const nextFiscalYmd = dateUtil(dateUtil().add(1, 'year').startOf('year')).format('YYYYMMDD'); // 내년 회계년도 날짜
-    const joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속년수 계산
+    const nextFiscalYmd = dateUtil(dateUtil().add(1, 'year').startOf('year')).format('YYYYMMDD'); // 내년 회계연도 날짜
+    const joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속연수 계산
 
-    // 입사일자가 1년 미만이면 내년 회계년도에 비례한 남은 개월수를 반환한다.
+    // 입사일자가 1년 미만이면 내년 회계연도에 비례한 남은 개월수를 반환한다.
     if (dateUtil(nextFiscalYmd).diff(joinYmd, 'year') < 1) {
       return dateUtil(nextFiscalYmd).diff(joinYmd, 'month');
     }

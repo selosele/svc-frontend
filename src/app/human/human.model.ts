@@ -125,7 +125,7 @@ export class WorkHistoryResponseDTO {
   /** 퇴사일자 */
   quitYmd?: string;
 
-  /** 재직기간(년도) */
+  /** 재직기간(연도) */
   workDiffY?: number;
 
   /** 재직기간(월) */
