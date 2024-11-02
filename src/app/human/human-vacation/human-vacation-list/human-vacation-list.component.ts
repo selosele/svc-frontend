@@ -1,12 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
 import { StoreService } from '@app/shared/services';
+import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '@app/human/human.service';
 import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
-import { isEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty } from '@app/shared/utils';
+import { AuthenticatedUser } from '@app/auth/auth.model';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ export class HumanVacationListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: StoreService,
+    private authService: AuthService,
     private humanService: HumanService,
   ) {}
 
@@ -47,8 +49,8 @@ export class HumanVacationListComponent implements OnInit {
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
-  /** 휴가 코드 데이터 목록 */
-  vacationTypeCodes: DropdownData[];
+  /** 인증된 사용자 정보 */
+  user: AuthenticatedUser;
 
   /** 휴가 목록 데이터 로드 완료 여부 */
   vacationListDataLoad = false;
@@ -65,22 +67,30 @@ export class HumanVacationListComponent implements OnInit {
   /** 테이블 선택된 행 */
   selection: VacationResponseDTO;
 
+  /** 테이블 다운로드 파일명 */
+  fileName: string;
+
+  /** 테이블 엑셀 다운로드 헤더 */
+  excelHeader = [
+    { 'vacationTypeCodeName': '휴가 구분' },
+    { 'vacationStartYmd'    : '휴가 시작일자' },
+    { 'vacationEndYmd'      : '휴가 종료일자' },
+    { 'vacationContent'     : '휴가 내용' }
+  ];
+
   /** 테이블 컬럼 */
   cols = [
-    { header: '휴가 구분',
-      valueGetter: (data: VacationResponseDTO) => this.vacationTypeCodes.find(x => x.value === data.vacationTypeCode)?.label
-    },
-    { field: 'vacationStartYmd', header: '휴가 시작일자' },
-    { header: '휴가 종료일자',
+    { field: 'vacationTypeCodeName', header: '휴가 구분' },
+    { field: 'vacationStartYmd',     header: '휴가 시작일자' },
+    { field: 'vacationEndYmd',       header: '휴가 종료일자',
       valueGetter: (data: VacationResponseDTO) => `${data.vacationEndYmd} (${data.vacationUseCount}일)`
     },
-    { field: 'vacationContent',  header: '휴가 내용' },
+    { field: 'vacationContent',      header: '휴가 내용' },
   ];
 
   ngOnInit() {
-    this.route.data.subscribe(({ code }) => {
-      this.vacationTypeCodes = code['VACATION_TYPE_00'];
-    });
+    this.user = this.authService.getAuthenticatedUser();
+    this.fileName = `휴가사용목록(${this.user.employeeName}, ${dateUtil().format('YYYYMMDD')})`;
 
     this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;

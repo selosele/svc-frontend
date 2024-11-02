@@ -225,6 +225,9 @@ export class VacationResponseDTO {
   /** 휴가 구분 코드 */
   vacationTypeCode?: string;
 
+  /** 휴가 구분 코드명 */
+  vacationTypeCodeName?: string;
+
   /** 휴가 내용 */
   vacationContent?: string;
 
