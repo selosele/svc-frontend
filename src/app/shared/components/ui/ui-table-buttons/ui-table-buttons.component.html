@@ -34,5 +34,13 @@
       [outlined]="true"
       (click)="onRefresh($event)"
     />
+    
+    <ui-button *ngIf="useExportExcel"
+      [size]="'small'"
+      [severity]="'success'"
+      [icon]="'pi-file-excel'"
+      [title]="'엑셀 다운로드'"
+      (click)="onExportExcel($event)"
+    />
   </div>
 </div>

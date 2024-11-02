@@ -2,11 +2,15 @@
   <ng-content select="[card]"></ng-content>
 
   <ui-table-buttons
+    [value]="data"
     [title]="title"
     [text]="text"
+    [fileName]="fileName"
+    [excelHeader]="excelHeader"
     [useAdd]="useAdd"
     [useRemove]="useRemove"
     [useRefresh]="useRefresh"
+    [useExportExcel]="useExportExcel"
     (refresh)="onRefresh($event)"
   >
     <ng-content select="[buttons]"></ng-content>
@@ -56,12 +60,11 @@
             <p-tableRadioButton [value]="rowData" />
           </td>
           <td *ngFor="let col of columns">
-            <ng-container *ngIf="col.field">
-              {{ rowData[col.field] }}
-            </ng-container>
-            <ng-container *ngIf="!col.field">
+            @if (col.valueGetter) {
               {{ col.valueGetter(rowData) }}
-            </ng-container>
+            } @else {
+              {{ rowData[col.field] }}
+            }
           </td>
         </tr>
       </ng-template>

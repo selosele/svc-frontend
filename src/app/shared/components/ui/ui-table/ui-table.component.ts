@@ -79,6 +79,15 @@ export class UiTableComponent implements OnInit {
   /** 테이블 선택된 행 */
   @Input() selection?: any;
 
+  /** 테이블 다운로드 파일명 */
+  @Input() fileName?: string;
+
+  /** 테이블 엑셀 다운로드 헤더 */
+  @Input() excelHeader?: { [key: string]: string }[];
+
+  /** 테이블 엑셀 다운로드 버튼 사용여부 */
+  @Input() useExportExcel = false;
+
   /** 테이블 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<Event>();
 
