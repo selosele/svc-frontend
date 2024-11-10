@@ -18,6 +18,9 @@ import { FormFieldComponent } from '../form-field/form-field.component';
 })
 export class UiDateFieldComponent extends FormFieldComponent {
 
+  /** input readonly */
+  @Input() readonlyInput = false;
+
   /** 날짜 선택 구분 */
   @Input() view?: 'date' | 'month' | 'year' = 'date';
 
