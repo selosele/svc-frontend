@@ -75,6 +75,7 @@ export class HumanVacationListComponent implements OnInit {
     { 'vacationTypeCodeName': '휴가 구분' },
     { 'vacationStartYmd'    : '휴가 시작일자' },
     { 'vacationEndYmd'      : '휴가 종료일자' },
+    { 'vacationUseCount'    : '휴가 사용일수' },
     { 'vacationContent'     : '휴가 내용' }
   ];
 
