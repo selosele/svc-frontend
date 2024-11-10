@@ -1,12 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { BlockButtonDirective } from '@app/shared/directives';
 
 @Component({
   standalone: true,
   imports: [
     ButtonModule,
-    BlockButtonDirective,
   ],
   selector: 'ui-button',
   templateUrl: './ui-button.component.html',
