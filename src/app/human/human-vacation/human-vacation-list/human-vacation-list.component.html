@@ -22,6 +22,32 @@
       (rowSelect)="onRowSelect($event)"
       (unRowSelect)="onRowUnselect($event)"
     >
+      <ui-form top [form]="searchForm" (submit)="onSubmit($event)">
+        <div class="grid">
+          <div class="input-box">
+            <ui-date-field
+              [control]="searchForm.get('vacationStartYmd')"
+              [label]="'휴가 시작일자'"
+              [dateFormat]="'yymmdd'"
+              [readonlyInput]="true"
+              (select)="onSearchFormChange()"
+              (clear)="onSearchFormChange()"
+              (clearClick)="onSearchFormChange()"
+            />
+
+            <ui-date-field
+              [control]="searchForm.get('vacationEndYmd')"
+              [label]="'휴가 종료일자'"
+              [dateFormat]="'yymmdd'"
+              [readonlyInput]="true"
+              (select)="onSearchFormChange()"
+              (clear)="onSearchFormChange()"
+              (clearClick)="onSearchFormChange()"
+            />
+          </div>
+        </div>
+      </ui-form>
+
       <ui-button buttons
         [size]="'small'"
         [icon]="'pi-plus'"
@@ -34,7 +60,7 @@
     <div second>
       <human-vacation-detail
         [detail]="detail"
-        (refresh)="listVacation($event)"
+        (refresh)="onRefresh()"
         (remove)="onRemove()"
         (close)="onClose()"
       />

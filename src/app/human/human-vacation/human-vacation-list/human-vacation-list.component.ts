@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { GetVacationRequestDTO, VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
 import { StoreService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '@app/human/human.service';
-import { UiButtonComponent, UiCardComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
 import { dateUtil, isEmpty } from '@app/shared/utils';
 import { AuthenticatedUser } from '@app/auth/auth.model';
@@ -12,11 +13,13 @@ import { AuthenticatedUser } from '@app/auth/auth.model';
 @Component({
   standalone: true,
   imports: [
+    ReactiveFormsModule,
+    UiFormComponent,
     UiSkeletonComponent,
-    UiCardComponent,
     UiTableComponent,
     UiSplitterComponent,
     UiButtonComponent,
+    UiDateFieldComponent,
     HumanVacationDetailComponent,
   ],
   selector: 'human-vacation-list',
@@ -26,7 +29,7 @@ import { AuthenticatedUser } from '@app/auth/auth.model';
 export class HumanVacationListComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
+    private fb: FormBuilder,
     private store: StoreService,
     private authService: AuthService,
     private humanService: HumanService,
@@ -61,6 +64,9 @@ export class HumanVacationListComponent implements OnInit {
   /** 선택된 탭의 휴가 목록 */
   vacationListCurrent: VacationResponseDTO[] = [];
 
+  /** 휴가 검색 폼 */
+  searchForm: FormGroup;
+
   /** 휴가 정보 */
   detail: VacationResponseDTO = null;
 
@@ -93,12 +99,17 @@ export class HumanVacationListComponent implements OnInit {
     this.user = this.authService.getAuthenticatedUser();
     this.fileName = `휴가사용목록(${this.user.employeeName}, ${dateUtil().format('YYYYMMDD')})`;
 
+    this.searchForm = this.fb.group({
+      vacationStartYmd: [''], // 휴가 시작일자
+      vacationEndYmd: [''],   // 휴가 종료일자
+    });
+
     this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
 
       const currentItem = this.vacationList.find(x => x.key === data);
       if (isEmpty(currentItem)) {
-        this.listVacation(data);
+        this.listVacation({ workHistoryId: data });
       }
       this.vacationListCurrent = currentItem?.value;
       this.splitter?.hide();
@@ -106,8 +117,10 @@ export class HumanVacationListComponent implements OnInit {
   }
 
   /** 휴가 목록을 조회한다. */
-  listVacation(workHistoryId: number): void {
-    this.humanService.listVacation$({ workHistoryId })
+  listVacation(dto: GetVacationRequestDTO): void {
+    const { workHistoryId } = dto;
+
+    this.humanService.listVacation$(dto)
     .subscribe((data) => {
       if (isEmpty(this.vacationList.find(x => x.key === workHistoryId)?.value)) {
         this.vacationList.push({ key: workHistoryId, value: data });
@@ -129,6 +142,19 @@ export class HumanVacationListComponent implements OnInit {
     this.splitter.show();
   }
 
+  /** 휴가 검색 폼을 전송한다. */
+  onSearchFormChange(): void {
+    this.listVacation({
+      workHistoryId: this.workHistoryId,
+      ...this.searchForm.value,
+    });
+  }
+
+  /** 휴가를 계산한다. */
+  onSubmit(value: GetVacationRequestDTO): void {
+    this.listVacation(value);
+  }
+
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
     this.humanService.getVacation$(event.data['vacationId'])
@@ -146,13 +172,16 @@ export class HumanVacationListComponent implements OnInit {
   
   /** 테이블 새로고침 버튼을 클릭한다. */
   onRefresh(): void {
-    this.listVacation(this.workHistoryId);
+    this.searchForm.get('vacationStartYmd').patchValue('');
+    this.searchForm.get('vacationEndYmd').patchValue('');
+    
+    this.listVacation({ workHistoryId: this.workHistoryId });
   }
 
   /** 삭제 버튼을 클릭한다. */
   onRemove(): void {
     this.splitter.hide();
-    this.listVacation(this.workHistoryId);
+    this.listVacation({ workHistoryId: this.workHistoryId });
   }
   
   /** 닫기 버튼을 클릭한다. */

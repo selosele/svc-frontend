@@ -182,6 +182,12 @@ export class GetVacationRequestDTO extends HttpRequestDTOBase {
   /** 근무이력 ID */
   workHistoryId?: number;
 
+  /** 휴가 시작일자 */
+  vacationStartYmd?: string;
+
+  /** 휴가 종료일자 */
+  vacationEndYmd?: string;
+
 }
 
 /** 휴가 추가/수정 요청 DTO */
