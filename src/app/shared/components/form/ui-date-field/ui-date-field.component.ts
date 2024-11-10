@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -17,6 +17,12 @@ import { FormFieldComponent } from '../form-field/form-field.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class UiDateFieldComponent extends FormFieldComponent {
+
+  /** 날짜 선택 구분 */
+  @Input() view?: 'date' | 'month' | 'year' = 'date';
+
+  /** 날짜 선택 모드 */
+  @Input() selectionMode?: 'single' | 'multiple' | 'range' = 'single';
 
   /** 날짜 포맷 */
   @Input() dateFormat = 'yy.mm.dd';
@@ -39,6 +45,21 @@ export class UiDateFieldComponent extends FormFieldComponent {
   /** 캘린더 팝업 위치 */
   @Input() appendTo = 'body';
 
+  /** 캘린더 input change 이벤트 */
+  @Output() input? = new EventEmitter<any>();
+
+  /** 캘린더 input blur 이벤트 */
+  @Output() blur? = new EventEmitter<Event>();
+
+  /** 캘린더 input select 이벤트 */
+  @Output() select? = new EventEmitter<Date>();
+
+  /** 캘린더 input clear 이벤트 */
+  @Output() clear? = new EventEmitter<any>();
+
+  /** 캘린더 input clear 버튼 클릭 이벤트 */
+  @Output() clearClick? = new EventEmitter<any>();
+
   override ngOnInit() {
     super.ngOnInit();
 
@@ -48,6 +69,36 @@ export class UiDateFieldComponent extends FormFieldComponent {
       this.showClear = false;
       this.showOnFocus = false;
     }
+  }
+
+  /** 캘린더 input change 이벤트 */
+  onInput(event: any): void {
+    this.setErrorMessage();
+    this.input.emit(event);
+  }
+
+  /** 캘린더 input change 이벤트 */
+  onBlur(event: Event): void {
+    this.setErrorMessage();
+    this.blur.emit(event);
+  }
+
+  /** 캘린더 input select 이벤트 */
+  onSelect(event: Date): void {
+    this.setErrorMessage();
+    this.select.emit(event);
+  }
+
+  /** 캘린더 input clear 이벤트 */
+  onClear(event: any): void {
+    this.setErrorMessage();
+    this.clear.emit(event);
+  }
+
+  /** 캘린더 input clear 버튼 클릭 이벤트 */
+  onClearClick(event: any): void {
+    this.setErrorMessage();
+    this.clearClick.emit(event);
   }
 
 }
