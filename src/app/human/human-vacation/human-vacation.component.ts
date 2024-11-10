@@ -42,7 +42,7 @@ import { dateUtil } from '@app/shared/utils';
     HumanVacationListComponent,
     MyHolidayComponent,
     UiTextFieldComponent
-],
+  ],
   selector: 'view-human-vacation',
   templateUrl: './human-vacation.component.html',
   styleUrl: './human-vacation.component.scss'
