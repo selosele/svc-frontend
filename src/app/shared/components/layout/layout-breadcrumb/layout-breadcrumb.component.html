@@ -8,7 +8,7 @@
 
         @if (i.route) {
           <a [routerLink]="i.route" [queryParams]="i.queryParams">
-            <span [ngClass]="[i.icon ? i.icon : '', 'text-color']"></span>
+            <span [ngClass]="[i.icon || '', 'text-color']"></span>
             <span class="text-primary font-semibold">{{ i.label }}</span>
           </a>
         }
