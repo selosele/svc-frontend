@@ -109,10 +109,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
         FormValidator.minLength(3),
         FormValidator.maxLength(20),
       ]],
-      userPassword: ['', [                                    // 사용자 비밀번호
-        FormValidator.required,
-        FormValidator.maxLength(12)
-      ]],
+      userPassword: ['', [FormValidator.required]],           // 사용자 비밀번호
       userActiveYn: ['', [FormValidator.required]],           // 사용자 활성화 여부
       lastLoginDt: [''],                                      // 마지막 로그인 일시
       roles: ['', [FormValidator.required]],                  // 사용자 권한

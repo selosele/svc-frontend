@@ -41,10 +41,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.fb.group({
       userAccount:  ['', [FormValidator.required]], // 사용자 계정
-      userPassword: ['', [                          // 사용자 비밀번호
-        FormValidator.required,
-        FormValidator.maxLength(12)
-      ]],
+      userPassword: ['', [FormValidator.required]], // 사용자 비밀번호
       saveUserAccountYn: [''],                      // 아이디 저장 여부
     });
 
