@@ -143,7 +143,7 @@ export class HumanVacationListComponent implements OnInit {
   }
 
   /** 휴가 검색 폼을 전송한다. */
-  onSearchFormChange(): void {
+  onSearchFormSubmit(): void {
     this.listVacation({
       workHistoryId: this.workHistoryId,
       ...this.searchForm.value,
