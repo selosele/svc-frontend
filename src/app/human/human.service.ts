@@ -173,7 +173,7 @@ export class HumanService {
       // 입사일자 기준
       case 'JOIN_YMD':
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-        return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM}</strong>개의 월차가 발생하였음`;
+        return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM-1}</strong>개의 월차가 발생하였음`;
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
@@ -194,7 +194,7 @@ export class HumanService {
 
       // 입사일자 기준
       case 'JOIN_YMD':
-        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM}개`;
+        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM-1}개`;
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
