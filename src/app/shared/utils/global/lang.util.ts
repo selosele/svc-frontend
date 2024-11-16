@@ -32,3 +32,10 @@ export function isNotObjectEmpty(value: object): boolean {
 export function deepCopy(value: any): any {
   return structuredClone(value);
 }
+
+/** 객체 배열을 key 기준으로 group by해서 반환한다. */
+export function groupBy<T>(arr: T[], key: string): T[] {
+  return [
+    ...new Map(arr.reverse().map((obj) => [obj[key], obj])).values()
+  ] as T[];
+}
