@@ -1,5 +1,6 @@
 export * from './form-field/form-field.component';
 export * from './form-validator/form-validator.component';
+export * from './ui-autocomplete-field/ui-autocomplete-field.component';
 export * from './ui-checkbox/ui-checkbox.component';
 export * from './ui-checkbox-group/ui-checkbox-group.component';
 export * from './ui-checkbox-list/ui-checkbox-list.component';

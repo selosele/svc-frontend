@@ -1,0 +1,31 @@
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
+
+<div class="input-button-box">
+  <p-autoComplete
+    [pTooltip]="tooltip"
+    [tooltipPosition]="tooltipPosition"
+    [name]="name"
+    [readonly]="readonly"
+    [formControl]="formControl"
+    [placeholder]="placeholder"
+    [dropdown]="dropdown"
+    [showClear]="showClear"
+    [optionLabel]="optionLabel"
+    [emptyMessage]="emptyMessage"
+    [showEmptyMessage]="showEmptyMessage"
+    [suggestions]="data"
+    [class.block]="block"
+    [class.readonly]="readonly"
+    (completeMethod)="onComplete($event)"
+    (onSelect)="onSelect($event)"
+    (onUnselect)="onUnSelect($event)"
+    (onKeyUp)="onKeyUp($event)"
+  />
+  <ng-content select="[button]"></ng-content>
+</div>
+
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
