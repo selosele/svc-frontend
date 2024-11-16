@@ -24,28 +24,30 @@
     >
       <ui-form top [form]="searchForm" (submit)="onSubmit($event)">
         <div class="grid">
-          <div class="input-box">
-            <ui-date-field
-              [control]="searchForm.get('vacationStartYmd')"
-              [label]="'휴가 시작일자로 검색'"
-              [dateFormat]="'yymmdd'"
-              [placeholder]="'YYYYMMDD'"
-              [readonlyInput]="true"
-              (select)="onSearchFormSubmit()"
-              (clear)="onSearchFormSubmit()"
-              (clearClick)="onSearchFormSubmit()"
-            />
+          <div class="col-fixed">
+            <div class="input-box">
+              <ui-date-field
+                [control]="searchForm.get('vacationStartYmd')"
+                [label]="'휴가 시작일자로 검색'"
+                [dateFormat]="'yymmdd'"
+                [placeholder]="'YYYYMMDD'"
+                [readonlyInput]="true"
+                (select)="onSearchFormSubmit()"
+                (clear)="onSearchFormSubmit()"
+                (clearClick)="onSearchFormSubmit()"
+              />
 
-            <ui-date-field
-              [control]="searchForm.get('vacationEndYmd')"
-              [label]="'휴가 종료일자로 검색'"
-              [dateFormat]="'yymmdd'"
-              [placeholder]="'YYYYMMDD'"
-              [readonlyInput]="true"
-              (select)="onSearchFormSubmit()"
-              (clear)="onSearchFormSubmit()"
-              (clearClick)="onSearchFormSubmit()"
-            />
+              <ui-date-field
+                [control]="searchForm.get('vacationEndYmd')"
+                [label]="'휴가 종료일자로 검색'"
+                [dateFormat]="'yymmdd'"
+                [placeholder]="'YYYYMMDD'"
+                [readonlyInput]="true"
+                (select)="onSearchFormSubmit()"
+                (clear)="onSearchFormSubmit()"
+                (clearClick)="onSearchFormSubmit()"
+              />
+            </div>
           </div>
         </div>
       </ui-form>

@@ -19,19 +19,21 @@
     <!-- <ng-container *ngIf="isNotQuit$ | async"> -->
       <ui-form [form]="caculateVacationForm" (submit)="onSubmit($event)">
         <div class="grid">
-          <div class="input-box">
-            <ui-text-field
-              [control]="caculateVacationForm.get('joinYmd')"
-              [label]="'입사일자'"
-              [readonly]="true"
-            />
+          <div class="col-fixed">
+            <div class="input-box">
+              <ui-text-field
+                [control]="caculateVacationForm.get('joinYmd')"
+                [label]="'입사일자'"
+                [readonly]="true"
+              />
 
-            <ui-dropdown
-              [control]="caculateVacationForm.get('annualTypeCode')"
-              [label]="'연차발생기준'"
-              [data]="annualTypeCodes"
-              (change)="onAnnualTypeCodeChange($event)"
-            />
+              <ui-dropdown
+                [control]="caculateVacationForm.get('annualTypeCode')"
+                [label]="'연차발생기준'"
+                [data]="annualTypeCodes"
+                (change)="onAnnualTypeCodeChange($event)"
+              />
+            </div>
           </div>
         </div>
 
