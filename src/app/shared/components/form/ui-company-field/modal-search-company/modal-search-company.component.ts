@@ -1,20 +1,24 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { StoreService } from '@app/shared/services';
+import { AutoCompleteCompleteEvent, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import { StoreService, UiMessageService } from '@app/shared/services';
 import { HumanService } from '@app/human/human.service';
-import { CompanyResponseDTO, GetCompanyRequestDTO } from '@app/human/human.model';
+import { CompanyOpenAPIResponseDTO, CompanyResponseDTO, GetCompanyRequestDTO } from '@app/human/human.model';
+import { groupBy } from '@app/shared/utils';
+import { LayoutPageDescriptionComponent } from '../../../layout';
+import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '../../../ui';
 import { FormValidator } from '../../form-validator/form-validator.component';
 import { UiFormComponent } from '../../ui-form/ui-form.component';
+import { UiAutocompleteFieldComponent } from '../../ui-autocomplete-field/ui-autocomplete-field.component';
 import { UiTextFieldComponent } from '../../ui-text-field/ui-text-field.component';
-import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '../../../ui';
-import { LayoutPageDescriptionComponent } from '../../../layout';
 import { SearchCompanyDetailComponent } from './search-company-detail/search-company-detail.component';
 
 @Component({
   standalone: true,
   imports: [
     UiFormComponent,
+    UiAutocompleteFieldComponent,
     UiTextFieldComponent,
     UiButtonComponent,
     UiTableComponent,
@@ -34,6 +38,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     private fb: FormBuilder,
     private store: StoreService,
     private dialogRef: DynamicDialogRef,
+    private messageService: UiMessageService,
     private humanService: HumanService,
   ) {}
 
@@ -61,6 +66,9 @@ export class ModalSearchCompanyComponent implements OnInit {
   /** 회사 검색 폼 */
   searchForm: FormGroup;
 
+  /** Open API로 조회한 회사 목록 */
+  companyOpenAPIList = [];
+
   /** 테이블 컬럼 */
   cols = [
     { field: 'corporateName',  header: '법인명' },
@@ -74,9 +82,8 @@ export class ModalSearchCompanyComponent implements OnInit {
     }
 
     this.searchForm = this.fb.group({
-      corporateName: ['', [FormValidator.maxLength(100)]],       // 법인명
-      companyName: ['', [FormValidator.maxLength(100)]],         // 회사명
-      registrationNo: ['', [FormValidator.maxLength(10)]]        // 사업자등록번호
+      companyName: ['', [FormValidator.maxLength(100)]],  // 회사명
+      registrationNo: ['', [FormValidator.maxLength(10)]] // 사업자등록번호
     });
 
     this.dialogRef.onClose.subscribe(() => {
@@ -110,10 +117,67 @@ export class ModalSearchCompanyComponent implements OnInit {
     this.splitter.hide();
   }
 
+  /** 회사명을 입력한다(자동완성). */
+  onCompanyNameChange(event: AutoCompleteCompleteEvent): void {
+    event.originalEvent.stopPropagation();
+    
+    this.humanService.listCompanyOpenAPI$({
+      corporateName: event.query,
+      companyName: event.query,
+    })
+    .subscribe((data) => {
+      const filtered = [];
+      const groupByData = groupBy<CompanyOpenAPIResponseDTO>(data, 'bzno'); // bzno(사업자등록번호)를 기준으로 중복 제거
+
+      for (const company of groupByData) {
+        if (this.hasCompanyNameValue(company.corpNm, event.query) || this.hasCompanyNameValue(company.enpPbanCmpyNm, event.query)) {
+          filtered.push({
+            companyName: company.enpPbanCmpyNm || company.corpNm,
+            corporateName: company.corpNm,
+            registrationNo: company.bzno
+          });
+        }
+      }
+
+      this.companyOpenAPIList = filtered;
+    });
+  }
+
+  /** 회사명을 입력한다(keyup). */
+  onCompanyNameKeyup(event: KeyboardEvent): void {
+    if (event.key != 'Enter') return;
+
+    this.companyListDataLoad = false;
+    this.humanService.listCompany(this.searchForm.value as GetCompanyRequestDTO);
+  }
+
+  /** 회사 드롭다운 항목을 선택한다. */
+  async onCompanyNameSelect(event: AutoCompleteSelectEvent): Promise<void> {
+    const confirm = await this.messageService.confirm1(`
+      <ul>
+        <li>법인명: <strong>${event.value.companyName}</strong></li>
+        <li>사업자등록번호: <strong>${event.value.registrationNo}</strong></li>
+      </ul>
+      <p class="mt-2">해당 회사를 선택하시겠어요?</p>
+    `);
+    if (!confirm) return;
+
+    this.dialogRef.close({
+      companyName: event.value.companyName,
+      corporateName: event.value.corporateName,
+      registrationNo: event.value.registrationNo,
+    });
+  }
+
   /** 회사를 추가한다. */
   addCompany(): void {
     this.detail = {};
     this.splitter.show();
+  }
+
+  /** 회사 검색어로 매칭되는 검색 결과가 있는지 확인한다. */
+  private hasCompanyNameValue(companyName: string, searchValue: string): boolean {
+    return companyName.toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
   }
 
 }

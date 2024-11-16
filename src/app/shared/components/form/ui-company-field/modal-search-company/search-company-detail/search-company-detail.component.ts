@@ -1,14 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UiMessageService } from '@app/shared/services';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { UiSplitFormComponent } from '../../../ui-split-form/ui-split-form.component';
 import { FormValidator } from '../../../form-validator/form-validator.component';
+import { UiTextFieldComponent } from '../../../ui-text-field/ui-text-field.component';
+import { UiTextareaComponent } from '../../../ui-textarea/ui-textarea.component';
 
 @Component({
   standalone: true,
   imports: [
     UiSplitFormComponent,
+    UiTextFieldComponent,
+    UiTextareaComponent,
     UiContentTitleComponent,
   ],
   selector: 'search-company-detail',
@@ -34,15 +38,19 @@ export class SearchCompanyDetailComponent implements OnInit {
 
   ngOnInit() {
     this.detailForm = this.fb.group({
-      corporateName: ['', [FormValidator.maxLength(100)]],       // 법인명
-      companyName: ['', [FormValidator.maxLength(100)]],         // 회사명
-      registrationNo: ['', [FormValidator.maxLength(10)]]        // 사업자등록번호
+      corporateName: ['', [FormValidator.maxLength(100)]], // 법인명
+      companyName: ['', [                                  // 회사명
+        FormValidator.required,
+        FormValidator.maxLength(100)
+      ]],
+      registrationNo: ['', [FormValidator.maxLength(10)]], // 사업자등록번호
+      applyContent: ['', [FormValidator.maxLength(100)]]   // 신청 내용
     });
   }
 
-  /** 회사 정보를 추가한다. */
+  /** 회사등록신청을 한다. */
   async onSubmit(value): Promise<void> {
-    const confirm = await this.messageService.confirm1('회사 정보를 등록하시겠습니까?');
+    const confirm = await this.messageService.confirm1('회사등록신청하시겠어요?');
     if (!confirm) return;
 
     

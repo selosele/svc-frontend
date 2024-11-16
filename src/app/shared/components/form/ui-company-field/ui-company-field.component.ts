@@ -57,6 +57,10 @@ export class UiCompanyFieldComponent extends FormFieldComponent {
       if (this.formControl?.parent?.controls?.['companyName']) {
         this.formControl.parent.controls['companyName'].patchValue(data['companyName']);
       }
+
+      if (this.formControl?.parent?.controls?.['registrationNo']) {
+        this.formControl.parent.controls['registrationNo'].patchValue(data['registrationNo']);
+      }
     });
   }
 

@@ -78,7 +78,9 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     this.detailForm = this.fb.group({
       workHistoryId: [''],                            // 근무이력 ID
       companyId: [''],                                // 회사 ID
+      registrationNo: [''],                           // 사업자등록번호
       companyName: ['', [FormValidator.required]],    // 회사명
+      corporateName: [''],                            // 법인명
       rankCode: ['', [FormValidator.required]],       // 직위 코드
       jobTitleCode: ['', [FormValidator.required]],   // 직책 코드
       joinYmd: ['', [FormValidator.required]],        // 입사일자

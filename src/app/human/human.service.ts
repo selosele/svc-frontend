@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -81,6 +81,12 @@ export class HumanService {
     });
   }
 
+  /** Open API로 회사 목록을 조회한다. */
+  listCompanyOpenAPI$(dto?: GetCompanyRequestDTO) {
+    const params = this.httpService.createParams(dto);
+    return this.http.get<CompanyOpenAPIResponseDTO[]>('/public/hm/companies', { params });
+  }
+
   /** 근무이력 목록을 조회한다. */
   listWorkHistory$(dto: GetWorkHistoryRequestDTO) {
     const { employeeId } = dto;
@@ -156,7 +162,7 @@ export class HumanService {
 
     if (isNotBlank(quitYmd)) {
       // this.store.update('isNotQuit', false);
-      // this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않습니다.');
+      // this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않아요.');
       // return;
     }
 
@@ -173,13 +179,13 @@ export class HumanService {
       // 입사일자 기준
       case 'JOIN_YMD':
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-        return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM-1}</strong>개의 월차가 발생하였음`;
+        return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM-1}</strong>개의 월차가 발생했어요.`;
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
         return `
-          근로기준법 제60조 4항에 의거, 3년 이상 근속했을 경우 2년마다 1일씩 가산된 유급휴가가 부여된다.<br>
-          이 경우 가산휴가를 포함한 총 휴가 일수는 25일을 한도로 한다.
+          근로기준법 제60조 4항에 의거, 3년 이상 근속했을 경우 2년마다 1일씩 가산된 유급휴가가 부여돼요.<br>
+          이 경우 가산휴가를 포함한 총 휴가 일수는 25일을 한도로 하고 있어요.
         `;
       
       default:

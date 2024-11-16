@@ -5,7 +5,33 @@
 >
   <ui-content-title [text]="'회사 정보'" />
 
-  <div class="grid">
-    
+  <div class="grid mt-2">
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('corporateName')"
+        [label]="'법인명'"
+      />
+    </div>
+
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('companyName')"
+        [label]="'회사명'"
+      />
+    </div>
+
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('registrationNo')"
+        [label]="'사업자등록번호'"
+      />
+    </div>
+
+    <div class="col-12">
+      <ui-textarea
+        [control]="detailForm.get('applyContent')"
+        [label]="'신청 내용'"
+      />
+    </div>
   </div>
 </ui-split-form>
