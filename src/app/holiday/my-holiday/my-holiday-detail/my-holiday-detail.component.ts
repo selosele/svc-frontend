@@ -99,14 +99,14 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
   async onSubmit(value: SaveHolidayRequestDTO): Promise<void> {
     const crudName = isEmpty(value.originalYmd) ? '추가' : '수정';
 
-    const confirm = await this.messageService.confirm1(`휴일 정보를 ${crudName}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`휴일 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;
 
     // 휴일 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalYmd)) {
       this.holidayService.addHoliday$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -114,7 +114,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
     else {
       this.holidayService.updateHoliday$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -122,12 +122,12 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
 
   /** 휴일을 삭제한다. */
   async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('휴일을 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('휴일을 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
     this.holidayService.removeHoliday$(this.user?.userId, this.detail.ymd)
     .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
     });
   }

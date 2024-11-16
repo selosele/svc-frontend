@@ -107,7 +107,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     // 휴가 시작일자가 종료일자보다 큰지 확인
     if (dateUtil(startYmd).isAfter(endYmd)) {
-      this.messageService.toastError('휴가 시작일자는 종료일자보다 클 수 없습니다.');
+      this.messageService.toastError('휴가 시작일자는 종료일자보다 클 수 없어요.');
       return false;
     }
 
@@ -120,14 +120,14 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     const crudName = isEmpty(value.vacationId) ? '등록' : '수정';
 
-    const confirm = await this.messageService.confirm1(`휴가를 ${crudName}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`휴가를 ${crudName}하시겠어요?`);
     if (!confirm) return;
 
     // 휴가 ID가 없으면 추가 API를 타고
     if (isEmpty(value.vacationId)) {
       this.humanService.addVacation$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit(data.workHistoryId);
       });
     }
@@ -135,7 +135,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     else {
       this.humanService.updateVacation$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit(value.workHistoryId);
       });
     }
@@ -143,12 +143,12 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
   /** 휴가를 삭제한다. */
   async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('휴가를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('휴가를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
     this.humanService.removeVacation$(this.detail.vacationId)
     .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
     });
   }

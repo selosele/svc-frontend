@@ -169,14 +169,14 @@ export class HumanVacationComponent implements OnInit {
     // 근속 1년 미만 and 회계연도를 선택했을경우
     // TODO: 근속 1년 미만이지만 회계연도 기준으로 연차를 부여하는 회사도 있으므로 아래 로직은 주석처리
     // if (nowDate.diff(dateUtil(joinYmd), 'year') < 1 && event.value === 'FISCAL_YEAR') {
-    //   this.messageService.toastInfo('근속 1년 미만일 경우 회계연도 기준으로 조회할 수 없습니다.');
+    //   this.messageService.toastInfo('근속 1년 미만일 경우 회계연도 기준으로 조회할 수 없어요.');
     //   this.caculateVacationForm.get('annualTypeCode').patchValue('JOIN_YMD');
     //   return;
     // }
 
     // 근속 1년 이상일경우 and 입사일자를 선택했을경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') >= 1 && event.value === 'JOIN_YMD') {
-      this.messageService.toastInfo('근속 1년 이상일 경우 입사일자 기준으로 조회할 수 없습니다.');
+      this.messageService.toastInfo('근속 1년 이상일 경우 입사일자 기준으로 조회할 수 없어요.');
       this.caculateVacationForm.get('annualTypeCode').patchValue('FISCAL_YEAR');
       return;
     }
@@ -208,7 +208,7 @@ export class HumanVacationComponent implements OnInit {
   onSave(): void {
     this.humanService.addVacationCalc$(this.caculateVacationForm.value as AddVacationCalcRequestDTO)
     .subscribe(() => {
-      this.messageService.toastSuccess('휴가계산 설정이 저장되었습니다.');
+      this.messageService.toastSuccess('휴가계산 설정이 저장되었어요.');
     });
   }
 

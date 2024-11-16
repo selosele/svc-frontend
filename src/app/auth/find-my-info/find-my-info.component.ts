@@ -74,7 +74,7 @@ export class FindMyInfoComponent implements OnInit {
   onSubmitFindAccount(value: FindUserInfoRequestDTO): void {
     this.authService.findUserAccount$(value)
     .subscribe(() => {
-      this.messageService.toastSuccess('아이디를 메일로 발송했습니다. 메일을 확인해주세요.');
+      this.messageService.toastSuccess('아이디를 메일로 발송했어요. 메일을 확인해주세요.');
     });
   }
 
@@ -103,14 +103,14 @@ export class FindMyInfoComponent implements OnInit {
           this.certCodeLabel = `인증코드(${time})`;
         });
         this.store.update('userCertHistory', data);
-        this.messageService.toastSuccess('인증코드를 메일로 발송했습니다. 메일을 확인해주세요.');
+        this.messageService.toastSuccess('인증코드를 메일로 발송했어요. 메일을 확인해주세요.');
       });
     }
     // 2. 임시 비밀번호 발급
     else {
       this.authService.findUserPassword2$(this.findPasswordForm.value as GetUserCertHistoryRequestDTO)
       .subscribe(() => {
-        this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했습니다. 메일을 확인해주세요.');
+        this.messageService.toastSuccess('임시 비밀번호를 메일로 발송했어요. 메일을 확인해주세요.');
       });
     }
   }

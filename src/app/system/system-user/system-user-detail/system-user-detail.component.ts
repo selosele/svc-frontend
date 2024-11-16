@@ -188,12 +188,12 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 활성화 여부를 수정한다. */
   async updateUserActiveYn(event: Event, userActiveYn: string): Promise<void> {
-    const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠금해제하시겠습니까?' : '잠그시겠습니까?'}`);
+    const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠금해제하시겠어요?' : '잠그시겠어요?'}`);
     if (!confirm) return;
 
     this.authService.updateUser$({ userId: this.detail?.userId, userActiveYn })
     .subscribe((data) => {
-      this.messageService.toastSuccess('정상적으로 처리되었습니다.');
+      this.messageService.toastSuccess('정상적으로 처리되었어요.');
 
       this.detail = data;
       this.detailForm.patchValue({
@@ -209,14 +209,14 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   async onSubmit(value: SaveUserRequestDTO): Promise<void> {
     const crudName = isEmpty(value.userId) ? '추가' : '수정';
 
-    const confirm = await this.messageService.confirm1(`사용자 및 직원 정보를 ${crudName}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`사용자 및 직원 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;
 
     // 사용자 ID가 없으면 추가 API를 타고
     if (isEmpty(value.userId)) {
       this.authService.addUser$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -224,7 +224,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     else {
       this.authService.updateUser$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -232,19 +232,19 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자를 삭제한다. */
   async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('사용자를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('사용자를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
     this.authService.removeUser$(this.detail.userId)
     .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
     });
   }
 
   /** 특정 사용자로 로그인한다. */
   async superLogin(): Promise<void> {
-    const confirm = await this.messageService.confirm1(`${this.detail.userAccount}(${this.detail.employee.employeeName}) 계정으로 로그인하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`${this.detail.userAccount}(${this.detail.employee.employeeName}님) 계정으로 로그인하시겠어요?`);
     if (!confirm) return;
 
     this.authService.superLogin({

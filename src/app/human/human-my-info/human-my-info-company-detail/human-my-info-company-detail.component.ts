@@ -109,7 +109,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   async onSubmit(value: SaveWorkHistoryRequestDTO): Promise<void> {
     const crudName = isEmpty(value.workHistoryId) ? '추가' : '수정';
 
-    const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;
 
     value.employeeId = this.user?.employeeId;
@@ -118,7 +118,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     if (isEmpty(value.workHistoryId)) {
       this.humanService.addWorkHistory$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -126,7 +126,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     else {
       this.humanService.updateWorkHistory$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -134,7 +134,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
   /** 회사 정보를 삭제한다. */
   async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('회사를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('회사를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
     const { employeeId } = this.user;
@@ -142,7 +142,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
     this.humanService.removeWorkHistory$(employeeId, workHistoryId)
     .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
     });
   }

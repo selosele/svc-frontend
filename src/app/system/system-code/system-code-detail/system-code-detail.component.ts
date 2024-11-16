@@ -100,14 +100,14 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   async onSubmit(value: SaveCodeRequestDTO): Promise<void> {
     const crudName = isEmpty(value.originalCodeId) ? '추가' : '수정';
 
-    const confirm = await this.messageService.confirm1(`코드 정보를 ${crudName}하시겠습니까?`);
+    const confirm = await this.messageService.confirm1(`코드 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;
 
     // 코드 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalCodeId)) {
       this.codeService.addCode$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -115,7 +115,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     else {
       this.codeService.updateCode$(value)
       .subscribe((data) => {
-        this.messageService.toastSuccess(`정상적으로 ${crudName}되었습니다.`);
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
     }
@@ -123,12 +123,12 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   /** 코드를 삭제한다. */
   async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('코드를 삭제하시겠습니까?<br>이 작업은 복구할 수 없습니다.');
+    const confirm = await this.messageService.confirm2('코드를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
     this.codeService.removeCode$(this.detail.codeId)
     .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었습니다.');
+      this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
     });
   }

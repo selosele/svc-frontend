@@ -136,12 +136,12 @@ export class HumanMyInfoComponent implements OnInit {
       return;
     }
 
-    const confirm = await this.messageService.confirm1('비밀번호를 변경하시겠습니까?');
+    const confirm = await this.messageService.confirm1('비밀번호를 변경하시겠어요?');
     if (!confirm) return;
 
     this.authService.updatePassword$(value)
     .subscribe((data) => {
-      const alert = this.messageService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
+      const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
       alert.onClose.subscribe((data) => {
         this.authService.logout();
       });
@@ -150,12 +150,12 @@ export class HumanMyInfoComponent implements OnInit {
 
   /** 직원 정보를 저장한다. */
   async onSubmitEmployee(value: SaveEmployeeRequestDTO): Promise<void> {
-    const confirm = await this.messageService.confirm1('저장하시겠습니까?');
+    const confirm = await this.messageService.confirm1('저장하시겠어요?');
     if (!confirm) return;
 
     this.humanService.updateEmployee$(value)
     .subscribe((data) => {
-      const alert = this.messageService.alert('정상적으로 변경되었습니다.<br>다시 로그인해주시기 바랍니다.');
+      const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
       alert.onClose.subscribe((data) => {
         this.authService.logout();
       });
