@@ -188,7 +188,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 활성화 여부를 수정한다. */
   async updateUserActiveYn(event: Event, userActiveYn: string): Promise<void> {
-    const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠그시겠습니까?' : '잠금해제하시겠습니까?'}`);
+    const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠금해제하시겠습니까?' : '잠그시겠습니까?'}`);
     if (!confirm) return;
 
     this.authService.updateUser$({ userId: this.detail?.userId, userActiveYn })
