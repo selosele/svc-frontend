@@ -97,7 +97,7 @@ export class HumanVacationListComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
-    this.fileName = `휴가사용목록(${this.user.employeeName}, ${dateUtil().format('YYYYMMDD')})`;
+    this.fileName = `휴가사용목록(${this.user?.employeeName}, ${dateUtil().format('YYYYMMDD')})`;
 
     this.searchForm = this.fb.group({
       vacationStartYmd: [''], // 휴가 시작일자

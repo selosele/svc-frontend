@@ -146,7 +146,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.detail && this.detailForm) {
-      this.isUserSelf = Number(this.user.userId) === this.detail.userId;
+      this.isUserSelf = Number(this.user?.userId) === this.detail.userId;
 
       this.useRemove = !this.isUserSelf;
       this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
