@@ -5,6 +5,7 @@ import { AuthService } from '@app/auth/auth.service';
 import { StoreService } from '@app/shared/services';
 import { UserResponseDTO } from '@app/auth/auth.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
+import { isBlank } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -59,6 +60,11 @@ export class SystemUserComponent implements OnInit {
         if (data.jobTitleCode === 'ETC') {
           return data.rankCodeName;
         }
+
+        if (isBlank(data.rankCodeName) && isBlank(data.jobTitleCodeName)) {
+          return '';
+        }
+        
         return `${data.rankCodeName}/${data.jobTitleCodeName}`;
       }
     },
