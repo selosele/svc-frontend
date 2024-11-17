@@ -158,6 +158,11 @@ export class ModalSearchCompanyComponent implements OnInit {
 
   /** 회사 드롭다운 항목을 선택한다. */
   async onCompanyNameSelect(event: AutoCompleteSelectEvent): Promise<void> {
+    this.searchForm.patchValue({
+      companyName: event.value.companyName,
+      registrationNo: event.value.registrationNo,
+    });
+
     if (!event.value) return;
     
     const confirm = await this.messageService.confirm1(`
