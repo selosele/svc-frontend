@@ -74,6 +74,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     { field: 'corporateName',  header: '법인명' },
     { field: 'companyName',    header: '회사명' },
     { field: 'registrationNo', header: '사업자등록번호' },
+    { field: 'companyAddr',    header: '회사 소재지' },
   ];
 
   ngOnInit() {
@@ -134,7 +135,10 @@ export class ModalSearchCompanyComponent implements OnInit {
           filtered.push({
             companyName: company.enpPbanCmpyNm || company.corpNm,
             corporateName: company.corpNm,
-            registrationNo: company.bzno
+            registrationNo: company.bzno,
+            enpBsadr: company.enpBsadr,
+            enpTlno: company.enpTlno,
+            enpRprFnm: company.enpRprFnm,
           });
         }
       }
@@ -153,10 +157,15 @@ export class ModalSearchCompanyComponent implements OnInit {
 
   /** 회사 드롭다운 항목을 선택한다. */
   async onCompanyNameSelect(event: AutoCompleteSelectEvent): Promise<void> {
+    if (!event.value) return;
+    
     const confirm = await this.messageService.confirm1(`
       <ul>
-        <li>법인명: <strong>${event.value.companyName}</strong></li>
         <li>사업자등록번호: <strong>${event.value.registrationNo}</strong></li>
+        <li>회사명/법인명: <strong>${event.value.companyName}</strong></li>
+        <li>회사 소재지: <strong>${event.value.enpBsadr}</strong></li>
+        <li>전화번호: <strong>${event.value.enpTlno.replaceAll(' ', '')}</strong></li>
+        <li>대표자명: <strong>${event.value.enpRprFnm}</strong></li>
       </ul>
       <p class="mt-2">해당 회사를 선택하시겠어요?</p>
     `);

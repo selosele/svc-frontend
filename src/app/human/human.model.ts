@@ -171,14 +171,17 @@ export class CompanyResponseDTO {
   /** 회사 ID */
   companyId?: number;
 
+  /** 사업자등록번호 */
+  registrationNo?: string;
+
   /** 법인명 */
   corporateName?: string;
 
   /** 회사명 */
   companyName?: string;
 
-  /** 사업자등록번호 */
-  registrationNo?: string;
+  /** 회사 소재지 */
+  companyAddr?: string;
 
   /** 삭제 여부 */
   deleteYn?: string;
