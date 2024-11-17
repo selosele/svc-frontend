@@ -7,7 +7,7 @@ import { FormValidator } from '../../../form-validator/form-validator.component'
 import { UiTextFieldComponent } from '../../../ui-text-field/ui-text-field.component';
 import { UiTextareaComponent } from '../../../ui-textarea/ui-textarea.component';
 import { HumanService } from '@app/human/human.service';
-import { AddCompanyApplyRequestDTO } from '@app/human/human.model';
+import { SaveCompanyApplyRequestDTO } from '@app/human/human.model';
 
 @Component({
   standalone: true,
@@ -52,7 +52,7 @@ export class SearchCompanyDetailComponent implements OnInit {
   }
 
   /** 회사등록신청을 한다. */
-  async onSubmit(value: AddCompanyApplyRequestDTO): Promise<void> {
+  async onSubmit(value: SaveCompanyApplyRequestDTO): Promise<void> {
     const confirm = await this.messageService.confirm1('회사등록신청하시겠어요?');
     if (!confirm) return;
 

@@ -318,8 +318,11 @@ export class GetCompanyApplyRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 회사등록신청 추가 요청 DTO */
-export class AddCompanyApplyRequestDTO extends HttpRequestDTOBase {
+/** 회사등록신청 추가/수정 요청 DTO */
+export class SaveCompanyApplyRequestDTO extends HttpRequestDTOBase {
+
+  /** 회사등록신청 ID */
+  companyApplyId?: number;
 
   /** 법인명 */
   corporateName?: string;

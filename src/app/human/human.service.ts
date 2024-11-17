@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, AddCompanyApplyRequestDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -110,7 +110,7 @@ export class HumanService {
   }
 
   /** 회사등록신청을 추가한다. */
-  addCompanyApply$(dto: AddCompanyApplyRequestDTO) {
+  addCompanyApply$(dto: SaveCompanyApplyRequestDTO) {
     return this.http.post<number>('/hm/company-applies', dto);
   }
 
