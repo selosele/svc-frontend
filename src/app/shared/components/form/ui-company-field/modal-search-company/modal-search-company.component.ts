@@ -75,6 +75,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     { field: 'companyName',    header: '회사명' },
     { field: 'registrationNo', header: '사업자등록번호' },
     { field: 'companyAddr',    header: '회사 소재지' },
+    { field: 'ceoName',        header: '대표자명' },
   ];
 
   ngOnInit() {

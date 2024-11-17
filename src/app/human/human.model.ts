@@ -183,6 +183,9 @@ export class CompanyResponseDTO {
   /** 회사 소재지 */
   companyAddr?: string;
 
+  /** 대표자명 */
+  ceoName?: string;
+
   /** 삭제 여부 */
   deleteYn?: string;
 
