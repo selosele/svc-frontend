@@ -26,6 +26,9 @@ export class UiAutocompleteFieldComponent extends FormFieldComponent {
   /** 검색어 초기화 버튼 사용여부 */
   @Input() showClear = true;
 
+  /** input에 focus시 자동완성 표출 여부 */
+  @Input() completeOnFocus = false;
+
   /** 검색어 초기화 버튼 사용여부 */
   @Input() optionLabel?: string;
 
