@@ -40,7 +40,7 @@ export class UiCompanyFieldComponent extends FormFieldComponent {
     const modal = this.dialogService.open(ModalSearchCompanyComponent, {
       focusOnShow: false,
       header: '회사 검색',
-      width: '1000px'
+      width: '1200px'
     });
 
     modal.onClose.subscribe((data: CompanyResponseDTO) => {
