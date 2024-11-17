@@ -64,8 +64,11 @@ export class HumanVacationComponent implements OnInit {
   /** 회사 탭 */
   tabs: Tab[] = [];
 
-  /** 선택된 회사 탭 index */
+  /** 선택된 회사 탭의 index */
   activeIndex = 0;
+
+  /** 선택된 회사 탭의 근무이력 ID */
+  activeWorkHistoryId: number;
 
   /** 휴가 계산 폼 */
   caculateVacationForm: FormGroup;
@@ -119,43 +122,25 @@ export class HumanVacationComponent implements OnInit {
     this.humanService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({
-      employeeId: [this.user.employeeId],                 // 직원 ID
+      workHistoryId: [this.user?.workHistoryId],          // 근무이력 ID
+      employeeId: [this.user?.employeeId],                // 직원 ID
       joinYmd: [''],                                      // 입사일자
       annualTypeCode: [this.annualTypeCodes],             // 연차발생기준 코드
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
 
-    this.humanService.listVacationCalc$(this.user?.employeeId)
-    .subscribe((data) => {
-
-      // 사용자 지정 휴가계산설정이 있으면 설정해주고
-      if (data?.length > 0) {
-        this.caculateVacationForm.get('annualTypeCode').patchValue(data[0].annualTypeCode);
-        this.caculateVacationForm.get('vacationTypeCodes').patchValue(data.map(x => x.vacationTypeCode));
-      }
-      // 없으면 기본 값을 설정한다.
-      else {
-        this.setAnnualTypeCode();
-      }
-
-      this.setJoinYmd();
-
-      // TODO: 2024.10.27. 다른 페이지로 갔다가 다시 휴가관리 페이지로 이동시, 탭은 첫 번째 탭이 활성화돼 있는데
-      // 페이지 이동 전에 클릭했던 탭의 콘텐츠가 활성화돼 있는 이슈로 인해 주석처리
-      // 예) 페이지 이동 전에 두 번째 탭 클릭 -> 다시 페이지 이동시 첫 번째 탭 활성화 및 두 번째 탭의 콘텐츠 활성화되어 있는 이슈
-      // 상태관리 로직 개선 예정
-      //if (!this.workHistoryListDataLoad) {
-        this.listWorkHistory();
-      //}
-    });
+    this.activeWorkHistoryId = this.user?.workHistoryId;
+    this.listVacationCalc(this.activeWorkHistoryId);
   }
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
+    this.activeWorkHistoryId = event.activeKey;
 
     this.setAnnualTypeCode();
-    this.listWorkHistory();
+    //this.listWorkHistory();
+    this.listVacationCalc(event.activeKey);
     
     this.humanService.setWorkHistoryId(event.activeKey);
     this.humanService.setVacationTableContent(this.activeIndex);
@@ -206,7 +191,10 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 설정을 저장한다. */
   onSave(): void {
-    this.humanService.addVacationCalc$(this.caculateVacationForm.value as AddVacationCalcRequestDTO)
+    this.humanService.addVacationCalc$({
+      ...this.caculateVacationForm.value as AddVacationCalcRequestDTO,
+      workHistoryId: this.activeWorkHistoryId,
+    })
     .subscribe(() => {
       this.messageService.toastSuccess('휴가계산 설정이 저장되었어요.');
     });
@@ -227,10 +215,37 @@ export class HumanVacationComponent implements OnInit {
     });
   }
 
+  /** 휴가 계산 설정 목록을 조회한다. */
+  private listVacationCalc(workHistoryId: number): void {
+    this.humanService.listVacationCalc$(workHistoryId)
+    .subscribe((data) => {
+
+      // 사용자 지정 휴가계산설정이 있으면 설정해주고
+      if (data?.length > 0) {
+        this.caculateVacationForm.get('annualTypeCode').patchValue(data[0].annualTypeCode);
+        this.caculateVacationForm.get('vacationTypeCodes').patchValue(data.map(x => x.vacationTypeCode));
+      }
+      // 없으면 기본 값을 설정한다.
+      else {
+        this.setAnnualTypeCode();
+      }
+
+      this.setJoinYmd();
+
+      // TODO: 2024.10.27. 다른 페이지로 갔다가 다시 휴가관리 페이지로 이동시, 탭은 첫 번째 탭이 활성화돼 있는데
+      // 페이지 이동 전에 클릭했던 탭의 콘텐츠가 활성화돼 있는 이슈로 인해 주석처리
+      // 예) 페이지 이동 전에 두 번째 탭 클릭 -> 다시 페이지 이동시 첫 번째 탭 활성화 및 두 번째 탭의 콘텐츠 활성화되어 있는 이슈
+      // 상태관리 로직 개선 예정
+      //if (!this.workHistoryListDataLoad) {
+        this.listWorkHistory();
+      //}
+    });
+  }
+
   /** 연차발생기준 코드 값을 설정한다. */
   private setAnnualTypeCode(): void {
     const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
-    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user.joinYmd;
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
 
     // 근속 1년 미만일경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
@@ -246,7 +261,7 @@ export class HumanVacationComponent implements OnInit {
 
   /** 입사일자 값을 설정한다. */
   private setJoinYmd(): void {
-    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user.joinYmd;
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
     this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
   }
 

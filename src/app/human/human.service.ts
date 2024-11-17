@@ -145,14 +145,14 @@ export class HumanService {
   }
 
   /** 휴가 계산 설정 목록을 조회한다. */
-  listVacationCalc$(employeeId: number) {
-    return this.http.get<VacationCalcResponseDTO[]>(`/hm/vacations/calcs/${employeeId}`);
+  listVacationCalc$(workHistoryId: number) {
+    return this.http.get<VacationCalcResponseDTO[]>(`/hm/vacations/calcs/${workHistoryId}`);
   }
 
   /** 휴가 계산 설정을 추가한다. */
   addVacationCalc$(dto: AddVacationCalcRequestDTO) {
-    const { employeeId } = dto;
-    return this.http.post<number>(`/hm/vacations/calcs/${employeeId}`, dto);
+    const { workHistoryId } = dto;
+    return this.http.post<number>(`/hm/vacations/calcs/${workHistoryId}`, dto);
   }
 
   /** 테이블 문구를 설정한다. */

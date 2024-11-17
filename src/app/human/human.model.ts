@@ -382,6 +382,9 @@ export class VacationResponseDTO {
 /** 휴가 계산 설정 추가 요청 DTO */
 export class AddVacationCalcRequestDTO extends HttpRequestDTOBase {
 
+  /** 근무이력 ID */
+  workHistoryId?: number;
+  
   /** 직원 ID */
   employeeId?: number;
   
@@ -398,6 +401,9 @@ export class VacationCalcResponseDTO {
 
   /** 휴가 계산 설정 ID */
   vacationCalcId?: number;
+
+  /** 근무이력 ID */
+  workHistoryId?: number;
 
   /** 직원 ID */
   employeeId?: number;
