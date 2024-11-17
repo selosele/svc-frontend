@@ -371,6 +371,12 @@ export class CompanyApplyResponseDTO {
   /** 신청일시 */
   applyDt?: string;
 
+  /** 반려 사유 */
+  rejectContent?: string;
+
+  /** 반려일시 */
+  rejectDt?: string;
+
 }
 
 /** 휴가 조회 요청 DTO */
