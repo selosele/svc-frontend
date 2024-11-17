@@ -307,6 +307,72 @@ export class CompanyOpenAPIResponseDTO {
 
 }
 
+/** 회사등록신청 조회 요청 DTO */
+export class GetCompanyApplyRequestDTO extends HttpRequestDTOBase {
+
+  /** 회사등록신청 ID */
+  companyApplyId?: number;
+
+  /** 사업자등록번호 */
+  registrationNo?: string;
+
+}
+
+/** 회사등록신청 추가 요청 DTO */
+export class AddCompanyApplyRequestDTO extends HttpRequestDTOBase {
+
+  /** 법인명 */
+  corporateName?: string;
+
+  /** 회사명 */
+  companyName?: string;
+
+  /** 사업자등록번호 */
+  registrationNo?: string;
+
+  /** 신청 내용 */
+  applyContent?: string;
+
+  /** 신청 상태 코드 */
+  applyStateCode?: string;
+
+}
+
+/** 회사등록신청 응답 DTO */
+export class CompanyApplyResponseDTO {
+
+  /** 회사등록신청 ID */
+  companyApplyId?: number;
+
+  /** 사업자등록번호 */
+  registrationNo?: string;
+
+  /** 법인명 */
+  corporateName?: string;
+
+  /** 회사명 */
+  companyName?: string;
+
+  /** 신청 내용 */
+  applyContent?: string;
+
+  /** 신청 상태 코드 */
+  applyStateCode?: string;
+
+  /** 신청 상태 코드명 */
+  applyStateCodeName?: string;
+
+  /** 신청자 ID */
+  applicantId?: number;
+
+  /** 신청자명 */
+  applicantName?: string;
+
+  /** 신청일시 */
+  applyDt?: string;
+
+}
+
 /** 휴가 조회 요청 DTO */
 export class GetVacationRequestDTO extends HttpRequestDTOBase {
 

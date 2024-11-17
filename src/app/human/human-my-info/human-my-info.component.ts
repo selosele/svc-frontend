@@ -5,9 +5,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { isEmpty } from '@app/shared/utils';
+import { isEmpty, roles } from '@app/shared/utils';
 import { HumanService } from '../human.service';
-import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO } from '../human.model';
+import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO, CompanyApplyResponseDTO } from '../human.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
@@ -16,6 +16,7 @@ import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detail/human-my-info-company-detail.component';
+import { HumanMyInfoCompanyApplyDetailComponent } from './human-my-info-company-apply-detail/human-my-info-company-apply-detail.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
 @Component({
@@ -32,7 +33,8 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
     UiSplitterComponent,
     UiContentTitleComponent,
     LayoutPageDescriptionComponent,
-    HumanMyInfoCompanyDetailComponent
+    HumanMyInfoCompanyDetailComponent,
+    HumanMyInfoCompanyApplyDetailComponent,
 ],
   selector: 'view-human-my-info',
   templateUrl: './human-my-info.component.html',
@@ -49,11 +51,17 @@ export class HumanMyInfoComponent implements OnInit {
     private humanService: HumanService,
   ) {}
 
-  /** table */
-  @ViewChild('table') table: UiTableComponent;
+  /** table - 근무이력정보 */
+  @ViewChild('table1') table1: UiTableComponent;
 
-  /** splitter */
-  @ViewChild('splitter') splitter: UiSplitterComponent;
+  /** splitter - 근무이력정보 */
+  @ViewChild('splitter1') splitter1: UiSplitterComponent;
+
+  /** table - 회사등록신청현황 */
+  @ViewChild('table2') table2: UiTableComponent;
+
+  /** splitter - 회사등록신청현황 */
+  @ViewChild('splitter2') splitter2: UiSplitterComponent;
 
   /** 직원 정보 데이터 로드 완료 여부 */
   get employeeDataLoad() {
@@ -65,9 +73,17 @@ export class HumanMyInfoComponent implements OnInit {
     const employee = this.store.select<EmployeeResponseDTO>('employee').value;
     return employee.workHistories;
   }
+
+  /** 회사등록신청 목록 */
+  get companyApplyList(): CompanyApplyResponseDTO[] {
+    return this.store.select<CompanyApplyResponseDTO[]>('companyApplyList').value
+  }
   
   /** 인증된 사용자 정보 */
   user: AuthenticatedUser;
+
+  /** 인증된 사용자가 시스템관리자 권한을 보유했는지 여부 */
+  isSystemAdmin: boolean;
 
   /** 비밀번호 변경 폼 */
   changePasswordForm: FormGroup;
@@ -84,8 +100,8 @@ export class HumanMyInfoComponent implements OnInit {
   /** 직책 코드 데이터 목록 */
   jobTitleCodes: DropdownData[];
 
-  /** 테이블 컬럼 */
-  cols = [
+  /** 근무이력정보 테이블 컬럼 */
+  cols1 = [
     { field: 'companyName', header: '회사명' },
     { field: 'joinYmd',     header: '입사일자' },
     { field: 'quitYmd',     header: '퇴사일자' },
@@ -99,11 +115,27 @@ export class HumanMyInfoComponent implements OnInit {
     },
   ];
 
-  /** 근무이력 정보 */
+  /** 근무이력정보 */
   workHistoryDetail: WorkHistoryResponseDTO = null;
 
-  /** 테이블 선택된 행 */
-  selection: WorkHistoryResponseDTO;
+  /** 근무이력정보 테이블 선택된 행 */
+  selection1: WorkHistoryResponseDTO;
+
+  /** 회사등록신청현황 테이블 컬럼 */
+  cols2 = [
+    { field: 'companyName',        header: '회사명' },
+    { field: 'corporateName',      header: '법인명' },
+    { field: 'registrationNo',     header: '사업자등록번호' },
+    { field: 'applyContent',       header: '내용' },
+    { field: 'applyDt',            header: '신청일시' },
+    { field: 'applyStateCodeName', header: '신청상태' },
+  ];
+
+  /** 회사등록신청 정보 */
+  companyApplyDetail: CompanyApplyResponseDTO = null;
+
+  /** 회사등록신청현황 테이블 선택된 행 */
+  selection2: CompanyApplyResponseDTO;
 
   ngOnInit() {
     this.route.data.subscribe(({ code }) => {
@@ -113,12 +145,14 @@ export class HumanMyInfoComponent implements OnInit {
     });
 
     this.user = this.authService.getAuthenticatedUser();
+    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN);
     this.initForm();
 
     if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value)) {
       this.getEmployee();
     }
     this.setMyInfoForm();
+    this.listCompanyApply();
   }
 
   /** 직원을 조회한다. */
@@ -167,41 +201,72 @@ export class HumanMyInfoComponent implements OnInit {
     this.getEmployee();
   }
 
-  /** 근무이력 정보 새로고침 버튼을 클릭한다. */
-  onRefreshWorkHistory(event: Event): void {
-    
-  }
-
-  /** 근무이력 정보 추가 버튼을 클릭한다. */
+  /** 근무이력정보 추가 버튼을 클릭한다. */
   addCompany(): void {
     this.workHistoryDetail = {};
-    this.splitter.show();
+    this.splitter1.show();
   }
 
-  /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  /** 근무이력정보 테이블 행을 선택한다. */
+  onRowSelect1(event: any): void {
     this.humanService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
     .subscribe((data) => {
       this.workHistoryDetail = data;
-      this.splitter.show();
+      this.splitter1.show();
     });
   }
 
-  /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any): void {
+  /** 근무이력정보 테이블 행을 선택 해제한다. */
+  onRowUnselect1(event: any): void {
     this.workHistoryDetail = {};
-    this.splitter.hide();
+    this.splitter1.hide();
   }
 
-  /** 삭제 버튼을 클릭한다. */
-  onRemove(): void {
-    this.splitter.hide();
+  /** 근무이력정보 테이블 삭제 버튼을 클릭한다. */
+  onRemove1(): void {
+    this.splitter1.hide();
     this.getEmployee();
   }
 
-  /** 닫기 버튼을 클릭한다. */
-  onClose(): void {
-    this.splitter.hide();
+  /** 근무이력정보 닫기 버튼을 클릭한다. */
+  onClose1(): void {
+    this.splitter1.hide();
+  }
+
+  /** 회사등록신청현황 목록을 조회한다. */
+  listCompanyApply(): void {
+    this.humanService.listCompanyApply();
+  }
+
+  /** 회사등록신청현황 테이블 새로고침 버튼을 클릭한다. */
+  onRefresh2(): void {
+    this.listCompanyApply();
+  }
+
+  /** 회사등록신청현황 테이블 행을 선택한다. */
+  onRowSelect2(event: any): void {
+    this.humanService.getCompanyApply$(event.data['companyApplyId'])
+    .subscribe((data) => {
+      this.companyApplyDetail = data;
+      this.splitter2.show();
+    });
+  }
+
+  /** 회사등록신청현황 테이블 행을 선택 해제한다. */
+  onRowUnselect2(event: any): void {
+    this.companyApplyDetail = {};
+    this.splitter2.hide();
+  }
+
+  /** 회사등록신청현황 테이블 삭제 버튼을 클릭한다. */
+  onRemove2(): void {
+    this.splitter2.hide();
+    this.listCompanyApply();
+  }
+
+  /** 회사등록신청현황 닫기 버튼을 클릭한다. */
+  onClose2(): void {
+    this.splitter2.hide();
   }
 
   /** 폼을 초기화한다. */
@@ -229,7 +294,7 @@ export class HumanMyInfoComponent implements OnInit {
       ]],
       lastLoginDt: [''],                                  // 사용자 마지막 로그인 일시
 
-      // 근무이력 정보
+      // 근무이력정보
       workHistory: this.fb.group({
         companyId: ['', [FormValidator.required]],        // 회사 ID
         corporateName: ['', [FormValidator.required]],    // 법인명

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, AddCompanyApplyRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -25,6 +25,12 @@ export class HumanService {
 
   /** 회사 목록 데이터 로드 완료 여부 */
   private companyListDataLoad = this.store.create<boolean>('companyListDataLoad', false);
+
+  /** 회사등록신청 목록 */
+  private companyApplyList = this.store.create<CompanyResponseDTO[]>('companyApplyList', []);
+
+  /** 회사등록신청 목록 데이터 로드 완료 여부 */
+  private companyApplyListDataLoad = this.store.create<boolean>('companyApplyListDataLoad', false);
 
   /** 근무이력 목록 */
   private workHistoryList = this.store.create<WorkHistoryResponseDTO[]>('workHistoryList', []);
@@ -85,6 +91,27 @@ export class HumanService {
   listCompanyOpenAPI$(dto?: GetCompanyRequestDTO) {
     const params = this.httpService.createParams(dto);
     return this.http.get<CompanyOpenAPIResponseDTO[]>('/public/hm/companies', { params });
+  }
+
+  /** 회사등록신청 목록을 조회한다. */
+  listCompanyApply(dto?: GetCompanyApplyRequestDTO): void {
+    const params = this.httpService.createParams(dto);
+
+    this.http.get<CompanyApplyResponseDTO[]>('/hm/company-applies', { params })
+    .subscribe((data) => {
+      this.store.update('companyApplyList', data);
+      this.store.update('companyApplyListDataLoad', true);
+    });
+  }
+
+  /** 회사등록신청을 조회한다. */
+  getCompanyApply$(companyApplyId: number) {
+    return this.http.get<CompanyApplyResponseDTO>(`/hm/company-applies/${companyApplyId}`);
+  }
+
+  /** 회사등록신청을 추가한다. */
+  addCompanyApply$(dto: AddCompanyApplyRequestDTO) {
+    return this.http.post<number>('/hm/company-applies', dto);
   }
 
   /** 근무이력 목록을 조회한다. */

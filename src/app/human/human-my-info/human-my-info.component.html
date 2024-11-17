@@ -155,19 +155,18 @@
     </div>
   </ui-form>
 
-  <ui-splitter #splitter>
+  <ui-splitter #splitter1>
     <ui-table #table first
       [title]="'근무이력 정보'"
       [useAdd]="false"
       [useRemove]="false"
       [useRefresh]="false"
-      [cols]="cols"
+      [cols]="cols1"
       [data]="workHistoryList"
       [dataKey]="'workHistoryId'"
-      [selection]="selection"
-      (refresh)="onRefreshWorkHistory($event)"
-      (rowSelect)="onRowSelect($event)"
-      (unRowSelect)="onRowUnselect($event)"
+      [selection]="selection1"
+      (rowSelect)="onRowSelect1($event)"
+      (unRowSelect)="onRowUnselect1($event)"
     >
       <ui-button buttons
         [size]="'small'"
@@ -182,9 +181,35 @@
       <human-my-info-company-detail
         [detail]="workHistoryDetail"
         (refresh)="getEmployee()"
-        (remove)="onRemove()"
-        (close)="onClose()"
+        (remove)="onRemove1()"
+        (close)="onClose1()"
       />
     </div>
   </ui-splitter>
+
+  @if (!isSystemAdmin && companyApplyList.length > 0) {
+    <ui-splitter #splitter2>
+      <ui-table #table2 first
+        [title]="'회사등록신청현황'"
+        [useAdd]="false"
+        [useRemove]="false"
+        [useRefresh]="false"
+        [cols]="cols2"
+        [data]="companyApplyList"
+        [dataKey]="'companyApplyId'"
+        [selection]="selection2"
+        (refresh)="onRefresh2()"
+        (rowSelect)="onRowSelect2($event)"
+        (unRowSelect)="onRowUnselect2($event)"
+      />
+      <div second>
+        <human-my-info-company-apply-detail
+          [detail]="companyApplyDetail"
+          (refresh)="listCompanyApply()"
+          (remove)="onRemove2()"
+          (close)="onClose2()"
+        />
+      </div>
+    </ui-splitter>
+  }
 }

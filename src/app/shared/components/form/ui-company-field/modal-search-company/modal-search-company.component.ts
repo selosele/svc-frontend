@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AutoCompleteCompleteEvent, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { StoreService, UiMessageService } from '@app/shared/services';
+import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '@app/human/human.service';
 import { CompanyOpenAPIResponseDTO, CompanyResponseDTO, GetCompanyRequestDTO } from '@app/human/human.model';
-import { groupBy } from '@app/shared/utils';
+import { groupBy, roles } from '@app/shared/utils';
 import { LayoutPageDescriptionComponent } from '../../../layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '../../../ui';
 import { FormValidator } from '../../form-validator/form-validator.component';
@@ -39,6 +40,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     private store: StoreService,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
+    private authService: AuthService,
     private humanService: HumanService,
   ) {}
 
@@ -60,6 +62,9 @@ export class ModalSearchCompanyComponent implements OnInit {
     this.store.update('companyListDataLoad', value);
   }
 
+  /** 인증된 사용자가 시스템관리자 권한을 보유했는지 여부 */
+  isSystemAdmin: boolean;
+
   /** 회사 정보 */
   detail: CompanyResponseDTO = null;
 
@@ -79,6 +84,8 @@ export class ModalSearchCompanyComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN);
+
     if (!this.companyListDataLoad) {
       this.listCompany();
     }
@@ -184,8 +191,13 @@ export class ModalSearchCompanyComponent implements OnInit {
     });
   }
 
-  /** 회사를 추가한다. */
-  addCompany(): void {
+  /** 회사등록신청을 추가한다. */
+  addCompanyApply(): void {
+    if (this.isSystemAdmin) {
+      this.messageService.toastInfo('시스템관리자는 등록신청할 필요 없이 시스템관리 > 회사관리 화면에서 바로 회사를 등록할 수 있어요.');
+      return;
+    }
+
     this.detail = {};
     this.splitter.show();
   }
