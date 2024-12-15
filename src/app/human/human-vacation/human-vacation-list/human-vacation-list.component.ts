@@ -109,7 +109,7 @@ export class HumanVacationListComponent implements OnInit {
 
       const currentItem = this.vacationList.find(x => x.key === data);
       if (isEmpty(currentItem)) {
-        this.listVacation({ workHistoryId: data });
+        this.listVacation({ workHistoryId: data, userId: this.user?.userId });
       }
       this.vacationListCurrent = currentItem?.value;
       this.splitter?.hide();
@@ -146,6 +146,7 @@ export class HumanVacationListComponent implements OnInit {
   onSearchFormSubmit(): void {
     this.listVacation({
       workHistoryId: this.workHistoryId,
+      userId: this.user?.userId,
       ...this.searchForm.value,
     });
   }
@@ -175,13 +176,13 @@ export class HumanVacationListComponent implements OnInit {
     this.searchForm.get('vacationStartYmd').patchValue('');
     this.searchForm.get('vacationEndYmd').patchValue('');
     
-    this.listVacation({ workHistoryId: this.workHistoryId });
+    this.listVacation({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
   }
 
   /** 삭제 버튼을 클릭한다. */
   onRemove(): void {
     this.splitter.hide();
-    this.listVacation({ workHistoryId: this.workHistoryId });
+    this.listVacation({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
   }
   
   /** 닫기 버튼을 클릭한다. */

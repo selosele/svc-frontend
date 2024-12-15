@@ -397,6 +397,9 @@ export class GetVacationRequestDTO extends HttpRequestDTOBase {
   /** 휴가 종료일자 */
   vacationEndYmd?: string;
 
+  /** 사용자 ID */
+  userId?: number;
+
 }
 
 /** 휴가 추가/수정 요청 DTO */
