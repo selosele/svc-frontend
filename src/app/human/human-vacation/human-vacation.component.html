@@ -83,6 +83,7 @@
     <human-vacation-list
       [tableTitle]="vacationTableTitle"
       [tableText]="vacationTableText"
+      (refresh)="onRefresh()"
     />
   </ui-tab>
 }

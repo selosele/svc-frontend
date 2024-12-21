@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GetVacationRequestDTO, VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
 import { StoreService } from '@app/shared/services';
@@ -45,6 +45,9 @@ export class HumanVacationListComponent implements OnInit {
 
   /** 테이블 텍스트 */
   @Input() tableText: string;
+
+  /** 근무이력목록 조회 새로고침 이벤트 */
+  @Output() refresh = new EventEmitter<void>();
 
   /** table */
   @ViewChild('table') table: UiTableComponent;
@@ -177,6 +180,7 @@ export class HumanVacationListComponent implements OnInit {
     this.searchForm.get('vacationEndYmd').patchValue('');
     
     this.listVacation({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
+    this.refresh.emit();
   }
 
   /** 삭제 버튼을 클릭한다. */

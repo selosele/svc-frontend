@@ -200,6 +200,11 @@ export class HumanVacationComponent implements OnInit {
     });
   }
 
+  /** 근무이력 목록을 다시 조회한다. */
+  onRefresh(): void {
+    this.listWorkHistory();
+  }
+
   /** 근무이력 목록을 조회한다. */
   private listWorkHistory(): void {
     this.humanService.listWorkHistory$({
