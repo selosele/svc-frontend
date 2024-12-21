@@ -1,1 +1,56 @@
-<p>human-my-info-company-apply-detail works!</p>
+<ui-split-form
+  [form]="detailForm"
+  [useRemove]="useRemove"
+  (submit)="onSubmit($event)"
+  (close)="onClose()"
+>
+  <ui-hidden-field [control]="detailForm.get('companyApplyId')" />
+
+  <ui-content-title [text]="'회사등록신청정보'" />
+
+  <div class="grid mt-2">
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('corporateName')"
+        [label]="'법인명'"
+      />
+    </div>
+
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('companyName')"
+        [label]="'회사명'"
+      />
+    </div>
+
+    <div class="col-4">
+      <ui-text-field
+        [control]="detailForm.get('registrationNo')"
+        [label]="'사업자등록번호'"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('applyDt')"
+        [label]="'신청일시'"
+        [readonly]="true"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('applyStateCodeName')"
+        [label]="'신청상태'"
+        [readonly]="true"
+      />
+    </div>
+
+    <div class="col-12">
+      <ui-textarea
+        [control]="detailForm.get('applyContent')"
+        [label]="'신청 내용'"
+      />
+    </div>
+  </div>
+</ui-split-form>

@@ -11,14 +11,14 @@
   <ui-content-title [text]="'회사 정보'" />
 
   <div class="grid mt-2">
-    <div class="col">
+    <div class="col-4">
       <ui-company-field
         [control]="detailForm.get('companyName')"
         [label]="'회사명'"
       />
     </div>
 
-    <div class="col">
+    <div class="col-4">
       <ui-dropdown
         [control]="detailForm.get('rankCode')"
         [label]="'직위'"
@@ -26,16 +26,14 @@
       />
     </div>
 
-    <div class="col">
+    <div class="col-4">
       <ui-dropdown
         [control]="detailForm.get('jobTitleCode')"
         [label]="'직책'"
         [data]="jobTitleCodes"
       />
     </div>
-  </div>
 
-  <div class="grid">
     <div class="col-4">
       <ui-date-field
         [control]="detailForm.get('joinYmd')"
