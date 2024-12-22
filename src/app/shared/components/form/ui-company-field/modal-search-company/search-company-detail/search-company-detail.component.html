@@ -3,13 +3,21 @@
   (submit)="onSubmit($event)"
   (close)="onClose()"
 >
-  <ui-content-title [text]="'회사 정보'" />
+  <ui-content-title [text]="'회사등록신청'" />
+
+  <ui-card>
+    <ul>
+      <li>회사명, 사업자등록번호를 반드시 입력해주셔야 해요.</li>
+      <li>지역, 업종 등의 상세정보를 신청 내용에 입력해주시면 더 빠른 신청승인이 가능해요.</li>
+    </ul>
+  </ui-card>
 
   <div class="grid mt-2">
     <div class="col-4">
       <ui-text-field
         [control]="detailForm.get('corporateName')"
         [label]="'법인명'"
+        [placeholder]="'비워두셔도 괜찮아요.'"
       />
     </div>
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UiMessageService } from '@app/shared/services';
-import { UiContentTitleComponent } from '@app/shared/components/ui';
+import { UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { UiSplitFormComponent } from '../../../ui-split-form/ui-split-form.component';
 import { FormValidator } from '../../../form-validator/form-validator.component';
 import { UiTextFieldComponent } from '../../../ui-text-field/ui-text-field.component';
@@ -16,6 +16,7 @@ import { SaveCompanyApplyRequestDTO } from '@app/human/human.model';
     UiTextFieldComponent,
     UiTextareaComponent,
     UiContentTitleComponent,
+    UiCardComponent,
   ],
   selector: 'search-company-detail',
   templateUrl: './search-company-detail.component.html',
@@ -46,14 +47,17 @@ export class SearchCompanyDetailComponent implements OnInit {
         FormValidator.required,
         FormValidator.maxLength(100)
       ]],
-      registrationNo: ['', [FormValidator.maxLength(10)]], // 사업자등록번호
+      registrationNo: ['', [                               // 사업자등록번호
+        FormValidator.required,
+        FormValidator.maxLength(10)]
+      ],
       applyContent: ['', [FormValidator.maxLength(100)]]   // 신청 내용
     });
   }
 
   /** 회사등록신청을 한다. */
   async onSubmit(value: SaveCompanyApplyRequestDTO): Promise<void> {
-    const confirm = await this.messageService.confirm1('회사등록신청하시겠어요?');
+    const confirm = await this.messageService.confirm1('등록신청하시겠어요?<br>신청 후에는 취소할 수 없으니 신중하게 입력해주세요.');
     if (!confirm) return;
 
     this.humanService.addCompanyApply$(value)
