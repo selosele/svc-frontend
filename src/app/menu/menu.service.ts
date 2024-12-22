@@ -16,8 +16,16 @@ export class MenuService {
     private store: StoreService,
   ) {}
 
+  /** 메뉴 ID 정보 */
+  public menuIdInfo = {
+
+    // 마이페이지
+    MY_PAGE: 14,
+
+  };
+
   /** 메뉴접속이력 목록 저장 key */
-  readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
+  public readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
 
   /** 메뉴 목록 */
   private menuList = this.store.create<MenuResponseDTO[]>('menuList', []);

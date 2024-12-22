@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulati
 import { RouterModule } from '@angular/router';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
+import { MenuService } from '@app/menu/menu.service';
 import { UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
@@ -28,6 +29,7 @@ export class LayoutHeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dialogService: UiDialogService,
+    protected menuService: MenuService,
   ) {}
 
   /** header 태그 */
@@ -41,6 +43,8 @@ export class LayoutHeaderComponent implements OnInit {
 
   /** 스크롤다운 여부 */
   isScrollDown = true;
+
+  menuInfo = null
 
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();

@@ -21,6 +21,7 @@ import { AddVacationCalcRequestDTO, WorkHistoryResponseDTO } from '../human.mode
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from "../../shared/components/form/ui-text-field/ui-text-field.component";
 import { dateUtil } from '@app/shared/utils';
+import { MenuService } from '@app/menu/menu.service';
 
 @Component({
   standalone: true,
@@ -56,6 +57,7 @@ export class HumanVacationComponent implements OnInit {
     private messageService: UiMessageService,
     private authService: AuthService,
     private humanService: HumanService,
+    protected menuService: MenuService,
   ) {}
 
   /** 인증된 사용자 정보 */
