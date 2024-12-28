@@ -53,12 +53,6 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
     this.isEditVisible = true;
   }
 
-  /** 편집버튼을 비활성화한다. */
-  onMouseLeave(): void {
-    this.isEditVisible = false;
-    this.isEditable = false;
-  }
-
   /** 사이트 타이틀을 편집한다. */
   onEdit(event: Event): void {
     event.stopPropagation();

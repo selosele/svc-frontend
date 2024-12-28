@@ -1,4 +1,4 @@
-<div class="layout-site-title" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+<div class="layout-site-title" (mouseenter)="onMouseEnter()">
   @if (isEditable) {
     <input type="text" class="layout-site-title__text" [value]="name" (keyup.enter)="onSubmit()" #editName>
   }
