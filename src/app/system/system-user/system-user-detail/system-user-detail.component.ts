@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthenticatedUser, RoleResponseDTO, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
+import { AuthenticatedUser, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
+import { RoleResponseDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';

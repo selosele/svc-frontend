@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpService, StoreService, UiDialogService } from '@app/shared/services';
 import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO, GetUserCertHistoryRequestDTO, UserSetupResponseDTO, AddUserRequestDTO } from './auth.model';
+import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO, UserSetupResponseDTO, AddUserRequestDTO } from './auth.model';
+import { RoleResponseDTO } from '@app/role/role.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

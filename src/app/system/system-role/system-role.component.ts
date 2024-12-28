@@ -4,10 +4,10 @@ import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { AuthService } from '@app/auth/auth.service';
 import { RoleService } from '@app/role/role.service';
-import { RoleResponseDTO } from '@app/auth/auth.model';
 import { StoreService, UiDialogService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
 import { SystemRoleDetailComponent } from './system-role-detail/system-role-detail.component';
+import { RoleResponseDTO } from '@app/role/role.model';
 
 @Component({
   standalone: true,
