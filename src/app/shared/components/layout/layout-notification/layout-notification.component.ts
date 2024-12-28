@@ -22,7 +22,7 @@ export class LayoutNotificationComponent implements OnInit {
   constructor(
     private store: StoreService,
     private notificationService: NotificationService,
-    private eRef: ElementRef, // ElementRef로 컴포넌트의 DOM 요소 참조
+    private eRef: ElementRef,
   ) {}
 
   /** 알림 개수 */
