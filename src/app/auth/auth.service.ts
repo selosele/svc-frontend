@@ -162,15 +162,6 @@ export class AuthService {
     return this.http.put<number>(`/co/users/${userId}/password`, dto);
   }
 
-  /** 권한 목록을 조회한다. */
-  listRole(): void {
-    this.http.get<RoleResponseDTO[]>('/co/roles')
-    .subscribe((data) => {
-      this.store.update('roleList', data);
-      this.store.update('roleListDataLoad', true);
-    });
-  }
-
   /** 사용자의 아이디를 찾는다. */
   findUserAccount$(dto: FindUserInfoRequestDTO) {
     return this.http.post<boolean>('/co/auth/find-user-account', dto);
@@ -249,7 +240,7 @@ export class AuthService {
     return this.jwtHelper.isTokenExpired(token);
   }
 
-  /** 로컬스토리지에 저장된 아이디 저장 여부 */
+  /** 로컬스토리지에 저장된 아이디 저장 여부 값을 반환한다. */
   getSavedUserAccount(): string {
     return window.localStorage.getItem(SAVE_USER_ACCOUNT_KEY);
   }

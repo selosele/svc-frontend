@@ -3,6 +3,7 @@ import { combineLatest } from 'rxjs';
 import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { AuthService } from '@app/auth/auth.service';
+import { RoleService } from '@app/role/role.service';
 import { RoleResponseDTO } from '@app/auth/auth.model';
 import { StoreService, UiDialogService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
@@ -25,6 +26,7 @@ export class SystemRoleComponent implements OnInit {
     private store: StoreService,
     private dialogService: UiDialogService,
     private authService: AuthService,
+    private roleService: RoleService,
     private menuService: MenuService,
   ) {}
 
@@ -56,7 +58,7 @@ export class SystemRoleComponent implements OnInit {
 
   /** 권한 목록을 조회한다. */
   listRole(): void {
-    this.authService.listRole();
+    this.roleService.listRole();
   }
 
   /** 테이블 행을 선택한다. */

@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { StoreService } from './shared/services';
 import { AuthService } from './auth/auth.service';
+import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private store: StoreService,
     private authService: AuthService,
+    private roleService: RoleService,
     private codeService: CodeService,
     private menuService: MenuService,
   ) {}
@@ -62,7 +64,7 @@ export class AppComponent implements OnInit {
           
           // 권한 목록 조회
           if (!this.store.select<boolean>('roleListDataLoad').value) {
-            this.authService.listRole();
+            this.roleService.listRole();
           }
           
           // 메뉴 목록 조회
