@@ -1,8 +1,6 @@
 <header class="layout-header" [class.scroll]="!isScrollDown" #header>
   <div class="layout-header__inner">
-    <layout-site-title>
-      svc
-    </layout-site-title>
+    <layout-site-title [name]="userSetup?.siteTitleName" />
 
     <layout-menu />
 
@@ -12,9 +10,7 @@
         <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: menuService.menuIdInfo.MY_PAGE }">{{ user.employeeName }}</a> 님 반갑습니다
       </p>
       
-      <ui-button [size]="'small'" (click)="logout()">
-        로그아웃
-      </ui-button>
+      <ui-button [size]="'small'" (click)="logout()">로그아웃</ui-button>
     </div>
   </div>
 </header>

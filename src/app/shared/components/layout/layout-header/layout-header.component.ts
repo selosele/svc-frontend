@@ -1,9 +1,9 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthenticatedUser } from '@app/auth/auth.model';
+import { AuthenticatedUser, UserSetupResponseDTO } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
-import { UiDialogService } from '@app/shared/services';
+import { StoreService, UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { LayoutNotificationComponent } from '../layout-notification/layout-notification.component';
@@ -27,6 +27,7 @@ import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.com
 export class LayoutHeaderComponent implements OnInit {
 
   constructor(
+    private store: StoreService,
     private authService: AuthService,
     private dialogService: UiDialogService,
     protected menuService: MenuService,
@@ -44,7 +45,10 @@ export class LayoutHeaderComponent implements OnInit {
   /** 스크롤다운 여부 */
   isScrollDown = true;
 
-  menuInfo = null
+  /** 사용자 설정 */
+  get userSetup() {
+    return this.store.select<UserSetupResponseDTO>('userSetup').value;
+  }
 
   ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();

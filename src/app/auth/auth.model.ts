@@ -77,6 +77,31 @@ export class UserResponseDTO {
     
 }
 
+/** 사용자 설정 추가 요청 DTO */
+export class AddUserRequestDTO extends HttpRequestDTOBase {
+
+  /** 사용자 ID */
+  userId?: number;
+
+  /** 사이트타이틀명 */
+  siteTitleName?: string;
+
+}
+
+/** 사용자 설정 응답 DTO */
+export class UserSetupResponseDTO {
+
+  /** 사용자 설정 ID */
+  userSetupId?: number;
+
+  /** 사용자 ID */
+  userId?: number;
+
+  /** 사이트타이틀명 */
+  siteTitleName?: string;
+    
+}
+
 /** 사용자 비밀번호 변경 요청 DTO */
 export class UpdateUserPasswordRequestDTO extends HttpRequestDTOBase {
 

@@ -70,6 +70,12 @@ export class AppComponent implements OnInit {
             this.menuService.listMenu();
           }
 
+          // 사용자 설정 조회
+          if (!this.store.select<boolean>('userSetupDataLoad').value) {
+            const userId = this.authService.getAuthenticatedUser().userId;
+            this.authService.getUserConfig(userId);
+          }
+
           // 알림창 닫기
           this.store.update('isNotificationLayerVisible', false);
         }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpService, StoreService, UiDialogService } from '@app/shared/services';
 import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO, GetUserCertHistoryRequestDTO } from './auth.model';
+import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, RoleResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO, GetUserCertHistoryRequestDTO, UserSetupResponseDTO, AddUserRequestDTO } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,6 +32,12 @@ export class AuthService {
 
   /** 사용자 본인인증 내역 */
   private userCertHistory = this.store.create<UserCertHistoryResponseDTO>('userCertHistory', null);
+
+  /** 사용자 설정 */
+  private userSetup = this.store.create<UserSetupResponseDTO>('userSetup', null);
+
+  /** 사용자 설정 데이터 로드 완료 여부 */
+  private userSetupDataLoad = this.store.create<boolean>('userSetupDataLoad', false);
 
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
@@ -117,6 +123,21 @@ export class AuthService {
   /** 사용자를 조회한다. */
   getUser$(userId: number) {
     return this.http.get<UserResponseDTO>(`/co/users/${userId}`);
+  }
+
+  /** 사용자 설정을 조회한다. */
+  getUserConfig(userId: number): void {
+    this.http.get<UserSetupResponseDTO>(`/co/users/${userId}/setups`)
+    .subscribe((data) => {
+      this.store.update('userSetup', data);
+      this.store.update('userSetupDataLoad', true);
+    });
+  }
+
+  /** 사용자 설정을 추가한다. */
+  addUserSetup$(dto: AddUserRequestDTO) {
+    const { userId } = dto;
+    return this.http.post<UserSetupResponseDTO>(`/co/users/${userId}/setups`, dto);
   }
 
   /** 사용자를 추가한다. */

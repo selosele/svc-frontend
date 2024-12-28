@@ -1,3 +1,26 @@
 .layout-site-title {
-  font-size: 1.875rem;
+  position: relative;
+  
+  &__text {
+    width: 15.625rem;
+    font-size: 1.5rem;
+  }
+
+  &-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -0.5rem;
+    right: -1rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+
+    i {
+      font-size: 0.875rem;
+    }
+  }
 }
