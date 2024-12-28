@@ -5,7 +5,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpService, StoreService, UiDialogService } from '@app/shared/services';
 import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, GetUserRequestDTO, LoginRequestDTO, LoginResponseDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO, UserSetupResponseDTO, AddUserRequestDTO } from './auth.model';
-import { RoleResponseDTO } from '@app/role/role.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,12 +23,6 @@ export class AuthService {
 
   /** 사용자 목록 데이터 로드 완료 여부 */
   private userListDataLoad = this.store.create<boolean>('userListDataLoad', false);
-
-  /** 권한 목록 */
-  private roleList = this.store.create<RoleResponseDTO[]>('roleList', []);
-
-  /** 권한 목록 데이터 로드 완료 여부 */
-  private roleListDataLoad = this.store.create<boolean>('roleListDataLoad', false);
 
   /** 사용자 본인인증 내역 */
   private userCertHistory = this.store.create<UserCertHistoryResponseDTO>('userCertHistory', null);
