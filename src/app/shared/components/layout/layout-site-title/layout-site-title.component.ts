@@ -4,11 +4,13 @@ import { StoreService, UiMessageService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { UserService } from '@app/user/user.service';
 import { AuthenticatedUser } from '@app/auth/auth.model';
+import { UiButtonComponent } from '../../ui';
 
 @Component({
   standalone: true,
   imports: [
     RouterModule,
+    UiButtonComponent,
   ],
   selector: 'layout-site-title',
   templateUrl: './layout-site-title.component.html',
@@ -53,6 +55,14 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
   /** 편집버튼을 활성화한다. */
   onMouseEnter(): void {
     this.isEditVisible = true;
+  }
+
+  /** 편집버튼을 비활성화한다. */
+  onMouseLeave(): void {
+    if (this.isEditable) return;
+
+    this.isEditVisible = false;
+    this.isEditable = false;
   }
 
   /** 사이트 타이틀을 편집한다. */

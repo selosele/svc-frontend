@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -11,7 +11,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './ui-button.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class UiButtonComponent implements OnInit {
+export class UiButtonComponent {
 
   /** 버튼 크기 */
   @Input() size?: 'small' | 'large';
@@ -42,10 +42,6 @@ export class UiButtonComponent implements OnInit {
 
   /** 버튼 클릭 이벤트 */
   @Output() click? = new EventEmitter<Event>();
-
-  ngOnInit() {
-    this.icon = `pi ${this.icon}`;
-  }
 
   /** 버튼을 클릭한다. */
   onClick(event: Event): void {

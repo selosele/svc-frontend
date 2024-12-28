@@ -1,16 +1,19 @@
-<div class="layout-site-title" (mouseenter)="onMouseEnter()">
+<div class="layout-site-title" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
   @if (isEditable) {
     <input type="text" class="layout-site-title__text" [value]="name" (keyup.enter)="onSubmit()" #editName>
   }
   @else {
-    <a [routerLink]="'/'" class="layout-site-title__text">
-      {{ name }}
-    </a>
+    <a [routerLink]="'/'" class="layout-site-title__text">{{ name }}</a>
   }
   
   @if (isEditVisible) {
-    <button type="button" class="layout-site-title-edit" [title]="isEditable ? '저장' : '편집'" (click)="onEdit($event)">
-      <i class="pi" [class.pi-check]="isEditable" [class.pi-pencil]="!isEditable"></i>
-    </button>
+    <ui-button
+      class="layout-site-title-edit"
+      [title]="isEditable ? '저장' : '편집'"
+      [icon]="isEditable ? 'pi-check' : 'pi-pencil'"
+      [severity]="isEditable ? 'success' : 'secondary'"
+      [text]="true"
+      (click)="onEdit($event)"
+    />
   }
 </div>
