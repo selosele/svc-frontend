@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthenticatedUser, UserSetupResponseDTO } from '@app/auth/auth.model';
+import { AuthenticatedUser } from '@app/auth/auth.model';
+import { UserSetupResponseDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
 import { StoreService, UiDialogService } from '@app/shared/services';

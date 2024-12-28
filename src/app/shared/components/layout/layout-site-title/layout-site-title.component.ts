@@ -2,6 +2,7 @@ import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnInit, V
 import { RouterModule } from '@angular/router';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
+import { UserService } from '@app/user/user.service';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 
 @Component({
@@ -17,10 +18,11 @@ import { AuthenticatedUser } from '@app/auth/auth.model';
 export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
 
   constructor(
-    private eRef: ElementRef, // ElementRef로 컴포넌트의 DOM 요소 참조
+    private eRef: ElementRef,
     private store: StoreService,
     private messageService: UiMessageService,
     private authService: AuthService,
+    private userService: UserService,
   ) {}
 
   /** 사이트 타이틀명 */
@@ -38,11 +40,11 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
   /** 인증된 사용자 정보 */
   user: AuthenticatedUser;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.user = this.authService.getAuthenticatedUser();
   }
 
-  ngAfterViewChecked(): void {
+  ngAfterViewChecked() {
     if (this.isEditable && this.editName) {
       this.editName.nativeElement.focus();
     }
@@ -69,7 +71,7 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
     const userId = this.user?.userId;
     const siteTitleName = this.editName.nativeElement.value;
     
-    this.authService.addUserSetup$({ userId, siteTitleName })
+    this.userService.addUserSetup$({ userId, siteTitleName })
     .subscribe((data) => {
       this.store.update('userSetup', data);
       this.messageService.toastSuccess('저장되었어요.');

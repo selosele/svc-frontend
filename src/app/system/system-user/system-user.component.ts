@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { AuthService } from '@app/auth/auth.service';
+import { UserService } from '@app/user/user.service';
 import { StoreService } from '@app/shared/services';
-import { UserResponseDTO } from '@app/auth/auth.model';
+import { UserResponseDTO } from '@app/user/user.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
 import { isBlank } from '@app/shared/utils';
 
@@ -25,7 +25,7 @@ export class SystemUserComponent implements OnInit {
 
   constructor(
     private store: StoreService,
-    private authService: AuthService,
+    private userService: UserService,
   ) {}
 
   /** table */
@@ -80,7 +80,7 @@ export class SystemUserComponent implements OnInit {
 
   /** 사용자 목록을 조회한다. */
   listUser(): void {
-    this.authService.listUser();
+    this.userService.listUser();
   }
 
   /** 사용자를 추가한다. */
@@ -91,7 +91,7 @@ export class SystemUserComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.authService.getUser$(event.data['userId'])
+    this.userService.getUser$(event.data['userId'])
     .subscribe((data) => {
       this.detail = data;
       this.splitter.show();

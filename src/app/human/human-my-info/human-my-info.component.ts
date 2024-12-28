@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticatedUser, UpdateUserPasswordRequestDTO } from '@app/auth/auth.model';
+import { AuthenticatedUser } from '@app/auth/auth.model';
+import { UpdateUserPasswordRequestDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
+import { UserService } from '@app/user/user.service';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { isEmpty, roles } from '@app/shared/utils';
 import { HumanService } from '../human.service';
@@ -48,6 +50,7 @@ export class HumanMyInfoComponent implements OnInit {
     private store: StoreService,
     private messageService: UiMessageService,
     private authService: AuthService,
+    private userSerivce: UserService,
     private humanService: HumanService,
   ) {}
 
@@ -173,7 +176,7 @@ export class HumanMyInfoComponent implements OnInit {
     const confirm = await this.messageService.confirm1('비밀번호를 변경하시겠어요?');
     if (!confirm) return;
 
-    this.authService.updatePassword$(value)
+    this.userSerivce.updatePassword$(value)
     .subscribe((data) => {
       const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
       alert.onClose.subscribe((data) => {

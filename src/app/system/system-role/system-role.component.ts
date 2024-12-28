@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { AuthService } from '@app/auth/auth.service';
-import { RoleService } from '@app/role/role.service';
 import { StoreService, UiDialogService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
+import { RoleService } from '@app/role/role.service';
+import { UserService } from '@app/user/user.service';
 import { SystemRoleDetailComponent } from './system-role-detail/system-role-detail.component';
 import { RoleResponseDTO } from '@app/role/role.model';
 
@@ -25,7 +25,7 @@ export class SystemRoleComponent implements OnInit {
   constructor(
     private store: StoreService,
     private dialogService: UiDialogService,
-    private authService: AuthService,
+    private userService: UserService,
     private roleService: RoleService,
     private menuService: MenuService,
   ) {}
@@ -64,7 +64,7 @@ export class SystemRoleComponent implements OnInit {
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
     combineLatest([
-      this.authService.listUserByRole$({ roleIdList: [event.data['roleId']] }),
+      this.userService.listUserByRole$({ roleIdList: [event.data['roleId']] }),
       this.menuService.listMenuByRole$({ roleIdList: [event.data['roleId']] })
     ]).subscribe(([userList, menuList]) => {
       const menuTree = this.menuService.createMenuTree(menuList);

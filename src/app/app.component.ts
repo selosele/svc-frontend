@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { StoreService } from './shared/services';
 import { AuthService } from './auth/auth.service';
+import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private store: StoreService,
     private authService: AuthService,
+    private userService: UserService,
     private roleService: RoleService,
     private codeService: CodeService,
     private menuService: MenuService,
@@ -75,7 +77,7 @@ export class AppComponent implements OnInit {
           // 사용자 설정 조회
           if (!this.store.select<boolean>('userSetupDataLoad').value) {
             const userId = this.authService.getAuthenticatedUser().userId;
-            this.authService.getUserConfig(userId);
+            this.userService.getUserConfig(userId);
           }
 
           // 알림창 닫기

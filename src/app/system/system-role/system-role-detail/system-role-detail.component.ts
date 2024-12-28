@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserResponseDTO } from '@app/auth/auth.model';
+import { UserResponseDTO } from '@app/user/user.model';
 import { MenuTree } from '@app/menu/menu.model';
 import { UiTableComponent, UiTreeTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';

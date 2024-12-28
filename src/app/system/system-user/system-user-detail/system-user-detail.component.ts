@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthenticatedUser, SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/auth/auth.model';
+import { AuthenticatedUser } from '@app/auth/auth.model';
+import { SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { RoleResponseDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -11,6 +12,7 @@ import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/uti
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { UserService } from '@app/user/user.service';
 
 @Component({
   standalone: true,
@@ -39,6 +41,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     private store: StoreService,
     private messageService: UiMessageService,
     private authService: AuthService,
+    private userService: UserService,
     private codeService: CodeService,
   ) {}
 
@@ -192,7 +195,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠금해제하시겠어요?' : '잠그시겠어요?'}`);
     if (!confirm) return;
 
-    this.authService.updateUser$({ userId: this.detail?.userId, userActiveYn })
+    this.userService.updateUser$({ userId: this.detail?.userId, userActiveYn })
     .subscribe((data) => {
       this.messageService.toastSuccess('정상적으로 처리되었어요.');
 
@@ -215,7 +218,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
     // 사용자 ID가 없으면 추가 API를 타고
     if (isEmpty(value.userId)) {
-      this.authService.addUser$(value)
+      this.userService.addUser$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
@@ -223,7 +226,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.authService.updateUser$(value)
+      this.userService.updateUser$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
@@ -236,7 +239,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('사용자를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
-    this.authService.removeUser$(this.detail.userId)
+    this.userService.removeUser$(this.detail.userId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
@@ -248,10 +251,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm1(`${this.detail.userAccount}(${this.detail.employee.employeeName}님) 계정으로 로그인하시겠어요?`);
     if (!confirm) return;
 
-    this.authService.superLogin({
-      userAccount: this.detail.userAccount,
-      isSuperLogin: 'Y',
-    });
+    this.authService.superLogin({ userAccount: this.detail.userAccount });
   }
 
   /** 닫기 버튼을 클릭한다. */
