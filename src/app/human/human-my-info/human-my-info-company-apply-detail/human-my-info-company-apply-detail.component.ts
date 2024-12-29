@@ -89,7 +89,7 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
     const confirm = await this.messageService.confirm1('재신청하시겠어요?');
     if (!confirm) return;
 
-    // 반려 후 재신청은 프로세스를 '신청'부터 다시 시작 
+    // 반려 후 재신청은 프로세스를 [신청]부터 다시 시작 
     value.applyStateCode = 'NEW';
 
     this.humanService.updateCompanyApply$(value)

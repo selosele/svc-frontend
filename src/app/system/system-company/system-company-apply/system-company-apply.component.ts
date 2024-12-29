@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CompanyApplyResponseDTO } from '@app/human/human.model';
 import { UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -63,6 +63,9 @@ export class SystemCompanyApplyComponent implements OnInit {
   /** 테이블 선택된 행 */
   selection: CompanyApplyResponseDTO;
 
+  /** 데이터 새로고침 이벤트 */
+  @Output() refresh = new EventEmitter<void>();
+
   ngOnInit() {
     if (!this.companyApplyListDataLoad) {
       this.listCompanyApply();
@@ -72,6 +75,7 @@ export class SystemCompanyApplyComponent implements OnInit {
   /** 회사등록신청현황 목록을 조회한다. */
   listCompanyApply(): void {
     this.humanService.listCompanyApply();
+    this.refresh.emit();
   }
 
   /** 테이블 새로고침 버튼을 클릭한다. */

@@ -81,6 +81,7 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
       rejectContent: [''],                                      // 반려 사유
       applyDt: [''],                                            // 신청일시
       applyContent: ['', [FormValidator.maxLength(100)]],       // 신청 내용
+      applicantId: [''],                                        // 신청자 ID
     });
   }
 

@@ -362,6 +362,9 @@ export class SaveCompanyApplyRequestDTO extends HttpRequestDTOBase {
   /** 신청 상태 코드 */
   applyStateCode?: string;
 
+  /** 신청자 ID */
+  applicantId?: string;
+
   /** 반려 사유 */
   rejectContent?: string;
 

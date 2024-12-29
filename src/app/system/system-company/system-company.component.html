@@ -44,5 +44,7 @@
 
 <div class="mt-5">
   <ui-content-title [text]="'회사등록신청관리'" />
-  <view-system-company-apply />
+  <view-system-company-apply
+    (refresh)="listCompany()"
+  />
 </div>
