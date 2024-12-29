@@ -1,36 +1,58 @@
 <ui-split-form
   [form]="detailForm"
-  [useSubmit]="isReject"
   [useRemove]="useRemove"
   (submit)="onSubmit($event)"
   (close)="onClose()"
 >
   <ui-hidden-field [control]="detailForm.get('companyApplyId')" />
 
-  <ui-content-title [text]="'회사등록신청정보'" />
+  <ui-content-title [text]="'회사등록신청 정보'" />
 
   <div class="grid mt-2">
-    <div class="col-4">
+    <div class="col-6">
       <ui-text-field
         [control]="detailForm.get('corporateName')"
         [label]="'법인명'"
-        [readonly]="!isReject"
       />
     </div>
 
-    <div class="col-4">
+    <div class="col-6">
       <ui-text-field
         [control]="detailForm.get('companyName')"
         [label]="'회사명'"
-        [readonly]="!isReject"
       />
     </div>
 
-    <div class="col-4">
+    <div class="col-6">
       <ui-text-field
         [control]="detailForm.get('registrationNo')"
         [label]="'사업자등록번호'"
-        [readonly]="!isReject"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-dropdown
+        [control]="detailForm.get('applyStateCode')"
+        [label]="'신청상태'"
+        [data]="applyStateCodes"
+        (change)="onApplyStateCodeChange($event)"
+      />
+    </div>
+
+    @if (isRejectable) {
+      <div class="col-12">
+        <ui-textarea
+          [control]="detailForm.get('rejectContent')"
+          [label]="'반려 사유'"
+        />
+      </div>
+    }
+
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('applicantName')"
+        [label]="'신청자명'"
+        [readonly]="true"
       />
     </div>
 
@@ -42,29 +64,11 @@
       />
     </div>
 
-    <div class="col-6">
-      <ui-text-field
-        [control]="detailForm.get('applyStateCodeName')"
-        [label]="'신청상태'"
-        [readonly]="true"
-      />
-    </div>
-
-    @if (isReject) {
-      <div class="col-12">
-        <ui-textarea
-          [control]="detailForm.get('rejectContent')"
-          [label]="'반려 사유'"
-          [readonly]="true"
-        />
-      </div>
-    }
-
     <div class="col-12">
       <ui-textarea
         [control]="detailForm.get('applyContent')"
         [label]="'신청 내용'"
-        [readonly]="!isReject"
+        [readonly]="true"
       />
     </div>
   </div>

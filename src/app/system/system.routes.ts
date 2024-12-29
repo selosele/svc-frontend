@@ -39,8 +39,10 @@ export const systemRoutes: Routes = [
   {
     path: 'sys/companies',
     canActivate: [authGuard, menuGuard],
+    resolve: { code: codeResolver },
     data: {
       roles: [roles.SYSTEM_ADMIN],
+      codeKeys: ['APPLY_STATE_00'],
     },
     loadComponent: () => import('./system-company/system-company.component').then(x => x.SystemCompanyComponent),
   },

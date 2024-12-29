@@ -131,7 +131,12 @@ export class HumanMyInfoComponent implements OnInit {
     { field: 'registrationNo',     header: '사업자등록번호' },
     { field: 'applyContent',       header: '내용' },
     { field: 'applyDt',            header: '신청일시' },
-    { field: 'applyStateCodeName', header: '신청상태' },
+    { field: 'applyStateCodeName', header: '신청상태',
+      valueGetter: (data: CompanyApplyResponseDTO) => {
+        const colorClass = this.getColorClass(data.applyStateCode);
+        return `<span class="px-3 py-1 ${colorClass}">${data.applyStateCodeName}</span>`;
+      }
+    },
   ];
 
   /** 회사등록신청 정보 */
@@ -322,6 +327,25 @@ export class HumanMyInfoComponent implements OnInit {
       ...employee,
       workHistory: employee?.workHistories[0],
     });
+  }
+
+  /** 신청상태 color 클래스명을 반환한다. */
+  private getColorClass(applyStateCode: string): string {
+
+    // 신청
+    if (applyStateCode === 'NEW') {
+      return 'bg-primary-reverse';
+    }
+    // 승인
+    else if (applyStateCode === 'APPROVAL') {
+      return 'bg-primary text-white';
+    }
+    // 반려
+    else if (applyStateCode === 'REJECT') {
+      return 'bg-red-500 text-white';
+    }
+
+    return '';
   }
 
 }

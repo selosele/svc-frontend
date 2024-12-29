@@ -132,7 +132,13 @@ export class HumanService {
 
   /** 회사등록신청을 추가한다. */
   addCompanyApply$(dto: SaveCompanyApplyRequestDTO) {
-    return this.http.post<number>('/hm/company-applies', dto);
+    return this.http.post<void>('/hm/company-applies', dto);
+  }
+
+  /** 회사등록신청을 수정한다. */
+  updateCompanyApply$(dto: SaveCompanyApplyRequestDTO) {
+    const { companyApplyId } = dto;
+    return this.http.put<void>(`/hm/company-applies/${companyApplyId}`, dto);
   }
 
   /** 근무이력 목록을 조회한다. */

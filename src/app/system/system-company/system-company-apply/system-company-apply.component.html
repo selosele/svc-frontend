@@ -1,15 +1,19 @@
-<!-- @if (!companyApplyListDataLoad) {
+<layout-page-description>
+  <ul>
+    <li>회사등록신청 건을 승인/반려할 수 있어요.</li>
+  </ul>
+</layout-page-description>
+
+@if (!companyApplyListDataLoad) {
   <ui-skeleton />
   <ui-skeleton />
   <ui-skeleton />
 }
 @else {
-  <ui-splitter #splitter2>
-    <ui-table #table2 first
-      [title]="'회사등록신청현황'"
+  <ui-splitter #splitter>
+    <ui-table #table first
       [useAdd]="false"
       [useRemove]="false"
-      [useRefresh]="false"
       [cols]="cols"
       [data]="companyApplyList"
       [dataKey]="'companyApplyId'"
@@ -19,7 +23,12 @@
       (unRowSelect)="onRowUnselect($event)"
     />
     <div second>
-      
+      <system-company-apply-detail
+        [detail]="detail"
+        (refresh)="listCompanyApply()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
     </div>
   </ui-splitter>
-} -->
+}
