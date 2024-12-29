@@ -61,9 +61,9 @@
           </td>
           <td *ngFor="let col of columns">
             @if (col.valueGetter) {
-              {{ col.valueGetter(rowData) }}
+              <div [innerHTML]="col.valueGetter(rowData)"></div>
             } @else {
-              {{ rowData[col.field] }}
+              <div>{{ rowData[col.field] }}</div>
             }
           </td>
         </tr>
