@@ -79,7 +79,16 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
   /** 사이트 타이틀을 저장한다. */
   onSubmit(): void {
     const userId = this.user?.userId;
-    const siteTitleName = this.editName.nativeElement.value;
+    const siteTitleName = this.editName.nativeElement.value as string;
+
+    if (!siteTitleName.trim()) {
+      return;
+    }
+
+    if (siteTitleName.trim().length > 20) {
+      this.messageService.toastInfo('20자 이내로 입력해주세요.');
+      return;
+    }
     
     this.userService.addUserSetup$({ userId, siteTitleName })
     .subscribe((data) => {
