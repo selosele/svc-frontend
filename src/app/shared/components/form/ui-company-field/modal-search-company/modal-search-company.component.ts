@@ -194,7 +194,7 @@ export class ModalSearchCompanyComponent implements OnInit {
   /** 회사등록신청을 추가한다. */
   addCompanyApply(): void {
     if (this.isSystemAdmin) {
-      this.messageService.toastInfo('시스템관리자는 등록신청할 필요 없이 시스템관리 > 기업정보관리 화면에서 바로 회사를 등록할 수 있어요.');
+      this.messageService.toastInfo('시스템관리자는 등록신청할 필요 없이 시스템관리 > 회사정보관리 화면에서 바로 회사를 등록할 수 있어요.');
       return;
     }
 
