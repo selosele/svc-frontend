@@ -27,16 +27,16 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
     private userService: UserService,
   ) {}
 
-  /** 사이트 타이틀명 */
+  /** 사이트타이틀명 */
   @Input() name: string;
 
-  /** 사이트 타이틀 편집필드 */
+  /** 사이트타이틀명 편집필드 */
   @ViewChild('editName') editName: ElementRef;
 
-  /** 사이트 타이틀 편집 상태 */
+  /** 사이트타이틀명 편집 상태 */
   isEditVisible = false;
 
-  /** 사이트 타이틀 편집 상태 */
+  /** 사이트타이틀명 편집 상태 */
   isEditable = false;
 
   /** 인증된 사용자 정보 */
@@ -65,7 +65,7 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
     this.isEditable = false;
   }
 
-  /** 사이트 타이틀을 편집한다. */
+  /** 사이트타이틀명을 편집한다. */
   onEdit(event: Event): void {
     event.stopPropagation();
 
@@ -76,7 +76,7 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  /** 사이트 타이틀을 저장한다. */
+  /** 사이트타이틀명을 저장한다. */
   onSubmit(): void {
     const userId = this.user?.userId;
     const siteTitleName = this.editName.nativeElement.value as string;
