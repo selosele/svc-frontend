@@ -74,6 +74,7 @@
           [control]="employeeForm.get('birthYmd')"
           [label]="'생년월일'"
           [dateFormat]="'yymmdd'"
+          [placeholder]="'YYYYMMDD'"
         />
       </div>
 
@@ -132,7 +133,8 @@
           [control]="employeeForm.get('workHistory.joinYmd')"
           [label]="'입사일자'"
           [dateFormat]="'yymmdd'"
-          [readonly]="true"
+          [placeholder]="'YYYYMMDD'"
+          [readonlyInput]="true"
         />
       </div>
     </div>
