@@ -36,6 +36,9 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
   /** 회사등록신청 상세 조회 폼 */
   detailForm: FormGroup;
 
+  /** 저장 버튼 사용 여부 */
+  useSubmit = false;
+
   /** 삭제 버튼 사용 여부 */
   useRemove = false;
 

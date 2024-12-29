@@ -165,6 +165,29 @@ export class GetCompanyRequestDTO extends HttpRequestDTOBase {
 
 }
 
+/** 회사 추가/수정 요청 DTO */
+export class SaveCompanyRequestDTO extends HttpRequestDTOBase {
+
+  /** 회사 ID */
+  companyId?: number;
+
+  /** 사업자등록번호 */
+  registrationNo?: string;
+
+  /** 법인명 */
+  corporateName?: string;
+
+  /** 회사명 */
+  companyName?: string;
+
+  /** 회사 소재지 */
+  companyAddr?: string;
+
+  /** 대표자명 */
+  ceoName?: string;
+
+}
+
 /** 회사 응답 DTO */
 export class CompanyResponseDTO {
 

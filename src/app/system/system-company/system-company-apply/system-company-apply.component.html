@@ -1,0 +1,25 @@
+<!-- @if (!companyApplyListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter2>
+    <ui-table #table2 first
+      [title]="'회사등록신청현황'"
+      [useAdd]="false"
+      [useRemove]="false"
+      [useRefresh]="false"
+      [cols]="cols"
+      [data]="companyApplyList"
+      [dataKey]="'companyApplyId'"
+      [selection]="selection"
+      (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
+    />
+    <div second>
+      
+    </div>
+  </ui-splitter>
+} -->

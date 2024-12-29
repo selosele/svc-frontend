@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO, SaveCompanyRequestDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -85,6 +85,27 @@ export class HumanService {
       this.store.update('companyList', data);
       this.store.update('companyListDataLoad', true);
     });
+  }
+
+  /** 회사를 조회한다. */
+  getCompany$(companyId: number) {
+    return this.http.get<CompanyResponseDTO>(`/hm/companies/${companyId}`);
+  }
+
+  /** 회사를 추가한다. */
+  addCompany$(dto: SaveCompanyRequestDTO) {
+    return this.http.post<void>('/hm/companies', dto);
+  }
+
+  /** 회사를 수정한다. */
+  updateCompany$(dto: SaveCompanyRequestDTO) {
+    const { companyId } = dto;
+    return this.http.put<void>(`/hm/companies/${companyId}`, dto);
+  }
+
+  /** 회사를 삭제한다. */
+  removeCompany$(companyId: number) {
+    return this.http.delete<void>(`/hm/companies/${companyId}`);
   }
 
   /** Open API로 회사 목록을 조회한다. */

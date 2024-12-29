@@ -1,0 +1,49 @@
+<layout-page-description>
+  <ul>
+    <li>회사정보를 조회/입력할 수 있어요.</li>
+    <li>회사등록신청 건을 승인/반려할 수 있어요.</li>
+  </ul>
+</layout-page-description>
+
+@if (!companyListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-table #table first
+      [useAdd]="false"
+      [useRemove]="false"
+      [cols]="cols"
+      [data]="companyList"
+      [dataKey]="'companyId'"
+      [selection]="selection"
+      (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'회사정보 추가'"
+        [outlined]="true"
+        (click)="addCompany()"
+      />
+    </ui-table>
+  
+    <div second>
+      <system-company-detail
+        [detail]="detail"
+        (refresh)="listCompany()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
+    </div>
+  </ui-splitter>
+}
+
+<div class="mt-5">
+  <ui-content-title [text]="'회사등록신청관리'" />
+  <view-system-company-apply />
+</div>

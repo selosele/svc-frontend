@@ -35,5 +35,14 @@ export const systemRoutes: Routes = [
     },
     loadComponent: () => import('./system-code/system-code.component').then(x => x.SystemCodeComponent),
   },
+  // 회사정보관리 페이지
+  {
+    path: 'sys/companies',
+    canActivate: [authGuard, menuGuard],
+    data: {
+      roles: [roles.SYSTEM_ADMIN],
+    },
+    loadComponent: () => import('./system-company/system-company.component').then(x => x.SystemCompanyComponent),
+  },
   
 ];
