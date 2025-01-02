@@ -55,9 +55,9 @@
             <p-treeTableToggler [rowNode]="rowNode" (click)="onTogglerClick($event)" *ngIf="i === 0" />
             
             @if (col.valueGetter) {
-              <div [innerHTML]="col.valueGetter(rowData)"></div>
+              <span [innerHTML]="col.valueGetter(rowData)"></span>
             } @else {
-              <div>{{ rowData[col.field] }}</div>
+              <span>{{ rowData[col.field] }}</span>
             }
           </td>
         </tr>
