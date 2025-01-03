@@ -157,13 +157,13 @@ export class HumanService {
   /** 근무이력을 추가한다. */
   addWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId } = dto;
-    return this.http.post<number>(`/hm/employees/${employeeId}/companies`, dto);
+    return this.http.post<void>(`/hm/employees/${employeeId}/companies`, dto);
   }
 
   /** 근무이력을 수정한다. */
   updateWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId, workHistoryId } = dto;
-    return this.http.put<number>(`/hm/employees/${employeeId}/companies/${workHistoryId}`, dto);
+    return this.http.put<void>(`/hm/employees/${employeeId}/companies/${workHistoryId}`, dto);
   }
 
   /** 근무이력을 삭제한다. */
@@ -190,7 +190,7 @@ export class HumanService {
   /** 휴가를 수정한다. */
   updateVacation$(dto: SaveVacationRequestDTO) {
     const { vacationId } = dto;
-    return this.http.put<number>(`/hm/vacations/${vacationId}`, dto);
+    return this.http.put<void>(`/hm/vacations/${vacationId}`, dto);
   }
 
   /** 휴가를 삭제한다. */
@@ -206,7 +206,7 @@ export class HumanService {
   /** 휴가 계산 설정을 추가한다. */
   addVacationCalc$(dto: AddVacationCalcRequestDTO) {
     const { workHistoryId } = dto;
-    return this.http.post<number>(`/hm/vacations/calcs/${workHistoryId}`, dto);
+    return this.http.post<void>(`/hm/vacations/calcs/${workHistoryId}`, dto);
   }
 
   /** 테이블 문구를 설정한다. */

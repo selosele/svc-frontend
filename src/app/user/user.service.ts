@@ -80,7 +80,7 @@ export class UserService {
   /** 사용자 비밀번호를 변경한다. */
   updatePassword$(dto: UpdateUserPasswordRequestDTO) {
     const { userId } = this.authService.getAuthenticatedUser();
-    return this.http.put<number>(`/co/users/${userId}/password`, dto);
+    return this.http.put<void>(`/co/users/${userId}/password`, dto);
   }
 
 }

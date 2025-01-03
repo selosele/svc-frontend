@@ -182,7 +182,7 @@ export class HumanMyInfoComponent implements OnInit {
     if (!confirm) return;
 
     this.userSerivce.updatePassword$(value)
-    .subscribe((data) => {
+    .subscribe(() => {
       const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
       alert.onClose.subscribe((data) => {
         this.authService.logout();

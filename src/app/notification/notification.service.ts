@@ -36,7 +36,7 @@ export class NotificationService {
   /** 알림을 확인처리한다. */
   updateNotificationReadDt$(dto: SaveNotificationRequestDTO) {
     const { notificationId } = dto;
-    return this.http.put<number>(`/co/notifications/${notificationId}`, dto);
+    return this.http.put<void>(`/co/notifications/${notificationId}`, dto);
   }
 
   /** 알림을 삭제한다. */

@@ -134,7 +134,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     // 있으면 수정 API를 탄다.
     else {
       this.humanService.updateVacation$(value)
-      .subscribe((data) => {
+      .subscribe(() => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit(value.workHistoryId);
       });

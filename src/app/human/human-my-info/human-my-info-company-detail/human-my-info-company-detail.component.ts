@@ -119,7 +119,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     // 근무이력 ID가 없으면 추가 API를 타고
     if (isEmpty(value.workHistoryId)) {
       this.humanService.addWorkHistory$(value)
-      .subscribe((data) => {
+      .subscribe(() => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
@@ -127,7 +127,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
     // 있으면 수정 API를 탄다.
     else {
       this.humanService.updateWorkHistory$(value)
-      .subscribe((data) => {
+      .subscribe(() => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
