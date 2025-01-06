@@ -249,7 +249,7 @@ export class HumanService {
 
   /** 잔여 휴가를 표출한다. */
   showVacationCount(workHistory: WorkHistoryResponseDTO): string {
-    const { annualTypeCode, joinYmd, workDiffM, vacationRemainCount } = workHistory;
+    const { annualTypeCode, joinYmd, quitYmd, workDiffM, vacationRemainCount } = workHistory;
     switch (annualTypeCode) {
 
       // 입사일자 기준
@@ -258,7 +258,7 @@ export class HumanService {
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
-        return `잔여 연차: <strong class="text-primary">${vacationRemainCount}</strong>/${this.getTotalAnnualCount(joinYmd)}개`;
+        return `잔여 연차: <strong class="text-primary">${vacationRemainCount}</strong>/${this.getTotalAnnualCount(joinYmd, quitYmd)}개`;
       
       default:
         return null;
@@ -266,9 +266,14 @@ export class HumanService {
   }
 
   /** total 연차개수를 반환한다. */
-  private getTotalAnnualCount(joinYmd: string): number {
+  private getTotalAnnualCount(joinYmd: string, quitYmd: string): number {
     const nextFiscalYmd = dateUtil(dateUtil().add(1, 'year').startOf('year')).format('YYYYMMDD'); // 내년 회계연도 날짜
-    const joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속연수 계산
+    let joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속연수 계산
+
+    // 퇴사한 회사는 퇴사일자를 기준으로 계산
+    if (isNotBlank(quitYmd)) {
+      joinYmdDiff = dateUtil(quitYmd).diff(joinYmd, 'year');
+    }
 
     // 입사일자가 1년 미만이면 내년 회계연도에 비례한 남은 개월수를 반환한다.
     if (dateUtil(nextFiscalYmd).diff(joinYmd, 'year') < 1) {
