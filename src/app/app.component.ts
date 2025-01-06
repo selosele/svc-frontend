@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        if (this.authService.isLogined()) {
+        if (this.isLogined) {
 
           // 코드 목록 조회
           if (!this.store.select<boolean>('codeListDataLoad').value) {
