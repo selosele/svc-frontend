@@ -1,0 +1,24 @@
+<layout-page-description>
+  <ul>
+    <li>메뉴를 조회/입력할 수 있어요.</li>
+  </ul>
+</layout-page-description>
+
+@if (!menuListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-tree first
+      [data]="data"
+      (nodeSelect)="onNodeSelect($event)"
+      (nodeUnselect)="onNodeUnselect($event)"
+    />
+  
+    <div second>
+      <system-menu-detail />
+    </div>
+  </ui-splitter>
+}
