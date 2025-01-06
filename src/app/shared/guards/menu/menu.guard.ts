@@ -26,8 +26,11 @@ export const menuGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
 
         const currentMenu = menuList.find(menu => menu.menuId === Number(route.queryParams.menuId));
 
-        // 메뉴가 없거나 미사용 or 삭제된 메뉴일경우 에러페이지로 이동한다.
-        if (!currentMenu || currentMenu.useYn === 'N' || currentMenu.deleteYn === 'Y') {
+        // 미사용 or 삭제된 메뉴일경우 에러페이지로 이동한다.
+        // 2025.01.06. 로그아웃 후 다른 유저로 재로그인하는 즉시 menuGuard를 타면서
+        // !currentMenu 조건을 만족하게 되어 에러 페이지로 이동되는 현상 수정을 위한 주석 처리
+//      if (!currentMenu || currentMenu.useYn === 'N' || currentMenu.deleteYn === 'Y') {
+        if (currentMenu?.useYn === 'N' || currentMenu?.deleteYn === 'Y') {
           router.navigateByUrl('/error');
           return;
         }
