@@ -26,7 +26,7 @@ export class UiAccordionComponent {
   @Output() activeIndexChange = new EventEmitter<UiAccordionChangeEvent>();
 
   /** 아코디언 탭을 클릭하여 탭 index를 변경한다. */
-  onActiveIndexChange(index: number | number[]) {
+  protected onActiveIndexChange(index: number | number[]) {
     this.activeIndexChange.emit({ index, activeKey: this.tabs[index as number]?.key } as UiAccordionChangeEvent);
   }
 

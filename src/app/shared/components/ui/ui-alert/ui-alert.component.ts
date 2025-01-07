@@ -41,7 +41,7 @@ export class UiAlertComponent implements OnInit {
   }
 
   /** alert을 닫는다. */
-  closeAlert(event: Event): void {
+  protected closeAlert(event: Event): void {
     this.visible = false;
     this.dialogRef.close();
   }

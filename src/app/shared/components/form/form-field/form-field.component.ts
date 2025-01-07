@@ -57,29 +57,8 @@ export class FormFieldComponent implements OnInit {
     this.setErrorMessage();
   }
 
-  /** 재귀 함수로 FormControl을 찾아서 반환한다. */
-  findControl(control: AbstractControl) {
-    const parent = control.parent;
-    if (!parent) return null;
-
-    const formGroup = parent.controls;
-
-    for (const name in formGroup) {
-      if (formGroup[name] === control) {
-        return { control: formGroup[name], name };
-      }
-      else if (formGroup[name] instanceof FormGroup) {
-        const nestedControl = this.findControl(control);
-        if (nestedControl) {
-          return { control: nestedControl.control, name: `${name}.${nestedControl.name}` };
-        }
-      }
-    }
-    return null;
-  }
-
   /** 오류 메시지를 설정한다. */
-  setErrorMessage(): void {
+  protected setErrorMessage(): void {
     const { errors } = this.control;
     
     if (isEmpty(errors)) {
@@ -101,6 +80,27 @@ export class FormFieldComponent implements OnInit {
         default :             this.errorMessage = ''; break;
       }
     });
+  }
+
+  /** 재귀 함수로 FormControl을 찾아서 반환한다. */
+  private findControl(control: AbstractControl) {
+    const parent = control.parent;
+    if (!parent) return null;
+
+    const formGroup = parent.controls;
+
+    for (const name in formGroup) {
+      if (formGroup[name] === control) {
+        return { control: formGroup[name], name };
+      }
+      else if (formGroup[name] instanceof FormGroup) {
+        const nestedControl = this.findControl(control);
+        if (nestedControl) {
+          return { control: nestedControl.control, name: `${name}.${nestedControl.name}` };
+        }
+      }
+    }
+    return null;
   }
 
 }

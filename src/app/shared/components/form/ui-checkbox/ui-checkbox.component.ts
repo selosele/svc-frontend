@@ -29,13 +29,13 @@ export class UiCheckboxComponent extends FormFieldComponent {
   }
 
   /** 체크박스 change 이벤트 */
-  onChange(event: CheckboxChangeEvent): void {
+  protected onChange(event: CheckboxChangeEvent): void {
     this.setErrorMessage();
     this.change.emit(event);
   }
 
   /** 체크박스 blur 이벤트 */
-  onBlur(event: Event): void {
+  protected onBlur(event: Event): void {
     this.setErrorMessage();
     this.blur.emit(event);
   }

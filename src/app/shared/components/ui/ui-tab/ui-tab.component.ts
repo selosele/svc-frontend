@@ -29,12 +29,12 @@ export class UiTabComponent {
   @Output() activeIndexChange = new EventEmitter<UiTabChangeEvent>();
 
   /** 탭을 클릭한다. */
-  onChange(event: TabViewChangeEvent): void {
+  protected onChange(event: TabViewChangeEvent): void {
     this.change.emit({ ...event, activeKey: this.tabs[event.index]?.key } as UiTabChangeEvent);
   }
 
   /** 탭을 클릭하여 탭 index를 변경한다. */
-  onActiveIndexChange(index: number): void {
+  protected onActiveIndexChange(index: number): void {
     this.activeIndexChange.emit({ index, activeKey: this.tabs[index]?.key } as UiTabChangeEvent);
   }
 

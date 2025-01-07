@@ -36,13 +36,13 @@ export class UiDropdownComponent extends FormFieldComponent {
   }
 
   /** 드롭다운 change 이벤트 */
-  onChange(event: DropdownChangeEvent): void {
+  protected onChange(event: DropdownChangeEvent): void {
     this.setErrorMessage();
     this.change.emit(event);
   }
 
   /** 드롭다운 blur 이벤트 */
-  onBlur(event: Event): void {
+  protected onBlur(event: Event): void {
     this.setErrorMessage();
     this.blur.emit(event);
   }

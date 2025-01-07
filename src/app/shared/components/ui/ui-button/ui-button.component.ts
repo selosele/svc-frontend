@@ -44,7 +44,7 @@ export class UiButtonComponent {
   @Output() click? = new EventEmitter<Event>();
 
   /** 버튼을 클릭한다. */
-  onClick(event: Event): void {
+  protected onClick(event: Event): void {
     event.stopPropagation();
     this.click.emit(event);
   }

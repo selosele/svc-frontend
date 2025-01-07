@@ -34,13 +34,13 @@ export class UiTextFieldComponent extends FormFieldComponent {
   }
 
   /** input keydown 이벤트 */
-  onKeydown(event: KeyboardEvent) {
+  protected onKeydown(event: KeyboardEvent): void {
     this.setErrorMessage();
     this.keydown.emit(event);
   }
 
   /** input blur 이벤트 */
-  onBlur(event: FocusEvent) {
+  protected onBlur(event: FocusEvent): void {
     this.setErrorMessage();
     this.blur.emit(event);
   }

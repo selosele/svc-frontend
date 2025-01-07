@@ -75,31 +75,31 @@ export class UiDateFieldComponent extends FormFieldComponent {
   }
 
   /** 캘린더 input change 이벤트 */
-  onInput(event: any): void {
+  protected onInput(event: any): void {
     this.setErrorMessage();
     this.input.emit(event);
   }
 
   /** 캘린더 input change 이벤트 */
-  onBlur(event: Event): void {
+  protected onBlur(event: Event): void {
     this.setErrorMessage();
     this.blur.emit(event);
   }
 
   /** 캘린더 input select 이벤트 */
-  onSelect(event: Date): void {
+  protected onSelect(event: Date): void {
     this.setErrorMessage();
     this.select.emit(event);
   }
 
   /** 캘린더 input clear 이벤트 */
-  onClear(event: any): void {
+  protected onClear(event: any): void {
     this.setErrorMessage();
     this.clear.emit(event);
   }
 
   /** 캘린더 input clear 버튼 클릭 이벤트 */
-  onClearClick(event: any): void {
+  protected onClearClick(event: any): void {
     this.setErrorMessage();
     this.clearClick.emit(event);
   }

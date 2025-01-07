@@ -44,7 +44,7 @@ export class UiSplitterComponent {
   }
 
   /** 닫기 버튼을 클릭해서 splitter를 비활성화한다. */
-  onClose(event: Event): void {
+  protected onClose(event: Event): void {
     this.hide();
   }
 
