@@ -7,7 +7,7 @@ import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenField
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isNotEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -67,7 +67,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       vacationTypeCode: ['', [FormValidator.required]],       // 휴가 구분 코드
       vacationStartYmd: ['', [FormValidator.required]],       // 휴가 시작일자
       vacationEndYmd: ['', [FormValidator.required]],         // 휴가 종료일자
-      vacationUseCount: [''],                                 // 휴가 사용일수
+      vacationUseCount: ['', [FormValidator.numeric]],        // 휴가 사용일수
       vacationContent: ['', FormValidator.maxLength(100)],    // 휴가 내용
     });
 
@@ -122,6 +122,11 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     const confirm = await this.messageService.confirm1(`휴가를 ${crudName}하시겠어요?`);
     if (!confirm) return;
+
+    // 휴가사용일수를 직접 입력하면 string으로 전송되므로 숫자로 변환
+    if (isNotEmpty(value.vacationUseCount)) {
+      value.vacationUseCount = Number(value.vacationUseCount);
+    }
 
     // 휴가 ID가 없으면 추가 API를 타고
     if (isEmpty(value.vacationId)) {
