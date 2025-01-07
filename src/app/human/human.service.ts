@@ -227,23 +227,29 @@ export class HumanService {
 
   /** 테이블 텍스트를 설정한다. */
   setVacationTableText(workHistory: WorkHistoryResponseDTO): string {
-    const { annualTypeCode, joinYmd, workDiffM } = workHistory;
+    let text = '';
+    const { annualTypeCode, joinYmd, quitYmd, workDiffM } = workHistory;
     switch (annualTypeCode) {
 
       // 입사일자 기준
       case 'JOIN_YMD':
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-        return `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM-1}</strong>개의 월차가 발생했어요.`;
+        text += `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM-1}</strong>개의 월차가 발생했어요.`;
+        if (isNotBlank(quitYmd)) {
+          text += `<br>퇴사했을 경우 퇴사일자(${quitYmd})를 기준으로 마지막 월차 개수가 계산돼요.`;
+        }
+        return text;
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
-        return `
+        text += `
           근로기준법 제60조 4항에 의거, 3년 이상 근속했을 경우 2년마다 1일씩 가산된 유급휴가가 부여돼요.<br>
           이 경우 가산휴가를 포함한 총 휴가 일수는 25일을 한도로 하고 있어요.
         `;
+        return text;
       
       default:
-        return null;
+        return text;
     }
   }
 
@@ -270,7 +276,7 @@ export class HumanService {
     const nextFiscalYmd = dateUtil(dateUtil().add(1, 'year').startOf('year')).format('YYYYMMDD'); // 내년 회계연도 날짜
     let joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속연수 계산
 
-    // 퇴사한 회사는 퇴사일자를 기준으로 계산
+    // 퇴사한 회사는 퇴사일자를 기준으로 근속연수를 계산
     if (isNotBlank(quitYmd)) {
       joinYmdDiff = dateUtil(quitYmd).diff(joinYmd, 'year');
     }

@@ -21,18 +21,26 @@
         <div class="grid">
           <div class="col-fixed">
             <div class="input-box">
-              <ui-text-field
-                [control]="caculateVacationForm.get('joinYmd')"
-                [label]="'입사일자'"
-                [readonly]="true"
-              />
-
               <ui-dropdown
                 [control]="caculateVacationForm.get('annualTypeCode')"
                 [label]="'연차발생기준'"
                 [data]="annualTypeCodes"
                 (change)="onAnnualTypeCodeChange($event)"
               />
+              
+              <ui-text-field
+                [control]="caculateVacationForm.get('joinYmd')"
+                [label]="'입사일자'"
+                [readonly]="true"
+              />
+              
+              @if (caculateVacationForm.get('quitYmd').value) {
+                <ui-text-field
+                  [control]="caculateVacationForm.get('quitYmd')"
+                  [label]="'퇴사일자'"
+                  [readonly]="true"
+                />
+              }
             </div>
           </div>
         </div>

@@ -127,6 +127,7 @@ export class HumanVacationComponent implements OnInit {
       workHistoryId: [this.user?.workHistoryId],          // 근무이력 ID
       employeeId: [this.user?.employeeId],                // 직원 ID
       joinYmd: [''],                                      // 입사일자
+      quitYmd: [''],                                      // 퇴사일자
       annualTypeCode: [this.annualTypeCodes],             // 연차발생기준 코드
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
@@ -218,6 +219,7 @@ export class HumanVacationComponent implements OnInit {
       this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
       this.store.update('workHistoryListDataLoad', true);
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
+      this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);
       this.humanService.setVacationTableContent(this.activeIndex);
     });
   }
@@ -269,7 +271,9 @@ export class HumanVacationComponent implements OnInit {
   /** 입사일자 값을 설정한다. */
   private setJoinYmd(): void {
     const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
+    const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.user?.quitYmd;
     this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
+    this.caculateVacationForm.get('quitYmd').patchValue(quitYmd);
   }
 
 }
