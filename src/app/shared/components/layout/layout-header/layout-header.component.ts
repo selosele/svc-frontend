@@ -43,7 +43,7 @@ export class LayoutHeaderComponent implements OnInit {
   /** 마지막 scroll top */
   lastScrollTop = 0;
 
-  /** 스크롤다운 여부 */
+  /** 스크롤 여부 */
   isScrollDown = true;
 
   /** 사용자 설정 */
@@ -69,7 +69,7 @@ export class LayoutHeaderComponent implements OnInit {
     });
   }
 
-  /** 스크롤다운 시, header를 위로 이동한다. */
+  /** 스크롤 시, header를 위로 이동한다. */
   @HostListener('document:scroll', ['$event'])
   onScroll(event: Event): void {
     if (window.scrollY < 0)

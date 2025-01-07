@@ -3,7 +3,7 @@ import { TreeNode } from 'primeng/api';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CodeService } from '../../code/code.service';
-import { CodeTree } from '../../code/code.model';
+import { CodeResponseDTO, CodeTree } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
 import { StoreService } from '@app/shared/services';
 
@@ -45,7 +45,7 @@ export class SystemCodeComponent implements OnInit {
   }
 
   /** 코드 정보 */
-  detail: CodeTree = null;
+  detail: CodeResponseDTO = null;
 
   /** 테이블 선택된 행 */
   selection: TreeNode;

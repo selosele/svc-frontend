@@ -51,8 +51,8 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 사용자 상세 조회 폼 */
   detailForm: FormGroup;
 
-  /** 사용자 활성화 여부 데이터 목록 */
-  userActiveYns = this.codeService.createYnCodeData();
+  /** Y/N 데이터 목록 */
+  ynCode = this.codeService.createYnCodeData();
 
   /** 사용자 활성화 여부 기본 값 */
   defaultUserActiveYn = 'Y';
