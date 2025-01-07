@@ -18,7 +18,12 @@
     />
   
     <div second>
-      <system-menu-detail />
+      <system-menu-detail
+        [detail]="detail"
+        (refresh)="listMenu()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
     </div>
   </ui-splitter>
 }

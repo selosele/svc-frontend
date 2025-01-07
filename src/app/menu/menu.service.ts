@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, TreeNode } from 'primeng/api';
 import { HttpService, StoreService } from '@app/shared/services';
-import { GetMenuRequestDTO, MenuResponseDTO, MenuTree } from '@app/menu/menu.model';
+import { GetMenuRequestDTO, MenuResponseDTO, MenuTree, SaveMenuRequestDTO } from '@app/menu/menu.model';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
@@ -65,6 +65,27 @@ export class MenuService {
   listMenuByRole$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);
     return this.http.get<MenuResponseDTO[]>('/co/menus', { params });
+  }
+
+  /** 메뉴를 조회한다. */
+  getMenu$(menuId: number) {
+    return this.http.get<MenuResponseDTO>(`/co/menus/${menuId}`);
+  }
+
+  /** 메뉴를 추가한다. */
+  addMenu$(dto: SaveMenuRequestDTO) {
+    return this.http.post<MenuResponseDTO>('/co/menus', dto);
+  }
+
+  /** 메뉴를 수정한다. */
+  updateMenu$(dto: SaveMenuRequestDTO) {
+    const { menuId } = dto;
+    return this.http.put<MenuResponseDTO>(`/co/menus/${menuId}`, dto);
+  }
+
+  /** 메뉴를 삭제한다. */
+  removeMenu$(menuId: number) {
+    return this.http.delete<void>(`/co/menus/${menuId}`);
   }
 
   /** 메뉴 관련 데이터를 설정한다. */
@@ -147,6 +168,23 @@ export class MenuService {
       if (menu.upMenuId === upMenuId) {
         const children = this.createMenuTree(data, menu.menuId);
         tree.push({ data: menu, children, expanded: false });
+      }
+    }
+    return tree;
+  }
+
+  /** 시스템관리 > 메뉴관리 > 메뉴트리를 생성한다. */
+  createSysMenuTree(data: MenuResponseDTO[], upMenuId = null): TreeNode[] {
+    const tree: TreeNode[] = [];
+
+    for (const menu of data) {
+      if (menu.upMenuId === upMenuId) {
+        const children = this.createSysMenuTree(data, menu.menuId);
+        tree.push({
+          key: `${menu.menuId}`,
+          label: menu.menuName,
+          children,
+        });
       }
     }
     return tree;

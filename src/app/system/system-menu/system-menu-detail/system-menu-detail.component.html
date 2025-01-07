@@ -1,1 +1,73 @@
-<p>system-menu-detail works!</p>
+<ui-split-form
+  [form]="detailForm"
+  [useRemove]="useRemove"
+  (submit)="onSubmit($event)"
+  (remove)="onRemove($event)"
+  (close)="onClose()"
+>
+  <ui-hidden-field [control]="detailForm.get('originalMenuId')" />
+
+  <ui-content-title [text]="'메뉴 정보'" />
+
+  <div class="grid mt-2">
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('menuId')"
+        [label]="'메뉴 ID'"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('upMenuId')"
+        [label]="'상위 메뉴 ID'"
+      />
+    </div>
+
+    <div class="col-12">
+      <ui-text-field
+        [control]="detailForm.get('menuName')"
+        [label]="'메뉴명'"
+      />
+    </div>
+
+    <div class="col-12">
+      <ui-text-field
+        [control]="detailForm.get('menuUrl')"
+        [label]="'메뉴 URL'"
+      />
+    </div>
+
+    <div class="col-3">
+      <ui-text-field
+        [control]="detailForm.get('menuOrder')"
+        [label]="'메뉴 순서'"
+        [placeholder]="'예) 1'"
+      />
+    </div>
+
+    <div class="col-3">
+      <ui-text-field
+        [control]="detailForm.get('menuDepth')"
+        [label]="'메뉴 뎁스'"
+        [placeholder]="'예) 1'"
+      />
+    </div>
+
+    <div class="col-3">
+      <ui-dropdown
+        [control]="detailForm.get('menuShowYn')"
+        [label]="'표출 여부'"
+        [data]="ynCode"
+      />
+    </div>
+
+    <div class="col-3">
+      <ui-dropdown
+        [control]="detailForm.get('useYn')"
+        [label]="'사용 여부'"
+        [data]="ynCode"
+      />
+    </div>
+  </div>
+</ui-split-form>
