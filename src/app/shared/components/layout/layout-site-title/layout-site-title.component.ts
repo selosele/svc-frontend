@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, Input, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
@@ -20,6 +20,7 @@ import { UiButtonComponent } from '../../ui';
 export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
 
   constructor(
+    private zone: NgZone,
     private eRef: ElementRef,
     private store: StoreService,
     private messageService: UiMessageService,
@@ -47,9 +48,13 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if (this.isEditable && this.editName) {
-      this.editName.nativeElement.focus();
-    }
+    this.zone.runOutsideAngular(() => {
+      if (this.isEditable && this.editName) {
+        setTimeout(() => {
+          this.editName.nativeElement.focus();
+        });
+      }
+    });
   }
 
   /** 편집버튼을 활성화한다. */
