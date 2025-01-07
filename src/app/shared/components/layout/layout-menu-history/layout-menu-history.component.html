@@ -1,4 +1,4 @@
-<div class="layout-menu-history" *ngIf="menuHistoryList.length > 0">
+<div class="layout-menu-history" [class.scroll]="isScroll" *ngIf="menuHistoryList.length > 0" #lmh>
   <div class="grid">
     <div class="col col-2">
       <h2>최근 방문한 페이지</h2>
@@ -21,7 +21,7 @@
           </li>
         </ng-container>
       </ul>
-      <p-contextMenu #cm [model]="contextMenus" />
     </div>
   </div>
 </div>
+<p-contextMenu #cm [model]="contextMenus" />
