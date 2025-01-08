@@ -46,7 +46,7 @@ export class FindMyInfoComponent implements OnInit {
   /** 인증코드 timer */
   timer = null;
 
-  /** 사용자 본인인증 내역 */
+  /** 사용자 본인인증 이력 */
   get userCertHistory() {
     return this.store.select<UserCertHistoryResponseDTO>('userCertHistory').value;
   }

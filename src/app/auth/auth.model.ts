@@ -36,10 +36,10 @@ export class FindUserInfoRequestDTO extends HttpRequestDTOBase {
     
 }
 
-/** 사용자 본인인증 내역 조회 요청 DTO */
+/** 사용자 본인인증 이력 조회 요청 DTO */
 export class GetUserCertHistoryRequestDTO extends HttpRequestDTOBase {
 
-  /** 본인인증 내역 ID */
+  /** 본인인증 이력 ID */
   certHistoryId?: number;
 
   /** 사용자 계정 */
@@ -62,7 +62,7 @@ export class GetUserCertHistoryRequestDTO extends HttpRequestDTOBase {
     
 }
 
-/** 사용자 본인인증 내역 응답 DTO */
+/** 사용자 본인인증 이력 응답 DTO */
 export class UserCertHistoryResponseDTO {
 
   /** 직원명 */
