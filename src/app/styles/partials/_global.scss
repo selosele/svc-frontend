@@ -45,7 +45,7 @@ a {
 ul,
 ol {
   margin: 0;
-  padding: 0;
+  // padding: 0; // 2025.01.08. p-tree 컴포넌트의 ul 태그에도 적용되어 계층구조가 표현되지 않는 이슈로 인해 주석처리
   list-style: none;
 }
 

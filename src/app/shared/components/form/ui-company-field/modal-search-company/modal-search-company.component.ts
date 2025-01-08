@@ -173,7 +173,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     if (!event.value) return;
     
     const confirm = await this.messageService.confirm1(`
-      <ul>
+      <ul class="search-company__list">
         <li>사업자등록번호: <strong>${event.value.registrationNo}</strong></li>
         <li>회사명/법인명: <strong>${event.value.companyName}</strong></li>
         <li>회사 소재지: <strong>${event.value.enpBsadr}</strong></li>
