@@ -148,6 +148,11 @@ export class MenuService {
     this.store.update('currentUpMenuId', currentUpMenuId);
   }
 
+  /** 현재 페이지 타이틀 데이터를 반환한다. */
+  getCurrentPageTitle$() {
+    return this.currentPageTitle;
+  }
+
   /** 현재 페이지 타이틀 데이터를 설정한다. */
   setCurrentPageTitle(currentPageTitle: string): void {
     this.store.update('currentPageTitle', currentPageTitle);

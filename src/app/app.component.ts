@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   /** 페이지 타이틀 */
-  currentPageTitle$ = this.store.select<string>('currentPageTitle').asObservable();
+  currentPageTitle$ = this.menuService.getCurrentPageTitle$();
 
   /** 로그인 여부 */
   get isLogined() {
@@ -68,15 +68,10 @@ export class AppComponent implements OnInit {
           if (!this.store.select<boolean>('roleListDataLoad').value) {
             this.roleService.listRole();
           }
-          
-          // 메뉴 목록 조회
-          if (!this.store.select<boolean>('menuListDataLoad').value) {
-            this.menuService.listMenu();
-          }
 
           // 사용자 설정 조회
           if (!this.store.select<boolean>('userSetupDataLoad').value) {
-            const userId = this.authService.getAuthenticatedUser().userId;
+            const { userId } = this.authService.getAuthenticatedUser();
             this.userService.getUserConfig(userId);
           }
 

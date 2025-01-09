@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { UiButtonComponent } from '@app/shared/components/ui';
-import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -19,14 +17,7 @@ export class ErrorComponent {
   constructor(
     private router: Router,
     private location: Location,
-    private store: StoreService,
-  ) {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.store.update('currentPageTitle', null);
-      });
-  }
+  ) {}
 
   /** 메인 페이지로 이동한다. */
   goMainPage(): void {
