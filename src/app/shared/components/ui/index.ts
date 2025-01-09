@@ -14,4 +14,5 @@ export * from './ui-table/ui-table.component';
 export * from './ui-table-buttons/ui-table-buttons.component';
 export * from './ui-text/ui-text.component';
 export * from './ui-tree/ui-tree.component';
+export * from './ui-tree-buttons/ui-tree-buttons.component';
 export * from './ui-tree-table/ui-tree-table.component';

@@ -1,0 +1,19 @@
+.ui-tree__buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  &-right {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  &:not(:has(*)) {
+    display: none;
+  }
+}

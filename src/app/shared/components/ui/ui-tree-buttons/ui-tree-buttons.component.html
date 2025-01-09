@@ -1,0 +1,14 @@
+<div class="ui-tree__buttons">
+  <div class="ui-tree__buttons-right">
+    <ng-content></ng-content>
+
+    <ui-button *ngIf="useRefresh"
+      [size]="'small'"
+      [severity]="'success'"
+      [icon]="'pi-refresh'"
+      [label]="'새로고침'"
+      [outlined]="true"
+      (click)="onRefresh($event)"
+    />
+  </div>
+</div>
