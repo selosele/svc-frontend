@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TreeModule, TreeNodeCollapseEvent, TreeNodeExpandEvent, TreeNodeSelectEvent, TreeNodeUnSelectEvent } from 'primeng/tree';
 import { TreeNode } from 'primeng/api';
+import { UiTreeButtonsComponent } from '../ui-tree-buttons/ui-tree-buttons.component';
 
 @Component({
   standalone: true,
   imports: [
     TreeModule,
+    UiTreeButtonsComponent,
   ],
   selector: 'ui-tree',
   templateUrl: './ui-tree.component.html',
@@ -22,6 +24,12 @@ export class UiTreeComponent {
   /** tree 선택된 노드 */
   @Input() selectedNode?: TreeNode;
 
+  /** tree 새로고침 버튼 사용여부 */
+  @Input() useRefresh = true;
+
+  /** tree 새로고침 이벤트 */
+  @Output() refresh = new EventEmitter<Event>();
+
   /** tree 노드 선택 이벤트 */
   @Output() nodeSelect = new EventEmitter<TreeNodeSelectEvent>();
 
@@ -33,6 +41,11 @@ export class UiTreeComponent {
 
   /** tree 노드 확장해제 이벤트 */
   @Output() nodeCollapse = new EventEmitter<TreeNodeCollapseEvent>();
+
+  /** tree 새로고침 버튼을 클릭한다. */
+  protected onRefresh(event: Event): void {
+    this.refresh.emit(event);
+  }
 
   /** tree 노드를 선택한다. */
   protected onNodeSelect(event: TreeNodeSelectEvent): void {

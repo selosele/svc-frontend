@@ -1,4 +1,11 @@
 <div class="ui-tree">
+  <ui-tree-buttons
+    [useRefresh]="useRefresh"
+    (refresh)="onRefresh($event)"
+  >
+    <ng-content select="[buttons]"></ng-content>
+  </ui-tree-buttons>
+
   <p-tree
     [value]="data"
     [selectionMode]="selectionMode"
