@@ -120,7 +120,7 @@ export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
   /** 마우스 오른쪽을 클릭한다. */
   onContextMenu(event: any, menuId: number): void {
     this.cmMenuId = menuId;
-    this.cm.target = event.currentTarget;
+    //this.cm.target = event.currentTarget;
     this.cm.show(event);
   }
   
