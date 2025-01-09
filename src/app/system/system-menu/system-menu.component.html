@@ -13,9 +13,18 @@
   <ui-splitter #splitter>
     <ui-tree first
       [data]="data"
+      (refresh)="listMenu()"
       (nodeSelect)="onNodeSelect($event)"
       (nodeUnselect)="onNodeUnselect($event)"
-    />
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'메뉴 추가'"
+        [outlined]="true"
+        (click)="addMenu()"
+      />
+    </ui-tree>
   
     <div second>
       <system-menu-detail

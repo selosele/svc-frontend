@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNodeSelectEvent, TreeNodeUnSelectEvent } from 'primeng/tree';
 import { TreeNode } from 'primeng/api';
-import { UiSkeletonComponent, UiSplitterComponent, UiTreeComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { SystemMenuDetailComponent } from './system-menu-detail/system-menu-detail.component';
 import { MenuResponseDTO } from '@app/menu/menu.model';
@@ -14,6 +14,7 @@ import { MenuService } from '@app/menu/menu.service';
     UiSkeletonComponent,
     UiTreeComponent,
     UiSplitterComponent,
+    UiButtonComponent,
     LayoutPageDescriptionComponent,
     SystemMenuDetailComponent,
   ],
