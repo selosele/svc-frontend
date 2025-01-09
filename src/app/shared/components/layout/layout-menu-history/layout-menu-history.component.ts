@@ -136,7 +136,7 @@ export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
 
   /** 페이지 맨 하단으로 스크롤 시, scroll 클래스를 추가한다. */
   @HostListener('document:scroll', ['$event'])
-  onScroll(event: Event): void {
+  onDocumentScroll(event: Event): void {
     if (window.scrollY < 0) return;
     this.detectScrollEnd();
   }

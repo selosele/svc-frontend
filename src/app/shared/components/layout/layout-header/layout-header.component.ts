@@ -71,7 +71,7 @@ export class LayoutHeaderComponent implements OnInit {
 
   /** 스크롤 시, header를 위로 이동한다. */
   @HostListener('document:scroll', ['$event'])
-  onScroll(event: Event): void {
+  onDocumentScroll(event: Event): void {
     if (window.scrollY < 0)
       return;
 
