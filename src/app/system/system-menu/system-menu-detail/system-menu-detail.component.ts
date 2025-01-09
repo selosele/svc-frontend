@@ -53,27 +53,27 @@ export class SystemMenuDetailComponent {
 
   ngOnInit() {
     this.detailForm = this.fb.group({
-      originalMenuId: [''],                              // 기존 메뉴 ID
-      menuId: ['', [                                     // 메뉴 ID
+      originalMenuId: [''],                       // 기존 메뉴 ID
+      menuId: ['', [                              // 메뉴 ID
         FormValidator.required,
         FormValidator.numeric
       ]],
-      upMenuId: ['', [FormValidator.numeric]],           // 상위 메뉴 ID
-      menuName: ['', [                                   // 메뉴명
+      upMenuId: ['', [FormValidator.numeric]],    // 상위 메뉴 ID
+      menuName: ['', [                            // 메뉴명
         FormValidator.required,
         FormValidator.maxLength(30)
       ]],
-      menuUrl: ['', [                                    // 메뉴 URL
+      menuUrl: ['', [                             // 메뉴 URL
         FormValidator.required,
         FormValidator.maxLength(100)]
       ],
-      menuOrder: ['', [FormValidator.numeric]],          // 메뉴 순서
-      menuDepth: ['', [                                  // 메뉴 뎁스
+      menuOrder: ['', [FormValidator.numeric]],   // 메뉴 순서
+      menuDepth: ['', [                           // 메뉴 뎁스
         FormValidator.required,
         FormValidator.numeric
       ]],
-      menuShowYn: ['', [FormValidator.required]],        // 메뉴 표출 여부
-      useYn: ['', [FormValidator.required]],             // 사용 여부
+      menuShowYn: ['', [FormValidator.required]], // 메뉴 표출 여부
+      useYn: ['', [FormValidator.required]],      // 사용 여부
     });
   }
 
