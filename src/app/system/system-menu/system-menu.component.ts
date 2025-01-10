@@ -32,14 +32,14 @@ export class SystemMenuComponent implements OnInit {
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
-  /** 메뉴 목록 */
-  get menuList$() {
-    return this.store.select<MenuResponseDTO[]>('menuList').asObservable();
+  /** 시스템관리 > 메뉴관리 > 메뉴 트리 목록 */
+  get sysMenuTree() {
+    return this.store.select<TreeNode[]>('sysMenuTree').value;
   }
 
-  /** 메뉴 목록 데이터 로드 완료 여부 */
-  get menuListDataLoad() {
-    return this.store.select<boolean>('menuListDataLoad').value;
+  /** 시스템관리 > 메뉴관리 > 메뉴 목록 데이터 로드 완료 여부 */
+  get sysMenuListDataLoad() {
+    return this.store.select<boolean>('sysMenuListDataLoad').value;
   }
 
   /** 메뉴 트리 */
@@ -49,15 +49,18 @@ export class SystemMenuComponent implements OnInit {
   detail: MenuResponseDTO = null;
 
   ngOnInit() {
-    this.menuService.listSysMenu$()
-    .subscribe((data) => {
-      this.data = this.menuService.createSysMenuTree(data);
-    });
+    if (!this.sysMenuListDataLoad) {
+      this.listMenu();
+    }
   }
 
   /** 메뉴 목록을 조회한다. */
   listMenu(): void {
-    this.menuService.listMenu();
+    this.menuService.listSysMenu$()
+    .subscribe((data) => {
+      this.store.update('sysMenuListDataLoad', true);
+      this.store.update('sysMenuTree', this.menuService.createSysMenuTree(data));
+    });
   }
 
   /** 메뉴 tree 노드를 선택한다. */

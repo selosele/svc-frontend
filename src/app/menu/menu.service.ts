@@ -34,6 +34,12 @@ export class MenuService {
   /** 메뉴 목록 데이터 로드 완료 여부 */
   private menuListDataLoad = this.store.create<boolean>('menuListDataLoad', false);
 
+  /** 시스템관리 > 메뉴관리 > 메뉴 트리 목록 */
+  private sysMenuTree = this.store.create<TreeNode[]>('sysMenuTree', []);
+
+  /** 시스템관리 > 메뉴관리 > 메뉴 목록 데이터 로드 완료 여부 */
+  private sysMenuListDataLoad = this.store.create<boolean>('sysMenuListDataLoad', false);
+
   /** 메뉴 트리 목록 */
   private menuTree = this.store.create<MenuTree[]>('menuTree', []);
 

@@ -4,7 +4,7 @@
   </ul>
 </layout-page-description>
 
-@if (!menuListDataLoad) {
+@if (!sysMenuListDataLoad) {
   <ui-skeleton />
   <ui-skeleton />
   <ui-skeleton />
@@ -12,7 +12,7 @@
 @else {
   <ui-splitter #splitter>
     <ui-tree first
-      [data]="data"
+      [data]="sysMenuTree"
       (refresh)="listMenu()"
       (nodeSelect)="onNodeSelect($event)"
       (nodeUnselect)="onNodeUnselect($event)"
