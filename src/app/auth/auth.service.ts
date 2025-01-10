@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StoreService, UiDialogService } from '@app/shared/services';
-import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
+import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, MAIN_PAGE_PATH1, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
 import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
@@ -38,7 +38,7 @@ export class AuthService {
         }
 
         // 메인 화면으로 이동
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl(MAIN_PAGE_PATH1);
       }
     });
   }
@@ -57,7 +57,7 @@ export class AuthService {
         this.setAccessToken(accessToken);
 
         // 메인 화면으로 이동
-        await this.router.navigateByUrl('/');
+        await this.router.navigateByUrl(MAIN_PAGE_PATH1);
         window.location.reload();
       }
     });

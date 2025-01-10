@@ -4,6 +4,7 @@ import { StoreService, UiMessageService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { UserService } from '@app/user/user.service';
 import { AuthenticatedUser } from '@app/auth/auth.model';
+import { MAIN_PAGE_PATH1 } from '@app/shared/utils';
 import { UiButtonComponent } from '../../ui';
 
 @Component({
@@ -33,6 +34,9 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
 
   /** 사이트타이틀명 편집필드 */
   @ViewChild('editName') editName: ElementRef;
+
+  /** 사이트타이틀 링크 */
+  link = MAIN_PAGE_PATH1;
 
   /** 사이트타이틀명 편집 상태 */
   isEditVisible = false;

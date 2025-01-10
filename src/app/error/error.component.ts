@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { UiButtonComponent } from '@app/shared/components/ui';
+import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -21,7 +22,7 @@ export class ErrorComponent {
 
   /** 메인 페이지로 이동한다. */
   goMainPage(): void {
-    this.router.navigateByUrl('/index');
+    this.router.navigateByUrl(MAIN_PAGE_PATH2);
   }
 
   /** 이전 페이지로 이동한다. */

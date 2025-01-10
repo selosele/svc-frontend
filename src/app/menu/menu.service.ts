@@ -5,6 +5,7 @@ import { combineLatest } from 'rxjs';
 import { MenuItem, TreeNode } from 'primeng/api';
 import { HttpService, StoreService } from '@app/shared/services';
 import { GetMenuRequestDTO, MenuResponseDTO, MenuTree, SaveMenuRequestDTO } from '@app/menu/menu.model';
+import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
@@ -121,7 +122,7 @@ export class MenuService {
       this.store.update('breadcrumbList', [
         
         // 홈
-        { icon: 'pi pi-home', route: '/index' },
+        { icon: 'pi pi-home', route: MAIN_PAGE_PATH2 },
         // 상위 메뉴
         ...menuList.filter(x => x.menuId === upMenuId).map(x => ({ label: x.menuName })),
         // 현재 메뉴

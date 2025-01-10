@@ -4,6 +4,7 @@ import { authRoutes } from './auth/auth.routes';
 import { indexRoutes } from './index/index.routes';
 import { humanRoutes } from './human/human.routes';
 import { systemRoutes } from './system/system.routes';
+import { ERROR_PAGE_PATH } from './shared/utils';
 
 /** 공통 라우터 */
 const globalRoutes: Routes = [
@@ -13,7 +14,7 @@ const globalRoutes: Routes = [
     component: AppComponent,
   },
   {
-    path: 'error',
+    path: ERROR_PAGE_PATH.replace('/', ''),
     loadComponent: () => import('./error/error.component').then(x => x.ErrorComponent),
   },
   {

@@ -1,6 +1,3 @@
-/** 로그인 페이지 PATH */
-export const LOGIN_PAGE_PATH = '/auth/login';
-
 /** 액세스 토큰 저장 key */
 export const ACCESS_TOKEN_KEY = 'accessToken';
 

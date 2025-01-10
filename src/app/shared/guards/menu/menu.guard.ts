@@ -4,6 +4,7 @@ import { filter, firstValueFrom, take } from 'rxjs';
 import { StoreService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO } from '@app/menu/menu.model';
+import { ERROR_PAGE_PATH, LOGIN_PAGE_PATH, MAIN_PAGE_PATH1, MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
 /** 메뉴 guard */
 export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
@@ -25,13 +26,13 @@ export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
 
   // 메뉴 목록이 없으면 에러페이지로 이동한다.
   if (!menuList || menuList?.length === 0) {
-    await router.navigateByUrl('/error');
+    await router.navigateByUrl(ERROR_PAGE_PATH);
     return false;
   }
 
   // menuId 파라미터가 없으면 에러페이지로 이동한다.
   if (isExcludePath(route.routeConfig.path) && !route.queryParams.menuId) {
-    await router.navigateByUrl('/error');
+    await router.navigateByUrl(ERROR_PAGE_PATH);
     return false;
   }
 
@@ -42,7 +43,7 @@ export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
     
     // 미사용 or 삭제된 메뉴일경우 에러페이지로 이동한다.
     if (!currentMenu || currentMenu.useYn === 'N' || currentMenu.deleteYn === 'Y') {
-      await router.navigateByUrl('/error');
+      await router.navigateByUrl(ERROR_PAGE_PATH);
       return false;
     }
   }
@@ -54,6 +55,10 @@ export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
 
 /** 제외 경로 여부를 반환한다. */
 function isExcludePath(path: string): boolean {
-  const excludeUrls = ['/', 'index', 'auth/login'];
+  const excludeUrls = [
+    MAIN_PAGE_PATH1,
+    MAIN_PAGE_PATH2.substring(1),
+    LOGIN_PAGE_PATH.substring(1)
+  ];
   return !excludeUrls.includes(path);
 }

@@ -10,6 +10,7 @@ import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuHistoryComponent } from './shared/components/layout';
 import { UiAlertComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
+import { MAIN_PAGE_PATH2 } from './shared/utils';
 
 @Component({
   standalone: true,
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit {
 
   /** 현재 페이지가 메인 페이지인지 여부 */
   get isIndexPage() {
-    return this.router.url === '/index';
+    return this.router.url === MAIN_PAGE_PATH2;
   }
 
   ngOnInit() {

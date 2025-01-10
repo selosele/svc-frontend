@@ -3,7 +3,7 @@
     <input type="text" class="layout-site-title__text" [value]="name" (keyup.enter)="onSubmit()" #editName>
   }
   @else {
-    <a [routerLink]="'/'" class="layout-site-title__text">{{ name }}</a>
+    <a [routerLink]="link" class="layout-site-title__text">{{ name }}</a>
   }
   
   @if (isEditVisible) {
