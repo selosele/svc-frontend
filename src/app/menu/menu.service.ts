@@ -62,6 +62,12 @@ export class MenuService {
     });
   }
 
+  /** 시스템관리 > 메뉴관리 > 메뉴 목록을 조회한다. */
+  listSysMenu$(dto?: GetMenuRequestDTO) {
+    const params = this.httpService.createParams(dto);
+    return this.http.get<MenuResponseDTO[]>('/co/menus/sys', { params });
+  }
+
   /** 권한별 메뉴 목록을 조회한다. */
   listMenuByRole$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);

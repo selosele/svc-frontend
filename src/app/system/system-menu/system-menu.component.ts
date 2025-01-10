@@ -49,8 +49,8 @@ export class SystemMenuComponent implements OnInit {
   detail: MenuResponseDTO = null;
 
   ngOnInit() {
-    this.menuList$.subscribe((data) => {
-      if (data.length === 0) return;
+    this.menuService.listSysMenu$()
+    .subscribe((data) => {
       this.data = this.menuService.createSysMenuTree(data);
     });
   }
