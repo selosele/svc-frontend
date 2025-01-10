@@ -73,6 +73,23 @@ export class MenuResponseDTO {
   /** 삭제 여부 */
   deleteYn?: string;
 
+  /** 메뉴 권한 목록 */
+  menuRoles?: MenuRoleResponseDTO[];
+
+}
+
+/** 메뉴 권한 응답 DTO */
+export class MenuRoleResponseDTO {
+
+  /** 메뉴 ID */
+  menuId?: number;
+  
+  /** 권한 ID */
+  roleId?: string;
+  
+  /** 권한명 */
+  roleName?: string;
+
 }
 
 /** 메뉴 트리 */

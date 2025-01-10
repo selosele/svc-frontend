@@ -1,20 +1,23 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
-import { isEmpty, isObjectEmpty } from '@app/shared/utils';
-import { UiMessageService } from '@app/shared/services';
+import { isEmpty, isObjectEmpty, roles } from '@app/shared/utils';
+import { StoreService, UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
+import { RoleResponseDTO } from '@app/role/role.model';
 
 @Component({
   standalone: true,
   imports: [
     UiSplitFormComponent,
     UiTextFieldComponent,
-    UiDropdownComponent,
     UiHiddenFieldComponent,
+    UiDropdownComponent,
+    UiCheckboxGroupComponent,
+    UiCheckboxComponent,
     UiContentTitleComponent,
   ],
   selector: 'system-menu-detail',
@@ -25,6 +28,7 @@ export class SystemMenuDetailComponent {
 
   constructor(
     private fb: FormBuilder,
+    private store: StoreService,
     private messageService: UiMessageService,
     private codeService: CodeService,
     private menuService: MenuService,
@@ -37,7 +41,13 @@ export class SystemMenuDetailComponent {
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */
-  ynCode = this.codeService.createYnCodeData();
+  ynCodes = this.codeService.createYnCodeData();
+
+  /** 모든 권한 목록 */
+  roles: RoleResponseDTO[] = [];
+
+  /** 권한 목록 기본 값 */
+  defaultRoles: string[] = [];
 
   /** 사용 여부 기본 값 */
   defaultUseYn = 'Y';
@@ -56,6 +66,8 @@ export class SystemMenuDetailComponent {
 
   ngOnInit() {
     this.detailForm = this.fb.group({
+
+      // 메뉴 정보
       originalMenuId: [''],                       // 기존 메뉴 ID
       menuId: ['', [                              // 메뉴 ID
         FormValidator.required,
@@ -77,24 +89,37 @@ export class SystemMenuDetailComponent {
       ]],
       menuShowYn: ['', [FormValidator.required]], // 메뉴 표출 여부
       useYn: ['', [FormValidator.required]],      // 사용 여부
+
+      // 메뉴 권한 정보
+      menuRoles: this.fb.group({
+        roleId: ['', [FormValidator.required]],   // 권한 ID
+      }),
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.detail && this.detailForm) {
       this.useRemove = true;
+      this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
+      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
       
       if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
         this.detailForm.reset({
           useYn: this.defaultUseYn,
+          menuRoles: {
+            roleId: this.defaultRoles,
+          },
         });
         return;
       }
 
       this.detailForm.patchValue({
+        ...this.detail,
         originalMenuId: this.detail.menuId,
-        ...this.detail
+        menuRoles: {
+          roleId: this.detail.menuRoles.map(x => x.roleId) || this.defaultRoles,
+        },
       });
     }
   }

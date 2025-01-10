@@ -9,7 +9,7 @@
 
   <ui-content-title [text]="'메뉴 정보'" />
 
-  <div class="grid mt-2">
+  <div class="grid mt-2 mb-4">
     <div class="col-6">
       <ui-text-field
         [control]="detailForm.get('menuId')"
@@ -58,7 +58,7 @@
       <ui-dropdown
         [control]="detailForm.get('menuShowYn')"
         [label]="'표출 여부'"
-        [data]="ynCode"
+        [data]="ynCodes"
       />
     </div>
 
@@ -66,8 +66,24 @@
       <ui-dropdown
         [control]="detailForm.get('useYn')"
         [label]="'사용 여부'"
-        [data]="ynCode"
+        [data]="ynCodes"
       />
+    </div>
+  </div>
+
+  <ui-content-title [text]="'메뉴 권한 정보'" />
+
+  <div class="grid mt-2">
+    <div class="col-12">
+      <ui-checkbox-group [label]="'메뉴 권한'">
+        @for (i of roles; track $index) {
+          <ui-checkbox
+            [control]="detailForm.get('menuRoles.roleId')"
+            [label]="i.roleName"
+            [value]="i.roleId"
+          />
+        }
+      </ui-checkbox-group>
     </div>
   </div>
 </ui-split-form>
