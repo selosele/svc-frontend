@@ -36,7 +36,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */
-  ynCode = this.codeService.createYnCodeData();
+  ynCodes = this.codeService.createYnCodeData();
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
