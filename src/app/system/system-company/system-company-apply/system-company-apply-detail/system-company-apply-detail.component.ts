@@ -95,10 +95,10 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
       } else {
         this.isRejectable = false;
         this.detailForm.get('rejectContent').clearValidators();
-        this.detailForm.get('rejectContent').updateValueAndValidity();
       }
 
       this.detailForm.patchValue(this.detail);
+      this.detailForm.get('rejectContent').updateValueAndValidity();
       this.applyStateCodeName = this.detail.applyStateCodeName;
     }
   }
@@ -115,8 +115,9 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
     } else {
       this.isRejectable = false;
       this.detailForm.get('rejectContent').clearValidators();
-      this.detailForm.get('rejectContent').updateValueAndValidity();
     }
+
+    this.detailForm.get('rejectContent').updateValueAndValidity();
   }
 
   /** 회사등록신청 정보를 저장한다. */
