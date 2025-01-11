@@ -6,8 +6,8 @@ import { AuthenticatedUser } from '@app/auth/auth.model';
 import { SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { RoleResponseDTO } from '@app/role/role.model';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
@@ -21,6 +21,7 @@ import { UserService } from '@app/user/user.service';
     UiSplitFormComponent,
     UiTextFieldComponent,
     UiCheckboxComponent,
+    UiCheckboxListComponent,
     UiCheckboxGroupComponent,
     UiDropdownComponent,
     UiDateFieldComponent,
@@ -28,6 +29,7 @@ import { UserService } from '@app/user/user.service';
     UiButtonComponent,
     UiHiddenFieldComponent,
     UiContentTitleComponent,
+    UiCardComponent,
   ],
   selector: 'system-user-detail',
   templateUrl: './system-user-detail.component.html',

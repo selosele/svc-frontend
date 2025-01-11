@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { UiContentTitleComponent } from '@app/shared/components/ui';
+import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isEmpty, isObjectEmpty, roles } from '@app/shared/utils';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
@@ -17,8 +17,10 @@ import { RoleResponseDTO } from '@app/role/role.model';
     UiHiddenFieldComponent,
     UiDropdownComponent,
     UiCheckboxGroupComponent,
+    UiCheckboxListComponent,
     UiCheckboxComponent,
     UiContentTitleComponent,
+    UiCardComponent,
   ],
   selector: 'system-menu-detail',
   templateUrl: './system-menu-detail.component.html',

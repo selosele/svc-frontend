@@ -76,13 +76,17 @@
   <div class="grid mt-2">
     <div class="col-12">
       <ui-checkbox-group [label]="'메뉴 권한'">
-        @for (i of roles; track $index) {
-          <ui-checkbox
-            [control]="detailForm.get('menuRoles.roleId')"
-            [label]="i.roleName"
-            [value]="i.roleId"
-          />
-        }
+        <ui-card>
+          <ui-checkbox-list>
+            @for (i of roles; track $index) {
+              <ui-checkbox
+                [control]="detailForm.get('menuRoles.roleId')"
+                [label]="i.roleName"
+                [value]="i.roleId"
+              />
+            }
+          </ui-checkbox-list>
+        </ui-card>
       </ui-checkbox-group>
     </div>
   </div>

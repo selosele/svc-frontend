@@ -59,13 +59,17 @@
 
     <div class="col-12">
       <ui-checkbox-group [label]="'사용자 권한'">
-        @for (i of roles; track $index) {
-          <ui-checkbox
-            [control]="detailForm.get('roles')"
-            [label]="i.roleName"
-            [value]="i.roleId"
-          />
-        }
+        <ui-card>
+          <ui-checkbox-list>
+            @for (i of roles; track $index) {
+              <ui-checkbox
+                [control]="detailForm.get('roles')"
+                [label]="i.roleName"
+                [value]="i.roleId"
+              />
+            }
+          </ui-checkbox-list>
+        </ui-card>
       </ui-checkbox-group>
     </div>
   </div>
