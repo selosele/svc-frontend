@@ -22,6 +22,7 @@
     "@angular/router": "^18.0.0",
     "@auth0/angular-jwt": "^5.2.0",
     "ag-grid-community": "^31.3.2",
+    "class-transformer": "^0.5.1",
     "dayjs": "^1.11.12",
     "file-saver": "^2.0.5",
     "primeflex": "^3.3.1",
