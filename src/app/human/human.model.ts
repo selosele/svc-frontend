@@ -1,4 +1,6 @@
+import { Transform } from 'class-transformer';
 import { HttpRequestDTOBase } from '@app/shared/models';
+import { isNotEmpty } from '@app/shared/utils';
 
 /** 직원 추가/수정 요청 DTO */
 export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
@@ -453,6 +455,7 @@ export class SaveVacationRequestDTO extends HttpRequestDTOBase {
   vacationContent?: string;
 
   /** 휴가 사용일수 */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   vacationUseCount?: number;
 
 }

@@ -1,4 +1,6 @@
+import { Transform } from 'class-transformer';
 import { HttpRequestDTOBase } from '@app/shared/models';
+import { isNotEmpty } from '@app/shared/utils';
 
 /** 메뉴 조회 요청 DTO */
 export class GetMenuRequestDTO extends HttpRequestDTOBase {
@@ -18,12 +20,15 @@ export class GetMenuRequestDTO extends HttpRequestDTOBase {
 export class SaveMenuRequestDTO extends HttpRequestDTOBase {
 
   /** 기존 메뉴 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   originalMenuId?: number;
 
   /** 메뉴 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   menuId?: number;
 
   /** 상위 메뉴 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   upMenuId?: number;
 
   /** 메뉴명 */
@@ -33,13 +38,18 @@ export class SaveMenuRequestDTO extends HttpRequestDTOBase {
   menuUrl?: string;
 
   /** 메뉴 순서 */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   menuOrder?: number;
 
   /** 메뉴 뎁스 */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   menuDepth?: number;
 
   /** 메뉴 표출 여부 */
   menuShowYn?: string;
+
+  /** 메뉴 권한 목록 */
+  menuRoles?: string[];
 
 }
 

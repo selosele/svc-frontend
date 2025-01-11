@@ -6,8 +6,9 @@ import { HumanService } from '@app/human/human.service';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
+import { TransformToDto } from '@app/shared/decorators';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { dateUtil, isEmpty, isNotEmpty, isObjectEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -115,6 +116,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   }
 
   /** 휴가 정보를 저장한다. */
+  @TransformToDto(SaveVacationRequestDTO)
   async onSubmit(value: SaveVacationRequestDTO): Promise<void> {
     if (!this.isValid()) return;
 
@@ -122,11 +124,6 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     const confirm = await this.messageService.confirm1(`휴가를 ${crudName}하시겠어요?`);
     if (!confirm) return;
-
-    // 휴가사용일수를 직접 입력하면 string으로 전송되므로 숫자로 변환
-    if (isNotEmpty(value.vacationUseCount)) {
-      value.vacationUseCount = Number(value.vacationUseCount);
-    }
 
     // 휴가 ID가 없으면 추가 API를 타고
     if (isEmpty(value.vacationId)) {

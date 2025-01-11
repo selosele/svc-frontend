@@ -8,6 +8,7 @@ import { CodeService } from '@app/code/code.service';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
 import { RoleResponseDTO } from '@app/role/role.model';
+import { TransformToDto } from '@app/shared/decorators';
 
 @Component({
   standalone: true,
@@ -71,10 +72,7 @@ export class SystemMenuDetailComponent {
 
       // 메뉴 정보
       originalMenuId: [''],                       // 기존 메뉴 ID
-      menuId: ['', [                              // 메뉴 ID
-        FormValidator.required,
-        FormValidator.numeric
-      ]],
+      menuId: ['', [FormValidator.numeric]],      // 메뉴 ID
       upMenuId: ['', [FormValidator.numeric]],    // 상위 메뉴 ID
       menuName: ['', [                            // 메뉴명
         FormValidator.required,
@@ -93,9 +91,7 @@ export class SystemMenuDetailComponent {
       useYn: ['', [FormValidator.required]],      // 사용 여부
 
       // 메뉴 권한 정보
-      menuRoles: this.fb.group({
-        roleId: ['', [FormValidator.required]],   // 권한 ID
-      }),
+      menuRoles: ['', [FormValidator.required]],  // 권한 ID
     });
   }
 
@@ -109,9 +105,7 @@ export class SystemMenuDetailComponent {
         this.useRemove = false;
         this.detailForm.reset({
           useYn: this.defaultUseYn,
-          menuRoles: {
-            roleId: this.defaultRoles,
-          },
+          menuRoles: this.defaultRoles,
         });
         return;
       }
@@ -119,14 +113,13 @@ export class SystemMenuDetailComponent {
       this.detailForm.patchValue({
         ...this.detail,
         originalMenuId: this.detail.menuId,
-        menuRoles: {
-          roleId: this.detail.menuRoles.map(x => x.roleId) || this.defaultRoles,
-        },
+        menuRoles: this.detail.menuRoles.map(x => x.roleId) || this.defaultRoles,
       });
     }
   }
 
   /** 메뉴 정보를 저장한다. */
+  @TransformToDto(SaveMenuRequestDTO)
   async onSubmit(value: SaveMenuRequestDTO): Promise<void> {
     const crudName = isEmpty(value.originalMenuId) ? '추가' : '수정';
 
