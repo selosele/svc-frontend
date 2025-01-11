@@ -14,6 +14,7 @@
       <ui-text-field
         [control]="detailForm.get('menuId')"
         [label]="'메뉴 ID'"
+        [placeholder]="'비워두시면 자동으로 생성돼요.'"
       />
     </div>
 
@@ -80,7 +81,7 @@
           <ui-checkbox-list>
             @for (i of roles; track $index) {
               <ui-checkbox
-                [control]="detailForm.get('menuRoles.roleId')"
+                [control]="detailForm.get('menuRoles')"
                 [label]="i.roleName"
                 [value]="i.roleId"
               />
