@@ -50,6 +50,11 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 사용자 정보 */
   @Input() detail: UserResponseDTO = null;
 
+  /** 사용자 정보 존재 여부 */
+  get isDetailNotEmpty() {
+    return isNotObjectEmpty(this.detail);
+  }
+
   /** 사용자 상세 조회 폼 */
   detailForm: FormGroup;
 
@@ -82,11 +87,6 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 정보가 본인의 정보와 일치하는지 여부 */
   isUserSelf = false;
-
-  /** 사용자 정보 존재 여부 */
-  get isUserNotEmpty() {
-    return isNotObjectEmpty(this.detail);
-  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();

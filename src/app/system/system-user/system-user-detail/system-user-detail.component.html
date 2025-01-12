@@ -7,12 +7,12 @@
 >
   <ui-content-title [text]="'사용자 정보'" />
 
-  @if (isUserNotEmpty) {
+  @if (isDetailNotEmpty) {
     <p class="mt-2">마지막 로그인 일시: {{ detailForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</p>
   }
 
   <div class="grid mt-2 mb-4">
-    @if (isUserNotEmpty) {
+    @if (isDetailNotEmpty) {
       <div class="col">
         <ui-text-field
           [control]="detailForm.get('userId')"
@@ -24,11 +24,11 @@
     <div class="col">
       <ui-text-field
         [control]="detailForm.get('userAccount')"
-        [label]="'사용자 계정'" [readonly]="isUserNotEmpty" [placeholder]="'20자 이내'"
+        [label]="'사용자 계정'" [readonly]="isDetailNotEmpty" [placeholder]="'20자 이내'"
       />
     </div>
 
-    @if (!isUserNotEmpty) {
+    @if (!isDetailNotEmpty) {
       <div class="col">
         <ui-text-field
           [control]="detailForm.get('userPassword')"
@@ -42,11 +42,11 @@
         [control]="detailForm.get('userActiveYn')"
         [label]="'사용자 계정 활성화'"
         [data]="ynCodes"
-        [readonly]="isUserNotEmpty"
+        [readonly]="isDetailNotEmpty"
       />
     </div>
 
-    @if (isUserNotEmpty && !isUserSelf) {
+    @if (isDetailNotEmpty && !isUserSelf) {
       <div class="col flex align-items-end">
         <ui-button button
           [severity]="'secondary'"
@@ -167,7 +167,7 @@
     </div>
   </div>
 
-  @if (isUserNotEmpty && !isUserSelf) {
+  @if (isDetailNotEmpty && !isUserSelf) {
     <ui-button button (click)="superLogin()">로그인</ui-button>
   }
 </ui-split-form>

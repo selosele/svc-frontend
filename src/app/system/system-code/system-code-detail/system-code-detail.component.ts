@@ -5,7 +5,7 @@ import { CodeService } from '@app/code/code.service';
 import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { UiMessageService } from '@app/shared/services';
-import { isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { isEmpty, isNotObjectEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -31,6 +31,11 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
 
   /** 코드 정보 */
   @Input() detail: CodeResponseDTO = null;
+
+  /** 코드 정보 존재 여부 */
+  get isDetailNotEmpty() {
+    return isNotObjectEmpty(this.detail);
+  }
 
   /** 코드 상세 조회 폼 */
   detailForm: FormGroup;

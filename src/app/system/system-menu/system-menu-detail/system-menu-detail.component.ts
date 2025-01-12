@@ -40,6 +40,11 @@ export class SystemMenuDetailComponent {
   /** 메뉴 정보 */
   @Input() detail: MenuResponseDTO = null;
 
+  /** 메뉴 정보 존재 여부 */
+  get isDetailNotEmpty() {
+    return isNotObjectEmpty(this.detail);
+  }
+
   /** 메뉴 상세 조회 폼 */
   detailForm: FormGroup;
 
@@ -57,11 +62,6 @@ export class SystemMenuDetailComponent {
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
-
-  /** 메뉴 정보 존재 여부 */
-  get isMenuNotEmpty() {
-    return isNotObjectEmpty(this.detail);
-  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
