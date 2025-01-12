@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
-import { isEmpty, isObjectEmpty, roles } from '@app/shared/utils';
+import { isEmpty, isNotObjectEmpty, isObjectEmpty, roles } from '@app/shared/utils';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { MenuService } from '@app/menu/menu.service';
@@ -57,6 +57,11 @@ export class SystemMenuDetailComponent {
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
+
+  /** 메뉴 정보 존재 여부 */
+  get isMenuNotEmpty() {
+    return isNotObjectEmpty(this.detail);
+  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
