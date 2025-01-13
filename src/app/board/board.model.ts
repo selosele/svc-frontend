@@ -32,6 +32,9 @@ export class BoardResponseDTO {
   /** 게시판 구분 코드 */
   boardTypeCode?: string;
 
+  /** 게시판 구분 코드명 */
+  boardTypeCodeName?: string;
+
   /** 사용 여부 */
   useYn?: string;
 

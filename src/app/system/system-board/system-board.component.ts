@@ -48,9 +48,9 @@ export class SystemBoardComponent implements OnInit {
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'boardName',     header: '게시판명' },
-    { field: 'boardTypeCode', header: '게시판 구분' },
-    { field: 'useYn',         header: '사용 여부' },
+    { field: 'boardName',         header: '게시판명' },
+    { field: 'boardTypeCodeName', header: '게시판 구분' },
+    { field: 'useYn',             header: '사용 여부' },
   ];
 
   ngOnInit() {
