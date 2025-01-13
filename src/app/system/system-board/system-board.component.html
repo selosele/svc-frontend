@@ -1,0 +1,43 @@
+<layout-page-description>
+  <ul>
+    <li>게시판을 조회/입력할 수 있어요.</li>
+  </ul>
+</layout-page-description>
+
+@if (!boardListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-splitter #splitter>
+    <ui-table #table first
+      [useAdd]="false"
+      [useRemove]="false"
+      [cols]="cols"
+      [data]="boardList"
+      [dataKey]="'boardId'"
+      [selection]="selection"
+      (refresh)="onRefresh()"
+      (rowSelect)="onRowSelect($event)"
+      (unRowSelect)="onRowUnselect($event)"
+    >
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'게시판 추가'"
+        [outlined]="true"
+        (click)="addBoard()"
+      />
+    </ui-table>
+  
+    <div second>
+      <system-board-detail
+        [detail]="detail"
+        (refresh)="listBoard()"
+        (remove)="onRemove()"
+        (close)="onClose()"
+      />
+    </div>
+  </ui-splitter>
+}

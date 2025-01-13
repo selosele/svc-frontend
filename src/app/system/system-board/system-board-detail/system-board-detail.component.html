@@ -1,0 +1,43 @@
+<ui-split-form
+  [form]="detailForm"
+  [useRemove]="useRemove"
+  (submit)="onSubmit($event)"
+  (remove)="onRemove($event)"
+  (close)="onClose()"
+>
+  <ui-hidden-field [control]="detailForm.get('boardId')" />
+
+  <ui-content-title [text]="'게시판 정보'" />
+
+  <div class="grid mt-2">
+    <div class="col-12">
+      <ui-text-field
+        [control]="detailForm.get('boardName')"
+        [label]="'게시판명'"
+      />
+    </div>
+
+    <div class="col-12">
+      <ui-textarea
+        [control]="detailForm.get('boardContent')"
+        [label]="'게시판 내용'"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-dropdown
+        [control]="detailForm.get('boardTypeCode')"
+        [label]="'게시판 구분'"
+        [data]="boardTypeCodes"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-dropdown
+        [control]="detailForm.get('useYn')"
+        [label]="'사용 여부'"
+        [data]="ynCodes"
+      />
+    </div>
+  </div>
+</ui-split-form>

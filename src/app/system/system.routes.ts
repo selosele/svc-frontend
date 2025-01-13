@@ -26,6 +26,15 @@ export const systemRoutes: Routes = [
     },
     loadComponent: () => import('./system-role/system-role.component').then(x => x.SystemRoleComponent),
   },
+  // 메뉴관리 페이지
+  {
+    path: 'sys/menus',
+    canActivate: [authGuard, menuGuard],
+    data: {
+      roles: [roles.SYSTEM_ADMIN],
+    },
+    loadComponent: () => import('./system-menu/system-menu.component').then(x => x.SystemMenuComponent),
+  },
   // 코드관리 페이지
   {
     path: 'sys/codes',
@@ -35,14 +44,16 @@ export const systemRoutes: Routes = [
     },
     loadComponent: () => import('./system-code/system-code.component').then(x => x.SystemCodeComponent),
   },
-  // 메뉴관리 페이지
+  // 게시판관리 페이지
   {
-    path: 'sys/menus',
+    path: 'sys/boards',
     canActivate: [authGuard, menuGuard],
+    resolve: { code: codeResolver },
     data: {
       roles: [roles.SYSTEM_ADMIN],
+      codeKeys: ['BOARD_TYPE_00'],
     },
-    loadComponent: () => import('./system-menu/system-menu.component').then(x => x.SystemMenuComponent),
+    loadComponent: () => import('./system-board/system-board.component').then(x => x.SystemBoardComponent),
   },
   // 회사정보관리 페이지
   {
