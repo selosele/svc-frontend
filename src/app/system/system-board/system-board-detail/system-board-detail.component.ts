@@ -75,7 +75,10 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
         FormValidator.required,
         FormValidator.maxLength(30)
       ]],
-      boardContent: ['', [FormValidator.maxLength(255)]], // 게시판 내용
+      boardContent: ['', [                                // 게시판 내용
+        FormValidator.required,
+        FormValidator.maxLength(255)
+      ]],
       boardTypeCode: ['', [FormValidator.required]],      // 게시판 구분 코드
       useYn: ['', [FormValidator.required]],              // 사용 여부
     });
