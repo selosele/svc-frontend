@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
-import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { FormValidator, UiDropdownComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
@@ -18,7 +18,6 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
     UiTextFieldComponent,
     UiTextareaComponent,
     UiDropdownComponent,
-    UiHiddenFieldComponent,
     UiContentTitleComponent,
   ],
   selector: 'system-board-detail',
