@@ -58,6 +58,7 @@ export class SystemMenuComponent implements OnInit {
   listMenu(): void {
     this.menuService.listSysMenu$()
     .subscribe((data) => {
+      this.menuService.listMenu(); // 메뉴입력시마다 GNB 메뉴를 새로고침해야 함
       this.store.update('sysMenuListDataLoad', true);
       this.store.update('sysMenuTree', this.menuService.createSysMenuTree(data));
     });
