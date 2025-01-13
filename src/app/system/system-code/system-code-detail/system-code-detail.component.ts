@@ -72,10 +72,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
         FormValidator.maxLength(100)]
       ],
       codeContent: ['', [FormValidator.maxLength(100)]], // 코드 내용
-      codeOrder: ['', [                                  // 코드 순서
-        FormValidator.required,
-        FormValidator.numeric
-      ]],
+      codeOrder: ['', [FormValidator.numeric]],          // 코드 순서
       codeDepth: ['', [                                  // 코드 뎁스
         FormValidator.required,
         FormValidator.numeric
