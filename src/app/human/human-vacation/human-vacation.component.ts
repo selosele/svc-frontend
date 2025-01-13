@@ -19,7 +19,7 @@ import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { AddVacationCalcRequestDTO, WorkHistoryResponseDTO } from '../human.model';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { UiTextFieldComponent } from "../../shared/components/form/ui-text-field/ui-text-field.component";
+import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
 import { dateUtil } from '@app/shared/utils';
 import { MenuService } from '@app/menu/menu.service';
 
