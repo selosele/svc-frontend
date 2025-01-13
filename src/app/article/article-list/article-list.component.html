@@ -1,0 +1,24 @@
+@if (!articleListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <layout-page-description>
+    <ul>
+      <li>{{ articleList[0]?.boardContent }}</li>
+    </ul>
+  </layout-page-description>
+  
+  <ui-table #table first
+    [useAdd]="false"
+    [useRemove]="false"
+    [useRowIndex]="true"
+    [cols]="cols"
+    [data]="articleList"
+    [dataKey]="'articleId'"
+    [selection]="selection"
+    (refresh)="onRefresh()"
+    (rowSelect)="onRowSelect($event)"
+  />
+}
