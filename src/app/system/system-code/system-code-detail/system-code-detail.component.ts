@@ -4,6 +4,7 @@ import { CodeResponseDTO, SaveCodeRequestDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
 import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
+import { TransformToDto } from '@app/shared/decorators';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isNotObjectEmpty, isObjectEmpty } from '@app/shared/utils';
 
@@ -92,13 +93,14 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
       }
 
       this.detailForm.patchValue({
+        ...this.detail,
         originalCodeId: this.detail.codeId,
-        ...this.detail
       });
     }
   }
 
   /** 코드 정보를 저장한다. */
+  @TransformToDto(SaveCodeRequestDTO)
   async onSubmit(value: SaveCodeRequestDTO): Promise<void> {
     const crudName = isEmpty(value.originalCodeId) ? '추가' : '수정';
 

@@ -13,7 +13,7 @@ export function TransformToDto<T>(dtoClass: new () => T): MethodDecorator {
     }
 
     // descriptor.value를 덮어씀
-    descriptor.value = function (...args: any[]) {
+    descriptor.value = function(...args: any[]) {
       if (args.length > 0 && args[0] instanceof Object) {
         // 첫 번째 인자를 DTO로 변환
         args[0] = plainToInstance(dtoClass, args[0]);

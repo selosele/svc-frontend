@@ -1,5 +1,7 @@
+import { Transform } from 'class-transformer';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { HttpRequestDTOBase } from '@app/shared/models';
+import { isNotEmpty } from '@app/shared/utils';
 
 /** 코드 추가/수정 요청 DTO DTO */
 export class SaveCodeRequestDTO extends HttpRequestDTOBase {
@@ -23,9 +25,11 @@ export class SaveCodeRequestDTO extends HttpRequestDTOBase {
   codeContent?: string;
   
   /** 코드 순서 */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   codeOrder?: number;
   
   /** 코드 뎁스 */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   codeDepth?: number;
     
 }
