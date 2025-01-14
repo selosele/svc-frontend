@@ -1,4 +1,4 @@
-@if (!articleListDataLoad) {
+@if (!articleResponseDataLoad) {
   <ui-skeleton />
   <ui-skeleton />
   <ui-skeleton />
@@ -6,7 +6,7 @@
 @else {
   <layout-page-description>
     <ul>
-      <li>{{ articleList[0]?.boardContent }}</li>
+      <li>{{ articleResponse?.board.boardContent }}</li>
     </ul>
   </layout-page-description>
   
@@ -15,7 +15,7 @@
     [useRemove]="false"
     [useRowIndex]="true"
     [cols]="cols"
-    [data]="articleList"
+    [data]="articleResponse?.articleList"
     [dataKey]="'articleId'"
     [selection]="selection"
     (refresh)="onRefresh()"
