@@ -50,7 +50,7 @@ export class ArticleListComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.boardId = params['boardId'];
 
       if (!this.articleListDataLoad) {

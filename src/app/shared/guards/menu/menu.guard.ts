@@ -19,7 +19,7 @@ export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
   
   const menuList = await firstValueFrom(
     store.select<MenuResponseDTO[]>('menuList').pipe(
-      filter(menuList => Array.isArray(menuList) && menuList.length > 0),
+      filter((menuList) => Array.isArray(menuList) && menuList.length > 0),
       take(1)
     )
   );
