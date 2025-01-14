@@ -45,6 +45,9 @@ export class UiTreeTableComponent implements OnInit {
   /** 트리테이블 스크롤 높이 값 */
   @Input() scrollHeight = '400px';
 
+  /** 트리테이블 데이터 없을 시 표출할 텍스트 */
+  @Input() emptymessage = '데이터가 없어요.';
+
   /** 트리테이블 컬럼 목록 */
   @Input() cols!: Column[];
 
@@ -98,6 +101,11 @@ export class UiTreeTableComponent implements OnInit {
 
   /** 테이블 행 더블 클릭 이벤트 */
   @Output() rowDblclick = new EventEmitter<any>();
+
+  /** 트리테이블 colspan */
+  protected get colspan() {
+    return this.cols.length;
+  }
 
   /** 트리테이블 데이터 초기 값 */
   private initialValue = [];

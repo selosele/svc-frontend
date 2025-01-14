@@ -49,6 +49,13 @@
           </th>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [colSpan]="colspan" class="text-center">
+            {{ emptymessage }}
+          </td>
+        </tr>
+      </ng-template>
       <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
         <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" (dblclick)="onRowDblclick(rowData)">
           <td *ngFor="let col of columns; let i = index">

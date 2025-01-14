@@ -52,6 +52,9 @@ export class UiTableComponent implements OnInit {
   /** 테이블 스크롤 높이 값 */
   @Input() scrollHeight = '400px';
 
+  /** 테이블 데이터 없을 시 표출할 텍스트 */
+  @Input() emptymessage = '데이터가 없어요.';
+
   /** 테이블 컬럼 목록 */
   @Input() cols!: Column[];
 
@@ -99,6 +102,15 @@ export class UiTableComponent implements OnInit {
 
   /** 테이블 행 더블 클릭 이벤트 */
   @Output() rowDblclick = new EventEmitter<any>();
+
+  /** 테이블 colspan */
+  protected get colspan() {
+    let length = this.cols.length;
+    if (this.useRowIndex) length += 1;
+    if (this.useCheckbox) length += 1;
+    if (this.useRadio)    length += 1;
+    return length;
+  }
 
   /** 테이블 데이터 초기 값 */
   private initialValue = [];
