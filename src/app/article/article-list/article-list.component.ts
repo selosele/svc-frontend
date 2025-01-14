@@ -69,7 +69,7 @@ export class ArticleListComponent implements OnInit {
 
       this.store.update('articleResponse', {
         ...oldValue,
-        [this.boardId]: { data, dataLoaded: true }
+        [this.boardId]: { data, dataLoaded: true } // 게시판 ID별로 게시글 목록을 상태관리
       });
     });
   }
