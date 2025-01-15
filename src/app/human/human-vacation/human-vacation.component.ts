@@ -66,7 +66,10 @@ export class HumanVacationComponent implements OnInit {
   /** 회사 탭 */
   tabs: Tab[] = [];
 
-  /** 선택된 회사 탭의 index */
+  /**
+   * 선택된 회사 탭의 index
+   *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
+   */
   get activeIndex() {
     return this.store.select<number>('workHistoryTabIndex').value;
   }
