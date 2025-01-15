@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { MenuItem, TreeNode } from 'primeng/api';
 import { HttpService, StoreService } from '@app/shared/services';
-import { GetMenuRequestDTO, MenuResponseDTO, MenuTree, SaveMenuRequestDTO } from '@app/menu/menu.model';
+import { GetMenuRequestDTO, MenuBookmarkResponseDTO, MenuResponseDTO, MenuTree, SaveMenuBookmarkRequestDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
 import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
@@ -52,6 +52,12 @@ export class MenuService {
   /** 현재 페이지 타이틀 */
   private currentPageTitle = this.store.create<string>('currentPageTitle', null);
 
+  /** 현재 메뉴가 즐겨찾기 추가되어 있는지 여부 */
+  private hasBookmark = this.store.create<boolean>('hasBookmark', false);
+
+  /** 메뉴 즐겨찾기 목록 */
+  private menuBookmarkList = this.store.create<MenuBookmarkResponseDTO[]>('menuBookmarkList', []);
+
   /** 메뉴접속이력 목록 */
   private menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
 
@@ -66,6 +72,12 @@ export class MenuService {
     .subscribe((data) => {
       this.setMenuList(data);
     });
+  }
+
+  /** 메뉴 목록을 조회한다. */
+  listMenu$(dto?: GetMenuRequestDTO) {
+    const params = this.httpService.createParams(dto);
+    return this.http.get<MenuResponseDTO[]>('/co/menus', { params });
   }
 
   /** 시스템관리 > 메뉴관리 > 메뉴 목록을 조회한다. */
@@ -99,6 +111,24 @@ export class MenuService {
   /** 메뉴를 삭제한다. */
   removeMenu$(menuId: number) {
     return this.http.delete<void>(`/co/menus/${menuId}`);
+  }
+
+  /** 메뉴 즐겨찾기 목록을 조회한다. */
+  listMenuBookmark(): void {
+    this.http.get<MenuBookmarkResponseDTO[]>('/co/menubookmarks')
+    .subscribe((data) => {
+      this.store.update('menuBookmarkList', data);
+    });
+  }
+
+  /** 메뉴 즐겨찾기를 추가한다. */
+  addMenuBookmark$(dto: SaveMenuBookmarkRequestDTO) {
+    return this.http.post<MenuBookmarkResponseDTO>('/co/menubookmarks', dto);
+  }
+
+  /** 메뉴 즐겨찾기를 삭제한다. */
+  removeMenuBookmark$(menuBookmarkId: number) {
+    return this.http.delete<void>(`/co/menubookmarks/${menuBookmarkId}`);
   }
 
   /** 메뉴 관련 데이터를 설정한다. */

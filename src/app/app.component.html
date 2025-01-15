@@ -8,15 +8,30 @@
           <layout-breadcrumb />
         }
 
-        <h1 class="page-wrapper__title" *ngIf="currentPageTitle$ | async">
-          {{ currentPageTitle$ | async }}
-        </h1>
+        <div class="page-wrapper__title-box" *ngIf="currentPageTitle$ | async">
+          <h1 class="page-wrapper__title-name">
+            {{ currentPageTitle$ | async }}
+          </h1>
+
+          <ui-button
+            [size]="'small'"
+            [icon]="hasBookmark ? 'pi-bookmark-fill' : 'pi-bookmark'"
+            [outlined]="true"
+            [rounded]="true"
+            [text]="true"
+            [title]="hasBookmark ? '메뉴 즐겨찾기 삭제' : '메뉴 즐겨찾기 추가'"
+            (click)="saveMenuBookmark(currentMenu.menuBookmarkId)"
+          />
+        </div>
 
         <router-outlet />
       </div>
 
       @if (!isIndexPage) {
-        <layout-menu-history />
+        <div class="layout-bottom-box" [class.scroll]="isScroll" #layoutBottom>
+          <layout-menu-bookmark />
+          <!-- <layout-menu-history /> -->
+        </div>
       }
     </div>
   }

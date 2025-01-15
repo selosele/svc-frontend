@@ -23,10 +23,9 @@ import { isEmpty, isNotEmpty } from '@app/shared/utils';
   styleUrl: './layout-menu-history.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
+export class LayoutMenuHistoryComponent implements OnInit {
 
   constructor(
-    private zone: NgZone,
     private store: StoreService,
     private route: ActivatedRoute,
     private menuService: MenuService,
@@ -34,9 +33,6 @@ export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
   
   /** 컨텍스트 메뉴 */
   @ViewChild('cm') cm: ContextMenu;
-
-  /** layout-menu-history 요소 */
-  @ViewChild('lmh') lmh: ElementRef<HTMLElement>;
 
   /** 컨텍스트 메뉴 목록 */
   contextMenus: MenuItem[] = [];
@@ -46,12 +42,6 @@ export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
 
   /** 컨텍스트 메뉴로 선택한 메뉴 ID */
   cmMenuId: number;
-
-  /** 마지막 scroll top */
-  lastScrollTop = 0;
-
-  /** 스크롤 중인지 여부 */
-  isScroll = false;
 
   /** 메뉴접속이력 목록 */
   get menuHistoryList() {
@@ -99,14 +89,6 @@ export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  ngAfterViewChecked() {
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => {
-        this.detectScrollEnd();
-      });
-    });
-  }
-
   /** 삭제 버튼을 클릭해서 메뉴접속이력을 삭제한다. */
   onRemove(menuId: number): void {
     this.menuService.setMenuHistoryList(this.menuHistoryList.filter(x => x.menuId !== menuId));
@@ -122,23 +104,6 @@ export class LayoutMenuHistoryComponent implements OnInit, AfterViewChecked {
     this.cmMenuId = menuId;
     //this.cm.target = event.currentTarget;
     this.cm.show(event);
-  }
-  
-  /** 페이지 맨 하단으로 스크롤했는지 감지한다. */
-  detectScrollEnd(): void {
-    if (this.lmh) {
-      const lmhBottom = this.lmh.nativeElement.getBoundingClientRect().bottom;
-      this.isScroll = lmhBottom >= window.innerHeight;
-    } else {
-      this.isScroll = false;
-    }
-  }
-
-  /** 페이지 맨 하단으로 스크롤 시, scroll 클래스를 추가한다. */
-  @HostListener('document:scroll', ['$event'])
-  onDocumentScroll(event: Event): void {
-    if (window.scrollY < 0) return;
-    this.detectScrollEnd();
   }
 
 }

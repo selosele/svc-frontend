@@ -1,0 +1,27 @@
+<div class="layout-menu-bookmark" *ngIf="menuBookmarkList.length > 0">
+  <div class="grid">
+    <div class="col col-2">
+      <h2>메뉴 즐겨찾기</h2>
+    </div>
+
+    <div class="col col-10">
+      <ul class="layout-menu-bookmark__list">
+        <ng-container *ngFor="let i of menuBookmarkList">
+          <li [class.active]="i.menuId === menuId" (contextmenu)="onContextMenu($event, i.menuBookmarkId)">
+            <a [routerLink]="i.menuUrl" [queryParams]="{ menuId: i.menuId }" [title]="'메뉴 즐겨찾기'">
+              {{ i.menuName }}
+            </a>
+            <ui-button
+              [size]="'small'"
+              [icon]="'pi-times'"
+              [severity]="'secondary'"
+              [title]="'메뉴 즐겨찾기 삭제'"
+              (click)="onRemove(i.menuBookmarkId)"
+            />
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>
+<p-contextMenu [model]="contextMenus" #cm />

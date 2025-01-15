@@ -82,6 +82,9 @@ export class MenuResponseDTO {
   
   /** 삭제 여부 */
   deleteYn?: string;
+  
+  /** 메뉴 즐겨찾기 ID */
+  menuBookmarkId?: number;
 
   /** 메뉴 권한 목록 */
   menuRoles?: MenuRoleResponseDTO[];
@@ -99,6 +102,34 @@ export class MenuRoleResponseDTO {
   
   /** 권한명 */
   roleName?: string;
+
+}
+
+/** 메뉴 즐겨찾기 추가/수정 요청 DTO */
+export class SaveMenuBookmarkRequestDTO extends HttpRequestDTOBase {
+
+  /** 메뉴 즐겨찾기 ID */
+  menuBookmarkId?: number;
+
+  /** 메뉴 ID */
+  menuId?: number;
+
+}
+
+/** 메뉴 즐겨찾기 응답 DTO */
+export class MenuBookmarkResponseDTO {
+
+  /** 메뉴 즐겨찾기 ID */
+  menuBookmarkId?: number;
+
+  /** 메뉴 ID */
+  menuId?: number;
+
+  /** 메뉴명 */
+  menuName?: string;
+
+  /** 메뉴 URL */
+  menuUrl?: string;
 
 }
 

@@ -10,7 +10,55 @@
     box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
   }
 
-  &__title {
+  &__title-box {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     margin: 0 0 1rem 0;
+  }
+
+  &__title-name {
+    margin: 0;
+  }
+}
+
+.layout-bottom-box {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: 1.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--surface-300);
+  background-color: var(--surface-0);
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
+
+  &:not(:has(layout-menu-bookmark ul)) {
+    display: none;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1.5rem;
+    z-index: -1;
+    width: calc(100% + 3rem);
+    height: 100%;
+    background: inherit;
+    border-top: 1px solid var(--surface-300);
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0.625rem 0;
+    transition: all 0.2s;
+    opacity: 0;
+  }
+
+  &.scroll {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+
+    &:before {
+      opacity: 1;
+    }
   }
 }
