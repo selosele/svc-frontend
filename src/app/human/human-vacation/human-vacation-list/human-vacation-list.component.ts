@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { GetVacationRequestDTO, VacationResponseDTO, VacationTabViewItem } from '@app/human/human.model';
+import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/human/human.model';
 import { StoreService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '@app/human/human.service';
@@ -58,14 +58,17 @@ export class HumanVacationListComponent implements OnInit {
   /** 인증된 사용자 정보 */
   user: AuthenticatedUser;
 
+  /** 휴가 목록 */
+  get vacationList() {
+    const list = this.store.select<VacationDataStateDTO>('vacationList').value;
+    return list?.[this.workHistoryId]?.data ?? null;
+  }
+
   /** 휴가 목록 데이터 로드 완료 여부 */
-  vacationListDataLoad = false;
-
-  /** 모든 탭의 휴가 목록 */
-  vacationList: VacationTabViewItem[]= [];
-
-  /** 선택된 탭의 휴가 목록 */
-  vacationListCurrent: VacationResponseDTO[] = [];
+  get vacationListDataLoad() {
+    const list = this.store.select<VacationDataStateDTO>('vacationList').value;
+    return list?.[this.workHistoryId]?.dataLoaded ?? false;
+  }
 
   /** 휴가 검색 폼 */
   searchForm: FormGroup;
@@ -110,11 +113,10 @@ export class HumanVacationListComponent implements OnInit {
     this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
 
-      const currentItem = this.vacationList.find(x => x.key === data);
-      if (isEmpty(currentItem)) {
+      if (!this.vacationListDataLoad) {
         this.listVacation({ workHistoryId: data, userId: this.user?.userId });
       }
-      this.vacationListCurrent = currentItem?.value;
+
       this.splitter?.hide();
     });
   }
@@ -125,17 +127,12 @@ export class HumanVacationListComponent implements OnInit {
 
     this.humanService.listVacation$(dto)
     .subscribe((data) => {
-      if (isEmpty(this.vacationList.find(x => x.key === workHistoryId)?.value)) {
-        this.vacationList.push({ key: workHistoryId, value: data });
-        this.vacationListCurrent = this.vacationList.find(x => x.key === workHistoryId)?.value;
-        this.vacationListDataLoad = true;
-      }
-      else {
-        this.vacationList.forEach((x) => {
-          if (x.key === workHistoryId) x.value = data;
-        });
-        this.vacationListCurrent = data;
-      }
+      const oldValue = this.store.select<VacationDataStateDTO>('vacationList').value;
+      
+      this.store.update('vacationList', {
+        ...oldValue,
+        [workHistoryId]: { data, dataLoaded: true } // 근무이력 탭별로 휴가 목록을 상태관리
+      });
     });
   }
 

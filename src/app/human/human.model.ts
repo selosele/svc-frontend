@@ -532,13 +532,13 @@ export class VacationCalcResponseDTO {
 
 }
 
-/** 탭별 휴가 목록 */
-export interface VacationTabViewItem {
+/** 휴가 상태관리 DTO */
+export class VacationDataStateDTO {
 
-  /** key */
-  key: number;
-
-  /** 휴가 목록 */
-  value: VacationResponseDTO[];
+  /** 근무이력 탭별 휴가 목록 및 데이터 로드 완료 여부 */
+  [key: number]: {
+    data: VacationResponseDTO[],
+    dataLoaded: boolean,
+  };
 
 }

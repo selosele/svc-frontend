@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, VacationTabViewItem, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO, SaveCompanyRequestDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO, SaveCompanyRequestDTO, VacationDataStateDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -45,7 +45,7 @@ export class HumanService {
   private workHistoryId = this.store.create<number>('workHistoryId', null);
 
   /** 휴가 목록 */
-  private vacationList = this.store.create<VacationTabViewItem[]>('vacationList', []);
+  private vacationList = this.store.create<VacationDataStateDTO[]>('vacationList', []);
 
   /** 휴가 탭별 테이블 타이틀 */
   private vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
