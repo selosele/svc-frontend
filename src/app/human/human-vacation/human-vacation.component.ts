@@ -99,14 +99,15 @@ export class HumanVacationComponent implements OnInit {
     return this.store.select<Tab[]>('workHistoryTabList').value;
   }
 
+  /** 근무이력 목록 데이터 로드 완료 여부 */
+  get workHistoryListDataLoad() {
+    const data = this.store.select<Tab[]>('workHistoryTabList').value;
+    return data?.find(x => x.key === this.activeWorkHistoryId)?.dataLoaded ?? false;
+  }
+
   /** 근무이력 목록 */
   get workHistoryList() {
     return this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value;
-  }
-
-  /** 근무이력 목록 데이터 로드 완료 여부 */
-  get workHistoryListDataLoad() {
-    return this.store.select<boolean>('workHistoryListDataLoad').value;
   }
 
   /** 재직 중인 회사인지 여부 */
@@ -132,14 +133,14 @@ export class HumanVacationComponent implements OnInit {
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
 
-    this.activeWorkHistoryId = this.user?.workHistoryId;
+    this.activeWorkHistoryId = Number(this.user?.workHistoryId);
     this.listVacationCalc(this.activeWorkHistoryId);
   }
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
     this.activeIndex = event.index;
-    this.activeWorkHistoryId = event.activeKey;
+    this.activeWorkHistoryId = Number(event.activeKey);
 
     this.setAnnualTypeCode();
     //this.listWorkHistory();
@@ -216,8 +217,8 @@ export class HumanVacationComponent implements OnInit {
     })
     .subscribe((data) => {
       this.store.update('workHistoryList', data);
-      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId })));
-      this.store.update('workHistoryListDataLoad', true);
+      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoaded: true })));
+
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
       this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);
       this.humanService.setVacationTableContent(this.activeIndex);
@@ -245,9 +246,9 @@ export class HumanVacationComponent implements OnInit {
       // 페이지 이동 전에 클릭했던 탭의 콘텐츠가 활성화돼 있는 이슈로 인해 주석처리
       // 예) 페이지 이동 전에 두 번째 탭 클릭 -> 다시 페이지 이동시 첫 번째 탭 활성화 및 두 번째 탭의 콘텐츠 활성화되어 있는 이슈
       // 상태관리 로직 개선 예정
-      //if (!this.workHistoryListDataLoad) {
+      if (!this.workHistoryListDataLoad) {
         this.listWorkHistory();
-      //}
+      }
     });
   }
 
