@@ -22,6 +22,9 @@ export class UiButtonComponent {
   /** 버튼 외곽선 표출여부 */
   @Input() outlined?: boolean;
 
+  /** 버튼 라운드 처리 여부 */
+  @Input() rounded?: boolean;
+
   /** 버튼 아이콘 */
   @Input() icon?: string;
 
