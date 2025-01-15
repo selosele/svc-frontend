@@ -38,6 +38,9 @@ export class HumanService {
   /** 근무이력 탭 목록 */
   private workHistoryTabList = this.store.create<Tab[]>('workHistoryTabList', []);
 
+  /** 근무이력 탭 목록 */
+  private workHistoryTabIndex = this.store.create<number>('workHistoryTabIndex', 0);
+
   /** 근무이력 목록 데이터 로드 완료 여부 */
   private workHistoryListDataLoad = this.store.create<boolean>('workHistoryListDataLoad', false);
 

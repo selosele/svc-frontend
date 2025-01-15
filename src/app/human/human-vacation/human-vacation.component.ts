@@ -67,7 +67,14 @@ export class HumanVacationComponent implements OnInit {
   tabs: Tab[] = [];
 
   /** 선택된 회사 탭의 index */
-  activeIndex = 0;
+  get activeIndex() {
+    return this.store.select<number>('workHistoryTabIndex').value;
+  }
+
+  /** 선택된 회사 탭의 index를 변경한다. */
+  set activeIndex(value: number) {
+    this.store.update('workHistoryTabIndex', value);
+  }
 
   /** 선택된 회사 탭의 근무이력 ID */
   activeWorkHistoryId: number;
@@ -139,7 +146,7 @@ export class HumanVacationComponent implements OnInit {
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
-    this.activeIndex = event.index;
+    this.store.update('workHistoryTabIndex', event.index);
     this.activeWorkHistoryId = Number(event.activeKey);
 
     this.setAnnualTypeCode();
@@ -147,7 +154,7 @@ export class HumanVacationComponent implements OnInit {
     this.listVacationCalc(event.activeKey);
     
     this.humanService.setWorkHistoryId(event.activeKey);
-    this.humanService.setVacationTableContent(this.activeIndex);
+    this.humanService.setVacationTableContent(this.store.select<number>('workHistoryTabIndex').value);
   }
 
   /** 연차발생기준을 선택한다. */
