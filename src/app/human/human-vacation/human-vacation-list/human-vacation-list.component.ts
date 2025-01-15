@@ -128,7 +128,6 @@ export class HumanVacationListComponent implements OnInit {
     this.humanService.listVacation$(dto)
     .subscribe((data) => {
       const oldValue = this.store.select<VacationDataStateDTO>('vacationList').value;
-      
       this.store.update('vacationList', {
         ...oldValue,
         [workHistoryId]: { data, dataLoaded: true } // 근무이력 탭별로 휴가 목록을 상태관리

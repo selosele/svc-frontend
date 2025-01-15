@@ -66,7 +66,6 @@ export class ArticleListComponent implements OnInit {
     this.articleService.listArticle$({ boardId: this.boardId })
     .subscribe((data) => {
       const oldValue = this.store.select<ArticleDataStateDTO>('articleResponse').value;
-
       this.store.update('articleResponse', {
         ...oldValue,
         [this.boardId]: { data, dataLoaded: true } // 게시판 ID별로 게시글 목록을 상태관리
