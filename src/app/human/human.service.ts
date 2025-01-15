@@ -45,7 +45,7 @@ export class HumanService {
   private workHistoryId = this.store.create<number>('workHistoryId', null);
 
   /** 휴가 목록 */
-  private vacationList = this.store.create<VacationDataStateDTO[]>('vacationList', []);
+  private vacationList = this.store.create<VacationDataStateDTO>('vacationList', []);
 
   /** 휴가 탭별 테이블 타이틀 */
   private vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
@@ -255,16 +255,16 @@ export class HumanService {
 
   /** 잔여 휴가를 표출한다. */
   showVacationCount(workHistory: WorkHistoryResponseDTO): string {
-    const { annualTypeCode, joinYmd, quitYmd, workDiffM, vacationRemainCount } = workHistory;
+    const { annualTypeCode, joinYmd, quitYmd, workDiffM, vacationRemainCountByJoinYmd, vacationRemainCountByFiscalYear } = workHistory;
     switch (annualTypeCode) {
 
       // 입사일자 기준
       case 'JOIN_YMD':
-        return `잔여 월차: <strong class="text-primary">${vacationRemainCount}</strong>/${workDiffM-1}개`;
+        return `잔여 월차: <strong class="text-primary">${vacationRemainCountByJoinYmd}</strong>/${workDiffM-1}개`;
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
-        return `잔여 연차: <strong class="text-primary">${vacationRemainCount}</strong>/${this.getTotalAnnualCount(joinYmd, quitYmd)}개`;
+        return `잔여 연차: <strong class="text-primary">${vacationRemainCountByFiscalYear}</strong>/${this.getTotalAnnualCount(joinYmd, quitYmd)}개`;
       
       default:
         return null;

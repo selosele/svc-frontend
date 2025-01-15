@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
 import { HttpRequestDTOBase } from '@app/shared/models';
 import { isNotEmpty } from '@app/shared/utils';
+import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 
 /** 직원 추가/수정 요청 DTO */
 export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
@@ -145,8 +146,11 @@ export class WorkHistoryResponseDTO {
   /** 재직기간(월) */
   workDiffM?: number;
 
-  /** 잔여 휴가 개수 */
-  vacationRemainCount?: number;
+  /** 잔여 월차 개수 */
+  vacationRemainCountByJoinYmd?: number;
+
+  /** 잔여 연차 개수 */
+  vacationRemainCountByFiscalYear?: number;
 
 }
 
