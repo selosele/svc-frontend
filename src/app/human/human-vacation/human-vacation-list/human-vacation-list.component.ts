@@ -7,7 +7,7 @@ import { HumanService } from '@app/human/human.service';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
-import { dateUtil, isEmpty } from '@app/shared/utils';
+import { dateUtil } from '@app/shared/utils';
 import { AuthenticatedUser } from '@app/auth/auth.model';
 
 @Component({
@@ -112,7 +112,7 @@ export class HumanVacationListComponent implements OnInit {
 
     this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
-
+      
       if (!this.vacationListDataLoad) {
         this.listVacation({ workHistoryId: data, userId: this.user?.userId });
       }
