@@ -7,3 +7,4 @@ export * from './form/validation.util';
 // 공통
 export * from './global/date.util';
 export * from './global/lang.util';
+export * from './global/route.util';
