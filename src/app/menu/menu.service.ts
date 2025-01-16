@@ -126,6 +126,11 @@ export class MenuService {
     return this.http.post<MenuBookmarkResponseDTO>('/co/menubookmarks', dto);
   }
 
+  /** 모든 메뉴 즐겨찾기를 삭제한다. */
+  removeMenuBookmarkAll$() {
+    return this.http.delete<void>('/co/menubookmarks');
+  }
+
   /** 메뉴 즐겨찾기를 삭제한다. */
   removeMenuBookmark$(menuBookmarkId: number) {
     return this.http.delete<void>(`/co/menubookmarks/${menuBookmarkId}`);

@@ -55,6 +55,11 @@ export class LayoutMenuBookmarkComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.contextMenus = [
+      { label: '삭제', icon: 'pi pi-trash', command: () => this.onRemove(this.cmMenuBookmarkId) },
+      { label: '전체 삭제', icon: 'pi pi-trash', command: () => this.removeAll() },
+    ];
+
     this.menuService.listMenuBookmark();
   }
 
@@ -62,20 +67,33 @@ export class LayoutMenuBookmarkComponent implements OnInit {
   onRemove(menuBookmarkId: number): void {
     this.menuService.removeMenuBookmark$(menuBookmarkId)
     .subscribe(() => {
-      this.store.update('hasBookmark', false);
-      this.store.update('menuBookmarkList', this.menuBookmarkList.filter(x => x.menuBookmarkId !== menuBookmarkId));
+
+      this.menuService.listMenu$()
+      .subscribe((data) => {
+        this.menuService.setMenuList(data);
+        this.store.update('hasBookmark', false);
+        this.store.update('menuBookmarkList', this.menuBookmarkList.filter(x => x.menuBookmarkId !== menuBookmarkId));
+      });
     });
   }
 
   /** 모든 메뉴 즐겨찾기를 삭제한다. */
   removeAll(): void {
-    this.store.update('hasBookmark', false);
-    this.store.update('menuBookmarkList', []);
+    this.menuService.removeMenuBookmarkAll$()
+    .subscribe(() => {
+
+      this.menuService.listMenu$()
+      .subscribe((data) => {
+        this.menuService.setMenuList(data);
+        this.store.update('hasBookmark', false);
+        this.store.update('menuBookmarkList', []);
+      });
+    });
   }
 
   /** 마우스 오른쪽을 클릭한다. */
   onContextMenu(event: any, menuBookmarkId: number): void {
-    this.menuBookmarkId = menuBookmarkId;
+    this.cmMenuBookmarkId = menuBookmarkId;
     //this.cm.target = event.currentTarget;
     this.cm.show(event);
   }
