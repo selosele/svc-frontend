@@ -12,7 +12,7 @@ import { MenuResponseDTO } from './menu/menu.model';
 import { AuthenticatedUser } from './auth/auth.model';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent } from './shared/components/layout';
 import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
-import { isNotEmpty, MAIN_PAGE_PATH2 } from './shared/utils';
+import { MAIN_PAGE_PATH2 } from './shared/utils';
 
 @Component({
   standalone: true,
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   /** 메뉴 즐겨찾기를 추가/수정한다. */
   saveMenuBookmark(menuBookmarkId: number): void {
-    if (isNotEmpty(menuBookmarkId)) {
+    if (this.hasBookmark) {
       this.menuService.removeMenuBookmark$(menuBookmarkId)
       .subscribe(() => {
         this.messageService.toastSuccess('즐겨찾기 삭제되었어요.');
