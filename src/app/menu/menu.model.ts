@@ -114,6 +114,9 @@ export class SaveMenuBookmarkRequestDTO extends HttpRequestDTOBase {
   /** 메뉴 ID */
   menuId?: number;
 
+  /** 사용자 ID */
+  userId?: number;
+
 }
 
 /** 메뉴 즐겨찾기 응답 DTO */
@@ -124,6 +127,9 @@ export class MenuBookmarkResponseDTO {
 
   /** 메뉴 ID */
   menuId?: number;
+
+  /** 사용자 ID */
+  userId?: number;
 
   /** 메뉴명 */
   menuName?: string;

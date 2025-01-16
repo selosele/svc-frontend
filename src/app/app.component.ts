@@ -9,6 +9,7 @@ import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
 import { MenuResponseDTO } from './menu/menu.model';
+import { AuthenticatedUser } from './auth/auth.model';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent } from './shared/components/layout';
 import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 import { isNotEmpty, MAIN_PAGE_PATH2 } from './shared/utils';
@@ -48,6 +49,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
   /** 레이아웃 하단 박스 요소 */
   @ViewChild('layoutBottom') lmh: ElementRef<HTMLElement>;
 
+  /** 인증된 사용자 정보 */
+  user: AuthenticatedUser;
+
   /** 마지막 scroll top */
   lastScrollTop = 0;
 
@@ -85,6 +89,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.user = this.authService.getAuthenticatedUser();
+
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -142,7 +148,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       });
     }
     else {
-      this.menuService.addMenuBookmark$({ menuId: this.currentMenuId })
+      this.menuService.addMenuBookmark$({ menuId: this.currentMenuId, userId: Number(this.user?.userId) })
       .subscribe((data) => {
         this.messageService.toastSuccess('즐겨찾기 추가되었어요.');
         this.hasBookmark = true;
