@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TreeTable, TreeTableModule, TreeTableNodeExpandEvent, TreeTableNodeUnSelectEvent } from 'primeng/treetable';
 import { TreeNode, TreeTableNode } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
@@ -17,7 +17,8 @@ import { Column } from './ui-tree-table.model';
   ],
   selector: 'ui-tree-table',
   templateUrl: './ui-tree-table.component.html',
-  styleUrl: './ui-tree-table.component.scss'
+  styleUrl: './ui-tree-table.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiTreeTableComponent implements OnInit {
 
