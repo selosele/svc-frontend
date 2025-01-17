@@ -26,9 +26,6 @@ export class ArticleListComponent implements OnInit {
     private articleService: ArticleService,
   ) {}
 
-  /** 게시판 ID */
-  private boardId: number;
-
   /** 게시글 및 게시판 정보 */
   get articleResponse() {
     const article = this.store.select<ArticleDataStateDTO>('articleResponse').value;
@@ -57,6 +54,9 @@ export class ArticleListComponent implements OnInit {
     },
     { field: 'createDt',          header: '작성일시' },
   ];
+
+  /** 게시판 ID */
+  private boardId: number;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
