@@ -58,7 +58,7 @@
       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
         <tr [pSelectableRow]="rowData" (dblclick)="onRowDblclick(rowData)">
           <td *ngIf="useRowIndex">
-            {{ setRowIndex(rowIndex) }}
+            {{ getRowIndex(rowIndex) }}
           </td>
           <td *ngIf="useCheckbox">
             <p-tableCheckbox [value]="rowData" />

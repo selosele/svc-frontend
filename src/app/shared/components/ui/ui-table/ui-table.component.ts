@@ -179,7 +179,7 @@ export class UiTableComponent implements OnInit {
   }
 
   /** 행 번호를 설정한다. */
-  protected setRowIndex(rowIndex: number): number {
+  protected getRowIndex(rowIndex: number): number {
     if (this.useRowIndexDesc) {
       return this.data.length - rowIndex;
     }
