@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Table, TableModule, TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
@@ -15,7 +15,8 @@ import { Column } from './ui-table.model';
   ],
   selector: 'ui-table',
   templateUrl: './ui-table.component.html',
-  styleUrl: './ui-table.component.scss'
+  styleUrl: './ui-table.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiTableComponent implements OnInit {
 
@@ -37,8 +38,11 @@ export class UiTableComponent implements OnInit {
   /** 테이블 새로고침 버튼 사용여부 */
   @Input() useRefresh = true;
 
-  /** 테이블 row index 사용여부 */
+  /** 테이블 행 번호 사용여부 */
   @Input() useRowIndex = false;
+
+  /** 테이블 행 번호 역순 정렬 사용여부 */
+  @Input() useRowIndexDesc = false;
 
   /** 테이블 체크박스 사용여부 */
   @Input() useCheckbox = false;
@@ -172,6 +176,14 @@ export class UiTableComponent implements OnInit {
 
       return event.order * result;
     });
+  }
+
+  /** 행 번호를 설정한다. */
+  protected setRowIndex(rowIndex: number): number {
+    if (this.useRowIndexDesc) {
+      return this.data.length - rowIndex;
+    }
+    return rowIndex + 1;
   }
 
 }

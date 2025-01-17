@@ -6,4 +6,14 @@
   &__view {
     font-family: inherit;
   }
+
+  .p-datatable .p-datatable-thead > tr > th {
+    padding: 0.8rem;
+    border: 0;
+    background-color: var(--primary-50);
+  }
+  
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.9rem;
+  }
 }
