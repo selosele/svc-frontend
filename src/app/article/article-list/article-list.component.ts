@@ -47,7 +47,14 @@ export class ArticleListComponent implements OnInit {
   /** 테이블 컬럼 */
   cols = [
     { field: 'articleTitle',      header: '제목' },
-    { field: 'articleWriterName', header: '작성자' },
+    { field: 'articleWriterName', header: '작성자',
+      valueGetter: (data: ArticleResultDTO) => {
+        if (data.isSystemAdmin === 1) {
+          return `<strong>${data.articleWriterName}</strong>`;
+        }
+        return data.articleWriterName;
+      }
+    },
     { field: 'createDt',          header: '작성일시' },
   ];
 

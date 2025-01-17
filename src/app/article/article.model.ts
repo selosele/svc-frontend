@@ -30,6 +30,9 @@ export class ArticleResultDTO {
   /** 게시글 작성자명 */
   articleWriterName?: number;
 
+  /** 게시글 작성자의 시스템관리자 권한 보유 여부 */
+  isSystemAdmin?: number;
+
   /** 등록일시 */
   createDt?: string;
 
