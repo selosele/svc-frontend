@@ -63,7 +63,15 @@ export class UiTableComponent implements OnInit {
   @Input() cols!: Column[];
 
   /** 테이블 데이터 */
-  @Input() data?: any;
+  @Input()
+  set data(value: any[]) {
+    this._data = value ? deepCopy(value) : [];
+    this.initialValue = deepCopy(this._data);
+  }
+
+  get data() {
+    return this._data;
+  }
 
   /** 테이블 행 선택 key */
   @Input() dataKey?: any;
@@ -106,6 +114,9 @@ export class UiTableComponent implements OnInit {
 
   /** 테이블 행 더블 클릭 이벤트 */
   @Output() rowDblclick = new EventEmitter<any>();
+
+  /** 테이블 데이터 (임시) */
+  private _data: any[] = [];
 
   /** 테이블 colspan */
   protected get colspan() {
