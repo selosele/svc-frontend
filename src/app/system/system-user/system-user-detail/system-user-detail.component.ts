@@ -156,7 +156,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
       this.useRemove = !this.isUserSelf;
       this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
-      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
+      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
 
       if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;

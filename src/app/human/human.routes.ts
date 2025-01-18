@@ -12,7 +12,7 @@ export const humanRoutes: Routes = [
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
-      roles: [roles.EMPLOYEE],
+      roles: [roles.EMPLOYEE.id],
       codeKeys: ['GENDER_00', 'RANK_00', 'JOB_TITLE_00'],
     },
     loadComponent: () => import('./human-my-info/human-my-info.component').then(x => x.HumanMyInfoComponent),
@@ -23,7 +23,7 @@ export const humanRoutes: Routes = [
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
-      roles: [roles.EMPLOYEE],
+      roles: [roles.EMPLOYEE.id],
       codeKeys: ['VACATION_TYPE_00', 'ANNUAL_TYPE_00'],
     },
     loadComponent: () => import('./human-vacation/human-vacation.component').then(x => x.HumanVacationComponent),

@@ -84,7 +84,7 @@ export class ModalSearchCompanyComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN);
+    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN.id);
 
     if (!this.companyListDataLoad) {
       this.listCompany();

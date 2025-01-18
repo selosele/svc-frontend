@@ -104,7 +104,7 @@ export class SystemMenuDetailComponent {
     if (changes.detail && this.detailForm) {
       this.useRemove = true;
       this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
-      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE).map(x => x.roleId);
+      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
       
       if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;

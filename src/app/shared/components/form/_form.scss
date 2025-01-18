@@ -98,7 +98,9 @@ textarea {
   border-color: var(--red-600);
 
   .p-inputtext,
-  .p-dropdown {
+  .p-dropdown,
+  .p-editor-container .p-editor-toolbar.ql-snow,
+  .p-editor-container .p-editor-content.ql-snow {
     border-color: var(--red-600);
   }
 }

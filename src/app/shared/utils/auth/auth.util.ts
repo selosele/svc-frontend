@@ -11,13 +11,19 @@ export function jwtOptionsFactory() {
   };
 }
 
-/** 권한 ID 목록 */
+/** 권한 목록 */
 export const roles = {
 
   /** 시스템관리자 권한 */
-  SYSTEM_ADMIN: 'ROLE_SYSTEM_ADMIN',
+  SYSTEM_ADMIN: {
+    id: 'ROLE_SYSTEM_ADMIN',
+    name: '시스템관리자'
+  },
 
   /** 직원 권한 */
-  EMPLOYEE: 'ROLE_EMPLOYEE',
+  EMPLOYEE: {
+    id: 'ROLE_EMPLOYEE',
+    name: '직원'
+  },
 
 };

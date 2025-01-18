@@ -12,7 +12,7 @@ export const systemRoutes: Routes = [
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
-      roles: [roles.SYSTEM_ADMIN],
+      roles: [roles.SYSTEM_ADMIN.id],
       codeKeys: ['GENDER_00', 'RANK_00', 'JOB_TITLE_00'],
     },
     loadComponent: () => import('./system-user/system-user.component').then(x => x.SystemUserComponent),
@@ -22,7 +22,7 @@ export const systemRoutes: Routes = [
     path: 'sys/roles',
     canActivate: [authGuard, menuGuard],
     data: {
-      roles: [roles.SYSTEM_ADMIN],
+      roles: [roles.SYSTEM_ADMIN.id],
     },
     loadComponent: () => import('./system-role/system-role.component').then(x => x.SystemRoleComponent),
   },
@@ -31,7 +31,7 @@ export const systemRoutes: Routes = [
     path: 'sys/menus',
     canActivate: [authGuard, menuGuard],
     data: {
-      roles: [roles.SYSTEM_ADMIN],
+      roles: [roles.SYSTEM_ADMIN.id],
     },
     loadComponent: () => import('./system-menu/system-menu.component').then(x => x.SystemMenuComponent),
   },
@@ -40,7 +40,7 @@ export const systemRoutes: Routes = [
     path: 'sys/codes',
     canActivate: [authGuard, menuGuard],
     data: {
-      roles: [roles.SYSTEM_ADMIN],
+      roles: [roles.SYSTEM_ADMIN.id],
     },
     loadComponent: () => import('./system-code/system-code.component').then(x => x.SystemCodeComponent),
   },
@@ -50,7 +50,7 @@ export const systemRoutes: Routes = [
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
-      roles: [roles.SYSTEM_ADMIN],
+      roles: [roles.SYSTEM_ADMIN.id],
       codeKeys: ['BOARD_TYPE_00'],
     },
     loadComponent: () => import('./system-board/system-board.component').then(x => x.SystemBoardComponent),
@@ -61,7 +61,7 @@ export const systemRoutes: Routes = [
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
-      roles: [roles.SYSTEM_ADMIN],
+      roles: [roles.SYSTEM_ADMIN.id],
       codeKeys: ['APPLY_STATE_00'],
     },
     loadComponent: () => import('./system-company/system-company.component').then(x => x.SystemCompanyComponent),

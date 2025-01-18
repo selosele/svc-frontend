@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { isEmpty, isObjectEmpty, validationMessage } from '@app/shared/utils';
+import { isObjectEmpty, validationMessage } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -67,7 +67,7 @@ export class FormFieldComponent implements OnInit {
   protected setErrorMessage(): void {
     const { errors } = this.control;
     
-    if (isEmpty(errors)) {
+    if (isObjectEmpty(errors)) {
       this.errorMessage = '';
       return;
     }

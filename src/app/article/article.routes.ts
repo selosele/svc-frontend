@@ -12,7 +12,7 @@ export const articleRoutes: Routes = [
     canActivate: [authGuard, menuGuard],
     resolve: { code: codeResolver },
     data: {
-      roles: [roles.EMPLOYEE],
+      roles: [roles.EMPLOYEE.id],
       codeKeys: ['BOARD_TYPE_00'],
     },
     loadComponent: () => import('./article-list/article-list.component').then(x => x.ArticleListComponent),

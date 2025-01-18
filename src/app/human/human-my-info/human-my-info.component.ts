@@ -153,7 +153,7 @@ export class HumanMyInfoComponent implements OnInit {
     });
 
     this.user = this.authService.getAuthenticatedUser();
-    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN);
+    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN.id);
     this.initForm();
 
     if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value)) {
