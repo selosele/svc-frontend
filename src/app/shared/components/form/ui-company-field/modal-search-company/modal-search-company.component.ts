@@ -96,7 +96,7 @@ export class ModalSearchCompanyComponent implements OnInit {
     });
 
     this.dialogRef.onClose.subscribe(() => {
-      this.companyListDataLoad = false; // 모달을 닫고 다시 열면 리스트를 처음부터 다시 조회하도록 해준다.
+      this.companyListDataLoad = false; // modal을 닫고 다시 열면 리스트를 처음부터 다시 조회하도록 해준다.
     });
   }
 
