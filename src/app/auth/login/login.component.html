@@ -6,7 +6,7 @@
       <p>찾는 건 이제 그만! 나의 회사별 휴가, 급여 데이터를 한 곳에서 편리하게 관리하세요!</p>
     </ui-card>
 
-    <ui-form [form]="loginForm" (submit)="onSubmit($event)">
+    <ui-form [form]="loginForm" [useSubmit]="false" (submit)="onSubmit($event)">
       <div class="input-box">
         <ui-text-field
           [block]="true"

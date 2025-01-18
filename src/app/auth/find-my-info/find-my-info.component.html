@@ -8,12 +8,13 @@
     </ul>
   </layout-page-description>
   
-  <ui-form [form]="findAccountForm" (submit)="onSubmitFindAccount($event)">
+  <ui-form [form]="findAccountForm" [useSubmit]="false" (submit)="onSubmitFindAccount($event)">
     <div class="grid">
       <div class="col-5">
         <ui-text-field
           [control]="findAccountForm.get('employeeName')"
           [label]="'실명'"
+          [showErrorMessage]="false"
         />
       </div>
   
@@ -21,6 +22,7 @@
         <ui-text-field
           [control]="findAccountForm.get('emailAddr')"
           [label]="'이메일주소'"
+          [showErrorMessage]="false"
         />
       </div>
 
@@ -41,12 +43,13 @@
     </ul>
   </layout-page-description>
   
-  <ui-form [form]="findPasswordForm" (submit)="onSubmitFindPassword($event)">
+  <ui-form [form]="findPasswordForm" [useSubmit]="false" (submit)="onSubmitFindPassword($event)">
     <div class="grid">
       <div class="col-5">
         <ui-text-field
           [control]="findPasswordForm.get('userAccount')"
           [label]="'아이디'"
+          [showErrorMessage]="false"
         />
       </div>
   
@@ -54,6 +57,7 @@
         <ui-text-field
           [control]="findPasswordForm.get('emailAddr')"
           [label]="'이메일주소'"
+          [showErrorMessage]="false"
         />
       </div>
 

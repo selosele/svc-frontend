@@ -5,7 +5,7 @@
   </ul>
 </layout-page-description>
 
-<ui-form [form]="searchForm" (submit)="onSubmit($event)">
+<ui-form [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
   <!-- <div class="input-box search-box"> -->
   <div class="grid">
     <div class="col">

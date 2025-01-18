@@ -16,7 +16,7 @@
 @else {
   <ui-content-title [text]="'비밀번호 변경'" />
 
-  <ui-form [form]="changePasswordForm" (submit)="onSubmitPassword($event)">
+  <ui-form [form]="changePasswordForm" [useSubmit]="false" (submit)="onSubmitPassword($event)">
     <div class="grid mt-2">
       <div class="col">
         <ui-text-field
@@ -52,7 +52,7 @@
 
   <ui-content-title [text]="'직원 정보'" />
 
-  <ui-form [form]="employeeForm" (submit)="onSubmitEmployee($event)">
+  <ui-form [form]="employeeForm" [useSubmit]="false" (submit)="onSubmitEmployee($event)">
     <div class="grid mt-2">
       <div class="col">
         <ui-text-field

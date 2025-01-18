@@ -1,3 +1,28 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit($event)" (keydown.enter)="onEnterKey($event)">
   <ng-content></ng-content>
+
+  <div class="ui-form__buttons">
+    <ng-content select="[button]"></ng-content>
+
+    @if (useSubmit) {
+      <ui-button button
+        [type]="'submit'"
+        [size]="'small'"
+        [severity]="'primary'"
+        (click)="onSubmit($event)"
+      >
+        저장
+      </ui-button>
+    }
+    
+    @if (useRemove) {
+      <ui-button button
+        [size]="'small'"
+        [severity]="'danger'"
+        (click)="onRemove($event)"
+      >
+        삭제
+      </ui-button>
+    }
+  </div>
 </form>

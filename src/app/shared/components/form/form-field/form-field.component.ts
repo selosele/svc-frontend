@@ -42,11 +42,14 @@ export class FormFieldComponent implements OnInit {
   /** input value */
   @Input() value?: any = '';
 
-  /** input name */
-  name?: string;
+  /** input 오류 메시지 표출 여부 */
+  @Input() showErrorMessage = true;
 
   /** input 오류 메시지 */
   errorMessage: string;
+
+  /** input name */
+  name?: string;
 
   ngOnInit() {
     if (isObjectEmpty(this.foundControl)) {
@@ -54,7 +57,10 @@ export class FormFieldComponent implements OnInit {
       this.formControl = this.foundControl?.control;
       this.name = this.foundControl?.name;
     }
-    this.setErrorMessage();
+
+    if (this.showErrorMessage) {
+      this.setErrorMessage();
+    }
   }
 
   /** 오류 메시지를 설정한다. */

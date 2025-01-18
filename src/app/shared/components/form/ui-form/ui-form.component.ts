@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UiButtonComponent } from '../../ui';
 
 @Component({
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    UiButtonComponent,
   ],
   selector: 'ui-form',
   templateUrl: './ui-form.component.html',
@@ -19,8 +21,17 @@ export class UiFormComponent {
   /** Enter키를 통한 submit 이벤트 발생 여부 */
   @Input() enterKeySubmit = true;
 
+  /** 저장 버튼 사용 여부 */
+  @Input() useSubmit = true;
+
+  /** 삭제 버튼 사용 여부 */
+  @Input() useRemove = false;
+
   /** form submit 이벤트 */
   @Output() submit = new EventEmitter<any>();
+
+  /** 삭제 버튼 클릭 이벤트 */
+  @Output() remove = new EventEmitter<Event>();
 
   /** form을 submit한다. */
   protected onSubmit(event: Event): void {
@@ -32,6 +43,11 @@ export class UiFormComponent {
       return;
     }
     this.submit.emit(this.form.value);
+  }
+
+  /** 삭제 버튼을 클릭한다. */
+  protected onRemove(event: Event): void {
+    this.remove.emit(event);
   }
 
   /** Enter키를 통한 submit 이벤트를 방지한다. */
