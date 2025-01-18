@@ -2,7 +2,7 @@
 export class HttpRequestDTOBase {
 
   /** 사용 여부 */
-  useYn?: string = 'Y';
+  useYn?: string;
 
   /** 삭제 여부 */
   deleteYn?: string = 'N';
