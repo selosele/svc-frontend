@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TreeTable, TreeTableModule, TreeTableNodeExpandEvent, TreeTableNodeUnSelectEvent } from 'primeng/treetable';
 import { TreeNode, TreeTableNode } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
@@ -20,7 +20,7 @@ import { Column } from './ui-tree-table.model';
   styleUrl: './ui-tree-table.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class UiTreeTableComponent implements OnInit {
+export class UiTreeTableComponent {
 
   /** 트리테이블 */
   @ViewChild('treeTable') treeTable: TreeTable;
@@ -57,6 +57,8 @@ export class UiTreeTableComponent implements OnInit {
   set data(value: any[]) {
     this._data = value ? deepCopy(value) : [];
     this.initialValue = deepCopy(this._data);
+    this.isSorted = null;
+    this.treeTable?.reset();
   }
 
   get data() {
@@ -124,10 +126,6 @@ export class UiTreeTableComponent implements OnInit {
 
   /** 트리테이블 행 정렬 여부 */
   private isSorted: boolean | null = null;
-
-  ngOnInit() {
-    this.initialValue = deepCopy(this.data);
-  }
 
   /** 트리테이블 새로고침 버튼을 클릭한다. */
   protected onRefresh(event: Event): void {

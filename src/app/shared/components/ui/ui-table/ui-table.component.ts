@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Table, TableModule, TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
 import { deepCopy } from '@app/shared/utils';
@@ -18,7 +18,7 @@ import { Column } from './ui-table.model';
   styleUrl: './ui-table.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class UiTableComponent implements OnInit {
+export class UiTableComponent {
 
   /** 테이블 */
   @ViewChild('table') table: Table;
@@ -63,10 +63,11 @@ export class UiTableComponent implements OnInit {
   @Input() cols!: Column[];
 
   /** 테이블 데이터 */
-  @Input()
-  set data(value: any[]) {
+  @Input() set data(value: any[]) {
     this._data = value ? deepCopy(value) : [];
     this.initialValue = deepCopy(this._data);
+    this.isSorted = null;
+    this.table?.reset();
   }
 
   get data() {
@@ -131,11 +132,7 @@ export class UiTableComponent implements OnInit {
   private initialValue = [];
 
   /** 테이블 행 정렬 여부 */
-  private isSorted: boolean = null;
-
-  ngOnInit() {
-    this.initialValue = deepCopy(this.data);
-  }
+  private isSorted: boolean | null = null;
 
   /** 테이블 새로고침 버튼을 클릭한다. */
   protected onRefresh(event: Event): void {
