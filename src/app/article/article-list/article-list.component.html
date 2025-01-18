@@ -11,6 +11,7 @@
   </layout-page-description>
   
   <ui-table #table first
+    [scrollHeight]="null"
     [useAdd]="false"
     [useRemove]="false"
     [useRowIndex]="true"
@@ -25,5 +26,13 @@
     [paginator]="true"
     (refresh)="onRefresh()"
     (rowSelect)="onRowSelect($event)"
-  />
+  >
+    <ui-button buttons
+      [size]="'small'"
+      [icon]="'pi-plus'"
+      [label]="'게시글 작성'"
+      [outlined]="true"
+      (click)="addArticle()"
+    />
+  </ui-table>
 }

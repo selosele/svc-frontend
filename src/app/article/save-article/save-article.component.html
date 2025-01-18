@@ -1,0 +1,47 @@
+<ui-form
+  [form]="detailForm"
+  (submit)="onSubmit($event)"
+  (remove)="onRemove($event)"
+>
+  <ui-hidden-field [control]="detailForm.get('articleId')" />
+  <ui-hidden-field [control]="detailForm.get('boardId')" />
+
+  <div class="grid mt-2">
+    <div class="col-12">
+      <div class="grid align-items-center">
+        <div class="col-fixed">
+          <ui-text-field
+            [control]="detailForm.get('articleWriterNickname')"
+            [placeholder]="'닉네임'"
+            [readonly]="!isNicknameEditable"
+          />
+        </div>
+        <div class="col-fixed">
+          <ui-checkbox
+            [control]="detailForm.get('useNicknameYn')"
+            [label]="'닉네임 사용'"
+            [value]="'Y'"
+            (change)="onUseNicknameYnChange($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <ui-text-field
+        [control]="detailForm.get('articleTitle')"
+        [label]="'게시글 제목'"
+        [placeholder]="'제목을 입력하세요.'"
+      />
+    </div>
+
+    <div class="col-12">
+      <ui-editor
+        [control]="detailForm.get('articleContent')"
+        [label]="'게시글 내용'"
+        [placeholder]="'내용을 입력하세요.'"
+        [height]="'200px'"
+      />
+    </div>
+  </div>
+</ui-form>

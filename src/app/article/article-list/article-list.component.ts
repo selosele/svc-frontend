@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { StoreService, UiDialogService } from '@app/shared/services';
-import { ArticleService } from '../article.service';
-import { ArticleDataStateDTO, ArticleResultDTO } from '../article.model';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
+import { roles } from '@app/shared/utils';
+import { ArticleDataStateDTO, ArticleResultDTO } from '../article.model';
+import { ArticleService } from '../article.service';
+import { SaveArticleComponent } from '../save-article/save-article.component';
 
 @Component({
   standalone: true,
   imports: [
     UiSkeletonComponent,
     UiTableComponent,
+    UiButtonComponent,
     LayoutPageDescriptionComponent,
   ],
   selector: 'view-article-list',
@@ -22,6 +26,7 @@ export class ArticleListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: StoreService,
+    private dialogRef: DynamicDialogRef,
     private dialogService: UiDialogService,
     private articleService: ArticleService,
   ) {}
@@ -46,13 +51,18 @@ export class ArticleListComponent implements OnInit {
     { field: 'articleTitle',      header: '제목' },
     { field: 'articleWriterName', header: '작성자',
       valueGetter: (data: ArticleResultDTO) => {
+        
+        // 1. 작성자가 시스템관리자인 경우 
         if (data.isSystemAdmin === 1) {
-          return `<strong>${data.articleWriterName}</strong>`;
+
+          // 닉네임이 있으면 닉네임을 반환하고, 없으면 "시스템관리자" 권한명을 반환
+          return data.articleWriterNickname ?? `<strong>${roles.SYSTEM_ADMIN.name}</strong>`;
         }
-        return data.articleWriterName;
+        // 2. 작성자가 시스템관리자가 아닌 경우
+        return data.articleWriterNickname ?? data.employeeName;
       }
     },
-    { field: 'createDt',          header: '작성일시' },
+    { field: 'createDt', header: '작성일시' },
   ];
 
   /** 게시판 ID */
@@ -79,12 +89,27 @@ export class ArticleListComponent implements OnInit {
       });
     });
   }
+  
+  /** 게시글 작성 modal을 표출한다. */
+  addArticle(): void {
+    const modal = this.dialogService.open(SaveArticleComponent, {
+      focusOnShow: false,
+      header: '게시글 작성하기',
+      width: '1000px',
+      data: { boardId: this.boardId }
+    });
+
+    modal.onClose.subscribe((articleSaved) => {
+      if (!articleSaved) return;
+      this.listArticle();
+    });
+  }
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    // this.dialogService.open(SystemRoleDetailComponent, {
+    // const modal = this.dialogService.open(SaveArticleComponent, {
     //   focusOnShow: false,
-    //   header: `"${event.data['roleName']}" 권한별 사용자 및 메뉴 목록 조회`,
+    //   header: '게시글 제목이 들어감',
     //   data: { userList, menuTree },
     // });
   }
