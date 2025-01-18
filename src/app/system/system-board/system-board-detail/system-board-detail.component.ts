@@ -104,7 +104,7 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
   /** 게시판을 저장한다. */
   @TransformToDto(SaveBoardRequestDTO)
   async onSubmit(value: SaveBoardRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.boardId) ? '추가' : '수정';
+    const crudName = isEmpty(value.boardId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`게시판을 ${crudName}하시겠어요?`);
     if (!confirm) return;

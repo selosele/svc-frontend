@@ -213,7 +213,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 정보를 추가/수정한다. */
   async onSubmit(value: SaveUserRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.userId) ? '추가' : '수정';
+    const crudName = isEmpty(value.userId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`사용자 및 직원 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;

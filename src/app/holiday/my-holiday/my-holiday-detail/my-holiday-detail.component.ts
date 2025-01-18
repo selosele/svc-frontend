@@ -97,7 +97,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
 
   /** 휴일 정보를 저장한다. */
   async onSubmit(value: SaveHolidayRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.originalYmd) ? '추가' : '수정';
+    const crudName = isEmpty(value.originalYmd) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`휴일 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;

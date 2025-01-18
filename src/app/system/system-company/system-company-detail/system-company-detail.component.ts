@@ -78,7 +78,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
 
   /** 회사 정보를 저장한다. */
   async onSubmit(value: SaveCompanyRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.companyId) ? '추가' : '수정';
+    const crudName = isEmpty(value.companyId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;

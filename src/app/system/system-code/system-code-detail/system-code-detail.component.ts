@@ -102,7 +102,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   /** 코드 정보를 저장한다. */
   @TransformToDto(SaveCodeRequestDTO)
   async onSubmit(value: SaveCodeRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.originalCodeId) ? '추가' : '수정';
+    const crudName = isEmpty(value.originalCodeId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`코드 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;

@@ -109,7 +109,7 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
   /** 회사 정보를 저장한다. */
   async onSubmit(value: SaveWorkHistoryRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.workHistoryId) ? '추가' : '수정';
+    const crudName = isEmpty(value.workHistoryId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;

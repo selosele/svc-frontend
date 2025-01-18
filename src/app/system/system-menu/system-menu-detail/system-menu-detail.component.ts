@@ -126,7 +126,7 @@ export class SystemMenuDetailComponent {
   /** 메뉴 정보를 저장한다. */
   @TransformToDto(SaveMenuRequestDTO)
   async onSubmit(value: SaveMenuRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.originalMenuId) ? '추가' : '수정';
+    const crudName = isEmpty(value.originalMenuId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`메뉴 정보를 ${crudName}하시겠어요?`);
     if (!confirm) return;
