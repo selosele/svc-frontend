@@ -1,0 +1,19 @@
+<span *ngIf="label" class="custom-label">
+  {{ label }}
+</span>
+
+<div class="input-button-box">
+  <p-editor
+    [pTooltip]="tooltip"
+    [tooltipPosition]="tooltipPosition"
+    [formControl]="formControl"
+    [placeholder]="placeholder"
+    [class.block]="block"
+    [style]="{ height }"
+    (onTextChange)="onTextChange($event)"
+  />
+</div>
+
+<div *ngIf="showErrorMessage && control.invalid && (control.dirty || control.touched)" class="input-message">
+  {{ errorMessage }}
+</div>
