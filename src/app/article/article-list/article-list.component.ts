@@ -8,6 +8,7 @@ import { ArticleService } from '../article.service';
 import { AuthService } from '@app/auth/auth.service';
 import { SaveArticleComponent } from '../save-article/save-article.component';
 import { ArticleViewComponent } from '../article-view/article-view.component';
+import { isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -102,10 +103,11 @@ export class ArticleListComponent implements OnInit {
       data: { boardId: this.boardId }
     });
 
-    modal.onClose.subscribe(({ action }) => {
+    modal.onClose.subscribe((result) => {
+      if (isObjectEmpty(result)) return;
 
       // 게시글 추가/수정/삭제
-      if (action === 'save') {
+      if (result.action === 'save') {
         this.listArticle();
       }
     });
@@ -127,15 +129,16 @@ export class ArticleListComponent implements OnInit {
         data,
       });
 
-      modal?.onClose.subscribe(({ action, data }) => {
+      modal?.onClose.subscribe((result) => {
+        if (isObjectEmpty(result)) return;
 
         // 게시글 추가/수정/삭제
-        if (action === 'save') {
+        if (result.action === 'save') {
           this.listArticle();
         }
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
-        else if (action === 'reload') {
-          this.getArticle(data.articleId);
+        else if (result.action === 'reload') {
+          this.getArticle(result.data.articleId);
         }
       });
     });
