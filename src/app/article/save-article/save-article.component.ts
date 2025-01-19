@@ -7,7 +7,6 @@ import { TransformToDto } from '@app/shared/decorators';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { AuthService } from '@app/auth/auth.service';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { ArticleResultDTO, SaveArticleRequestDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -49,7 +48,9 @@ export class SaveArticleComponent implements OnInit {
   isNicknameEditable = true;
 
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
@@ -58,8 +59,6 @@ export class SaveArticleComponent implements OnInit {
   @Output() remove = new EventEmitter<void>();
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
-    
     this.detailForm = this.fb.group({
       articleId: [''],                                            // 게시글 ID
       boardId: [this.config.data['boardId']],                     // 게시판 ID
@@ -71,7 +70,10 @@ export class SaveArticleComponent implements OnInit {
         FormValidator.required,
         FormValidator.maxLength(4000)
       ]],
-      articleWriterNickname: ['', [FormValidator.maxLength(30)]], // 게시글 작성자 닉네임
+      articleWriterNickname: ['', [                               // 게시글 작성자 닉네임
+        FormValidator.required,
+        FormValidator.maxLength(30)
+      ]],
       useNicknameYn: [['Y']],                                     // 닉네임 사용 여부
     });
   }
@@ -134,11 +136,15 @@ export class SaveArticleComponent implements OnInit {
       this.isNicknameEditable = true;
       this.detailForm.get('articleWriterNickname').patchValue('');
       this.detailForm.get('articleWriterNickname').enable();
+      this.detailForm.get('articleWriterNickname').setValidators([FormValidator.required, FormValidator.maxLength(30)]);
     } else {
       this.isNicknameEditable = false;
       this.detailForm.get('articleWriterNickname').patchValue(this.user?.employeeName);
       this.detailForm.get('articleWriterNickname').disable();
+      this.detailForm.get('articleWriterNickname').clearValidators();
     }
+
+    this.detailForm.get('articleWriterNickname').updateValueAndValidity();
   }
 
 }

@@ -13,7 +13,10 @@
           <ui-text-field
             [control]="detailForm.get('articleWriterNickname')"
             [placeholder]="'닉네임'"
+            [tooltip]="'게시글 작성 후 닉네임은 변경할 수 없어요.'"
+            [tooltipPosition]="'bottom'"
             [readonly]="!isNicknameEditable"
+            [showErrorMessage]="false"
           />
         </div>
         <div class="col-fixed">

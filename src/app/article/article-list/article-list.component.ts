@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { StoreService, UiDialogService } from '@app/shared/services';
+import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
-import { roles } from '@app/shared/utils';
 import { ArticleDataStateDTO, ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
+import { AuthService } from '@app/auth/auth.service';
 import { SaveArticleComponent } from '../save-article/save-article.component';
+import { ArticleViewComponent } from '../article-view/article-view.component';
 
 @Component({
   standalone: true,
@@ -27,7 +28,9 @@ export class ArticleListComponent implements OnInit {
     private route: ActivatedRoute,
     private store: StoreService,
     private dialogRef: DynamicDialogRef,
+    private loadingService: UiLoadingService,
     private dialogService: UiDialogService,
+    private authService: AuthService,
     private articleService: ArticleService,
   ) {}
 
@@ -43,6 +46,11 @@ export class ArticleListComponent implements OnInit {
     return article?.[this.boardId]?.dataLoaded ?? false;
   }
 
+  /** 시스템관리자 권한 여부 */
+  get isSystemAdmin() {
+    return this.authService.hasRole('ROLE_SYSTEM_ADMIN');
+  }
+
   /** 테이블 선택된 행 */
   selection: ArticleResultDTO;
 
@@ -50,17 +58,7 @@ export class ArticleListComponent implements OnInit {
   cols = [
     { field: 'articleTitle',      header: '제목' },
     { field: 'articleWriterName', header: '작성자',
-      valueGetter: (data: ArticleResultDTO) => {
-        
-        // 1. 작성자가 시스템관리자인 경우 
-        if (data.isSystemAdmin === 1) {
-
-          // 닉네임이 있으면 닉네임을 반환하고, 없으면 "시스템관리자" 권한명을 반환
-          return data.articleWriterNickname ?? `<strong>${roles.SYSTEM_ADMIN.name}</strong>`;
-        }
-        // 2. 작성자가 시스템관리자가 아닌 경우
-        return data.articleWriterNickname ?? data.employeeName;
-      }
+      valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleWriterName(data)
     },
     { field: 'createDt', header: '작성일시' },
   ];
@@ -107,11 +105,20 @@ export class ArticleListComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    // const modal = this.dialogService.open(SaveArticleComponent, {
-    //   focusOnShow: false,
-    //   header: '게시글 제목이 들어감',
-    //   data: { userList, menuTree },
-    // });
+    const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
+
+    this.articleService.getArticle$(event.data['articleId'])
+    .subscribe((data) => {
+      clearTimeout(loadingTimeout);
+      this.loadingService.setLoading(false);
+
+      this.dialogService.open(ArticleViewComponent, {
+        focusOnShow: false,
+        header: data.article.articleTitle,
+        width: '1000px',
+        data,
+      });
+    });
   }
   
   /** 테이블 새로고침 버튼을 클릭한다. */

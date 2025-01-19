@@ -27,12 +27,23 @@
     (refresh)="onRefresh()"
     (rowSelect)="onRowSelect($event)"
   >
-    <ui-button buttons
-      [size]="'small'"
-      [icon]="'pi-plus'"
-      [label]="'게시글 작성'"
-      [outlined]="true"
-      (click)="addArticle()"
-    />
+    @if (articleResponse?.board.boardTypeCode === 'NOTICE' && isSystemAdmin) {
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'게시글 작성'"
+        [outlined]="true"
+        (click)="addArticle()"
+      />
+    }
+    @else if (articleResponse?.board.boardTypeCode !== 'NOTICE') {
+      <ui-button buttons
+        [size]="'small'"
+        [icon]="'pi-plus'"
+        [label]="'게시글 작성'"
+        [outlined]="true"
+        (click)="addArticle()"
+      />
+    }
   </ui-table>
 }

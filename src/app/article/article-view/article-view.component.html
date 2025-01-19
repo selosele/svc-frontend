@@ -1,0 +1,33 @@
+<div class="article-view">
+  <div class="article-view__top">
+    <div class="article-view__top__item">
+      <i class="pi pi-clipboard"></i>
+      <p>게시판: {{ board.boardName }}</p>
+    </div>
+    
+    <div class="article-view__top__item">
+      <i class="pi pi-user"></i>
+      <p [innerHTML]="articleWriterName"></p>
+    </div>
+
+    <div class="article-view__top__item">
+      <i class="pi pi-clock"></i>
+      <p>{{ article.createDt }}</p>
+    </div>
+  </div>
+
+  <div class="article-view__content">
+    <div [innerHTML]="article.articleContent"></div>
+  </div>
+
+  <div class="article-view__buttons">
+    @if (isSystemAdmin || article.articleWriterId == user.userId) {
+      <ui-button
+        [size]="'small'"
+        [severity]="'danger'"
+      >
+        삭제
+      </ui-button>
+    }
+  </div>
+</div>
