@@ -46,7 +46,7 @@ export class ArticleService {
   /** 게시글 제목을 반환한다. */
   getArticleTitle(data: ArticleResultDTO, userId: number): string {
     if (data.articleWriterId === userId) {
-      return `<span class="mr-1	px-2 py-1 bg-primary-50 text-primary">내가쓴글</span> ${data.articleTitle}`;
+      return `<span class="mr-2 px-2 py-1 bg-primary-50 text-primary">내가쓴글</span> ${data.articleTitle}`;
     }
     return data.articleTitle;
   }

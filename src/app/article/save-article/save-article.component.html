@@ -15,16 +15,15 @@
             [tooltip]="'게시글 작성 후 닉네임은 변경할 수 없어요.'"
             [tooltipPosition]="'bottom'"
             [readonly]="!isNicknameEditable"
-            [showErrorMessage]="false"
-          />
-        </div>
-        <div class="col-fixed">
-          <ui-checkbox
-            [control]="detailForm.get('useNicknameYn')"
-            [label]="'닉네임 사용'"
-            [value]="'Y'"
-            (change)="onUseNicknameYnChange($event)"
-          />
+          >
+            <ui-checkbox button
+              [control]="detailForm.get('useNicknameYn')"
+              [label]="'닉네임 사용'"
+              [value]="'Y'"
+              [style]="{ display: 'flex' }"
+              (change)="onUseNicknameYnChange($event)"
+            />
+          </ui-text-field>
         </div>
       </div>
     </div>
