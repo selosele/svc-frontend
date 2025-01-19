@@ -1,7 +1,6 @@
 <ui-form
   [form]="detailForm"
   (submit)="onSubmit($event)"
-  (remove)="onRemove($event)"
 >
   <ui-hidden-field [control]="detailForm.get('articleId')" />
   <ui-hidden-field [control]="detailForm.get('boardId')" />

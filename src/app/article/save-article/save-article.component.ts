@@ -118,18 +118,6 @@ export class SaveArticleComponent implements OnInit {
     }
   }
 
-  /** 게시글을 삭제한다. */
-  async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('게시글을 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
-    if (!confirm) return;
-
-    this.articleService.removeArticle$(this.detail.articleId)
-    .subscribe(() => {
-      this.messageService.toastSuccess('정상적으로 삭제되었어요.');
-      this.remove.emit();
-    });
-  }
-
   /** 닉네임 사용 여부 체크박스를 선택한다. */
   onUseNicknameYnChange(event: CheckboxChangeEvent): void {
     if (event.checked[0] === 'Y') {

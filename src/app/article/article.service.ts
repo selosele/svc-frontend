@@ -35,12 +35,12 @@ export class ArticleService {
   /** 게시글을 수정한다. */
   updateArticle$(dto: SaveArticleRequestDTO) {
     const { articleId } = dto;
-    return this.http.put<ArticleResponseDTO>(`/co/articles/${articleId}`, dto);
+    return this.http.put<void>(`/co/articles/${articleId}`, dto);
   }
 
   /** 게시글을 삭제한다. */
   removeArticle$(articleId: number) {
-    return this.http.delete<ArticleResponseDTO>(`/co/articles/${articleId}`);
+    return this.http.delete<void>(`/co/articles/${articleId}`);
   }
 
   /** 게시글 작성자명을 반환한다. */

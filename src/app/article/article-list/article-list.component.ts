@@ -98,8 +98,9 @@ export class ArticleListComponent implements OnInit {
     });
 
     modal.onClose.subscribe((articleSaved) => {
-      if (!articleSaved) return;
-      this.listArticle();
+      if (articleSaved) {
+        this.listArticle();
+      }
     });
   }
 
@@ -112,11 +113,17 @@ export class ArticleListComponent implements OnInit {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
 
-      this.dialogService.open(ArticleViewComponent, {
+      const modal = this.dialogService.open(ArticleViewComponent, {
         focusOnShow: false,
         header: data.article.articleTitle,
         width: '1000px',
         data,
+      });
+
+      modal.onClose.subscribe((articleSaved) => {
+        if (articleSaved) {
+          this.listArticle();
+        }
       });
     });
   }
