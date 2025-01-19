@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -27,7 +26,6 @@ export class ArticleListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: StoreService,
-    private dialogRef: DynamicDialogRef,
     private loadingService: UiLoadingService,
     private dialogService: UiDialogService,
     private authService: AuthService,
@@ -46,6 +44,11 @@ export class ArticleListComponent implements OnInit {
     return article?.[this.boardId]?.dataLoaded ?? false;
   }
 
+  /** 인증된 사용자 정보 */
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
+
   /** 시스템관리자 권한 여부 */
   get isSystemAdmin() {
     return this.authService.hasRole('ROLE_SYSTEM_ADMIN');
@@ -56,7 +59,9 @@ export class ArticleListComponent implements OnInit {
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'articleTitle',      header: '제목' },
+    { field: 'articleTitle',      header: '제목',
+      valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleTitle(data, Number(this.user?.userId)),
+    },
     { field: 'articleWriterName', header: '작성자',
       valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleWriterName(data)
     },

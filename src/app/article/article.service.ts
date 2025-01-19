@@ -43,6 +43,14 @@ export class ArticleService {
     return this.http.delete<void>(`/co/articles/${articleId}`);
   }
 
+  /** 게시글 제목을 반환한다. */
+  getArticleTitle(data: ArticleResultDTO, userId: number): string {
+    if (data.articleWriterId === userId) {
+      return `<span class="mr-1	px-2 py-1 bg-primary-50 text-primary">내가쓴글</span> ${data.articleTitle}`;
+    }
+    return data.articleTitle;
+  }
+
   /** 게시글 작성자명을 반환한다. */
   getArticleWriterName(data: ArticleResultDTO): string {
 
