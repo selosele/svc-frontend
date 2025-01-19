@@ -21,8 +21,8 @@
   </div>
 
   <div class="article-view__buttons">
-    @if (articleList.length > 0) {
-      <div class="article-view__buttons__prevnext">
+    <div class="article-view__buttons__prevnext">
+      @if (articleList.length > 0) {
         <ui-button
           [icon]="'pi-chevron-left'"
           [rounded]="true"
@@ -32,7 +32,7 @@
           [title]="'이전 게시글'"
           (click)="goPrevNextArticle(prevArticle?.articleId)"
         />
-  
+
         <ui-button
           [icon]="'pi-chevron-right'"
           [rounded]="true"
@@ -42,8 +42,8 @@
           [title]="'다음 게시글'"
           (click)="goPrevNextArticle(nextArticle?.articleId)"
         />
-      </div>
-    }
+      }
+    </div>
 
     @if (isSystemAdmin || article.articleWriterId == user.userId) {
       <ui-button
