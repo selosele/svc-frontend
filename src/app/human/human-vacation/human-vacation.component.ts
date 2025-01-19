@@ -32,6 +32,7 @@ import { MenuService } from '@app/menu/menu.service';
     UiSkeletonComponent,
     UiTabComponent,
     UiFormComponent,
+    UiTextFieldComponent,
     UiDropdownComponent,
     UiCheckboxListComponent,
     UiCheckboxGroupComponent,
@@ -42,7 +43,6 @@ import { MenuService } from '@app/menu/menu.service';
     LayoutPageDescriptionComponent,
     HumanVacationListComponent,
     MyHolidayComponent,
-    UiTextFieldComponent
   ],
   selector: 'view-human-vacation',
   templateUrl: './human-vacation.component.html',
