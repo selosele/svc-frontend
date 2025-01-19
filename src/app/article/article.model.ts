@@ -57,11 +57,14 @@ export class ArticleResultDTO {
   /** 게시글 작성자 직원명 */
   employeeName?: string;
 
+  /** 등록일시 */
+  createDt?: string;
+
   /** 게시글 작성자의 시스템관리자 권한 보유 여부 */
   isSystemAdmin?: number;
 
-  /** 등록일시 */
-  createDt?: string;
+  /** 이전/다음 게시글 flag */
+  prevNextFlag?: string;
 
 }
 

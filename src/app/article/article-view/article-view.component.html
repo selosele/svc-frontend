@@ -21,6 +21,30 @@
   </div>
 
   <div class="article-view__buttons">
+    @if (articleList.length > 0) {
+      <div class="article-view__buttons__prevnext">
+        <ui-button
+          [icon]="'pi-chevron-left'"
+          [rounded]="true"
+          [text]="true"
+          [severity]="'primary'"
+          [disabled]="prevArticle == null"
+          [title]="'이전 게시글'"
+          (click)="goPrevNextArticle(prevArticle?.articleId)"
+        />
+  
+        <ui-button
+          [icon]="'pi-chevron-right'"
+          [rounded]="true"
+          [text]="true"
+          [severity]="'primary'"
+          [disabled]="nextArticle == null"
+          [title]="'다음 게시글'"
+          (click)="goPrevNextArticle(nextArticle?.articleId)"
+        />
+      </div>
+    }
+
     @if (isSystemAdmin || article.articleWriterId == user.userId) {
       <ui-button
         [size]="'small'"

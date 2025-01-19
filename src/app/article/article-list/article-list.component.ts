@@ -102,18 +102,20 @@ export class ArticleListComponent implements OnInit {
       data: { boardId: this.boardId }
     });
 
-    modal.onClose.subscribe((articleSaved) => {
-      if (articleSaved) {
+    modal.onClose.subscribe(({ action }) => {
+
+      // 게시글 추가/수정/삭제
+      if (action === 'save') {
         this.listArticle();
       }
     });
   }
 
-  /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  /** 게시글을 조회한다. */
+  getArticle(articleId: number): void {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
 
-    this.articleService.getArticle$(event.data['articleId'])
+    this.articleService.getArticle$(articleId)
     .subscribe((data) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
@@ -125,12 +127,23 @@ export class ArticleListComponent implements OnInit {
         data,
       });
 
-      modal.onClose.subscribe((articleSaved) => {
-        if (articleSaved) {
+      modal?.onClose.subscribe(({ action, data }) => {
+
+        // 게시글 추가/수정/삭제
+        if (action === 'save') {
           this.listArticle();
+        }
+        // 게시글 새로고침(예: 이전/다음 게시글로 이동)
+        else if (action === 'reload') {
+          this.getArticle(data.articleId);
         }
       });
     });
+  }
+
+  /** 테이블 행을 선택한다. */
+  onRowSelect(event: any): void {
+    this.getArticle(event.data['articleId']);
   }
   
   /** 테이블 새로고침 버튼을 클릭한다. */

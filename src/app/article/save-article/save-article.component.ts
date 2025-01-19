@@ -68,7 +68,7 @@ export class SaveArticleComponent implements OnInit {
       ]],
       articleContent: ['', [                                      // 게시글 내용
         FormValidator.required,
-        FormValidator.maxLength(4000)
+        // FormValidator.maxLength(4000)
       ]],
       articleWriterNickname: ['', [                               // 게시글 작성자 닉네임
         FormValidator.required,
@@ -105,7 +105,7 @@ export class SaveArticleComponent implements OnInit {
       this.articleService.addArticle$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.dialogRef.close(true);
+        this.dialogRef.close({ action: 'save' });
       });
     }
     // 있으면 수정 API를 탄다.
@@ -113,7 +113,7 @@ export class SaveArticleComponent implements OnInit {
       this.articleService.updateArticle$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.dialogRef.close(true);
+        this.dialogRef.close({ action: 'save' });
       });
     }
   }
