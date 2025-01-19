@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DropdownChangeEvent } from 'primeng/dropdown';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '../human.service';
 import { HumanVacationListComponent } from './human-vacation-list/human-vacation-list.component';
@@ -59,9 +58,6 @@ export class HumanVacationComponent implements OnInit {
     private humanService: HumanService,
     protected menuService: MenuService,
   ) {}
-
-  /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
 
   /** 회사 탭 */
   tabs: Tab[] = [];
@@ -125,13 +121,17 @@ export class HumanVacationComponent implements OnInit {
     return this.store.select<boolean>('isNotQuit').asObservable();
   }
 
+  /** 인증된 사용자 정보 */
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
+
   ngOnInit() {
     this.route.data.subscribe(({ code }) => {
       this.annualTypeCodes = code['ANNUAL_TYPE_00'];
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.user = this.authService.getAuthenticatedUser();
     this.humanService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({

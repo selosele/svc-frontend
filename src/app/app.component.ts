@@ -9,7 +9,6 @@ import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
 import { MenuService } from './menu/menu.service';
 import { MenuResponseDTO } from './menu/menu.model';
-import { AuthenticatedUser } from './auth/auth.model';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent } from './shared/components/layout';
 import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 import { MAIN_PAGE_PATH2 } from './shared/utils';
@@ -49,9 +48,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   /** 레이아웃 하단 박스 요소 */
   @ViewChild('layoutBottom') lmh: ElementRef<HTMLElement>;
 
-  /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
-
   /** 마지막 scroll top */
   lastScrollTop = 0;
 
@@ -67,6 +63,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
   /** 현재 메뉴 ID */
   get currentMenuId() {
     return this.store.select<number>('currentMenuId').value;
+  }
+
+  /** 인증된 사용자 정보 */
+  get user() {
+    return this.authService.getAuthenticatedUser();
   }
 
   /** 로그인 여부 */
@@ -89,8 +90,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
-
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -108,7 +107,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
           // 사용자 설정 조회
           if (!this.store.select<boolean>('userSetupDataLoad').value) {
-            const { userId } = this.authService.getAuthenticatedUser();
+            const { userId } = this.user;
             this.userService.getUserConfig(userId);
           }
 

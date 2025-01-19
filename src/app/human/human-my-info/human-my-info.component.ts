@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { UpdateUserPasswordRequestDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { UserService } from '@app/user/user.service';
@@ -83,10 +82,14 @@ export class HumanMyInfoComponent implements OnInit {
   }
   
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
-  /** 인증된 사용자가 시스템관리자 권한을 보유했는지 여부 */
-  isSystemAdmin: boolean;
+  /** 시스템관리자 권한 여부 */
+  get isSystemAdmin() {
+    return this.authService.hasRole(roles.SYSTEM_ADMIN.id);
+  }
 
   /** 비밀번호 변경 폼 */
   changePasswordForm: FormGroup;
@@ -152,8 +155,6 @@ export class HumanMyInfoComponent implements OnInit {
       this.jobTitleCodes = code['JOB_TITLE_00'];
     });
 
-    this.user = this.authService.getAuthenticatedUser();
-    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN.id);
     this.initForm();
 
     if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value)) {

@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { UserSetupResponseDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
@@ -37,14 +36,16 @@ export class LayoutHeaderComponent implements OnInit {
   /** header 태그 */
   @ViewChild('header') header: ElementRef<HTMLElement>;
 
-  /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
-
   /** 마지막 scroll top */
   lastScrollTop = 0;
 
   /** 스크롤 여부 */
   isScrollDown = true;
+
+  /** 인증된 사용자 정보 */
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 사용자 설정 */
   get userSetup() {
@@ -52,7 +53,6 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
     this.lastScrollTop = window.scrollY;
   }
 

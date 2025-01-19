@@ -8,7 +8,6 @@ import { HolidayService } from '@app/holiday/holiday.service';
 import { HolidayResponseDTO, SaveHolidayRequestDTO } from '@app/holiday/holiday.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 
 @Component({
   standalone: true,
@@ -48,7 +47,9 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
   useRemove = true;
 
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
@@ -60,8 +61,6 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
-
     this.detailForm = this.fb.group({
       originalYmd: [''],                                    // 기존 일자
       ymd: ['', [                                           // 일자

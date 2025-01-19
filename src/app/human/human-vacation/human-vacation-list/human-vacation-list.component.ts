@@ -8,7 +8,6 @@ import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableCom
 import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
 import { dateUtil } from '@app/shared/utils';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 
 @Component({
   standalone: true,
@@ -56,7 +55,9 @@ export class HumanVacationListComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 휴가 목록 */
   get vacationList() {
@@ -102,7 +103,6 @@ export class HumanVacationListComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
     this.fileName = `휴가사용목록(${this.user?.employeeName}, ${dateUtil().format('YYYYMMDD')})`;
 
     this.searchForm = this.fb.group({

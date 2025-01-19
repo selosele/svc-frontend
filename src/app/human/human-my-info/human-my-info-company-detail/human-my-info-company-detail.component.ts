@@ -11,7 +11,6 @@ import { WorkHistoryResponseDTO, SaveWorkHistoryRequestDTO } from '@app/human/hu
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { HumanService } from '@app/human/human.service';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { AuthService } from '@app/auth/auth.service';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
@@ -56,7 +55,9 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
   useRemove = true;
 
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
@@ -72,8 +73,6 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
       this.rankCodes = code['RANK_00'];
       this.jobTitleCodes = code['JOB_TITLE_00'];
     });
-
-    this.user = this.authService.getAuthenticatedUser();
     
     this.detailForm = this.fb.group({
       workHistoryId: [''],                            // 근무이력 ID

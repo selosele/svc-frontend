@@ -3,7 +3,6 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { MyHolidayDetailComponent } from './my-holiday-detail/my-holiday-detail.component';
 import { HolidayResponseDTO } from '@app/holiday/holiday.model';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { HolidayService } from '@app/holiday/holiday.service';
 import { StoreService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
@@ -47,7 +46,9 @@ export class MyHolidayComponent {
   }
 
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 휴일 정보 */
   detail: HolidayResponseDTO = null;
@@ -64,8 +65,6 @@ export class MyHolidayComponent {
   ];
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
-
     if (!this.holidayListDataLoad) {
       this.listHoliday();
     }

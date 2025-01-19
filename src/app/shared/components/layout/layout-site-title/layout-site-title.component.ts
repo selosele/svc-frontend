@@ -1,9 +1,8 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, Input, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, Input, NgZone, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
 import { UserService } from '@app/user/user.service';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { MAIN_PAGE_PATH1 } from '@app/shared/utils';
 import { UiButtonComponent } from '../../ui';
 
@@ -18,7 +17,7 @@ import { UiButtonComponent } from '../../ui';
   styleUrl: './layout-site-title.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
+export class LayoutSiteTitleComponent implements AfterViewChecked {
 
   constructor(
     private zone: NgZone,
@@ -45,10 +44,8 @@ export class LayoutSiteTitleComponent implements OnInit, AfterViewChecked {
   isEditable = false;
 
   /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
-
-  ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
+  get user() {
+    return this.authService.getAuthenticatedUser();
   }
 
   ngAfterViewChecked() {

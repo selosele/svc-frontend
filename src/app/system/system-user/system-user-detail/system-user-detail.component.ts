@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthenticatedUser } from '@app/auth/auth.model';
 import { SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/user/user.model';
 import { AuthService } from '@app/auth/auth.service';
 import { RoleResponseDTO } from '@app/role/role.model';
@@ -82,11 +81,13 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
-  /** 인증된 사용자 정보 */
-  user: AuthenticatedUser;
-
   /** 사용자 정보가 본인의 정보와 일치하는지 여부 */
   isUserSelf = false;
+  
+  /** 인증된 사용자 정보 */
+  get user() {
+    return this.authService.getAuthenticatedUser();
+  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
@@ -98,8 +99,6 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
-    this.user = this.authService.getAuthenticatedUser();
-
     this.route.data.subscribe(({ code }) => {
       this.genderCodes = code['GENDER_00'];
       this.rankCodes = code['RANK_00'];
