@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -80,6 +80,19 @@ export class ArticleListComponent implements OnInit {
         this.listArticle();
       }
     });
+
+    // TODO: 2025.01.19. 게시판 목록 페이지에서 로그아웃시 listArticle$()이 발행되어 404 오류 발생
+    // 아래 코드도 동일한 현상이 발생함. 추후 리팩토링 예정
+    // this.route.url.subscribe((urlSegments: UrlSegment[]) => {
+    //   const currentUrl = urlSegments.map(segment => segment.path).join('/');
+    //   if (currentUrl.includes('co/boards')) { 
+    //     this.boardId = this.route.snapshot.params['boardId'];
+        
+    //     if (!this.articleResponseDataLoad) {
+    //       this.listArticle();
+    //     }
+    //   }
+    // });
   }
 
   /** 게시글 목록을 조회한다. */
