@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 import { BoardResponseDTO } from '@app/board/board.model';
@@ -23,6 +23,7 @@ export class ArticleViewComponent {
   constructor(
     private config: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
+    private dialogService: DialogService,
     private messageService: UiMessageService,
     private authService: AuthService,
     private articleService: ArticleService,
@@ -74,6 +75,11 @@ export class ArticleViewComponent {
       return;
     }
     this.dialogRef.close({ action: 'reload', data: { articleId } });
+  }
+
+  /** 게시글 수정 modal을 표출한다. */
+  updateArticle(article: ArticleResultDTO): void {
+    this.dialogRef.close({ action: 'update', data: article });
   }
 
   /** 게시글을 삭제한다. */

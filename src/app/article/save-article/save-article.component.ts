@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CheckboxChangeEvent } from 'primeng/checkbox';
 import { FormValidator, UiCheckboxComponent, UiEditorComponent, UiFormComponent, UiHiddenFieldComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiButtonComponent } from '@app/shared/components/ui';
 import { TransformToDto } from '@app/shared/decorators';
 import { UiMessageService } from '@app/shared/services';
-import { isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { isEmpty } from '@app/shared/utils';
 import { AuthService } from '@app/auth/auth.service';
 import { ArticleResultDTO, SaveArticleRequestDTO } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -19,6 +20,7 @@ import { ArticleService } from '../article.service';
     UiTextFieldComponent,
     UiEditorComponent,
     UiHiddenFieldComponent,
+    UiButtonComponent,
   ],
   selector: 'modal-save-article',
   templateUrl: './save-article.component.html',
@@ -52,6 +54,16 @@ export class SaveArticleComponent implements OnInit {
     return this.authService.getAuthenticatedUser();
   }
 
+  /** 게시글 추가/수정/삭제 등의 action */
+  get action(): string {
+    return this.config.data['action'];
+  }
+
+  /** 게시글 정보 */
+  get article(): ArticleResultDTO {
+    return this.config.data['article'];
+  }
+
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
 
@@ -70,25 +82,24 @@ export class SaveArticleComponent implements OnInit {
         FormValidator.required,
         // FormValidator.maxLength(4000)
       ]],
+      articleWriterId: [''],                                      // 게시글 작성자 ID
       articleWriterNickname: ['', [                               // 게시글 작성자 닉네임
         FormValidator.required,
         FormValidator.maxLength(30)
       ]],
       useNicknameYn: [['Y']],                                     // 닉네임 사용 여부
     });
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.detail && this.detailForm) {
-      this.useRemove = true;
+    // 게시글 수정 modal 표출
+    if (this.action === 'update') {
+      this.detailForm.patchValue({
+        ...this.article,
+        useNicknameYn: this.article.articleWriterNickname ? ['Y'] : [],
+        articleWriterNickname: this.articleService.getArticleWriterName(this.article, { tagUseYn: 'N' }),
+      });
       
-      if (isObjectEmpty(changes.detail.currentValue)) {
-        this.useRemove = false;
-        this.detailForm.reset();
-        return;
-      }
-
-      this.detailForm.patchValue(this.detail);
+      this.detailForm.get('useNicknameYn').disable();
+      this.detailForm.get('articleWriterNickname').disable();
     }
   }
 
@@ -133,6 +144,12 @@ export class SaveArticleComponent implements OnInit {
     }
 
     this.detailForm.get('articleWriterNickname').updateValueAndValidity();
+  }
+
+  /** 게시글 조회 화면으로 돌아간다. */
+  goToArticle(): void {
+    const articleId = this.detailForm.get('articleId').value;
+    this.dialogRef.close({ action: 'reload', data: { articleId } });
   }
 
 }

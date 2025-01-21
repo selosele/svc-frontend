@@ -52,13 +52,16 @@ export class ArticleService {
   }
 
   /** 게시글 작성자명을 반환한다. */
-  getArticleWriterName(data: ArticleResultDTO): string {
+  getArticleWriterName(data: ArticleResultDTO, options = { tagUseYn: 'Y' }): string {
 
     // 1. 작성자가 시스템관리자인 경우
     if (data.isSystemAdmin === 1) {
 
       // 닉네임이 있으면 닉네임을 반환하고, 없으면 "시스템관리자" 권한명을 반환
-      return data.articleWriterNickname ?? `<strong>${roles.SYSTEM_ADMIN.name}</strong>`;
+      if (options.tagUseYn === 'Y') {
+        return data.articleWriterNickname ?? `<strong>${roles.SYSTEM_ADMIN.name}</strong>`;
+      }
+      return data.articleWriterNickname ?? roles.SYSTEM_ADMIN.name;
     }
     // 2. 작성자가 시스템관리자가 아닌 경우
     return data.articleWriterNickname ?? data.employeeName;

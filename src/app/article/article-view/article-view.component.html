@@ -45,14 +45,26 @@
       }
     </div>
 
-    @if (isSystemAdmin || article.articleWriterId == user.userId) {
-      <ui-button
-        [size]="'small'"
-        [severity]="'danger'"
-        (click)="removeArticle(article.articleId)"
-      >
-        삭제
-      </ui-button>
-    }
+    <div class="article-view__buttons__crud">
+      @if (article.articleWriterId == user.userId) {
+        <ui-button
+          [size]="'small'"
+          [severity]="'primary'"
+          (click)="updateArticle(article)"
+        >
+          수정
+        </ui-button>
+      }
+  
+      @if (isSystemAdmin || article.articleWriterId == user.userId) {
+        <ui-button
+          [size]="'small'"
+          [severity]="'danger'"
+          (click)="removeArticle(article.articleId)"
+        >
+          삭제
+        </ui-button>
+      }
+    </div>
   </div>
 </div>

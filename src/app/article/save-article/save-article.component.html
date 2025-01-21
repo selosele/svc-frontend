@@ -46,4 +46,13 @@
       />
     </div>
   </div>
+
+  @if (action === 'update') {
+    <ui-button button
+      [text]="true"
+      (click)="goToArticle()"
+    >
+      뒤로가기
+    </ui-button>
+  }
 </ui-form>

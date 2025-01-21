@@ -126,6 +126,29 @@ export class ArticleListComponent implements OnInit {
     });
   }
 
+  /** 게시글 수정 modal을 표출한다. */
+  updateArticle(action: string, article: ArticleResultDTO): void {
+    const modal = this.dialogService.open(SaveArticleComponent, {
+      focusOnShow: false,
+      header: '게시글 수정하기',
+      width: '1000px',
+      data: { action, article }
+    });
+
+    modal.onClose.subscribe((result) => {
+      if (isObjectEmpty(result)) return;
+
+      // 게시글 추가/수정/삭제
+      if (result.action === 'save') {
+        this.listArticle();
+      }
+      // 게시글 새로고침(예: 이전/다음 게시글로 이동)
+      else if (result.action === 'reload') {
+        this.getArticle(result.data.articleId);
+      }
+    });
+  }
+
   /** 게시글을 조회한다. */
   getArticle(articleId: number): void {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
@@ -152,6 +175,10 @@ export class ArticleListComponent implements OnInit {
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
         else if (result.action === 'reload') {
           this.getArticle(result.data.articleId);
+        }
+        // 게시글 수정 modal 표출
+        else if (result.action === 'update') {
+          this.updateArticle(result.action, result.data);
         }
       });
     });

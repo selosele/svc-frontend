@@ -42,6 +42,9 @@ export class ArticleResultDTO {
   /** 게시글 ID */
   articleId?: number;
 
+  /** 게시판 ID */
+  boardId?: number;
+
   /** 게시글 제목 */
   articleTitle?: string;
 
