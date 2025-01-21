@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EditorModule, EditorTextChangeEvent } from 'primeng/editor';
+import { EditorInitEvent, EditorModule, EditorTextChangeEvent } from 'primeng/editor';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormFieldComponent } from '../form-field/form-field.component';
 
@@ -23,11 +23,19 @@ export class UiEditorComponent extends FormFieldComponent {
   /** 에디터 height */
   @Input() height = '320px';
 
+  /** 에디터 init 이벤트 */
+  @Output() init? = new EventEmitter<EditorInitEvent>();
+
   /** 에디터 change 이벤트 */
   @Output() textChange? = new EventEmitter<EditorTextChangeEvent>();
 
   override ngOnInit() {
     super.ngOnInit();
+  }
+
+  /** 에디터가 로드될 때 발생한다. */
+  protected onInit(event: EditorInitEvent): void {
+    this.init.emit(event);
   }
 
   /** 에디터의 값을 변경한다. */
