@@ -7,7 +7,7 @@ import { StoreService, UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { LayoutNotificationComponent } from '../layout-notification/layout-notification.component';
-import { UiButtonComponent } from '../../ui';
+import { UiButtonComponent, UiSkeletonComponent } from '../../ui';
 import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.component';
 
 @Component({
@@ -15,6 +15,7 @@ import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.com
   imports: [
     RouterModule,
     UiButtonComponent,
+    UiSkeletonComponent,
     LayoutSiteTitleComponent,
     LayoutMenuComponent,
     LayoutNotificationComponent,

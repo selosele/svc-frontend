@@ -1,6 +1,12 @@
 <header class="layout-header" [class.scroll]="!isScrollDown" #header>
   <div class="layout-header__inner">
-    <layout-site-title [name]="userSetup?.siteTitleName" />
+    @if (userSetup == null) {
+      <div style="width: 12.75rem;">
+        <ui-skeleton />
+      </div>
+    } @else {
+      <layout-site-title [name]="userSetup?.siteTitleName" />
+    }
 
     <layout-menu />
 

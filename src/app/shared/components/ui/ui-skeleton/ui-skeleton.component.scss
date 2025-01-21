@@ -1,0 +1,9 @@
+ui-skeleton ~ ui-skeleton {
+  .ui-skeleton {
+    margin-top: 1rem;
+  }
+}
+
+ui-skeleton:not(:only-of-type):last-of-type .ui-skeleton {
+  margin-bottom: 1rem;
+}

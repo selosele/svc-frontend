@@ -11,8 +11,9 @@
         <div class="col-fixed">
           <ui-text-field
             [control]="detailForm.get('articleWriterNickname')"
+            [label]="'닉네임'"
             [placeholder]="'닉네임'"
-            [tooltip]="'게시글 작성 후 닉네임은 변경할 수 없어요.'"
+            [tooltip]="isNicknameEditable ? '게시글 작성 후 닉네임은 변경할 수 없어요.' : ''"
             [tooltipPosition]="'bottom'"
             [readonly]="!isNicknameEditable"
           >
