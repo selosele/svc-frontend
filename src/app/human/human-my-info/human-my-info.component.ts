@@ -53,14 +53,8 @@ export class HumanMyInfoComponent implements OnInit {
     private humanService: HumanService,
   ) {}
 
-  /** table - 근무이력정보 */
-  @ViewChild('table1') table1: UiTableComponent;
-
   /** splitter - 근무이력정보 */
   @ViewChild('splitter1') splitter1: UiSplitterComponent;
-
-  /** table - 회사등록신청현황 */
-  @ViewChild('table2') table2: UiTableComponent;
 
   /** splitter - 회사등록신청현황 */
   @ViewChild('splitter2') splitter2: UiSplitterComponent;

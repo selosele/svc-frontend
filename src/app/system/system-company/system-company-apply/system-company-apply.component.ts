@@ -26,9 +26,6 @@ export class SystemCompanyApplyComponent implements OnInit {
     private humanService: HumanService,
   ) {}
 
-  /** table */
-  @ViewChild('table') table: UiTableComponent;
-
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 

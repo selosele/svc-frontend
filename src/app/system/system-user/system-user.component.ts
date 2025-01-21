@@ -28,9 +28,6 @@ export class SystemUserComponent implements OnInit {
     private userService: UserService,
   ) {}
 
-  /** table */
-  @ViewChild('table') table: UiTableComponent;
-
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 

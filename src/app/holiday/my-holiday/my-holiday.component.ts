@@ -29,9 +29,6 @@ export class MyHolidayComponent {
     private holidayService: HolidayService,
   ) {}
 
-  /** table */
-  @ViewChild('table') table: UiTableComponent;
-
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 

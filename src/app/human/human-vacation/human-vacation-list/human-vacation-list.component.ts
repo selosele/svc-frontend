@@ -48,9 +48,6 @@ export class HumanVacationListComponent implements OnInit {
   /** 근무이력목록 조회 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
 
-  /** table */
-  @ViewChild('table') table: UiTableComponent;
-
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
