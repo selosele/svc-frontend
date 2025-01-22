@@ -16,10 +16,28 @@ export class ArticleService {
   /** 게시글 및 게시판 정보 */
   private articleResponse = this.store.create<ArticleDataStateDTO>('articleResponse', null);
 
+  /** 로그인 화면 > 게시글 목록 */
+  private noticeList = this.store.create<ArticleResultDTO[]>('noticeList', []);
+
+  /** 로그인 화면 > 게시글 목록 데이터 로드 완료 여부 */
+  private noticeListDataLoad = this.store.create<boolean>('noticeListDataLoad', false);
+
   /** 게시글 목록을 조회한다. */
   listArticle$(dto: GetArticleRequestDTO) {
     const params = this.httpService.createParams(dto);
     return this.http.get<ArticleResponseDTO>('/co/articles', { params });
+  }
+
+  /** 게시글 목록을 조회한다. */
+  listArticle(boardId: number): void {
+    this.listArticle$({ boardId })
+    .subscribe((data) => {
+      const oldValue = this.store.select<ArticleDataStateDTO>('articleResponse').value;
+      this.store.update('articleResponse', {
+        ...oldValue,
+        [boardId]: { data, dataLoaded: true } // 게시판 ID별로 게시글 목록을 상태관리
+      });
+    });
   }
 
   /** 게시글을 조회한다. */

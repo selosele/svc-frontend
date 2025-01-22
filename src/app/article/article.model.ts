@@ -31,6 +31,10 @@ export class SaveArticleRequestDTO extends HttpRequestDTOBase {
   /** 게시글 내용 */
   articleContent?: string;
 
+  /** 게시글 작성자 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
+  articleWriterId?: number;
+
   /** 게시글 작성자 닉네임 */
   articleWriterNickname?: string;
 
@@ -59,6 +63,9 @@ export class ArticleResultDTO {
 
   /** 게시글 작성자 직원명 */
   employeeName?: string;
+
+  /** 게시판 구분 코드 */
+  boardTypeCode?: string;
 
   /** 등록일시 */
   createDt?: string;
