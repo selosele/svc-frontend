@@ -46,7 +46,7 @@
     </div>
 
     <div class="article-view__buttons__crud">
-      @if (article.articleWriterId == user.userId) {
+      @if (article.articleWriterId == user?.userId) {
         <ui-button
           [size]="'small'"
           [severity]="'primary'"
@@ -56,7 +56,7 @@
         </ui-button>
       }
   
-      @if (isSystemAdmin || article.articleWriterId == user.userId) {
+      @if (isSystemAdmin || article.articleWriterId == user?.userId) {
         <ui-button
           [size]="'small'"
           [severity]="'danger'"

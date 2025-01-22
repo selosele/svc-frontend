@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 import { BoardResponseDTO } from '@app/board/board.model';
@@ -23,7 +23,6 @@ export class ArticleViewComponent {
   constructor(
     private config: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
-    private dialogService: DialogService,
     private messageService: UiMessageService,
     private authService: AuthService,
     private articleService: ArticleService,
