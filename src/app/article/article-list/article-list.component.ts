@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
+import { isObjectEmpty } from '@app/shared/utils';
+import { AuthService } from '@app/auth/auth.service';
 import { ArticleDataStateDTO, ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
-import { AuthService } from '@app/auth/auth.service';
 import { SaveArticleComponent } from '../save-article/save-article.component';
 import { ArticleViewComponent } from '../article-view/article-view.component';
-import { isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -22,16 +24,39 @@ import { isObjectEmpty } from '@app/shared/utils';
   templateUrl: './article-list.component.html',
   styleUrl: './article-list.component.scss'
 })
-export class ArticleListComponent implements OnInit {
+export class ArticleListComponent implements OnInit, OnDestroy {
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private store: StoreService,
+    private config: DynamicDialogConfig,
     private loadingService: UiLoadingService,
     private dialogService: UiDialogService,
     private authService: AuthService,
     private articleService: ArticleService,
-  ) {}
+  ) {
+    // TODO: 로그아웃시 게시글목록조회 구독이 호출되는 문제는 해결했지만,
+    // 다른 게시판 페이지로 이동 시, 구독이 2번 호출되는 문제가 발생하고 있음
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.destroy$)
+    )
+    .subscribe(() => {
+      route.params.subscribe((params) => {
+        this.boardId = params['boardId'];
+  
+        if (!this.articleResponseDataLoad) {
+          this.articleService.listArticle(this.boardId);
+        }
+      });
+    });
+  }
+
+  /** 조회를 요청한 화면 */
+  get from(): string {
+    return this.config.data?.['from'];
+  }
 
   /** 게시글 및 게시판 정보 */
   get articleResponse() {
@@ -72,39 +97,24 @@ export class ArticleListComponent implements OnInit {
   /** 게시판 ID */
   private boardId: number;
 
+  /** 게시글 목록 조회 구독 관리용 */
+  private destroy$ = new Subject<void>();
+
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.boardId = params['boardId'];
 
+    // 로그인 화면에서 호출 시
+    if (this.from === 'login') {
       if (!this.articleResponseDataLoad) {
-        this.listArticle();
+        this.boardId = this.config.data['boardId'];
+        this.articleService.listArticle(this.boardId);
       }
-    });
-
-    // TODO: 2025.01.19. 게시판 목록 페이지에서 로그아웃시 listArticle$()이 발행되어 404 오류 발생
-    // 아래 코드도 동일한 현상이 발생함. 추후 리팩토링 예정
-    // this.route.url.subscribe((urlSegments: UrlSegment[]) => {
-    //   const currentUrl = urlSegments.map(segment => segment.path).join('/');
-    //   if (currentUrl.includes('co/boards')) { 
-    //     this.boardId = this.route.snapshot.params['boardId'];
-        
-    //     if (!this.articleResponseDataLoad) {
-    //       this.listArticle();
-    //     }
-    //   }
-    // });
+      return;
+    }
   }
 
-  /** 게시글 목록을 조회한다. */
-  listArticle(): void {
-    this.articleService.listArticle$({ boardId: this.boardId })
-    .subscribe((data) => {
-      const oldValue = this.store.select<ArticleDataStateDTO>('articleResponse').value;
-      this.store.update('articleResponse', {
-        ...oldValue,
-        [this.boardId]: { data, dataLoaded: true } // 게시판 ID별로 게시글 목록을 상태관리
-      });
-    });
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
   /** 게시글 작성 modal을 표출한다. */
@@ -121,7 +131,7 @@ export class ArticleListComponent implements OnInit {
 
       // 게시글 추가/수정/삭제
       if (result.action === 'save') {
-        this.listArticle();
+        this.articleService.listArticle(this.boardId);
       }
     });
   }
@@ -140,7 +150,7 @@ export class ArticleListComponent implements OnInit {
 
       // 게시글 추가/수정/삭제
       if (result.action === 'save') {
-        this.listArticle();
+        this.articleService.listArticle(this.boardId);
       }
       // 게시글 새로고침(예: 이전/다음 게시글로 이동)
       else if (result.action === 'reload') {
@@ -170,7 +180,7 @@ export class ArticleListComponent implements OnInit {
 
         // 게시글 추가/수정/삭제
         if (result.action === 'save') {
-          this.listArticle();
+          this.articleService.listArticle(this.boardId);
         }
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
         else if (result.action === 'reload') {
@@ -191,7 +201,7 @@ export class ArticleListComponent implements OnInit {
   
   /** 테이블 새로고침 버튼을 클릭한다. */
   onRefresh(): void {
-    this.listArticle();
+    this.articleService.listArticle(this.boardId);
   }
 
 }
