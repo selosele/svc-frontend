@@ -30,7 +30,7 @@ export class SystemCompanyApplyComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 회사등록신청 목록 */
-  get companyApplyList(): CompanyApplyResponseDTO[] {
+  get companyApplyList() {
     return this.store.select<CompanyApplyResponseDTO[]>('companyApplyList').value;
   }
 
@@ -72,12 +72,17 @@ export class SystemCompanyApplyComponent implements OnInit {
   /** 회사등록신청현황 목록을 조회한다. */
   listCompanyApply(): void {
     this.humanService.listCompanyApply();
-    this.refresh.emit();
   }
 
   /** 테이블 새로고침 버튼을 클릭한다. */
   onRefresh(): void {
     this.listCompanyApply();
+  }
+
+  /** 회사등록신청현황 목록을 재조회한다. */
+  onRefresh2(): void {
+    this.listCompanyApply();
+    this.refresh.emit();
   }
 
   /** 테이블 행을 선택한다. */

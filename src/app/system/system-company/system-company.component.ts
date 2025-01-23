@@ -34,7 +34,7 @@ export class SystemCompanyComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 회사 목록 */
-  get companyList(): CompanyResponseDTO[] {
+  get companyList() {
     return this.store.select<CompanyResponseDTO[]>('companyList').value;
   }
 
