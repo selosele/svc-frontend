@@ -166,19 +166,19 @@ export class ModalSearchCompanyComponent implements OnInit {
   /** 회사 드롭다운 항목을 선택한다. */
   async onCompanyNameSelect(event: AutoCompleteSelectEvent): Promise<void> {
     this.searchForm.patchValue({
-      companyName: event.value.companyName,
-      registrationNo: event.value.registrationNo,
+      companyName: event.value?.companyName,
+      registrationNo: event.value?.registrationNo,
     });
 
     if (!event.value) return;
     
     const confirm = await this.messageService.confirm1(`
       <ul class="search-company__list">
-        <li>사업자등록번호: <strong>${event.value.registrationNo}</strong></li>
-        <li>회사명/법인명: <strong>${event.value.companyName}</strong></li>
-        <li>회사 소재지: <strong>${event.value.enpBsadr}</strong></li>
-        <li>전화번호: <strong>${event.value.enpTlno.replaceAll(' ', '')}</strong></li>
-        <li>대표자명: <strong>${event.value.enpRprFnm}</strong></li>
+        <li>사업자등록번호: <strong>${event.value?.registrationNo}</strong></li>
+        <li>회사명/법인명: <strong>${event.value?.companyName}</strong></li>
+        <li>회사 소재지: <strong>${event.value?.enpBsadr}</strong></li>
+        <li>전화번호: <strong>${event.value?.enpTlno.replaceAll(' ', '')}</strong></li>
+        <li>대표자명: <strong>${event.value?.enpRprFnm}</strong></li>
       </ul>
       <p class="mt-2">해당 회사를 선택하시겠어요?</p>
     `);
