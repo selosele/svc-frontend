@@ -90,11 +90,6 @@ export class HumanVacationComponent implements OnInit {
   /** 휴가 계산에 포함할 휴가 구분 코드 목록 (기본 값) */
   defaultVacationTypeCodes = ['ANNUAL', 'MONTH', 'MORNING', 'AFTERNOON', 'PAID', 'UNPAID', 'SICK'];
 
-  /** 휴가 계산 설정 목록 데이터 로드 완료 여부 */
-  get vacationCalcListDataLoad() {
-    return this.store.select<boolean>('vacationCalcListDataLoad').value;
-  }
-
   /** 휴가 테이블 타이틀 */
   get vacationTableTitle() {
     return this.store.select<string>('vacationTableTitle').value;
@@ -150,9 +145,7 @@ export class HumanVacationComponent implements OnInit {
 
     this.activeWorkHistoryId = Number(this.user?.workHistoryId);
 
-    if (!this.vacationCalcListDataLoad) {
-      this.listVacationCalc(this.activeWorkHistoryId);
-    }
+    this.listVacationCalc(this.activeWorkHistoryId);
   }
 
   /** 탭을 클릭한다. */
@@ -248,7 +241,6 @@ export class HumanVacationComponent implements OnInit {
   private listVacationCalc(workHistoryId: number): void {
     this.humanService.listVacationCalc$(workHistoryId)
     .subscribe((data) => {
-      this.store.update('vacationCalcListDataLoad', true);
 
       // 사용자 지정 휴가계산설정이 있으면 설정해주고
       if (data?.length > 0) {

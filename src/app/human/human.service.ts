@@ -50,9 +50,6 @@ export class HumanService {
   /** 휴가 목록 */
   private vacationList = this.store.create<VacationDataStateDTO>('vacationList', []);
 
-  /** 휴가 계산 설정 목록 데이터 로드 완료 여부 */
-  private vacationCalcListDataLoad = this.store.create<boolean>('vacationCalcListDataLoad', false);
-
   /** 휴가 탭별 테이블 타이틀 */
   private vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
 
