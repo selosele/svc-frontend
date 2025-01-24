@@ -97,7 +97,7 @@ export class HumanService {
 
   /** 회사를 추가한다. */
   addCompany$(dto: SaveCompanyRequestDTO) {
-    return this.http.post<void>('/hm/companies', dto);
+    return this.http.post<CompanyResponseDTO>('/hm/companies', dto);
   }
 
   /** 회사를 수정한다. */
@@ -160,7 +160,7 @@ export class HumanService {
   /** 근무이력을 추가한다. */
   addWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId } = dto;
-    return this.http.post<void>(`/hm/employees/${employeeId}/companies`, dto);
+    return this.http.post<WorkHistoryResponseDTO>(`/hm/employees/${employeeId}/companies`, dto);
   }
 
   /** 근무이력을 수정한다. */

@@ -88,6 +88,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
       this.humanService.addCompany$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.detailForm.get('companyId').patchValue(data.companyId);
         this.refresh.emit();
       });
     }

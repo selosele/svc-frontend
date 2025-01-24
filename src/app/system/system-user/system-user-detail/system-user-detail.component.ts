@@ -222,6 +222,7 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
       this.userService.addUser$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.detailForm.get('userId').patchValue(data.userId);
         this.refresh.emit();
       });
     }

@@ -112,6 +112,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
       this.codeService.addCode$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.detailForm.get('originalCodeId').patchValue(data.codeId);
         this.refresh.emit();
       });
     }

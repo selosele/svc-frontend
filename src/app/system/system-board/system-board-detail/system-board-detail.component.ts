@@ -114,6 +114,7 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
       this.boardService.addBoard$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.detailForm.get('boardId').patchValue(data.boardId);
         this.refresh.emit();
       });
     }

@@ -106,6 +106,7 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
       this.holidayService.addHoliday$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.detailForm.get('originalYmd').patchValue(data.ymd);
         this.refresh.emit();
       });
     }
