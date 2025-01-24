@@ -130,6 +130,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       this.humanService.addVacation$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.detailForm.get('vacationId').patchValue(data.vacationId);
         this.refresh.emit(data.workHistoryId);
       });
     }
