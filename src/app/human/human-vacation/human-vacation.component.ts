@@ -90,6 +90,11 @@ export class HumanVacationComponent implements OnInit {
   /** 휴가 계산에 포함할 휴가 구분 코드 목록 (기본 값) */
   defaultVacationTypeCodes = ['ANNUAL', 'MONTH', 'MORNING', 'AFTERNOON', 'PAID', 'UNPAID', 'SICK'];
 
+  /** 휴가 계산 설정 목록 데이터 로드 완료 여부 */
+  get vacationCalcListDataLoad() {
+    return this.store.select<boolean>('vacationCalcListDataLoad').value;
+  }
+
   /** 휴가 테이블 타이틀 */
   get vacationTableTitle() {
     return this.store.select<string>('vacationTableTitle').value;
@@ -144,7 +149,10 @@ export class HumanVacationComponent implements OnInit {
     });
 
     this.activeWorkHistoryId = Number(this.user?.workHistoryId);
-    this.listVacationCalc(this.activeWorkHistoryId);
+
+    if (!this.vacationCalcListDataLoad) {
+      this.listVacationCalc(this.activeWorkHistoryId);
+    }
   }
 
   /** 탭을 클릭한다. */
@@ -199,7 +207,8 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 폼을 초기화한다. */
   onReset(): void {
-    this.setAnnualTypeCode();
+    // this.setAnnualTypeCode();
+    this.listVacationCalc(this.activeWorkHistoryId);
     this.listWorkHistory();
   }
 
@@ -239,6 +248,7 @@ export class HumanVacationComponent implements OnInit {
   private listVacationCalc(workHistoryId: number): void {
     this.humanService.listVacationCalc$(workHistoryId)
     .subscribe((data) => {
+      this.store.update('vacationCalcListDataLoad', true);
 
       // 사용자 지정 휴가계산설정이 있으면 설정해주고
       if (data?.length > 0) {
@@ -252,10 +262,6 @@ export class HumanVacationComponent implements OnInit {
 
       this.setJoinYmd();
 
-      // TODO: 2024.10.27. 다른 페이지로 갔다가 다시 휴가관리 페이지로 이동시, 탭은 첫 번째 탭이 활성화돼 있는데
-      // 페이지 이동 전에 클릭했던 탭의 콘텐츠가 활성화돼 있는 이슈로 인해 주석처리
-      // 예) 페이지 이동 전에 두 번째 탭 클릭 -> 다시 페이지 이동시 첫 번째 탭 활성화 및 두 번째 탭의 콘텐츠 활성화되어 있는 이슈
-      // 상태관리 로직 개선 예정
       if (!this.workHistoryListDataLoad) {
         this.listWorkHistory();
       }
