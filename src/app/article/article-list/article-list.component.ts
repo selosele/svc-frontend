@@ -36,20 +36,16 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private articleService: ArticleService,
   ) {
-    // TODO: 로그아웃시 게시글목록조회 구독이 호출되는 문제는 해결했지만,
-    // 다른 게시판 페이지로 이동 시, 구독이 2번 호출되는 문제가 발생하고 있음
     router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntil(this.destroy$)
     )
     .subscribe(() => {
-      route.params.subscribe((params) => {
-        this.boardId = params['boardId'];
+      this.boardId = route.snapshot.params['boardId'];
   
-        if (!this.articleResponseDataLoad) {
-          this.articleService.listArticle(this.boardId);
-        }
-      });
+      if (!this.articleResponseDataLoad) {
+        this.articleService.listArticle(this.boardId);
+      }
     });
   }
 
