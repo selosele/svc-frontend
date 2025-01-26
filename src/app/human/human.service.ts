@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService, StoreService } from '@app/shared/services';
 import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO, SaveCompanyRequestDTO, VacationDataStateDTO } from './human.model';
+import { CompanyResponseDTO, WorkHistoryResponseDTO, EmployeeResponseDTO, GetCompanyRequestDTO, GetVacationRequestDTO, SaveWorkHistoryRequestDTO, SaveEmployeeRequestDTO, VacationResponseDTO, SaveVacationRequestDTO, GetWorkHistoryRequestDTO, VacationCalcResponseDTO, AddVacationCalcRequestDTO, CompanyOpenAPIResponseDTO, GetCompanyApplyRequestDTO, CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO, SaveCompanyRequestDTO, VacationDataStateDTO, GetVacationStatsRequestDTO, VacationStatsResponseDTO } from './human.model';
 
 @Injectable({ providedIn: 'root' })
 export class HumanService {
@@ -212,6 +212,12 @@ export class HumanService {
     return this.http.post<void>(`/hm/vacations/calcs/${workHistoryId}`, dto);
   }
 
+  /** 휴가 통계 목록을 조회한다. */
+  listVacationStats$(dto: GetVacationStatsRequestDTO) {
+    const params = this.httpService.createParams(dto);
+    return this.http.get<VacationStatsResponseDTO[]>('/hm/vacations/stats', { params });
+  }
+
   /** 테이블 문구를 설정한다. */
   setVacationTableContent(index: number): void {
     const workHistory = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
@@ -231,13 +237,13 @@ export class HumanService {
   /** 테이블 텍스트를 설정한다. */
   setVacationTableText(workHistory: WorkHistoryResponseDTO): string {
     let text = '';
-    const { annualTypeCode, joinYmd, quitYmd, workDiffM } = workHistory;
+    const { annualTypeCode, joinYmd, quitYmd, vacationTotalCountByJoinYmd } = workHistory;
     switch (annualTypeCode) {
 
       // 입사일자 기준
       case 'JOIN_YMD':
         const joinYmdFormat = dateUtil(joinYmd).format('YYYY년 MM월 DD일');
-        text += `입사 ${joinYmdFormat}부터 총 <strong>${workDiffM-1}</strong>개의 월차가 발생했어요.`;
+        text += `입사 ${joinYmdFormat}부터 총 <strong>${vacationTotalCountByJoinYmd}</strong>개의 월차가 발생했어요.`;
         if (isNotBlank(quitYmd)) {
           text += `<br>퇴사했을 경우 퇴사일자(${quitYmd})를 기준으로 마지막 월차 개수가 계산돼요.`;
         }
@@ -258,41 +264,20 @@ export class HumanService {
 
   /** 잔여 휴가를 표출한다. */
   showVacationCount(workHistory: WorkHistoryResponseDTO): string {
-    const { annualTypeCode, joinYmd, quitYmd, workDiffM, vacationRemainCountByJoinYmd, vacationRemainCountByFiscalYear } = workHistory;
+    const { annualTypeCode, vacationTotalCountByJoinYmd, vacationTotalCountByFiscalYear, vacationRemainCountByJoinYmd, vacationRemainCountByFiscalYear } = workHistory;
     switch (annualTypeCode) {
 
       // 입사일자 기준
       case 'JOIN_YMD':
-        return `잔여 월차: <strong class="text-primary">${vacationRemainCountByJoinYmd}</strong>/${workDiffM-1}개`;
+        return `잔여 월차: <strong class="text-primary">${vacationRemainCountByJoinYmd}</strong>/${vacationTotalCountByJoinYmd}개`;
       
       // 회계연도 기준
       case 'FISCAL_YEAR':
-        return `잔여 연차: <strong class="text-primary">${vacationRemainCountByFiscalYear}</strong>/${this.getTotalAnnualCount(joinYmd, quitYmd)}개`;
+        return `잔여 연차: <strong class="text-primary">${vacationRemainCountByFiscalYear}</strong>/${vacationTotalCountByFiscalYear}개`;
       
       default:
         return null;
     }
-  }
-
-  /** total 연차개수를 반환한다. */
-  private getTotalAnnualCount(joinYmd: string, quitYmd: string): number {
-    const nextFiscalYmd = dateUtil(dateUtil().add(1, 'year').startOf('year')).format('YYYYMMDD'); // 내년 회계연도 날짜
-    let joinYmdDiff = dateUtil().diff(joinYmd, 'year'); // 근속연수 계산
-
-    // 퇴사한 회사는 퇴사일자를 기준으로 근속연수를 계산
-    if (isNotBlank(quitYmd)) {
-      joinYmdDiff = dateUtil(quitYmd).diff(joinYmd, 'year');
-    }
-
-    // 입사일자가 1년 미만이면 내년 회계연도에 비례한 남은 개월수를 반환한다.
-    if (dateUtil(nextFiscalYmd).diff(joinYmd, 'year') < 1) {
-      return dateUtil(nextFiscalYmd).diff(joinYmd, 'month');
-    }
-
-    // 위 조건을 충족하지 않으면 15개의 연차를 반환한다.
-    // 단, 3년 이상 근속했을 경우 근속 2년마다 1일씩 가산(최대 25일까지)된 연차가 반환된다.
-    const extraDays = Math.floor((joinYmdDiff - 3) / 2) + 1; // 3년 이상일 경우부터 가산
-    return Math.min(15 + Math.max(0, extraDays), 25);        // 최대 25일까지 제한
   }
 
 }

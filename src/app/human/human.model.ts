@@ -146,6 +146,12 @@ export class WorkHistoryResponseDTO {
   /** 재직기간(월) */
   workDiffM?: number;
 
+  /** 총 월차 개수 */
+  vacationTotalCountByJoinYmd?: number;
+
+  /** 총 연차 개수 */
+  vacationTotalCountByFiscalYear?: number;
+
   /** 잔여 월차 개수 */
   vacationRemainCountByJoinYmd?: number;
 
@@ -533,6 +539,46 @@ export class VacationCalcResponseDTO {
 
   /** 휴가 구분 코드 */
   vacationTypeCode?: string;
+
+}
+
+/** 휴가 통계 조회 요청 DTO */
+export class GetVacationStatsRequestDTO extends HttpRequestDTOBase {
+
+  /** 사용자 ID */
+  userId?: number;
+  
+  /** 직원 ID */
+  employeeId?: number;
+
+}
+
+/** 휴가 통계 응답 DTO */
+export class VacationStatsResponseDTO {
+
+  /** 휴가 통계 ID */
+  vacationStatsId?: number;
+
+  /** 직원 ID */
+  employeeId?: number;
+  
+  /** 연도 */
+  yyyy?: string;
+
+  /** 휴가 구분 코드 */
+  vacationTypeCode?: string;
+
+  /** 휴가 구분 코드명 */
+  vacationTypeCodeName?: string;
+
+  /** 총 휴가일수 */
+  vacationTotalCount?: number;
+
+  /** 휴가 사용 일수 */
+  vacationUseCount?: number;
+
+  /** 잔여 휴가일수 */
+  vacationRemainCount?: number;
 
 }
 
