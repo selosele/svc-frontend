@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { UiButtonComponent } from '../../ui';
 import { StoreService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuBookmarkResponseDTO } from '@app/menu/menu.model';
-import { MenuItem } from 'primeng/api';
-import { getQueryParameter } from '@app/shared/utils';
+import { isEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -25,14 +25,10 @@ import { getQueryParameter } from '@app/shared/utils';
 export class LayoutMenuBookmarkComponent implements OnInit {
 
   constructor(
-    private router: Router,
+    private route: ActivatedRoute,
     private store: StoreService,
     private menuService: MenuService,
-  ) {
-    router.events.subscribe((params) => {
-      this.menuId = Number(getQueryParameter('menuId'));
-    });
-  }
+  ) {}
 
   /** 컨텍스트 메뉴 */
   @ViewChild('cm') cm: ContextMenu;
@@ -54,13 +50,25 @@ export class LayoutMenuBookmarkComponent implements OnInit {
     return this.store.select<MenuBookmarkResponseDTO[]>('menuBookmarkList').value;
   }
 
+  /** 메뉴 즐겨찾기 목록 데이터 로드 완료 여부 */
+  get menuBookmarkListDataLoad() {
+    return this.store.select<boolean>('menuBookmarkListDataLoad').value;
+  }
+
   ngOnInit() {
     this.contextMenus = [
       { label: '삭제', icon: 'pi pi-trash', command: () => this.onRemove(this.cmMenuBookmarkId) },
       { label: '전체 삭제', icon: 'pi pi-trash', command: () => this.removeAll() },
     ];
 
-    this.menuService.listMenuBookmark();
+    this.route.queryParams.subscribe((queryParams) => {
+      this.menuId = Number(queryParams?.menuId);
+      if (isEmpty(this.menuId) || isNaN(this.menuId)) return;
+
+      if (!this.menuBookmarkListDataLoad) {
+        this.menuService.listMenuBookmark();
+      }
+    });
   }
 
   /** 삭제 버튼을 클릭해서 메뉴 즐겨찾기를 삭제한다. */

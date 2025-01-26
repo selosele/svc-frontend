@@ -58,6 +58,9 @@ export class MenuService {
   /** 메뉴 즐겨찾기 목록 */
   private menuBookmarkList = this.store.create<MenuBookmarkResponseDTO[]>('menuBookmarkList', []);
 
+  /** 메뉴 즐겨찾기 목록 데이터 로드 완료 여부 */
+  private menuBookmarkListDataLoad = this.store.create<boolean>('menuBookmarkListDataLoad', false);
+
   /** 메뉴접속이력 목록 */
   private menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
 
@@ -118,6 +121,7 @@ export class MenuService {
     this.http.get<MenuBookmarkResponseDTO[]>('/co/menubookmarks')
     .subscribe((data) => {
       this.store.update('menuBookmarkList', data);
+      this.store.update('menuBookmarkListDataLoad', true);
     });
   }
 
