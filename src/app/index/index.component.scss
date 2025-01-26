@@ -1,0 +1,49 @@
+.widget {
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+  }
+
+  &-box {
+    &__title {
+      padding-bottom: 0.625rem;
+      border-bottom: 1px solid var(--surface-300);
+
+      strong {
+        font-weight: 700;
+        font-size: 1.3rem;
+      }
+    }
+
+    &__container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    &__item {
+      flex: 1;
+      margin-top: 0.625rem;
+      padding: 0.625rem;
+
+      ul {
+        padding: 0;
+      }
+
+      li {
+        + li {
+          margin-top: 0.9375rem;
+        }
+      }
+    }
+  }
+
+  &-box1 {
+    width: calc(33.33% - 2rem);
+  }
+
+  &-box2 {
+    width: calc(33.33% - 2rem);
+  }
+}
