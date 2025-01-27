@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/human/human.model';
+import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
 import { StoreService } from '@app/shared/services';
 import { AuthService } from '@app/auth/auth.service';
-import { HumanService } from '@app/human/human.service';
+import { VacationService } from '@app/vacation/vacation.service';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
 import { HumanVacationDetailComponent } from '../human-vacation-detail/human-vacation-detail.component';
@@ -31,7 +31,7 @@ export class HumanVacationListComponent implements OnInit {
     private fb: FormBuilder,
     private store: StoreService,
     private authService: AuthService,
-    private humanService: HumanService,
+    private vacationService: VacationService,
   ) {}
 
   /** 근무이력 ID */
@@ -122,7 +122,7 @@ export class HumanVacationListComponent implements OnInit {
   listVacation(dto: GetVacationRequestDTO): void {
     const { workHistoryId } = dto;
 
-    this.humanService.listVacation$(dto)
+    this.vacationService.listVacation$(dto)
     .subscribe((data) => {
       const oldValue = this.store.select<VacationDataStateDTO>('vacationList').value;
       this.store.update('vacationList', {
@@ -154,7 +154,7 @@ export class HumanVacationListComponent implements OnInit {
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.humanService.getVacation$(event.data['vacationId'])
+    this.vacationService.getVacation$(event.data['vacationId'])
     .subscribe((data) => {
       this.detail = data;
       this.splitter.show();

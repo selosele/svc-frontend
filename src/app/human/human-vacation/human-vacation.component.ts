@@ -16,11 +16,13 @@ import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-
 import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbox-group/ui-checkbox-group.component';
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { AddVacationCalcRequestDTO, WorkHistoryResponseDTO } from '../human.model';
+import { WorkHistoryResponseDTO } from '../human.model';
+import { AddVacationCalcRequestDTO } from '@app/vacation/vacation.model';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
 import { dateUtil } from '@app/shared/utils';
 import { MenuService } from '@app/menu/menu.service';
+import { VacationService } from '@app/vacation/vacation.service';
 
 @Component({
   standalone: true,
@@ -56,6 +58,7 @@ export class HumanVacationComponent implements OnInit {
     private messageService: UiMessageService,
     private authService: AuthService,
     private humanService: HumanService,
+    private vacationService: VacationService,
     protected menuService: MenuService,
   ) {}
 
@@ -158,7 +161,7 @@ export class HumanVacationComponent implements OnInit {
     this.listVacationCalc(event.activeKey);
     
     this.humanService.setWorkHistoryId(event.activeKey);
-    this.humanService.setVacationTableContent(this.store.select<number>('workHistoryTabIndex').value);
+    this.vacationService.setVacationTableContent(this.store.select<number>('workHistoryTabIndex').value);
   }
 
   /** 연차발생기준을 선택한다. */
@@ -207,7 +210,7 @@ export class HumanVacationComponent implements OnInit {
 
   /** 휴가 계산 설정을 저장한다. */
   onSave(): void {
-    this.humanService.addVacationCalc$({
+    this.vacationService.addVacationCalc$({
       ...this.caculateVacationForm.value as AddVacationCalcRequestDTO,
       workHistoryId: this.activeWorkHistoryId,
     })
@@ -233,13 +236,13 @@ export class HumanVacationComponent implements OnInit {
 
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
       this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);
-      this.humanService.setVacationTableContent(this.activeIndex);
+      this.vacationService.setVacationTableContent(this.activeIndex);
     });
   }
 
   /** 휴가 계산 설정 목록을 조회한다. */
   private listVacationCalc(workHistoryId: number): void {
-    this.humanService.listVacationCalc$(workHistoryId)
+    this.vacationService.listVacationCalc$(workHistoryId)
     .subscribe((data) => {
 
       // 사용자 지정 휴가계산설정이 있으면 설정해주고

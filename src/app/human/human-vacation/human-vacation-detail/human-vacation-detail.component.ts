@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SaveVacationRequestDTO, VacationResponseDTO } from '@app/human/human.model';
-import { HumanService } from '@app/human/human.service';
+import { SaveVacationRequestDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
+import { VacationService } from '@app/vacation/vacation.service';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
@@ -32,7 +32,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private store: StoreService,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private vacationService: VacationService,
   ) {}
 
   /** 근무이력 ID */
@@ -127,7 +127,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     // 휴가 ID가 없으면 추가 API를 타고
     if (isEmpty(value.vacationId)) {
-      this.humanService.addVacation$(value)
+      this.vacationService.addVacation$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.detailForm.get('vacationId').patchValue(data.vacationId);
@@ -136,7 +136,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.humanService.updateVacation$(value)
+      this.vacationService.updateVacation$(value)
       .subscribe(() => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit(value.workHistoryId);
@@ -149,7 +149,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('휴가를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
-    this.humanService.removeVacation$(this.detail.vacationId)
+    this.vacationService.removeVacation$(this.detail.vacationId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
