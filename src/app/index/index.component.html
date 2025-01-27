@@ -64,7 +64,7 @@
             <ul class="flex-grow-1">
               @for (i of vacationStatResponse?.statsList; track $index) {
                 <li>
-                  <a href="javascript:void(0)" (click)="onStatsItemClick($event, i)" [class.active]="i.vacationStatsId === statsItemClickId">
+                  <a href="javascript:void(0)" (click)="onStatsItemClick(i)" [class.active]="i.vacationStatsId === statsItemClickId">
                     <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.yyyy }}년</span> {{ i.vacationTypeCodeName }} ({{ i.vacationUseCount }}개)
                   </a>
                 </li>

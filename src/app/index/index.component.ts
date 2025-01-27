@@ -74,9 +74,9 @@ export class IndexComponent implements OnInit {
   }
 
   /** 휴가통계 목록 항목을 클릭한다. */
-  onStatsItemClick(event: Event, i: VacationStatsResultDTO): void {
+  onStatsItemClick(i: VacationStatsResultDTO): void {
     this.statsItemClickId = i.vacationStatsId;
-    
+
     this.vacationService.listVacationByMonth$({
       yyyy: i.yyyy,
       workHistoryId: i.workHistoryId,
