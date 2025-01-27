@@ -64,8 +64,13 @@
             <ul class="flex-grow-1">
               @for (i of vacationStatResponse?.statsList; track $index) {
                 <li>
-                  <a href="javascript:void(0)" (click)="onStatsItemClick(i)" [class.active]="i.vacationStatsId === statsItemClickId">
-                    <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.yyyy }}년</span> {{ i.vacationTypeCodeName }} ({{ i.vacationUseCount }}개)
+                  <a
+                    href="javascript:void(0)"
+                    [class.active]="i.vacationStatsId === statsItemClickId"
+                    (click)="onStatsItemClick(i)"
+                  >
+                    <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.yyyy }}년</span>
+                    {{ i.vacationTypeCodeName }} ({{ i.vacationUseCount }}개)
                   </a>
                 </li>
               }
@@ -74,7 +79,8 @@
             <ul class="flex-grow-1">
               @for (i of vacationListByMonth; track $index) {
                 <li>
-                  <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationMonth }}월</span> {{ i.vacationUseCount }}개
+                  <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationMonth }}월</span>
+                  {{ i.vacationUseCount }}개
                 </li>
               }
             </ul>

@@ -54,7 +54,7 @@ export class IndexComponent implements OnInit {
   statsItemClickId: number;
 
   ngOnInit() {
-    if (!this.vacationStatResponseDataLoad) {
+    if (!this.vacationStatResponseDataLoad && this.user) {
       this.listVacationStats();
     }
   }
@@ -66,11 +66,6 @@ export class IndexComponent implements OnInit {
       this.store.update('vacationStatResponse', data);
       this.store.update('vacationStatResponseDataLoad', true);
     });
-  }
-
-  /** 휴가관리 페이지로 이동한다. */
-  onMoreClick(): void {
-    this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.menuInfo.VACATIONS } });
   }
 
   /** 휴가통계 목록 항목을 클릭한다. */
@@ -85,6 +80,11 @@ export class IndexComponent implements OnInit {
     .subscribe((data) => {
       this.vacationListByMonth = data;
     });
+  }
+
+  /** 휴가관리 페이지로 이동한다. */
+  onMoreClick(): void {
+    this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.menuInfo.VACATIONS } });
   }
 
 }
