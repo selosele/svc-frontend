@@ -1,55 +1,125 @@
 <div class="widget-wrapper">
   <div class="widget-box widget-box1">
-    <div class="widget-box__title">
-      <strong>휴가일수</strong>
-    </div>
-  
-    <div class="widget-box__container">
-      <div class="widget-box__item">
-        <p class="widget-box__item-title">총 휴가일수</p>
-        <p><strong class="text-2xl text-primary">15</strong>개</p>
+    @if (!vacationStatResponseDataLoad) {
+      <ui-skeleton />
+      <ui-skeleton />
+      <ui-skeleton />
+    }
+    @else {
+      <div class="widget-box__title">
+        <strong>휴가일수</strong>
+        <ui-button
+          [icon]="'pi-plus'"
+          [text]="true"
+          [title]="'자세히 보기'"
+          (click)="onMoreClick()"
+        />
       </div>
     
-      <div class="widget-box__item">
-        <p class="widget-box__item-title">휴가 사용일수</p>
-        <p><strong class="text-2xl text-primary">2</strong>개</p>
+      <div class="widget-box__container">
+        <div class="widget-box__item bg-primary-50">
+          <p class="widget-box__item-title">총 휴가일수</p>
+          <p>
+            <strong class="text-2xl text-primary">{{ vacationStatResponse?.countInfo.vacationTotalCount }}</strong>개
+          </p>
+        </div>
+      
+        <div class="widget-box__item bg-primary-50">
+          <p class="widget-box__item-title">휴가 사용일수</p>
+          <p>
+            <strong class="text-2xl text-primary">{{ vacationStatResponse?.countInfo.vacationUseCount }}</strong>개
+          </p>
+        </div>
+      
+        <div class="widget-box__item bg-primary-50">
+          <p class="widget-box__item-title">휴가 잔여일수</p>
+          <p>
+            <strong class="text-2xl text-primary">{{ vacationStatResponse?.countInfo.vacationRemainCount }}</strong>개
+          </p>
+        </div>
       </div>
-    
-      <div class="widget-box__item">
-        <p class="widget-box__item-title">휴가 잔여일수</p>
-        <p><strong class="text-2xl text-primary">13</strong>개</p>
-      </div>
-    </div>
+    }
   </div>
 
   <div class="widget-box widget-box2">
-    <div class="widget-box__title">
-      <strong>연도별 휴가내역</strong>
-    </div>
-
-    <div class="widget-box__container">
-      <div class="widget-box__item">
-        <ul>
-          <li><span class="mr-2 px-2 py-1 bg-primary-50 text-primary">2024년</span> 월차휴가 (6개)</li>
-          <li><span class="mr-2 px-2 py-1 bg-primary-50 text-primary">2024년</span> 대체휴가 (1개)</li>
-        </ul>
+    @if (!vacationStatResponseDataLoad) {
+      <ui-skeleton />
+      <ui-skeleton />
+      <ui-skeleton />
+    }
+    @else {
+      <div class="widget-box__title">
+        <strong>휴가통계</strong>
+        <ui-button
+          [icon]="'pi-plus'"
+          [text]="true"
+          [title]="'자세히 보기'"
+          (click)="onMoreClick()"
+        />
       </div>
-    </div>
+  
+      <div class="widget-box__container">
+        <div class="widget-box__item flex">
+          @if (vacationStatResponse?.statsList.length > 0) {
+            <ul class="flex-grow-1">
+              @for (i of vacationStatResponse?.statsList; track $index) {
+                <li>
+                  <a href="javascript:void(0)" (click)="onStatsItemClick($event, i)" [class.active]="i.vacationStatsId === statsItemClickId">
+                    <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.yyyy }}년</span> {{ i.vacationTypeCodeName }} ({{ i.vacationUseCount }}개)
+                  </a>
+                </li>
+              }
+            </ul>
+
+            <ul class="flex-grow-1">
+              @for (i of vacationListByMonth; track $index) {
+                <li>
+                  <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationMonth }}월</span> {{ i.vacationUseCount }}개
+                </li>
+              }
+            </ul>
+          }
+          @else {
+            <p>아직 사용한 휴가가 없어요!</p>
+          }
+        </div>
+      </div>
+    }
   </div>
 
   <div class="widget-box widget-box3">
-    <div class="widget-box__title">
-      <strong>최근휴가</strong>
-    </div>
-
-    <div class="widget-box__container">
-      <div class="widget-box__item">
-        <ul>
-          <li><span class="mr-2 px-2 py-1 bg-primary-50 text-primary">월차휴가</span> 20241227 ~ 20241227(1일)</li>
-          <li><span class="mr-2 px-2 py-1 bg-primary-50 text-primary">월차휴가</span> 20241115 ~ 20241115(1일)</li>
-          <li><span class="mr-2 px-2 py-1 bg-primary-50 text-primary">월차휴가</span> 20241011 ~ 20241011(1일)</li>
-        </ul>
+    @if (!vacationStatResponseDataLoad) {
+      <ui-skeleton />
+      <ui-skeleton />
+      <ui-skeleton />
+    }
+    @else {
+      <div class="widget-box__title">
+        <strong>최근휴가</strong>
+        <ui-button
+          [icon]="'pi-plus'"
+          [text]="true"
+          [title]="'자세히 보기'"
+          (click)="onMoreClick()"
+        />
       </div>
-    </div>
+  
+      <div class="widget-box__container">
+        <div class="widget-box__item">
+          @if (vacationStatResponse?.vacationList.length > 0) {
+            <ul>
+              @for (i of vacationStatResponse?.vacationList; track $index) {
+                <li>
+                  <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationTypeCodeName }}</span> {{ i.vacationStartYmd }} ~ {{ i.vacationEndYmd }} ({{ i.vacationUseCount }}일)
+                </li>
+              }
+            </ul>
+          }
+          @else {
+            <p>아직 사용한 휴가가 없어요!</p>
+          }
+        </div>
+      </div>
+    }
   </div>
 </div>

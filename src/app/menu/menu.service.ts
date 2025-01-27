@@ -20,6 +20,9 @@ export class MenuService {
   /** 메뉴 ID 정보 */
   public menuIdInfo = {
 
+    // 휴가관리
+    VACATIONS: 2,
+
     // 마이페이지
     MY_PAGE: 14,
 

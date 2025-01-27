@@ -7,7 +7,9 @@
 
   &-box {
     &__title {
-      padding-bottom: 0.625rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid var(--surface-300);
 
       strong {
@@ -28,6 +30,8 @@
       padding: 0.625rem;
 
       ul {
+        overflow: auto;
+        height: 3.75rem;
         padding: 0;
       }
 
@@ -35,15 +39,30 @@
         + li {
           margin-top: 0.9375rem;
         }
+
+        a {
+          position: relative;
+
+          &.active {
+            &:before {
+              content: "";
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: calc(100% + 0.5rem);
+              width: 0.5rem;
+              height: 0.5rem;
+              margin: auto 0.5rem auto 0;
+              border-radius: 50%;
+              background-color: var(--primary-color);
+            }
+          }
+        }
       }
     }
   }
 
-  &-box1 {
-    width: calc(33.33% - 2rem);
-  }
-
-  &-box2 {
-    width: calc(33.33% - 2rem);
+  &-box {
+    flex: 1;
   }
 }
