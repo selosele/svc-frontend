@@ -13,7 +13,7 @@ export interface Tab {
   key?: any;
 
   /** 탭 데이터 로드 완료 여부 */
-  dataLoaded?: boolean;
+  dataLoad?: boolean;
   
 }
 

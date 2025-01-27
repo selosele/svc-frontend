@@ -217,7 +217,7 @@ export class VacationDataStateDTO {
   /** 근무이력 탭별 휴가 목록 및 데이터 로드 완료 여부 */
   [key: number]: {
     data: VacationResponseDTO[],
-    dataLoaded: boolean,
+    dataLoad: boolean,
   };
 
 }

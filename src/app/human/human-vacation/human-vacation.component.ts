@@ -111,7 +111,7 @@ export class HumanVacationComponent implements OnInit {
   /** 근무이력 목록 데이터 로드 완료 여부 */
   get workHistoryListDataLoad() {
     const data = this.store.select<Tab[]>('workHistoryTabList').value;
-    return data?.find(x => x.key === this.activeWorkHistoryId)?.dataLoaded ?? false;
+    return data?.find(x => x.key === this.activeWorkHistoryId)?.dataLoad ?? false;
   }
 
   /** 근무이력 목록 */
@@ -232,7 +232,7 @@ export class HumanVacationComponent implements OnInit {
     })
     .subscribe((data) => {
       this.store.update('workHistoryList', data);
-      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoaded: true })));
+      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
 
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
       this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);

@@ -63,7 +63,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   /** 게시글 및 게시판 데이터 로드 완료 여부 */
   get articleResponseDataLoad() {
     const article = this.store.select<ArticleDataStateDTO>('articleResponse').value;
-    return article?.[this.boardId]?.dataLoaded ?? false;
+    return article?.[this.boardId]?.dataLoad ?? false;
   }
 
   /** 인증된 사용자 정보 */

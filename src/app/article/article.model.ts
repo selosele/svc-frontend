@@ -98,7 +98,7 @@ export class ArticleDataStateDTO {
   /** 게시판별 게시글 응답 DTO 및 데이터 로드 완료 여부 */
   [key: number]: {
     data: ArticleResponseDTO,
-    dataLoaded: boolean,
+    dataLoad: boolean,
   };
 
 }

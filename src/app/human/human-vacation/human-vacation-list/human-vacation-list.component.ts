@@ -65,7 +65,7 @@ export class HumanVacationListComponent implements OnInit {
   /** 휴가 목록 데이터 로드 완료 여부 */
   get vacationListDataLoad() {
     const list = this.store.select<VacationDataStateDTO>('vacationList').value;
-    return list?.[this.workHistoryId]?.dataLoaded ?? false;
+    return list?.[this.workHistoryId]?.dataLoad ?? false;
   }
 
   /** 휴가 검색 폼 */
@@ -127,7 +127,7 @@ export class HumanVacationListComponent implements OnInit {
       const oldValue = this.store.select<VacationDataStateDTO>('vacationList').value;
       this.store.update('vacationList', {
         ...oldValue,
-        [workHistoryId]: { data, dataLoaded: true } // 근무이력 탭별로 휴가 목록을 상태관리
+        [workHistoryId]: { data, dataLoad: true } // 근무이력 탭별로 휴가 목록을 상태관리
       });
     });
   }

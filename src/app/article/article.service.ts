@@ -35,7 +35,7 @@ export class ArticleService {
       const oldValue = this.store.select<ArticleDataStateDTO>('articleResponse').value;
       this.store.update('articleResponse', {
         ...oldValue,
-        [boardId]: { data, dataLoaded: true } // 게시판 ID별로 게시글 목록을 상태관리
+        [boardId]: { data, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
       });
     });
   }
