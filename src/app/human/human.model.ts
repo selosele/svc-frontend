@@ -561,6 +561,9 @@ export class VacationStatsResponseDTO {
 
   /** 직원 ID */
   employeeId?: number;
+
+  /** 근무이력 ID */
+  workHistoryId?: number;
   
   /** 연도 */
   yyyy?: string;
