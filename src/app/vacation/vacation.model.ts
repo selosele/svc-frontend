@@ -179,7 +179,7 @@ export class VacationStatsResponseDTO {
   countInfo?: VacationCountInfoResultDTO;
 
   /** 휴가 통계 목록 */
-  statList?: VacationStatsResultDTO[];
+  statsList?: VacationStatsResultDTO[];
 
   /** 휴가 목록 */
   vacationList?: VacationResponseDTO[];
