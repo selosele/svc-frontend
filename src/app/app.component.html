@@ -3,7 +3,7 @@
     <layout-header />
     
     <div class="page-wrapper">
-      <div class="page-wrapper__inner">
+      <div class="page-wrapper__inner" [class.is-index]="isIndexPage">
         @if (!isIndexPage) {
           <layout-breadcrumb />
         }
