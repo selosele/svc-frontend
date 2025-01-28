@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { filter, firstValueFrom, take } from 'rxjs';
-import { StoreService } from '@app/shared/services';
+import { MenuStore } from '@app/menu/menu.store';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO } from '@app/menu/menu.model';
 import { ERROR_PAGE_PATH, LOGIN_PAGE_PATH, MAIN_PAGE_PATH1, MAIN_PAGE_PATH2 } from '@app/shared/utils';
@@ -9,16 +9,16 @@ import { ERROR_PAGE_PATH, LOGIN_PAGE_PATH, MAIN_PAGE_PATH1, MAIN_PAGE_PATH2 } fr
 /** 메뉴 guard */
 export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router = inject(Router);
-  const store = inject(StoreService);
+  const menuStore = inject(MenuStore);
   const menuService = inject(MenuService);
 
   // 메뉴 목록을 조회한다.
-  if (!store.select<boolean>('menuListDataLoad').value) {
+  if (!menuStore.select<boolean>('menuListDataLoad').value) {
     menuService.listMenu();
   }
   
   const menuList = await firstValueFrom(
-    store.select<MenuResponseDTO[]>('menuList').pipe(
+    menuStore.select<MenuResponseDTO[]>('menuList').pipe(
       filter((menuList) => Array.isArray(menuList) && menuList.length > 0),
       take(1)
     )
