@@ -2,8 +2,26 @@
   &-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
+    gap: 2rem;
+
+    &1 {
+      width: calc(20% - 1rem);
+    }
+
+    &2 {
+      width: calc(40% - 1rem);
+    }
+
+    &3 {
+      width: calc(40% - 1rem);
+    }
   }
 
   &-box {
