@@ -18,7 +18,6 @@ export class UiLoadingService {
 
   /** 로딩 상태를 설정한다. */
   setLoading(loading: boolean): void {
-
     /**
      * setTimeout을 추가해서 ExpressionChangedAfterItHasBeenCheckedError 방지
      * modal 표출 후 HTTP 요청을 전송할 때 발생하는 오류

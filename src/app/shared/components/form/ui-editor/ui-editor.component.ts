@@ -40,8 +40,14 @@ export class UiEditorComponent extends FormFieldComponent {
 
   /** 에디터의 값을 변경한다. */
   protected onTextChange(event: EditorTextChangeEvent): void {
-    this.setErrorMessage();
-    this.textChange.emit(event);
+    /**
+     * 2025.01.28. 유효성검사가 제대로 동작 안하는 이슈로 인한 setTimeout을 추가
+     * 예) 에디터에 값을 입력하고서 전부 지우면 오류메시지가 출력되지 않음
+     */
+    setTimeout(() => {
+      this.setErrorMessage();
+      this.textChange.emit(event);
+    }, 0);
   }
 
 }
