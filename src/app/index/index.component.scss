@@ -31,15 +31,17 @@
 
       ul {
         overflow: auto;
-        height: 3.75rem;
+        height: 5.9375rem;
         padding: 0;
       }
 
-      li {
-        + li {
+      &-list {
+        li + li {
           margin-top: 0.9375rem;
         }
+      }
 
+      li {
         a {
           position: relative;
 

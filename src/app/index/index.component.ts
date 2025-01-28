@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StoreService } from '@app/shared/services';
-import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
 import { VacationService } from '@app/vacation/vacation.service';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
 import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 
@@ -17,19 +17,15 @@ import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResu
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private router: Router,
     private store: StoreService,
-    private authService: AuthService,
     private menuService: MenuService,
     private vacationService: VacationService,
-  ) {}
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
+  ) {
+    super();
   }
 
   /** 메뉴 ID 정보 */

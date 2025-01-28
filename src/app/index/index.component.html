@@ -61,7 +61,7 @@
       <div class="widget-box__container">
         <div class="widget-box__item flex">
           @if (vacationStatResponse?.statsList.length > 0) {
-            <ul class="flex-grow-1">
+            <ul class="widget-box__item-list flex-grow-1 w-6">
               @for (i of vacationStatResponse?.statsList; track $index) {
                 <li>
                   <a
@@ -76,7 +76,7 @@
               }
             </ul>
 
-            <ul class="flex-grow-1">
+            <ul class="flex flex-grow-1 flex-wrap gap-3 w-6">
               @for (i of vacationListByMonth; track $index) {
                 <li>
                   <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationMonth }}월</span>
@@ -113,7 +113,7 @@
       <div class="widget-box__container">
         <div class="widget-box__item">
           @if (vacationStatResponse?.vacationList.length > 0) {
-            <ul>
+            <ul class="widget-box__item-list">
               @for (i of vacationStatResponse?.vacationList; track $index) {
                 <li>
                   <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationTypeCodeName }}</span> {{ i.vacationStartYmd }} ~ {{ i.vacationEndYmd }} ({{ i.vacationUseCount }}일)
