@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { CompanyResponseDTO } from '@app/human/human.model';
-import { StoreService } from '@app/shared/services';
-import { HumanService } from '@app/human/human.service';
+import { CompanyStore } from '@app/company/company.store';
+import { CompanyService } from '@app/company/company.service';
+import { CompanyResponseDTO } from '@app/company/company.model';
 import { SystemCompanyDetailComponent } from './system-company-detail/system-company-detail.component';
 import { SystemCompanyApplyComponent } from './system-company-apply/system-company-apply.component';
 
@@ -27,8 +27,8 @@ import { SystemCompanyApplyComponent } from './system-company-apply/system-compa
 export class SystemCompanyComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
-    private humanService: HumanService,
+    private companyStore: CompanyStore,
+    private companyService: CompanyService,
   ) {
     super();
   }
@@ -38,12 +38,12 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
 
   /** 회사 목록 */
   get companyList() {
-    return this.store.select<CompanyResponseDTO[]>('companyList').value;
+    return this.companyStore.select<CompanyResponseDTO[]>('companyList').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 */
   get companyListDataLoad() {
-    return this.store.select<boolean>('companyListDataLoad').value;
+    return this.companyStore.select<boolean>('companyListDataLoad').value;
   }
 
   /** 회사 정보 */
@@ -69,7 +69,7 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
 
   /** 회사 목록을 조회한다. */
   listCompany(): void {
-    this.humanService.listCompany();
+    this.companyService.listCompany();
   }
 
   /** 회사를 추가한다. */
@@ -80,7 +80,7 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
 
   /** 회사정보목록 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.humanService.getCompany$(event.data['companyId'])
+    this.companyService.getCompany$(event.data['companyId'])
     .subscribe((data) => {
       this.detail = data;
       this.splitter.show();

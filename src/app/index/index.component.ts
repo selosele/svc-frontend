@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StoreService } from '@app/shared/services';
 import { MenuService } from '@app/menu/menu.service';
+import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
@@ -21,7 +21,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: StoreService,
+    private vacationStore: VacationStore,
     private menuService: MenuService,
     private vacationService: VacationService,
   ) {
@@ -35,12 +35,12 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   /** 휴가 통계 정보 */
   get vacationStatResponse() {
-    return this.store.select<VacationStatsResponseDTO>('vacationStatResponse').value;
+    return this.vacationStore.select<VacationStatsResponseDTO>('vacationStatResponse').value;
   }
 
   /** 휴가 통계 정보 데이터 로드 완료 여부 */
   get vacationStatResponseDataLoad() {
-    return this.store.select<boolean>('vacationStatResponseDataLoad').value;
+    return this.vacationStore.select<boolean>('vacationStatResponseDataLoad').value;
   }
 
   /** 월별 휴가사용일수 목록 */
@@ -59,8 +59,8 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   listVacationStats(): void {
     this.vacationService.listVacationStats$({ userId: this.user?.userId })
     .subscribe((data) => {
-      this.store.update('vacationStatResponse', data);
-      this.store.update('vacationStatResponseDataLoad', true);
+      this.vacationStore.update('vacationStatResponse', data);
+      this.vacationStore.update('vacationStatResponseDataLoad', true);
     });
   }
 

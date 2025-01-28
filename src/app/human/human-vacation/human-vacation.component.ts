@@ -6,7 +6,6 @@ import { DropdownChangeEvent } from 'primeng/dropdown';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
-import { HumanService } from '../human.service';
 import { HumanVacationListComponent } from './human-vacation-list/human-vacation-list.component';
 import { MyHolidayComponent } from '@app/holiday/my-holiday/my-holiday.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
@@ -16,13 +15,16 @@ import { UiCheckboxComponent } from '@app/shared/components/form/ui-checkbox/ui-
 import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbox-group/ui-checkbox-group.component';
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { WorkHistoryResponseDTO } from '../human.model';
 import { AddVacationCalcRequestDTO } from '@app/vacation/vacation.model';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { WorkHistoryStore } from '@app/work-history/work-history.store';
+import { WorkHistoryService } from '@app/work-history/work-history.service';
+import { VacationStore } from '@app/vacation/vacation.store';
+import { VacationService } from '@app/vacation/vacation.service';
+import { UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
 import { dateUtil } from '@app/shared/utils';
 import { MenuService } from '@app/menu/menu.service';
-import { VacationService } from '@app/vacation/vacation.service';
+import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 
 @Component({
   standalone: true,
@@ -54,9 +56,10 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private store: StoreService,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private workHistoryStore: WorkHistoryStore,
+    private workHistoryService: WorkHistoryService,
+    private vacationStore: VacationStore,
     private vacationService: VacationService,
     protected menuService: MenuService,
   ) {
@@ -71,12 +74,12 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
    *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
    */
   get activeIndex() {
-    return this.store.select<number>('workHistoryTabIndex').value;
+    return this.workHistoryStore.select<number>('workHistoryTabIndex').value;
   }
 
   /** 선택된 회사 탭의 index를 변경한다. */
   set activeIndex(value: number) {
-    this.store.update('workHistoryTabIndex', value);
+    this.workHistoryStore.update('workHistoryTabIndex', value);
   }
 
   /** 선택된 회사 탭의 근무이력 ID */
@@ -96,33 +99,33 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 휴가 테이블 타이틀 */
   get vacationTableTitle() {
-    return this.store.select<string>('vacationTableTitle').value;
+    return this.vacationStore.select<string>('vacationTableTitle').value;
   }
 
   /** 휴가 테이블 텍스트 */
   get vacationTableText() {
-    return this.store.select<string>('vacationTableText').value;
+    return this.vacationStore.select<string>('vacationTableText').value;
   }
 
   /** 근무이력 탭 목록 */
   get workHistoryTabList() {
-    return this.store.select<Tab[]>('workHistoryTabList').value;
+    return this.workHistoryStore.select<Tab[]>('workHistoryTabList').value;
   }
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
   get workHistoryListDataLoad() {
-    const data = this.store.select<Tab[]>('workHistoryTabList').value;
+    const data = this.workHistoryStore.select<Tab[]>('workHistoryTabList').value;
     return data?.find(x => x.key === this.activeWorkHistoryId)?.dataLoad ?? false;
   }
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value;
+    return this.workHistoryStore.select<WorkHistoryResponseDTO[]>('workHistoryList').value;
   }
 
   /** 재직 중인 회사인지 여부 */
   get isNotQuit$() {
-    return this.store.select<boolean>('isNotQuit').asObservable();
+    return this.vacationStore.select<boolean>('isNotQuit').asObservable();
   }
 
   ngOnInit() {
@@ -131,7 +134,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.humanService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
+    this.workHistoryService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({
       workHistoryId: [this.user?.workHistoryId],          // 근무이력 ID
@@ -151,15 +154,15 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
-    this.store.update('workHistoryTabIndex', event.index);
+    this.workHistoryStore.update('workHistoryTabIndex', event.index);
     this.activeWorkHistoryId = Number(event.activeKey);
 
     this.setAnnualTypeCode();
     //this.listWorkHistory();
     this.listVacationCalc(event.activeKey);
     
-    this.humanService.setWorkHistoryId(event.activeKey);
-    this.vacationService.setVacationTableContent(this.store.select<number>('workHistoryTabIndex').value);
+    this.workHistoryService.setWorkHistoryId(event.activeKey);
+    this.vacationService.setVacationTableContent(this.workHistoryStore.select<number>('workHistoryTabIndex').value);
   }
 
   /** 연차발생기준을 선택한다. */
@@ -224,13 +227,13 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 근무이력 목록을 조회한다. */
   private listWorkHistory(): void {
-    this.humanService.listWorkHistory$({
+    this.workHistoryService.listWorkHistory$({
       ...this.caculateVacationForm.value,
       employeeId: this.user?.employeeId,
     })
     .subscribe((data) => {
-      this.store.update('workHistoryList', data);
-      this.store.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
+      this.workHistoryStore.update('workHistoryList', data);
+      this.workHistoryStore.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
 
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
       this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);

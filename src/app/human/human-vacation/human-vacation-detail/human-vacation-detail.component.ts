@@ -7,7 +7,8 @@ import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenField
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { TransformToDto } from '@app/shared/decorators';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
+import { WorkHistoryStore } from '@app/work-history/work-history.store';
 import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
@@ -30,14 +31,14 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private store: StoreService,
+    private workHistoryStore: WorkHistoryStore,
     private messageService: UiMessageService,
     private vacationService: VacationService,
   ) {}
 
   /** 근무이력 ID */
   get workHistoryId() {
-    return this.store.select<number>('workHistoryId').value;
+    return this.workHistoryStore.select<number>('workHistoryId').value;
   }
 
   /** 휴가 정보 */
@@ -76,7 +77,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
+    this.workHistoryStore.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
       this.detailForm.get('workHistoryId').patchValue(data);
     });

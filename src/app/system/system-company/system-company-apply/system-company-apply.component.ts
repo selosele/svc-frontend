@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { CompanyApplyResponseDTO } from '@app/human/human.model';
+import { CompanyApplyResponseDTO } from '@app/company/company.model';
 import { UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { StoreService } from '@app/shared/services';
-import { HumanService } from '@app/human/human.service';
+import { CompanyStore } from '@app/company/company.store';
+import { CompanyService } from '@app/company/company.service';
 import { SystemCompanyApplyDetailComponent } from './system-company-apply-detail/system-company-apply-detail.component';
 
 @Component({
@@ -23,8 +23,8 @@ import { SystemCompanyApplyDetailComponent } from './system-company-apply-detail
 export class SystemCompanyApplyComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
-    private humanService: HumanService,
+    private companyStore: CompanyStore,
+    private companyService: CompanyService,
   ) {
     super();
   }
@@ -34,12 +34,12 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
 
   /** 회사등록신청 목록 */
   get companyApplyList() {
-    return this.store.select<CompanyApplyResponseDTO[]>('companyApplyList').value;
+    return this.companyStore.select<CompanyApplyResponseDTO[]>('companyApplyList').value;
   }
 
   /** 회사등록신청 목록 데이터 로드 완료 여부 */
   get companyApplyListDataLoad() {
-    return this.store.select<boolean>('companyApplyListDataLoad').value;
+    return this.companyStore.select<boolean>('companyApplyListDataLoad').value;
   }
 
   /** 테이블 컬럼 */
@@ -74,7 +74,7 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
 
   /** 회사등록신청현황 목록을 조회한다. */
   listCompanyApply(): void {
-    this.humanService.listCompanyApply();
+    this.companyService.listCompanyApply();
   }
 
   /** 테이블 새로고침 버튼을 클릭한다. */
@@ -90,7 +90,7 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: any): void {
-    this.humanService.getCompanyApply$(event.data['companyApplyId'])
+    this.companyService.getCompanyApply$(event.data['companyApplyId'])
     .subscribe((data) => {
       this.detail = data;
       this.splitter.show();

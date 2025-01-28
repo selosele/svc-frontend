@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import { CoreBaseComponent } from '../../core';
 import { UserSetupResponseDTO } from '@app/user/user.model';
 import { MenuService } from '@app/menu/menu.service';
-import { StoreService, UiDialogService } from '@app/shared/services';
+import { UserStore } from '@app/user/user.store';
+import { UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
 import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { LayoutNotificationComponent } from '../layout-notification/layout-notification.component';
@@ -28,7 +29,7 @@ import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.com
 export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private userStore: UserStore,
     private dialogService: UiDialogService,
     protected menuService: MenuService,
   ) {
@@ -46,7 +47,7 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
 
   /** 사용자 설정 */
   get userSetup() {
-    return this.store.select<UserSetupResponseDTO>('userSetup').value;
+    return this.userStore.select<UserSetupResponseDTO>('userSetup').value;
   }
 
   ngOnInit() {

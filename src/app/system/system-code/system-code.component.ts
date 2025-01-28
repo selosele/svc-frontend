@@ -3,10 +3,10 @@ import { TreeNode } from 'primeng/api';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
+import { CodeStore } from '@app/code/code.store';
 import { CodeService } from '../../code/code.service';
 import { CodeResponseDTO, CodeTree } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
-import { StoreService } from '@app/shared/services';
 
 @Component({
   standalone: true,
@@ -25,7 +25,7 @@ import { StoreService } from '@app/shared/services';
 export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private codeStore: CodeStore,
     private codeService: CodeService,
   ) {
     super();
@@ -39,12 +39,12 @@ export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
 
   /** 코드 트리 목록 */
   get codeTree(): CodeTree[] {
-    return this.store.select<CodeTree[]>('codeTree').value;
+    return this.codeStore.select<CodeTree[]>('codeTree').value;
   }
 
   /** 코드 목록 데이터 로드 완료 여부 */
   get codeListDataLoad() {
-    return this.store.select<boolean>('codeListDataLoad').value;
+    return this.codeStore.select<boolean>('codeListDataLoad').value;
   }
 
   /** 코드 정보 */

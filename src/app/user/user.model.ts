@@ -1,4 +1,4 @@
-import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/human/human.model';
+import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
 import { HttpRequestDTOBase } from '@app/shared/models';
 
 /** 사용자 조회 요청 DTO */

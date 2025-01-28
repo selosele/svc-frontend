@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { StoreService } from '@app/shared/services';
+import { MenuStore } from '@app/menu/menu.store';
 import { MenuService } from '@app/menu/menu.service';
 
 @Component({
@@ -19,13 +19,13 @@ import { MenuService } from '@app/menu/menu.service';
 export class LayoutBreadcrumbComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private menuStore: MenuStore,
     private menuService: MenuService,
   ) {}
 
   /** breadcrumb 목록 */
   get items() {
-    return this.store.select<MenuItem[]>('breadcrumbList').value;
+    return this.menuStore.select<MenuItem[]>('breadcrumbList').value;
   }
 
   ngOnInit() {

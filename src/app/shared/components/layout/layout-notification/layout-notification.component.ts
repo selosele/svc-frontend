@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiButtonComponent } from '../../ui';
-import { StoreService } from '@app/shared/services';
+import { NotificationStore } from '@app/notification/notification.store';
 import { NotificationService } from '@app/notification/notification.service';
 import { NotificationResultDTO } from '@app/notification/notification.model';
 import { dateUtil } from '@app/shared/utils';
@@ -20,29 +20,29 @@ import { dateUtil } from '@app/shared/utils';
 export class LayoutNotificationComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private notificationStore: NotificationStore,
     private notificationService: NotificationService,
     private eRef: ElementRef,
   ) {}
 
   /** 알림 개수 */
   get notificationCount() {
-    return this.store.select<number>('notificationCount').value;
+    return this.notificationStore.select<number>('notificationCount').value;
   }
 
   /** 알림 목록 */
   get notificationList() {
-    return this.store.select<NotificationResultDTO[]>('notificationList').value;
+    return this.notificationStore.select<NotificationResultDTO[]>('notificationList').value;
   }
 
   /** 알림 HTML 타이틀 */
   get notificationHtmlTitle() {
-    return this.store.select<string>('notificationHtmlTitle').value;
+    return this.notificationStore.select<string>('notificationHtmlTitle').value;
   }
 
   /** 알림 표출 상태 */
   get isNotificationLayerVisible() {
-    return this.store.select<string>('isNotificationLayerVisible').value;
+    return this.notificationStore.select<string>('isNotificationLayerVisible').value;
   }
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class LayoutNotificationComponent implements OnInit {
 
   /** 알림 목록을 표출한다. */
   toggleNotificationList(): void {
-    this.store.update('isNotificationLayerVisible', !this.isNotificationLayerVisible);
+    this.notificationStore.update('isNotificationLayerVisible', !this.isNotificationLayerVisible);
   }
 
   /** 알림을 확인처리한다. */
@@ -91,7 +91,7 @@ export class LayoutNotificationComponent implements OnInit {
   onDocumentClick(event: Event): void {
     // 클릭된 요소가 알림창 내부에 있는지 확인
     if (this.isNotificationLayerVisible && !this.eRef.nativeElement.contains(event.target)) {
-      this.store.update('isNotificationLayerVisible', false);
+      this.notificationStore.update('isNotificationLayerVisible', false);
     }
   }
 

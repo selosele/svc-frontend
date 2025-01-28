@@ -6,8 +6,8 @@ import { UiSplitFormComponent } from '../../../ui-split-form/ui-split-form.compo
 import { FormValidator } from '../../../form-validator/form-validator.component';
 import { UiTextFieldComponent } from '../../../ui-text-field/ui-text-field.component';
 import { UiTextareaComponent } from '../../../ui-textarea/ui-textarea.component';
-import { HumanService } from '@app/human/human.service';
-import { SaveCompanyApplyRequestDTO } from '@app/human/human.model';
+import { CompanyService } from '@app/company/company.service';
+import { SaveCompanyApplyRequestDTO } from '@app/company/company.model';
 
 @Component({
   standalone: true,
@@ -28,7 +28,7 @@ export class SearchCompanyDetailComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private companyService: CompanyService,
   ) {}
 
   /** 회사 상세 조회 폼 */
@@ -60,7 +60,7 @@ export class SearchCompanyDetailComponent implements OnInit {
     const confirm = await this.messageService.confirm1('등록신청하시겠어요?<br>신청 후에는 취소할 수 없으니 신중하게 입력해주세요.');
     if (!confirm) return;
 
-    this.humanService.addCompanyApply$(value)
+    this.companyService.addCompanyApply$(value)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 등록신청되었어요. 마이페이지 > 회사등록신청현황에서 확인해주세요.');
     });

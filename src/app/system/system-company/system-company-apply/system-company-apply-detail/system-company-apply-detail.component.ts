@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DropdownChangeEvent } from 'primeng/dropdown';
 import { UiMessageService } from '@app/shared/services';
-import { HumanService } from '@app/human/human.service';
-import { CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from '@app/human/human.model';
+import { CompanyService } from '@app/company/company.service';
+import { CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from '@app/company/company.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
@@ -29,7 +29,7 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private companyService: CompanyService,
   ) {}
 
   /** 회사등록신청 정보 */
@@ -130,7 +130,7 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm1(`${this.applyStateCodeName}하시겠어요?`);
     if (!confirm) return;
 
-    this.humanService.updateCompanyApply$(value)
+    this.companyService.updateCompanyApply$(value)
     .subscribe((data) => {
       this.messageService.toastSuccess(`정상적으로 ${this.applyStateCodeName}되었어요.`);
       this.refresh.emit();

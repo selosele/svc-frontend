@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpService, StoreService } from '@app/shared/services';
+import { HttpService } from '@app/shared/services';
+import { ArticleStore } from './article.store';
 import { ArticleDataStateDTO, ArticleResponseDTO, ArticleResultDTO, GetArticleRequestDTO, SaveArticleRequestDTO } from './article.model';
 import { roles } from '@app/shared/utils';
 
@@ -10,17 +11,8 @@ export class ArticleService {
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
-    private store: StoreService,
+    private articleStore: ArticleStore,
   ) {}
-
-  /** 게시글 및 게시판 정보 */
-  private articleResponse = this.store.create<ArticleDataStateDTO>('articleResponse', null);
-
-  /** 로그인 화면 > 게시글 목록 */
-  private noticeList = this.store.create<ArticleResultDTO[]>('noticeList', []);
-
-  /** 로그인 화면 > 게시글 목록 데이터 로드 완료 여부 */
-  private noticeListDataLoad = this.store.create<boolean>('noticeListDataLoad', false);
 
   /** 게시글 목록을 조회한다. */
   listArticle$(dto: GetArticleRequestDTO) {
@@ -32,8 +24,8 @@ export class ArticleService {
   listArticle(boardId: number): void {
     this.listArticle$({ boardId })
     .subscribe((data) => {
-      const oldValue = this.store.select<ArticleDataStateDTO>('articleResponse').value;
-      this.store.update('articleResponse', {
+      const oldValue = this.articleStore.select<ArticleDataStateDTO>('articleResponse').value;
+      this.articleStore.update('articleResponse', {
         ...oldValue,
         [boardId]: { data, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
       });

@@ -17,9 +17,6 @@ export class AuthService {
     private dialogService: UiDialogService,
   ) {}
 
-  /** 사용자 본인인증 이력 */
-  private userCertHistory = this.store.create<UserCertHistoryResponseDTO>('userCertHistory', null);
-
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
     this.http.post<LoginResponseDTO>('/co/auth/login', dto)

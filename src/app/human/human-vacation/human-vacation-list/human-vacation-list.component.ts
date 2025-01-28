@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
-import { StoreService } from '@app/shared/services';
+import { WorkHistoryStore } from '@app/work-history/work-history.store';
+import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
@@ -29,7 +30,8 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
   constructor(
     private fb: FormBuilder,
-    private store: StoreService,
+    private workHistoryStore: WorkHistoryStore,
+    private vacationStore: VacationStore,
     private vacationService: VacationService,
   ) {
     super();
@@ -37,7 +39,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
   /** 근무이력 ID */
   get workHistoryId() {
-    return this.store.select<number>('workHistoryId').value;
+    return this.workHistoryStore.select<number>('workHistoryId').value;
   }
 
   /** 테이블 타이틀 */
@@ -54,13 +56,13 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
   /** 휴가 목록 */
   get vacationList() {
-    const list = this.store.select<VacationDataStateDTO>('vacationList').value;
+    const list = this.vacationStore.select<VacationDataStateDTO>('vacationList').value;
     return list?.[this.workHistoryId]?.data ?? null;
   }
 
   /** 휴가 목록 데이터 로드 완료 여부 */
   get vacationListDataLoad() {
-    const list = this.store.select<VacationDataStateDTO>('vacationList').value;
+    const list = this.vacationStore.select<VacationDataStateDTO>('vacationList').value;
     return list?.[this.workHistoryId]?.dataLoad ?? false;
   }
 
@@ -103,7 +105,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
       vacationEndYmd: [''],   // 휴가 종료일자
     });
 
-    this.store.select<number>('workHistoryId').asObservable().subscribe((data) => {
+    this.workHistoryStore.select<number>('workHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
       
       if (!this.vacationListDataLoad) {
@@ -120,8 +122,8 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
     this.vacationService.listVacation$(dto)
     .subscribe((data) => {
-      const oldValue = this.store.select<VacationDataStateDTO>('vacationList').value;
-      this.store.update('vacationList', {
+      const oldValue = this.vacationStore.select<VacationDataStateDTO>('vacationList').value;
+      this.vacationStore.update('vacationList', {
         ...oldValue,
         [workHistoryId]: { data, dataLoad: true } // 근무이력 탭별로 휴가 목록을 상태관리
       });

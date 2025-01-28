@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { StoreService } from '@app/shared/services';
+import { MenuStore } from '@app/menu/menu.store';
 import { MenuTree } from '@app/menu/menu.model';
 
 @Component({
@@ -18,17 +18,17 @@ import { MenuTree } from '@app/menu/menu.model';
 export class LayoutMenuComponent {
 
   constructor(
-    private store: StoreService,
+    private menuStore: MenuStore,
   ) {}
 
   /** 메뉴 트리 목록 */
-  menuTree$? = this.store.select<MenuTree[]>('menuTree').asObservable();
+  menuTree$? = this.menuStore.select<MenuTree[]>('menuTree').asObservable();
 
   /** 현재 메뉴 ID */
-  currentMenuId$? = this.store.select<number>('currentMenuId').asObservable();
+  currentMenuId$? = this.menuStore.select<number>('currentMenuId').asObservable();
 
   /** 현재 상위 메뉴 ID */
-  currentUpMenuId$? = this.store.select<number>('currentUpMenuId').asObservable();
+  currentUpMenuId$? = this.menuStore.select<number>('currentUpMenuId').asObservable();
 
   /** 마우스를 올려서 활성화된 메뉴 ID */
   activeMenuId?: number;
@@ -39,7 +39,7 @@ export class LayoutMenuComponent {
   }
 
   /** 메뉴 링크를 클릭한다. */
-  onClick(event: Event) {
+  onClick(event: Event): void {
     event.preventDefault();
   }
 

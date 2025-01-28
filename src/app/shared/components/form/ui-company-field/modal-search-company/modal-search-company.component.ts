@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { AutoCompleteCompleteEvent, AutoCompleteSelectEvent } from 'primeng/autocomplete';
-import { StoreService, UiMessageService } from '@app/shared/services';
-import { HumanService } from '@app/human/human.service';
-import { CompanyOpenAPIResponseDTO, CompanyResponseDTO, GetCompanyRequestDTO } from '@app/human/human.model';
+import { UiMessageService } from '@app/shared/services';
+import { CompanyStore } from '@app/company/company.store';
+import { CompanyService } from '@app/company/company.service';
+import { CompanyOpenAPIResponseDTO, CompanyResponseDTO, GetCompanyRequestDTO } from '@app/company/company.model';
 import { groupBy } from '@app/shared/utils';
 import { LayoutPageDescriptionComponent } from '../../../layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '../../../ui';
@@ -37,10 +38,10 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
 
   constructor(
     private fb: FormBuilder,
-    private store: StoreService,
+    private companyStore: CompanyStore,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private companyService: CompanyService,
   ) {
     super();
   }
@@ -50,17 +51,17 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
 
   /** 회사 목록 */
   get companyList(): CompanyResponseDTO[] {
-    return this.store.select<CompanyResponseDTO[]>('companyList').value;
+    return this.companyStore.select<CompanyResponseDTO[]>('companyList').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 */
   get companyListDataLoad() {
-    return this.store.select<boolean>('companyListDataLoad').value;
+    return this.companyStore.select<boolean>('companyListDataLoad').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 값을 설정한다. */
   set companyListDataLoad(value: boolean) {
-    this.store.update('companyListDataLoad', value);
+    this.companyStore.update('companyListDataLoad', value);
   }
 
   /** 회사 정보 */
@@ -98,13 +99,13 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
 
   /** 회사 목록을 조회한다. */
   listCompany(): void {
-    this.humanService.listCompany();
+    this.companyService.listCompany();
   }
 
   /** 회사를 검색한다. */
   onSubmit(value: GetCompanyRequestDTO): void {
     this.companyListDataLoad = false;
-    this.humanService.listCompany(value);
+    this.companyService.listCompany(value);
   }
 
   /** 테이블 새로고침 버튼을 클릭한다. */
@@ -126,7 +127,7 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
   onCompanyNameChange(event: AutoCompleteCompleteEvent): void {
     event.originalEvent.stopPropagation();
     
-    this.humanService.listCompanyOpenAPI$({
+    this.companyService.listCompanyOpenAPI$({
       corporateName: event.query,
       companyName: event.query,
     })
@@ -156,7 +157,7 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
     if (event.key != 'Enter') return;
 
     this.companyListDataLoad = false;
-    this.humanService.listCompany(this.searchForm.value as GetCompanyRequestDTO);
+    this.companyService.listCompany(this.searchForm.value as GetCompanyRequestDTO);
   }
 
   /** 회사 드롭다운 항목을 선택한다. */

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
+import { UiDialogService, UiLoadingService } from '@app/shared/services';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -11,6 +11,7 @@ import { ArticleDataStateDTO, ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 import { SaveArticleComponent } from '../save-article/save-article.component';
 import { ArticleViewComponent } from '../article-view/article-view.component';
+import { ArticleStore } from '../article.store';
 
 @Component({
   standalone: true,
@@ -29,7 +30,7 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private store: StoreService,
+    private articleStore: ArticleStore,
     private config: DynamicDialogConfig,
     private loadingService: UiLoadingService,
     private dialogService: UiDialogService,
@@ -57,13 +58,13 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
 
   /** 게시글 및 게시판 정보 */
   get articleResponse() {
-    const article = this.store.select<ArticleDataStateDTO>('articleResponse').value;
+    const article = this.articleStore.select<ArticleDataStateDTO>('articleResponse').value;
     return article?.[this.boardId]?.data ?? null;
   }
 
   /** 게시글 및 게시판 데이터 로드 완료 여부 */
   get articleResponseDataLoad() {
-    const article = this.store.select<ArticleDataStateDTO>('articleResponse').value;
+    const article = this.articleStore.select<ArticleDataStateDTO>('articleResponse').value;
     return article?.[this.boardId]?.dataLoad ?? false;
   }
 

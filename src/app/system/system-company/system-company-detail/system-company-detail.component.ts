@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CompanyResponseDTO, SaveCompanyRequestDTO } from '@app/human/human.model';
+import { CompanyResponseDTO, SaveCompanyRequestDTO } from '@app/company/company.model';
+import { CompanyService } from '@app/company/company.service';
 import { UiMessageService } from '@app/shared/services';
-import { HumanService } from '@app/human/human.service';
 import { FormValidator, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
@@ -24,7 +24,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private companyService: CompanyService,
   ) {}
 
   /** 회사 정보 */
@@ -85,7 +85,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
 
     // 회사 ID가 없으면 추가 API를 타고
     if (isEmpty(value.companyId)) {
-      this.humanService.addCompany$(value)
+      this.companyService.addCompany$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.detailForm.get('companyId').patchValue(data.companyId);
@@ -94,7 +94,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.humanService.updateCompany$(value)
+      this.companyService.updateCompany$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
@@ -107,7 +107,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
     const confirm = await this.messageService.confirm2('회사를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
     if (!confirm) return;
 
-    this.humanService.removeCompany$(this.detail.companyId)
+    this.companyService.removeCompany$(this.detail.companyId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();

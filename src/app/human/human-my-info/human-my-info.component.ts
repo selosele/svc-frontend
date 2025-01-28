@@ -5,10 +5,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UpdateUserPasswordRequestDTO } from '@app/user/user.model';
 import { UserService } from '@app/user/user.service';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
+import { EmployeeStore } from '@app/employee/employee.store';
+import { CompanyStore } from '@app/company/company.store';
 import { isEmpty } from '@app/shared/utils';
-import { HumanService } from '../human.service';
-import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO, CompanyApplyResponseDTO } from '../human.model';
+import { EmployeeService } from '@app/employee/employee.service';
+import { CompanyService } from '@app/company/company.service';
+import { WorkHistoryService } from '@app/work-history/work-history.service';
+import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
+import { CompanyApplyResponseDTO } from '@app/company/company.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
@@ -46,10 +52,13 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private store: StoreService,
+    private employeeStore: EmployeeStore,
+    private companyStore: CompanyStore,
     private messageService: UiMessageService,
     private userSerivce: UserService,
-    private humanService: HumanService,
+    private employeeService: EmployeeService,
+    private companyService: CompanyService,
+    private workHistoryService: WorkHistoryService,
   ) {
     super();
   }
@@ -62,18 +71,18 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 직원 정보 데이터 로드 완료 여부 */
   get employeeDataLoad() {
-    return this.store.select<boolean>('employeeDataLoad').value;
+    return this.employeeStore.select<boolean>('employeeDataLoad').value;
   }
 
   /** 근무이력 목록 */
   get workHistoryList(): WorkHistoryResponseDTO[] {
-    const employee = this.store.select<EmployeeResponseDTO>('employee').value;
+    const employee = this.employeeStore.select<EmployeeResponseDTO>('employee').value;
     return employee.workHistories;
   }
 
   /** 회사등록신청 목록 */
   get companyApplyList(): CompanyApplyResponseDTO[] {
-    return this.store.select<CompanyApplyResponseDTO[]>('companyApplyList').value
+    return this.companyStore.select<CompanyApplyResponseDTO[]>('companyApplyList').value
   }
 
   /** 비밀번호 변경 폼 */
@@ -142,7 +151,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
     this.initForm();
 
-    if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value) && this.user) {
+    if (isEmpty(this.employeeStore.select<EmployeeResponseDTO>('employee').value) && this.user) {
       this.getEmployee();
     }
     this.setMyInfoForm();
@@ -154,7 +163,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 직원을 조회한다. */
   getEmployee(): void {
-    this.humanService.getEmployee(this.user?.employeeId);
+    this.employeeService.getEmployee(this.user?.employeeId);
     this.setMyInfoForm();
   }
 
@@ -184,7 +193,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     const confirm = await this.messageService.confirm1('저장하시겠어요?');
     if (!confirm) return;
 
-    this.humanService.updateEmployee$(value)
+    this.employeeService.updateEmployee$(value)
     .subscribe((data) => {
       const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
       alert.onClose.subscribe((data) => {
@@ -206,7 +215,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 근무이력정보 테이블 행을 선택한다. */
   onRowSelect1(event: any): void {
-    this.humanService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
+    this.workHistoryService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
     .subscribe((data) => {
       this.workHistoryDetail = data;
       this.splitter1.show();
@@ -232,7 +241,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 회사등록신청현황 목록을 조회한다. */
   listCompanyApply(): void {
-    this.humanService.listCompanyApply();
+    this.companyService.listCompanyApply();
   }
 
   /** 회사등록신청현황 테이블 새로고침 버튼을 클릭한다. */
@@ -242,7 +251,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 회사등록신청현황 테이블 행을 선택한다. */
   onRowSelect2(event: any): void {
-    this.humanService.getCompanyApply$(event.data['companyApplyId'])
+    this.companyService.getCompanyApply$(event.data['companyApplyId'])
     .subscribe((data) => {
       this.companyApplyDetail = data;
       this.splitter2.show();
@@ -305,7 +314,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 직원 정보 폼을 설정한다. */
   private setMyInfoForm(): void {
-    this.store.select<EmployeeResponseDTO>('employee').asObservable().subscribe((data) => {
+    this.employeeStore.select<EmployeeResponseDTO>('employee').asObservable().subscribe((data) => {
       this.setMyInfoFormData(data);
     });
   }

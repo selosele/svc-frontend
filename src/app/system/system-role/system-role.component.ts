@@ -3,7 +3,8 @@ import { combineLatest } from 'rxjs';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
-import { StoreService, UiDialogService } from '@app/shared/services';
+import { UiDialogService } from '@app/shared/services';
+import { RoleStore } from '@app/role/role.store';
 import { MenuService } from '@app/menu/menu.service';
 import { RoleService } from '@app/role/role.service';
 import { UserService } from '@app/user/user.service';
@@ -24,7 +25,7 @@ import { RoleResponseDTO } from '@app/role/role.model';
 export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private roleStore: RoleStore,
     private dialogService: UiDialogService,
     private userService: UserService,
     private roleService: RoleService,
@@ -35,12 +36,12 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
 
   /** 권한 목록 */
   get roleList(): RoleResponseDTO[] {
-    return this.store.select<RoleResponseDTO[]>('roleList').value;
+    return this.roleStore.select<RoleResponseDTO[]>('roleList').value;
   }
 
   /** 권한 목록 데이터 로드 완료 여부 */
   get roleListDataLoad() {
-    return this.store.select<boolean>('roleListDataLoad').value;
+    return this.roleStore.select<boolean>('roleListDataLoad').value;
   }
 
   /** 테이블 선택된 행 */

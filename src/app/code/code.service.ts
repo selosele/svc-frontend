@@ -3,30 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { CodeResponseDTO, CodeTree, SaveCodeRequestDTO } from './code.model';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
-import { StoreService } from '@app/shared/services';
+import { CodeStore } from './code.store';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
 
   constructor(
     private http: HttpClient,
-    private store: StoreService,
+    private codeStore: CodeStore,
   ) {}
-
-  /** 코드 목록 */
-  private codeList = this.store.create<CodeResponseDTO[]>('codeList', []);
-
-  /** 코드 목록 데이터 로드 완료 여부 */
-  private codeListDataLoad = this.store.create<boolean>('codeListDataLoad', false);
-
-  /** 코드 트리 목록 */
-  private codeTree = this.store.create<CodeTree[]>('codeTree', []);
 
   /** 코드 목록 데이터를 설정한다. */
   setCodeList(codeList: CodeResponseDTO[]): void {
     const codeTree = this.createCodeTree(codeList);
-    this.store.update('codeTree', codeTree);
-    this.store.update('codeList', codeList);
+    this.codeStore.update('codeTree', codeTree);
+    this.codeStore.update('codeList', codeList);
   }
 
   /** 코드 목록을 조회한다. */
@@ -34,7 +25,7 @@ export class CodeService {
     return this.http.get<CodeResponseDTO[]>('/co/codes').pipe(
       tap((data) => {
         this.setCodeList(data);
-        this.store.update('codeListDataLoad', true);
+        this.codeStore.update('codeListDataLoad', true);
       })
     );
   }
@@ -62,7 +53,7 @@ export class CodeService {
 
   /** 상위 코드 ID로 코드 데이터 목록을 만들어서 반환한다. */
   createCodeData(upCodeId: string): DropdownData[] {
-    return this.store.select<CodeResponseDTO[]>('codeList').value
+    return this.codeStore.select<CodeResponseDTO[]>('codeList').value
       .filter(x => x.upCodeId === upCodeId)
       .map(x => ({ label: x.codeName, value: x.codeValue })
     );

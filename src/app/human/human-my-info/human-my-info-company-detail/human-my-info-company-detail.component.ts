@@ -8,10 +8,10 @@ import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-
 import { UiHiddenFieldComponent } from '@app/shared/components/form/ui-hidden-field/ui-hidden-field.component';
 import { UiCompanyFieldComponent } from '@app/shared/components/form/ui-company-field/ui-company-field.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
-import { WorkHistoryResponseDTO, SaveWorkHistoryRequestDTO } from '@app/human/human.model';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
-import { HumanService } from '@app/human/human.service';
+import { WorkHistoryService } from '@app/work-history/work-history.service';
+import { SaveWorkHistoryRequestDTO, WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
@@ -35,7 +35,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private workHistoryService: WorkHistoryService,
   ) {
     super();
   }
@@ -113,7 +113,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
 
     // 근무이력 ID가 없으면 추가 API를 타고
     if (isEmpty(value.workHistoryId)) {
-      this.humanService.addWorkHistory$(value)
+      this.workHistoryService.addWorkHistory$(value)
       .subscribe((data) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.detailForm.get('workHistoryId').patchValue(data.workHistoryId);
@@ -122,7 +122,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.humanService.updateWorkHistory$(value)
+      this.workHistoryService.updateWorkHistory$(value)
       .subscribe(() => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
@@ -138,7 +138,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
     const { employeeId } = this.user;
     const workHistoryId = this.detailForm.get('workHistoryId').value;
 
-    this.humanService.removeWorkHistory$(employeeId, workHistoryId)
+    this.workHistoryService.removeWorkHistory$(employeeId, workHistoryId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();

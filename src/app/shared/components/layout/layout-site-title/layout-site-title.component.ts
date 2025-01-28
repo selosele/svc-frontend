@@ -1,6 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, HostListener, Input, NgZone, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
+import { UserStore } from '@app/user/user.store';
 import { UserService } from '@app/user/user.service';
 import { MAIN_PAGE_PATH1 } from '@app/shared/utils';
 import { UiButtonComponent } from '../../ui';
@@ -22,7 +23,7 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
   constructor(
     private zone: NgZone,
     private eRef: ElementRef,
-    private store: StoreService,
+    private userStore: UserStore,
     private messageService: UiMessageService,
     private userService: UserService,
   ) {
@@ -94,7 +95,7 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
     
     this.userService.addUserSetup$({ userId, siteTitleName })
     .subscribe((data) => {
-      this.store.update('userSetup', data);
+      this.userStore.update('userSetup', data);
       this.messageService.toastSuccess('저장되었어요.');
     });
   }

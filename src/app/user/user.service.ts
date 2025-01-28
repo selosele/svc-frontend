@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpService, StoreService } from '@app/shared/services';
+import { HttpService } from '@app/shared/services';
+import { UserStore } from './user.store';
 import { AuthService } from '@app/auth/auth.service';
 import { GetUserRequestDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, UserSetupResponseDTO, AddUserRequestDTO } from './user.model';
 
@@ -8,30 +9,18 @@ import { GetUserRequestDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, Us
 export class UserService {
 
   constructor(
-    private store: StoreService,
+    private userStore: UserStore,
     private http: HttpClient,
     private httpService: HttpService,
     private authService: AuthService,
   ) {}
 
-  /** 사용자 목록 */
-  private userList = this.store.create<UserResponseDTO[]>('userList', []);
-
-  /** 사용자 목록 데이터 로드 완료 여부 */
-  private userListDataLoad = this.store.create<boolean>('userListDataLoad', false);
-
-  /** 사용자 설정 */
-  private userSetup = this.store.create<UserSetupResponseDTO>('userSetup', null);
-
-  /** 사용자 설정 데이터 로드 완료 여부 */
-  private userSetupDataLoad = this.store.create<boolean>('userSetupDataLoad', false);
-
   /** 사용자 목록을 조회한다. */
   listUser(): void {
     this.http.get<UserResponseDTO[]>('/co/users')
     .subscribe((data) => {
-      this.store.update('userList', data);
-      this.store.update('userListDataLoad', true);
+      this.userStore.update('userList', data);
+      this.userStore.update('userListDataLoad', true);
     });
   }
 
@@ -50,8 +39,8 @@ export class UserService {
   getUserConfig(userId: number): void {
     this.http.get<UserSetupResponseDTO>(`/co/users/${userId}/setups`)
     .subscribe((data) => {
-      this.store.update('userSetup', data);
-      this.store.update('userSetupDataLoad', true);
+      this.userStore.update('userSetup', data);
+      this.userStore.update('userSetupDataLoad', true);
     });
   }
 

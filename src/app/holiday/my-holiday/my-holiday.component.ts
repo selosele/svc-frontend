@@ -5,7 +5,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableCom
 import { MyHolidayDetailComponent } from './my-holiday-detail/my-holiday-detail.component';
 import { HolidayResponseDTO } from '@app/holiday/holiday.model';
 import { HolidayService } from '@app/holiday/holiday.service';
-import { StoreService } from '@app/shared/services';
+import { HolidayStore } from '../holiday.store';
 
 @Component({
   standalone: true,
@@ -24,7 +24,7 @@ import { StoreService } from '@app/shared/services';
 export class MyHolidayComponent extends CoreBaseComponent {
 
   constructor(
-    private store: StoreService,
+    private holidayStore: HolidayStore,
     private holidayService: HolidayService,
   ) {
     super();
@@ -35,12 +35,12 @@ export class MyHolidayComponent extends CoreBaseComponent {
 
   /** 휴일 목록 */
   get holidayList(): HolidayResponseDTO[] {
-    return this.store.select<HolidayResponseDTO[]>('holidayList').value;
+    return this.holidayStore.select<HolidayResponseDTO[]>('holidayList').value;
   }
 
   /** 휴일 목록 데이터 로드 완료 여부 */
   get holidayListDataLoad() {
-    return this.store.select<boolean>('holidayListDataLoad').value;
+    return this.holidayStore.select<boolean>('holidayListDataLoad').value;
   }
 
   /** 휴일 정보 */

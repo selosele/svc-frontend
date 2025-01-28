@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { CoreBaseComponent } from './shared/components/core';
-import { StoreService, UiMessageService } from './shared/services';
+import { CodeStore } from './code/code.store';
+import { UserStore } from './user/user.store';
+import { RoleStore } from './role/role.store';
+import { MenuStore } from './menu/menu.store';
+import { NotificationStore } from './notification/notification.store';
+import { UiMessageService } from './shared/services';
 import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
@@ -36,7 +41,11 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
   constructor(
     private zone: NgZone,
     private router: Router,
-    private store: StoreService,
+    private menuStore: MenuStore,
+    private codeStore: CodeStore,
+    private userStore: UserStore,
+    private roleStore: RoleStore,
+    private notificationStore: NotificationStore,
     private messageService: UiMessageService,
     private userService: UserService,
     private roleService: RoleService,
@@ -63,7 +72,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
 
   /** 현재 메뉴 ID */
   get currentMenuId() {
-    return this.store.select<number>('currentMenuId').value;
+    return this.menuStore.select<number>('currentMenuId').value;
   }
 
   /** 현재 페이지가 메인 페이지인지 여부 */
@@ -73,11 +82,11 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
 
   /** 현재 메뉴가 즐겨찾기 추가되어 있는지 여부 */
   get hasBookmark() {
-    return this.store.select<boolean>('hasBookmark').value;
+    return this.menuStore.select<boolean>('hasBookmark').value;
   }
 
   set hasBookmark(value: boolean) {
-    this.store.update('hasBookmark', value);
+    this.menuStore.update('hasBookmark', value);
   }
 
   ngOnInit() {
@@ -87,26 +96,26 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
         if (this.isLogined) {
 
           // 코드 목록 조회
-          if (!this.store.select<boolean>('codeListDataLoad').value) {
+          if (!this.codeStore.select<boolean>('codeListDataLoad').value) {
             this.codeService.listCode$().subscribe();
           }
           
           // 권한 목록 조회
-          if (!this.store.select<boolean>('roleListDataLoad').value) {
+          if (!this.roleStore.select<boolean>('roleListDataLoad').value) {
             this.roleService.listRole();
           }
 
           // 사용자 설정 조회
-          if (!this.store.select<boolean>('userSetupDataLoad').value) {
+          if (!this.userStore.select<boolean>('userSetupDataLoad').value) {
             const { userId } = this.user;
             this.userService.getUserConfig(userId);
           }
 
           // 알림창 닫기
-          this.store.update('isNotificationLayerVisible', false);
+          this.notificationStore.update('isNotificationLayerVisible', false);
 
           // 즐겨찾기 등의 표시를 위해 현재 메뉴를 찾기
-          this.currentMenu = this.store.select<MenuResponseDTO[]>('menuList').value
+          this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
           this.hasBookmark = this.currentMenu?.menuBookmarkId !== null;
         }
@@ -132,7 +141,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
         this.menuService.listMenu$()
         .subscribe((data) => {
           this.menuService.setMenuList(data);
-          this.currentMenu = this.store.select<MenuResponseDTO[]>('menuList').value
+          this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
         });
       });
@@ -146,7 +155,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
         this.menuService.listMenu$()
         .subscribe((data) => {
           this.menuService.setMenuList(data);
-          this.currentMenu = this.store.select<MenuResponseDTO[]>('menuList').value
+          this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
         });
       });

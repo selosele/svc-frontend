@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
-import { HttpService, StoreService } from '@app/shared/services';
-import { WorkHistoryResponseDTO } from '@app/human/human.model';
+import { HttpService } from '@app/shared/services';
+import { VacationStore } from './vacation.store';
+import { WorkHistoryStore } from '@app/work-history/work-history.store';
 import { AddVacationCalcRequestDTO, GetVacationByMonthRequestDTO, GetVacationRequestDTO, GetVacationStatsRequestDTO, SaveVacationRequestDTO, VacationByMonthResponseDTO, VacationCalcResponseDTO, VacationDataStateDTO, VacationResponseDTO, VacationStatsResponseDTO } from '@app/vacation/vacation.model';
+import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 
 @Injectable({ providedIn: 'root' })
 export class VacationService {
@@ -11,31 +13,9 @@ export class VacationService {
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
-    private store: StoreService,
+    private vacationStore: VacationStore,
+    private workHistoryStore: WorkHistoryStore,
   ) {}
-
-  /** 휴가 목록 */
-  private vacationList = this.store.create<VacationDataStateDTO>('vacationList', []);
-
-  /** 휴가 탭별 테이블 타이틀 */
-  private vacationTableTitle = this.store.create<string>('vacationTableTitle', null);
-
-  /** 휴가 탭별 테이블 텍스트 */
-  private vacationTableText = this.store.create<string>('vacationTableText', null);
-
-  /** 휴가 통계 정보 */
-  private vacationStatResponse = this.store.create<VacationStatsResponseDTO>('vacationStatResponse', null);
-
-  /** 휴가 통계 정보 데이터 로드 완료 여부 */
-  private vacationStatResponseDataLoad = this.store.create<boolean>('vacationStatResponseDataLoad', false);
-
-  /** 재직 중인 회사인지 여부 */
-  private isNotQuit = this.store.create<boolean>('isNotQuit', true);
-
-  /** 근무이력을 삭제한다. */
-  removeWorkHistory$(employeeId: number, workHistoryId: number) {
-    return this.http.delete<void>(`/hm/employees/${employeeId}/companies/${workHistoryId}`);
-  }
 
   /** 휴가 목록을 조회한다. */
   listVacation$(dto: GetVacationRequestDTO) {
@@ -89,18 +69,18 @@ export class VacationService {
 
   /** 테이블 문구를 설정한다. */
   setVacationTableContent(index: number): void {
-    const workHistory = this.store.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
+    const workHistory = this.workHistoryStore.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
     const { quitYmd } = workHistory;
 
     if (isNotBlank(quitYmd)) {
-      // this.store.update('isNotQuit', false);
-      // this.store.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않아요.');
+      // this.vacationStore.update('isNotQuit', false);
+      // this.vacationStore.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않아요.');
       // return;
     }
 
-    // this.store.update('isNotQuit', true);
-    this.store.update('vacationTableTitle', this.showVacationCount(workHistory));
-    this.store.update('vacationTableText', this.setVacationTableText(workHistory));
+    // this.vacationStore.update('isNotQuit', true);
+    this.vacationStore.update('vacationTableTitle', this.showVacationCount(workHistory));
+    this.vacationStore.update('vacationTableText', this.setVacationTableText(workHistory));
   }
 
   /** 테이블 텍스트를 설정한다. */

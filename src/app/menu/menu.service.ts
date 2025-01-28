@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { MenuItem, TreeNode } from 'primeng/api';
-import { HttpService, StoreService } from '@app/shared/services';
+import { TreeNode } from 'primeng/api';
+import { MenuStore } from './menu.store';
+import { HttpService } from '@app/shared/services';
 import { GetMenuRequestDTO, MenuBookmarkResponseDTO, MenuResponseDTO, MenuTree, SaveMenuBookmarkRequestDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
 import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
@@ -14,7 +15,7 @@ export class MenuService {
     private http: HttpClient,
     private httpService: HttpService,
     private route: ActivatedRoute,
-    private store: StoreService,
+    private menuStore: MenuStore,
   ) {}
 
   /** 메뉴 ID 정보 */
@@ -30,45 +31,6 @@ export class MenuService {
 
   /** 메뉴접속이력 목록 저장 key */
   public readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
-
-  /** 메뉴 목록 */
-  private menuList = this.store.create<MenuResponseDTO[]>('menuList', []);
-
-  /** 메뉴 목록 데이터 로드 완료 여부 */
-  private menuListDataLoad = this.store.create<boolean>('menuListDataLoad', false);
-
-  /** 시스템관리 > 메뉴관리 > 메뉴 트리 목록 */
-  private sysMenuTree = this.store.create<TreeNode[]>('sysMenuTree', []);
-
-  /** 시스템관리 > 메뉴관리 > 메뉴 목록 데이터 로드 완료 여부 */
-  private sysMenuListDataLoad = this.store.create<boolean>('sysMenuListDataLoad', false);
-
-  /** 메뉴 트리 목록 */
-  private menuTree = this.store.create<MenuTree[]>('menuTree', []);
-
-  /** 현재 메뉴 ID */
-  private currentMenuId = this.store.create<number>('currentMenuId', null);
-
-  /** 현재 상위 메뉴 ID */
-  private currentUpMenuId = this.store.create<number>('currentUpMenuId', null);
-
-  /** 현재 페이지 타이틀 */
-  private currentPageTitle = this.store.create<string>('currentPageTitle', null);
-
-  /** 현재 메뉴가 즐겨찾기 추가되어 있는지 여부 */
-  private hasBookmark = this.store.create<boolean>('hasBookmark', false);
-
-  /** 메뉴 즐겨찾기 목록 */
-  private menuBookmarkList = this.store.create<MenuBookmarkResponseDTO[]>('menuBookmarkList', []);
-
-  /** 메뉴 즐겨찾기 목록 데이터 로드 완료 여부 */
-  private menuBookmarkListDataLoad = this.store.create<boolean>('menuBookmarkListDataLoad', false);
-
-  /** 메뉴접속이력 목록 */
-  private menuHistoryList = this.store.create<MenuResponseDTO[]>('menuHistoryList', []);
-
-  /** breadcrumb 목록 */
-  private breadcrumbList = this.store.create<MenuItem[]>('breadcrumbList', []);
 
   /** 메뉴 목록을 조회한다. */
   listMenu(dto?: GetMenuRequestDTO): void {
@@ -123,8 +85,8 @@ export class MenuService {
   listMenuBookmark(): void {
     this.http.get<MenuBookmarkResponseDTO[]>('/co/menubookmarks')
     .subscribe((data) => {
-      this.store.update('menuBookmarkList', data);
-      this.store.update('menuBookmarkListDataLoad', true);
+      this.menuStore.update('menuBookmarkList', data);
+      this.menuStore.update('menuBookmarkListDataLoad', true);
     });
   }
 
@@ -147,7 +109,7 @@ export class MenuService {
   setData(): void {
     combineLatest([
       this.route.queryParams,
-      this.store.select<MenuResponseDTO[]>('menuList').asObservable()
+      this.menuStore.select<MenuResponseDTO[]>('menuList').asObservable()
     ])
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
@@ -165,7 +127,7 @@ export class MenuService {
   setBreadcrumb(): void {
     combineLatest([
       this.route.queryParams,
-      this.store.select<MenuResponseDTO[]>('menuList').asObservable()
+      this.menuStore.select<MenuResponseDTO[]>('menuList').asObservable()
     ])
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
@@ -173,7 +135,7 @@ export class MenuService {
       const menuId = Number(queryParams?.menuId);
       const upMenuId = menuList.find(x => x.menuId === menuId)?.upMenuId;
 
-      this.store.update('breadcrumbList', [
+      this.menuStore.update('breadcrumbList', [
         
         // 홈
         { icon: 'pi pi-home', route: MAIN_PAGE_PATH2 },
@@ -188,35 +150,35 @@ export class MenuService {
   /** 메뉴 목록 데이터를 설정한다. */
   setMenuList(menuList: MenuResponseDTO[]): void {
     const menuTree = this.createMenuTree(menuList);
-    this.store.update('menuTree', menuTree);
-    this.store.update('menuList', menuList);
-    this.store.update('menuListDataLoad', true);
+    this.menuStore.update('menuTree', menuTree);
+    this.menuStore.update('menuList', menuList);
+    this.menuStore.update('menuListDataLoad', true);
   }
 
   /** 현재 메뉴 ID 데이터를 설정한다. */
   setCurrentMenuId(currentMenuId: number): void {
-    this.store.update('currentMenuId', currentMenuId);
+    this.menuStore.update('currentMenuId', currentMenuId);
   }
 
   /** 현재 상위 메뉴 ID 데이터를 설정한다. */
   setCurrentUpMenuId(currentUpMenuId: number): void {
-    this.store.update('currentUpMenuId', currentUpMenuId);
+    this.menuStore.update('currentUpMenuId', currentUpMenuId);
   }
 
   /** 현재 페이지 타이틀 데이터를 반환한다. */
   getCurrentPageTitle$() {
-    return this.currentPageTitle;
+    return this.menuStore.select<string>('currentPageTitle').asObservable();
   }
 
   /** 현재 페이지 타이틀 데이터를 설정한다. */
   setCurrentPageTitle(currentPageTitle: string): void {
-    this.store.update('currentPageTitle', currentPageTitle);
+    this.menuStore.update('currentPageTitle', currentPageTitle);
   }
 
   /** 메뉴접속이력 목록 데이터를 설정한다. */
   setMenuHistoryList(list: MenuResponseDTO[]): void {
     //list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
-    this.store.update('menuHistoryList', list);
+    this.menuStore.update('menuHistoryList', list);
     window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
   }
 

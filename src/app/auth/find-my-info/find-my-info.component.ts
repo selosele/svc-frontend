@@ -8,7 +8,8 @@ import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { FindUserInfoRequestDTO, GetUserCertHistoryRequestDTO, UserCertHistoryResponseDTO } from '../auth.model';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
+import { AuthStore } from '../auth.store';
 import { dateUtil } from '@app/shared/utils';
 
 @Component({
@@ -29,7 +30,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: StoreService,
+    private authStore: AuthStore,
     private messageService: UiMessageService,
   ) {
     super();
@@ -49,7 +50,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 사용자 본인인증 이력 */
   get userCertHistory() {
-    return this.store.select<UserCertHistoryResponseDTO>('userCertHistory').value;
+    return this.authStore.select<UserCertHistoryResponseDTO>('userCertHistory').value;
   }
 
   ngOnInit() {
@@ -103,7 +104,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
         formattedTime.subscribe((time) => {
           this.certCodeLabel = `인증코드(${time})`;
         });
-        this.store.update('userCertHistory', data);
+        this.authStore.update('userCertHistory', data);
         this.messageService.toastSuccess('인증코드를 메일로 발송했어요. 메일을 확인해주세요.');
       });
     }

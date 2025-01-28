@@ -8,7 +8,8 @@ import { RoleResponseDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
+import { RoleStore } from '@app/role/role.store';
 import { CodeService } from '@app/code/code.service';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UserService } from '@app/user/user.service';
@@ -39,7 +40,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private store: StoreService,
+    private roleStore: RoleStore,
     private messageService: UiMessageService,
     private userService: UserService,
     private codeService: CodeService,
@@ -150,7 +151,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
       this.isUserSelf = Number(this.user?.userId) === this.detail.userId;
 
       this.useRemove = !this.isUserSelf;
-      this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
+      this.roles = this.roleStore.select<RoleResponseDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
 
       if (isObjectEmpty(changes.detail.currentValue)) {

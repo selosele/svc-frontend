@@ -3,7 +3,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableCom
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UserService } from '@app/user/user.service';
-import { StoreService } from '@app/shared/services';
+import { UserStore } from '@app/user/user.store';
 import { UserResponseDTO } from '@app/user/user.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
 import { isBlank } from '@app/shared/utils';
@@ -25,7 +25,7 @@ import { isBlank } from '@app/shared/utils';
 export class SystemUserComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private userStore: UserStore,
     private userService: UserService,
   ) {
     super();
@@ -36,12 +36,12 @@ export class SystemUserComponent extends CoreBaseComponent implements OnInit {
 
   /** 사용자 목록 */
   get userList(): UserResponseDTO[] {
-    return this.store.select<UserResponseDTO[]>('userList').value;
+    return this.userStore.select<UserResponseDTO[]>('userList').value;
   }
 
   /** 사용자 목록 데이터 로드 완료 여부 */
   get userListDataLoad() {
-    return this.store.select<boolean>('userListDataLoad').value;
+    return this.userStore.select<boolean>('userListDataLoad').value;
   }
 
   /** 사용자 정보 */

@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator, UiCheckboxComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent } from '@app/shared/components/ui';
-import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
+import { UiDialogService, UiLoadingService } from '@app/shared/services';
+import { AuthStore } from '../auth.store';
 import { ArticleService } from '@app/article/article.service';
 import { BoardService } from '@app/board/board.service';
 import { isNotBlank, isObjectEmpty } from '@app/shared/utils';
@@ -13,6 +14,7 @@ import { FindMyInfoComponent } from '../find-my-info/find-my-info.component';
 import { ArticleResultDTO } from '@app/article/article.model';
 import { ArticleViewComponent } from '@app/article/article-view/article-view.component';
 import { ArticleListComponent } from '@app/article/article-list/article-list.component';
+import { ArticleStore } from '@app/article/article.store';
 
 @Component({
   standalone: true,
@@ -32,7 +34,8 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: StoreService,
+    private authStore: AuthStore,
+    private articleStore: ArticleStore,
     private dialogService: UiDialogService,
     private loadingService: UiLoadingService,
     private articleService: ArticleService,
@@ -49,14 +52,14 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
 
   /** 공지사항 게시글 목록 */
   get noticeList() {
-    return this.store.select<ArticleResultDTO[]>('noticeList').value;
+    return this.articleStore.select<ArticleResultDTO[]>('noticeList').value;
   }
 
   /** 공지사항 게시글 목록 데이터 로드 완료 여부 */
   get noticeListDataLoad() {
-    return this.store.select<boolean>('noticeListDataLoad').value;
+    return this.articleStore.select<boolean>('noticeListDataLoad').value;
   }
-    
+
   ngOnInit() {
     this.loginForm = this.fb.group({
       userAccount:  ['', [FormValidator.required]], // 사용자 계정
@@ -91,7 +94,7 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
     });
 
     modal.onClose.subscribe((data) => {
-      this.store.update('userCertHistory', null);
+      this.authStore.update('userCertHistory', null);
     });
   }
 
@@ -126,8 +129,8 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
   listArticle(): void {
     this.articleService.listArticle$({ boardId: 2 })
     .subscribe((data) => {
-      this.store.update('noticeListDataLoad', true);
-      this.store.update('noticeList', data.articleList);
+      this.articleStore.update('noticeListDataLoad', true);
+      this.articleStore.update('noticeList', data.articleList);
     });
   }
 

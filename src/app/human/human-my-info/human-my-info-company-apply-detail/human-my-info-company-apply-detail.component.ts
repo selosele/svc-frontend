@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { HumanService } from '@app/human/human.service';
-import { CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from '@app/human/human.model';
+import { CompanyService } from '@app/company/company.service';
+import { CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from '@app/company/company.model';
 import { UiMessageService } from '@app/shared/services';
 import { isObjectEmpty } from '@app/shared/utils';
 import { FormValidator, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -25,9 +24,8 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private messageService: UiMessageService,
-    private humanService: HumanService,
+    private companyService: CompanyService,
   ) {}
 
   /** 회사등록신청 정보 */
@@ -92,7 +90,7 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
     // 반려 후 재신청은 프로세스를 [신청]부터 다시 시작 
     value.applyStateCode = 'NEW';
 
-    this.humanService.updateCompanyApply$(value)
+    this.companyService.updateCompanyApply$(value)
     .subscribe((data) => {
       this.messageService.toastSuccess('정상적으로 재신청되었어요.');
       this.refresh.emit();

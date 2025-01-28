@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isEmpty, isNotObjectEmpty, isObjectEmpty, roles } from '@app/shared/utils';
-import { StoreService, UiMessageService } from '@app/shared/services';
+import { UiMessageService } from '@app/shared/services';
+import { RoleStore } from '@app/role/role.store';
 import { CodeService } from '@app/code/code.service';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
@@ -31,7 +32,7 @@ export class SystemMenuDetailComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: StoreService,
+    private roleStore: RoleStore,
     private messageService: UiMessageService,
     private codeService: CodeService,
     private menuService: MenuService,
@@ -103,7 +104,7 @@ export class SystemMenuDetailComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.detail && this.detailForm) {
       this.useRemove = true;
-      this.roles = this.store.select<RoleResponseDTO[]>('roleList').value;
+      this.roles = this.roleStore.select<RoleResponseDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
       
       if (isObjectEmpty(changes.detail.currentValue)) {

@@ -1,10 +1,10 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
-import { StoreService } from '@app/shared/services';
+import { MenuStore } from '@app/menu/menu.store';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO } from '../../../../menu/menu.model';
 import { UiButtonComponent } from '../../ui';
@@ -26,8 +26,8 @@ import { isEmpty, isNotEmpty } from '@app/shared/utils';
 export class LayoutMenuHistoryComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
     private route: ActivatedRoute,
+    private menuStore: MenuStore,
     private menuService: MenuService,
   ) {}
   
@@ -45,7 +45,7 @@ export class LayoutMenuHistoryComponent implements OnInit {
 
   /** 메뉴접속이력 목록 */
   get menuHistoryList() {
-    return this.store.select<MenuResponseDTO[]>('menuHistoryList').value;
+    return this.menuStore.select<MenuResponseDTO[]>('menuHistoryList').value;
   }
 
   /** 메뉴접속이력 로컬스토리지 목록 */
@@ -61,12 +61,12 @@ export class LayoutMenuHistoryComponent implements OnInit {
     ];
 
     if (this.menuHistoryStorageList.length > 0) {
-      this.store.update('menuHistoryList', this.menuHistoryStorageList);
+      this.menuStore.update('menuHistoryList', this.menuHistoryStorageList);
     }
 
     combineLatest([
       this.route.queryParams,
-      this.store.select<MenuResponseDTO[]>('menuList').asObservable()
+      this.menuStore.select<MenuResponseDTO[]>('menuList').asObservable()
     ])
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
