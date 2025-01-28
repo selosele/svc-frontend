@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
-import { AuthService } from '@app/auth/auth.service';
 import { HolidayService } from '@app/holiday/holiday.service';
 import { HolidayResponseDTO, SaveHolidayRequestDTO } from '@app/holiday/holiday.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
@@ -24,15 +24,16 @@ import { isEmpty, isObjectEmpty } from '@app/shared/utils';
   templateUrl: './my-holiday-detail.component.html',
   styleUrl: './my-holiday-detail.component.scss'
 })
-export class MyHolidayDetailComponent implements OnInit, OnChanges {
+export class MyHolidayDetailComponent extends CoreBaseComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private codeService: CodeService,
     private holidayService: HolidayService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 휴일 정보 */
   @Input() detail: HolidayResponseDTO = null;
@@ -45,11 +46,6 @@ export class MyHolidayDetailComponent implements OnInit, OnChanges {
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();

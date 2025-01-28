@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { FindUserInfoRequestDTO, GetUserCertHistoryRequestDTO, UserCertHistoryResponseDTO } from '../auth.model';
-import { AuthService } from '../auth.service';
 import { StoreService, UiMessageService } from '@app/shared/services';
 import { dateUtil } from '@app/shared/utils';
 
@@ -25,14 +25,15 @@ import { dateUtil } from '@app/shared/utils';
   templateUrl: './find-my-info.component.html',
   styleUrl: './find-my-info.component.scss'
 })
-export class FindMyInfoComponent implements OnInit {
+export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private store: StoreService,
     private messageService: UiMessageService,
-    private authService: AuthService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 아이디 찾기 폼 */
   findAccountForm: FormGroup;

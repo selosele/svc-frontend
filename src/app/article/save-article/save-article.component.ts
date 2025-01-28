@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { CheckboxChangeEvent } from 'primeng/checkbox';
 import { FormValidator, UiCheckboxComponent, UiEditorComponent, UiFormComponent, UiHiddenFieldComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { TransformToDto } from '@app/shared/decorators';
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty } from '@app/shared/utils';
-import { AuthService } from '@app/auth/auth.service';
 import { ArticleResultDTO, SaveArticleRequestDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -26,16 +26,17 @@ import { ArticleService } from '../article.service';
   templateUrl: './save-article.component.html',
   styleUrl: './save-article.component.scss'
 })
-export class SaveArticleComponent implements OnInit {
+export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private config: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private articleService: ArticleService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 게시글 정보 */
   @Input() detail: ArticleResultDTO = null;
@@ -48,11 +49,6 @@ export class SaveArticleComponent implements OnInit {
 
   /** 닉네임 편집 가능 여부 */
   isNicknameEditable = true;
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   /** 게시글 추가/수정/삭제 등의 action */
   get action(): string {

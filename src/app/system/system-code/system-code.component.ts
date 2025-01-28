@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CodeService } from '../../code/code.service';
@@ -21,12 +22,14 @@ import { StoreService } from '@app/shared/services';
   templateUrl: './system-code.component.html',
   styleUrl: './system-code.component.scss'
 })
-export class SystemCodeComponent implements OnInit {
+export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
     private codeService: CodeService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** tree table */
   @ViewChild('treeTable') treeTable: UiTreeTableComponent;
@@ -60,7 +63,7 @@ export class SystemCodeComponent implements OnInit {
   ];
 
   ngOnInit() {
-    if (!this.codeListDataLoad) {
+    if (!this.codeListDataLoad && this.user) {
       this.listCode();
     }
   }

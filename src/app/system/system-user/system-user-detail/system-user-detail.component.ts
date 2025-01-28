@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/user/user.model';
-import { AuthService } from '@app/auth/auth.service';
 import { RoleResponseDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
@@ -34,17 +34,18 @@ import { UserService } from '@app/user/user.service';
   templateUrl: './system-user-detail.component.html',
   styleUrl: './system-user-detail.component.scss'
 })
-export class SystemUserDetailComponent implements OnInit, OnChanges {
+export class SystemUserDetailComponent extends CoreBaseComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: StoreService,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private userService: UserService,
     private codeService: CodeService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 사용자 정보 */
   @Input() detail: UserResponseDTO = null;
@@ -83,11 +84,6 @@ export class SystemUserDetailComponent implements OnInit, OnChanges {
 
   /** 사용자 정보가 본인의 정보와 일치하는지 여부 */
   isUserSelf = false;
-  
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();

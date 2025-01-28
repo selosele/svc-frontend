@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { CompanyApplyResponseDTO } from '@app/human/human.model';
 import { UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -19,12 +20,14 @@ import { SystemCompanyApplyDetailComponent } from './system-company-apply-detail
   templateUrl: './system-company-apply.component.html',
   styleUrl: './system-company-apply.component.scss'
 })
-export class SystemCompanyApplyComponent implements OnInit {
+export class SystemCompanyApplyComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
     private humanService: HumanService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
@@ -64,7 +67,7 @@ export class SystemCompanyApplyComponent implements OnInit {
   @Output() refresh = new EventEmitter<void>();
 
   ngOnInit() {
-    if (!this.companyApplyListDataLoad) {
+    if (!this.companyApplyListDataLoad && this.user) {
       this.listCompanyApply();
     }
   }

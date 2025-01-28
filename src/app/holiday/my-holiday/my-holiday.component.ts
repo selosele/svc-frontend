@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { MyHolidayDetailComponent } from './my-holiday-detail/my-holiday-detail.component';
 import { HolidayResponseDTO } from '@app/holiday/holiday.model';
 import { HolidayService } from '@app/holiday/holiday.service';
 import { StoreService } from '@app/shared/services';
-import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -21,13 +21,14 @@ import { AuthService } from '@app/auth/auth.service';
   templateUrl: './my-holiday.component.html',
   styleUrl: './my-holiday.component.scss'
 })
-export class MyHolidayComponent {
+export class MyHolidayComponent extends CoreBaseComponent {
 
   constructor(
     private store: StoreService,
-    private authService: AuthService,
     private holidayService: HolidayService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
@@ -40,11 +41,6 @@ export class MyHolidayComponent {
   /** 휴일 목록 데이터 로드 완료 여부 */
   get holidayListDataLoad() {
     return this.store.select<boolean>('holidayListDataLoad').value;
-  }
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
   }
 
   /** 휴일 정보 */
@@ -62,7 +58,7 @@ export class MyHolidayComponent {
   ];
 
   ngOnInit() {
-    if (!this.holidayListDataLoad) {
+    if (!this.holidayListDataLoad && this.user) {
       this.listHoliday();
     }
   }

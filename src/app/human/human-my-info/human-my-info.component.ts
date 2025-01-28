@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UpdateUserPasswordRequestDTO } from '@app/user/user.model';
-import { AuthService } from '@app/auth/auth.service';
 import { UserService } from '@app/user/user.service';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { isEmpty, roles } from '@app/shared/utils';
+import { isEmpty } from '@app/shared/utils';
 import { HumanService } from '../human.service';
 import { WorkHistoryResponseDTO, EmployeeResponseDTO, SaveEmployeeRequestDTO, CompanyApplyResponseDTO } from '../human.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -41,17 +41,18 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
   templateUrl: './human-my-info.component.html',
   styleUrl: './human-my-info.component.scss'
 })
-export class HumanMyInfoComponent implements OnInit {
+export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: StoreService,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private userSerivce: UserService,
     private humanService: HumanService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter - 근무이력정보 */
   @ViewChild('splitter1') splitter1: UiSplitterComponent;
@@ -73,16 +74,6 @@ export class HumanMyInfoComponent implements OnInit {
   /** 회사등록신청 목록 */
   get companyApplyList(): CompanyApplyResponseDTO[] {
     return this.store.select<CompanyApplyResponseDTO[]>('companyApplyList').value
-  }
-  
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
-
-  /** 시스템관리자 권한 여부 */
-  get isSystemAdmin() {
-    return this.authService.hasRole(roles.SYSTEM_ADMIN.id);
   }
 
   /** 비밀번호 변경 폼 */
@@ -151,11 +142,14 @@ export class HumanMyInfoComponent implements OnInit {
 
     this.initForm();
 
-    if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value)) {
+    if (isEmpty(this.store.select<EmployeeResponseDTO>('employee').value) && this.user) {
       this.getEmployee();
     }
     this.setMyInfoForm();
-    this.listCompanyApply();
+
+    if (this.user) {
+      this.listCompanyApply();
+    }
   }
 
   /** 직원을 조회한다. */

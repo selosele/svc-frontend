@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { AutoCompleteCompleteEvent, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '@app/human/human.service';
 import { CompanyOpenAPIResponseDTO, CompanyResponseDTO, GetCompanyRequestDTO } from '@app/human/human.model';
-import { groupBy, roles } from '@app/shared/utils';
+import { groupBy } from '@app/shared/utils';
 import { LayoutPageDescriptionComponent } from '../../../layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '../../../ui';
 import { FormValidator } from '../../form-validator/form-validator.component';
@@ -33,16 +33,17 @@ import { SearchCompanyDetailComponent } from './search-company-detail/search-com
   styleUrl: './modal-search-company.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ModalSearchCompanyComponent implements OnInit {
+export class ModalSearchCompanyComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private store: StoreService,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private humanService: HumanService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
@@ -61,9 +62,6 @@ export class ModalSearchCompanyComponent implements OnInit {
   set companyListDataLoad(value: boolean) {
     this.store.update('companyListDataLoad', value);
   }
-
-  /** 인증된 사용자가 시스템관리자 권한을 보유했는지 여부 */
-  isSystemAdmin: boolean;
 
   /** 회사 정보 */
   detail: CompanyResponseDTO = null;
@@ -84,9 +82,7 @@ export class ModalSearchCompanyComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.isSystemAdmin = this.authService.hasRole(roles.SYSTEM_ADMIN.id);
-
-    if (!this.companyListDataLoad) {
+    if (!this.companyListDataLoad && this.user) {
       this.listCompany();
     }
 

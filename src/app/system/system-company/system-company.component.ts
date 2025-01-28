@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CompanyResponseDTO } from '@app/human/human.model';
@@ -23,12 +24,14 @@ import { SystemCompanyApplyComponent } from './system-company-apply/system-compa
   templateUrl: './system-company.component.html',
   styleUrl: './system-company.component.scss'
 })
-export class SystemCompanyComponent implements OnInit {
+export class SystemCompanyComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
     private humanService: HumanService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
@@ -59,7 +62,7 @@ export class SystemCompanyComponent implements OnInit {
   ];
 
   ngOnInit() {
-    if (!this.companyListDataLoad) {
+    if (!this.companyListDataLoad && this.user) {
       this.listCompany();
     }
   }

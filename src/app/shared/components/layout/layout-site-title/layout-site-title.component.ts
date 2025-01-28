@@ -1,10 +1,10 @@
 import { AfterViewChecked, Component, ElementRef, HostListener, Input, NgZone, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreService, UiMessageService } from '@app/shared/services';
-import { AuthService } from '@app/auth/auth.service';
 import { UserService } from '@app/user/user.service';
 import { MAIN_PAGE_PATH1 } from '@app/shared/utils';
 import { UiButtonComponent } from '../../ui';
+import { CoreBaseComponent } from '../../core';
 
 @Component({
   standalone: true,
@@ -17,16 +17,17 @@ import { UiButtonComponent } from '../../ui';
   styleUrl: './layout-site-title.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutSiteTitleComponent implements AfterViewChecked {
+export class LayoutSiteTitleComponent extends CoreBaseComponent implements AfterViewChecked {
 
   constructor(
     private zone: NgZone,
     private eRef: ElementRef,
     private store: StoreService,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private userService: UserService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 사이트타이틀명 */
   @Input() name: string;
@@ -42,11 +43,6 @@ export class LayoutSiteTitleComponent implements AfterViewChecked {
 
   /** 사이트타이틀명 편집 상태 */
   isEditable = false;
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   ngAfterViewChecked() {
     this.zone.runOutsideAngular(() => {

@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CoreBaseComponent } from '../../core';
 import { UserSetupResponseDTO } from '@app/user/user.model';
-import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
 import { StoreService, UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
@@ -25,14 +25,15 @@ import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.com
   styleUrl: './layout-header.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutHeaderComponent implements OnInit {
+export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
-    private authService: AuthService,
     private dialogService: UiDialogService,
     protected menuService: MenuService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** header 태그 */
   @ViewChild('header') header: ElementRef<HTMLElement>;
@@ -42,11 +43,6 @@ export class LayoutHeaderComponent implements OnInit {
 
   /** 스크롤 여부 */
   isScrollDown = true;
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   /** 사용자 설정 */
   get userSetup() {

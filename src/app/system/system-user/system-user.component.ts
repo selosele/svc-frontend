@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UserService } from '@app/user/user.service';
 import { StoreService } from '@app/shared/services';
 import { UserResponseDTO } from '@app/user/user.model';
@@ -21,12 +22,14 @@ import { isBlank } from '@app/shared/utils';
   templateUrl: './system-user.component.html',
   styleUrl: './system-user.component.scss'
 })
-export class SystemUserComponent implements OnInit {
+export class SystemUserComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
     private userService: UserService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
@@ -70,7 +73,7 @@ export class SystemUserComponent implements OnInit {
   ];
 
   ngOnInit() {
-    if (!this.userListDataLoad) {
+    if (!this.userListDataLoad && this.user) {
       this.listUser();
     }
   }

@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
-import { StoreService } from '@app/shared/services';
+import { BoardStore } from '@app/board/board.store';
 import { BoardService } from '@app/board/board.service';
 import { BoardResponseDTO } from '@app/board/board.model';
 import { SystemBoardDetailComponent } from './system-board-detail/system-board-detail.component';
@@ -20,24 +21,26 @@ import { SystemBoardDetailComponent } from './system-board-detail/system-board-d
   templateUrl: './system-board.component.html',
   styleUrl: './system-board.component.scss'
 })
-export class SystemBoardComponent implements OnInit {
+export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
-    private store: StoreService,
+    private boardStore: BoardStore,
     private boardService: BoardService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 게시판 목록 */
   get boardList(): BoardResponseDTO[] {
-    return this.store.select<BoardResponseDTO[]>('boardList').value;
+    return this.boardStore.select<BoardResponseDTO[]>('boardList').value;
   }
 
   /** 게시판 목록 데이터 로드 완료 여부 */
   get boardListDataLoad() {
-    return this.store.select<boolean>('boardListDataLoad').value;
+    return this.boardStore.select<boolean>('boardListDataLoad').value;
   }
 
   /** 게시판 정보 */
@@ -55,7 +58,7 @@ export class SystemBoardComponent implements OnInit {
   ];
 
   ngOnInit() {
-    if (!this.boardListDataLoad) {
+    if (!this.boardListDataLoad && this.user) {
       this.listBoard();
     }
   }

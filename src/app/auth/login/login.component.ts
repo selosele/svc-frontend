@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator, UiCheckboxComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent } from '@app/shared/components/ui';
 import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
-import { AuthService } from '../auth.service';
 import { ArticleService } from '@app/article/article.service';
 import { BoardService } from '@app/board/board.service';
 import { isNotBlank, isObjectEmpty } from '@app/shared/utils';
@@ -28,17 +28,18 @@ import { ArticleListComponent } from '@app/article/article-list/article-list.com
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private store: StoreService,
     private dialogService: UiDialogService,
     private loadingService: UiLoadingService,
-    private authService: AuthService,
     private articleService: ArticleService,
     private boardService: BoardService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 로그인 폼 */
   loginForm: FormGroup;

@@ -2,8 +2,8 @@ import { AfterViewChecked, Component, ElementRef, HostListener, NgZone, OnInit, 
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
+import { CoreBaseComponent } from './shared/components/core';
 import { StoreService, UiMessageService } from './shared/services';
-import { AuthService } from './auth/auth.service';
 import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
@@ -31,19 +31,20 @@ import { MAIN_PAGE_PATH2 } from './shared/utils';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent extends CoreBaseComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private zone: NgZone,
     private router: Router,
     private store: StoreService,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private userService: UserService,
     private roleService: RoleService,
     private codeService: CodeService,
     private menuService: MenuService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 레이아웃 하단 박스 요소 */
   @ViewChild('layoutBottom') lmh: ElementRef<HTMLElement>;
@@ -63,16 +64,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   /** 현재 메뉴 ID */
   get currentMenuId() {
     return this.store.select<number>('currentMenuId').value;
-  }
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
-
-  /** 로그인 여부 */
-  get isLogined() {
-    return this.authService.isLogined();
   }
 
   /** 현재 페이지가 메인 페이지인지 여부 */

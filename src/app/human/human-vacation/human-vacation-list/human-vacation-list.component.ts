@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
 import { StoreService } from '@app/shared/services';
-import { AuthService } from '@app/auth/auth.service';
 import { VacationService } from '@app/vacation/vacation.service';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
@@ -25,14 +25,15 @@ import { dateUtil } from '@app/shared/utils';
   templateUrl: './human-vacation-list.component.html',
   styleUrl: './human-vacation-list.component.scss'
 })
-export class HumanVacationListComponent implements OnInit {
+export class HumanVacationListComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private store: StoreService,
-    private authService: AuthService,
     private vacationService: VacationService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 근무이력 ID */
   get workHistoryId() {
@@ -50,11 +51,6 @@ export class HumanVacationListComponent implements OnInit {
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   /** 휴가 목록 */
   get vacationList() {

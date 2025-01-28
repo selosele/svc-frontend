@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DropdownChangeEvent } from 'primeng/dropdown';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
-import { AuthService } from '@app/auth/auth.service';
 import { HumanService } from '../human.service';
 import { HumanVacationListComponent } from './human-vacation-list/human-vacation-list.component';
 import { MyHolidayComponent } from '@app/holiday/my-holiday/my-holiday.component';
@@ -49,18 +49,19 @@ import { VacationService } from '@app/vacation/vacation.service';
   templateUrl: './human-vacation.component.html',
   styleUrl: './human-vacation.component.scss'
 })
-export class HumanVacationComponent implements OnInit {
+export class HumanVacationComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: StoreService,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private humanService: HumanService,
     private vacationService: VacationService,
     protected menuService: MenuService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 회사 탭 */
   tabs: Tab[] = [];
@@ -124,11 +125,6 @@ export class HumanVacationComponent implements OnInit {
     return this.store.select<boolean>('isNotQuit').asObservable();
   }
 
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
-
   ngOnInit() {
     this.route.data.subscribe(({ code }) => {
       this.annualTypeCodes = code['ANNUAL_TYPE_00'];
@@ -148,7 +144,9 @@ export class HumanVacationComponent implements OnInit {
 
     this.activeWorkHistoryId = Number(this.user?.workHistoryId);
 
-    this.listVacationCalc(this.activeWorkHistoryId);
+    if (this.user) {
+      this.listVacationCalc(this.activeWorkHistoryId);
+    }
   }
 
   /** 탭을 클릭한다. */

@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 import { BoardResponseDTO } from '@app/board/board.model';
-import { AuthService } from '@app/auth/auth.service';
 import { UiMessageService } from '@app/shared/services';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { isEmpty } from '@app/shared/utils';
@@ -18,15 +18,16 @@ import { isEmpty } from '@app/shared/utils';
   styleUrl: './article-view.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ArticleViewComponent {
+export class ArticleViewComponent extends CoreBaseComponent {
 
   constructor(
     private config: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private articleService: ArticleService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 게시판 */
   get board(): BoardResponseDTO {
@@ -56,16 +57,6 @@ export class ArticleViewComponent {
   /** 게시글 작성자명 */
   get articleWriterName() {
     return this.articleService.getArticleWriterName(this.article);
-  }
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
-
-  /** 시스템관리자 권한 여부 */
-  get isSystemAdmin() {
-    return this.authService.hasRole('ROLE_SYSTEM_ADMIN');
   }
 
   /** 이전/다음 게시글로 이동한다. */

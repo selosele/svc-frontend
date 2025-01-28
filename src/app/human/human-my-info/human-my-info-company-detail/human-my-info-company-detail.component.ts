@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiSplitFormComponent } from '@app/shared/components/form/ui-split-form/ui-split-form.component';
 import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/ui-date-field.component';
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
@@ -11,7 +12,6 @@ import { WorkHistoryResponseDTO, SaveWorkHistoryRequestDTO } from '@app/human/hu
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { HumanService } from '@app/human/human.service';
-import { AuthService } from '@app/auth/auth.service';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
@@ -29,15 +29,16 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
   templateUrl: './human-my-info-company-detail.component.html',
   styleUrl: './human-my-info-company-detail.component.scss'
 })
-export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
+export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private messageService: UiMessageService,
-    private authService: AuthService,
     private humanService: HumanService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 회사 정보 */
   @Input() detail: WorkHistoryResponseDTO = null;
@@ -53,11 +54,6 @@ export class HumanMyInfoCompanyDetailComponent implements OnInit, OnChanges {
 
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();

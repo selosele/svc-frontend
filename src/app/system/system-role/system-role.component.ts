@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { StoreService, UiDialogService } from '@app/shared/services';
@@ -20,7 +21,7 @@ import { RoleResponseDTO } from '@app/role/role.model';
   templateUrl: './system-role.component.html',
   styleUrl: './system-role.component.scss'
 })
-export class SystemRoleComponent implements OnInit {
+export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
@@ -28,7 +29,9 @@ export class SystemRoleComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private menuService: MenuService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** 권한 목록 */
   get roleList(): RoleResponseDTO[] {
@@ -51,7 +54,7 @@ export class SystemRoleComponent implements OnInit {
   ];
 
   ngOnInit() {
-    if (!this.roleListDataLoad) {
+    if (!this.roleListDataLoad && this.user) {
       this.listRole();
     }
   }

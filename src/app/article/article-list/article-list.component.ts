@@ -3,10 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { StoreService, UiDialogService, UiLoadingService } from '@app/shared/services';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { isObjectEmpty } from '@app/shared/utils';
-import { AuthService } from '@app/auth/auth.service';
 import { ArticleDataStateDTO, ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
 import { SaveArticleComponent } from '../save-article/save-article.component';
@@ -24,7 +24,7 @@ import { ArticleViewComponent } from '../article-view/article-view.component';
   templateUrl: './article-list.component.html',
   styleUrl: './article-list.component.scss'
 })
-export class ArticleListComponent implements OnInit, OnDestroy {
+export class ArticleListComponent extends CoreBaseComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
@@ -33,9 +33,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     private config: DynamicDialogConfig,
     private loadingService: UiLoadingService,
     private dialogService: UiDialogService,
-    private authService: AuthService,
     private articleService: ArticleService,
   ) {
+    super();
+    
     router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntil(this.destroy$)
@@ -64,16 +65,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   get articleResponseDataLoad() {
     const article = this.store.select<ArticleDataStateDTO>('articleResponse').value;
     return article?.[this.boardId]?.dataLoad ?? false;
-  }
-
-  /** 인증된 사용자 정보 */
-  get user() {
-    return this.authService.getAuthenticatedUser();
-  }
-
-  /** 시스템관리자 권한 여부 */
-  get isSystemAdmin() {
-    return this.authService.hasRole('ROLE_SYSTEM_ADMIN');
   }
 
   /** 테이블 선택된 행 */

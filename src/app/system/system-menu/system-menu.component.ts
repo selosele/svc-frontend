@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNodeSelectEvent, TreeNodeUnSelectEvent } from 'primeng/tree';
 import { TreeNode } from 'primeng/api';
+import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { SystemMenuDetailComponent } from './system-menu-detail/system-menu-detail.component';
@@ -22,12 +23,14 @@ import { MenuService } from '@app/menu/menu.service';
   templateUrl: './system-menu.component.html',
   styleUrl: './system-menu.component.scss'
 })
-export class SystemMenuComponent implements OnInit {
+export class SystemMenuComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private store: StoreService,
     private menuService: MenuService,
-  ) {}
+  ) {
+    super();
+  }
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
@@ -49,7 +52,7 @@ export class SystemMenuComponent implements OnInit {
   detail: MenuResponseDTO = null;
 
   ngOnInit() {
-    if (!this.sysMenuListDataLoad) {
+    if (!this.sysMenuListDataLoad && this.user) {
       this.listMenu();
     }
   }
