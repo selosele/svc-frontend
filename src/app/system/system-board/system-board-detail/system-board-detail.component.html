@@ -32,6 +32,22 @@
         [data]="ynCodes"
       />
     </div>
+
+    <div class="col-6">
+      <ui-text-field
+        [control]="detailForm.get('boardOrder')"
+        [label]="'게시판 순서'"
+        [placeholder]="'예) 1'"
+      />
+    </div>
+
+    <div class="col-6">
+      <ui-dropdown
+        [control]="detailForm.get('mainShowYn')"
+        [label]="'메인 화면 표출 여부'"
+        [data]="ynCodes"
+      />
+    </div>
     
     <div class="col-12">
       <ui-text-field
