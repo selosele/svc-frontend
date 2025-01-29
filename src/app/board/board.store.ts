@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StoreService } from '@app/shared/services';
+import { Tab } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { BoardResponseDTO } from './board.model';
 
 @Injectable({ providedIn: 'root' })
@@ -15,6 +16,8 @@ export class BoardStore extends StoreService {
       { key: 'boardListDataLoad', defaultValue: false },                // 게시판 목록 데이터 로드 완료 여부
       { key: 'mainBoardList', defaultValue: [] as BoardResponseDTO[] }, // 메인화면 게시판 목록
       { key: 'mainBoardListDataLoad', defaultValue: false },            // 메인화면 게시판 목록 데이터 로드 완료 여부
+      { key: 'mainBoardTabList', defaultValue: [] as Tab[] },           // 메인화면 게시판 탭 목록
+      { key: 'mainBoardTabIndex', defaultValue: null as number },       // 선택된 메인화면 게시판 탭의 index
     ]);
   }
 

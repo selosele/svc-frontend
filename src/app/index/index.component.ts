@@ -5,7 +5,8 @@ import { BoardService } from '@app/board/board.service';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
+import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { BoardResponseDTO } from '@app/board/board.model';
 import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 
@@ -15,6 +16,7 @@ import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResu
     RouterModule,
     UiSkeletonComponent,
     UiButtonComponent,
+    UiTabComponent,
   ],
   selector: 'view-index',
   templateUrl: './index.component.html',
@@ -40,6 +42,24 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   /** 메인화면 게시판 목록 데이터 로드 완료 여부 */
   get mainBoardListDataLoad() {
     return this.boardStore.select<boolean>('mainBoardListDataLoad').value;
+  }
+
+  /** 메인화면 게시판 탭 목록 */
+  get mainBoardTabList() {
+    return this.boardStore.select<Tab[]>('mainBoardTabList').value;
+  }
+
+  /**
+   * 선택된 메인화면 게시판 탭의 index
+   *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
+   */
+  get activeIndex() {
+    return this.boardStore.select<number>('mainBoardTabIndex').value;
+  }
+
+  /** 선택된 메인화면 게시판 탭의 index를 변경한다. */
+  set activeIndex(value: number) {
+    this.boardStore.update('mainBoardTabIndex', value);
   }
 
   /** 휴가 통계 정보 */
@@ -74,6 +94,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     .subscribe((data) => {
       this.boardStore.update('mainBoardList', data);
       this.boardStore.update('mainBoardListDataLoad', true);
+      this.boardStore.update('mainBoardTabList', data.map(x => ({ title: x.boardName, key: x.boardId, dataLoad: true })));
     });
   }
 
@@ -103,6 +124,11 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   /** 휴가관리 페이지로 이동한다. */
   onVacationMoreClick(): void {
     this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.getMenuIdByMenuUrl('/hm/vacations') } });
+  }
+
+  /** 메인화면 게시판 탭을 클릭한다. */
+  onChange(event: UiTabChangeEvent): void {
+    this.boardStore.update('mainBoardTabIndex', event.index);
   }
 
 }

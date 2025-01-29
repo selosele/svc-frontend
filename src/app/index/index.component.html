@@ -34,11 +34,12 @@
       }
       @else {
         @if (mainBoardList?.length > 0) {
-          <ul>
-            @for (i of mainBoardList; track $index) {
-              <li>{{ i.boardName }}</li>
-            }
-          </ul>
+          <ui-tab
+            [tabs]="mainBoardTabList"
+            [activeIndex]="activeIndex"
+            (activeIndexChange)="onChange($event)"
+          >
+          </ui-tab>
         }
         @else {
           <p>게시판이 없어요.</p>
