@@ -49,6 +49,9 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
   /** 게시판 구분 코드 기본 값 */
   defaultBoardTypeCode = 'NORMAL';
 
+  /** 메인 화면 표출 여부 기본 값 */
+  defaultMainShowYn = 'N';
+
   /** 사용 여부 기본 값 */
   defaultUseYn = 'Y';
 
@@ -94,6 +97,7 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
         this.useRemove = false;
         this.detailForm.reset({
           boardTypeCode: this.defaultBoardTypeCode,
+          mainShowYn: this.defaultMainShowYn,
           useYn: this.defaultUseYn,
         });
         return;
