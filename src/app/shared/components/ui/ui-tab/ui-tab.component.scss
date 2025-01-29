@@ -1,41 +1,43 @@
 .ui-tab {
   margin-top: 1rem;
 
-  .p-tabview {
-    display: flex;
-    gap: 1rem;
-
-    .p-tabview-nav {
+  &.vertical {
+    .p-tabview {
       display: flex;
-      flex-wrap: wrap;
-      border: 0;
-    }
-
-    .p-tabview-nav-container {
-      width: 15.625rem;
-      background-color: var(--surface-50);
-    }
-
-    .p-tabview-panels {
-      width: calc(100% - 15.625rem);
-    }
-
-    li {
-      width: 100%;
-
-      .p-tabview-nav-link  {
-        padding: 1rem;
+      gap: 1rem;
+  
+      .p-tabview-nav {
+        display: flex;
+        flex-wrap: wrap;
         border: 0;
-        border-radius: 0;
-        background-color: transparent;
       }
-
-      &.p-highlight {
-        .p-tabview-nav-link {
-          border-color: transparent;
-          border-left: 4px solid var(--primary-color);
-          background-color: var(--surface-0);
-          color: var(--primary-color);
+  
+      .p-tabview-nav-container {
+        width: 15.625rem;
+        background-color: var(--surface-50);
+      }
+  
+      .p-tabview-panels {
+        width: calc(100% - 15.625rem);
+      }
+  
+      li {
+        width: 100%;
+  
+        .p-tabview-nav-link  {
+          padding: 1rem;
+          border: 0;
+          border-radius: 0;
+          background-color: transparent;
+        }
+  
+        &.p-highlight {
+          .p-tabview-nav-link {
+            border-color: transparent;
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--surface-0);
+            color: var(--primary-color);
+          }
         }
       }
     }

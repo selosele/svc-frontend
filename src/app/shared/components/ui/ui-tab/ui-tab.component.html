@@ -1,4 +1,4 @@
-<div class="ui-tab">
+<div class="ui-tab" [class.horizontal]="!vertical" [class.vertical]="vertical">
   <p-tabView
     [activeIndex]="activeIndex"
     (onChange)="onChange($event)"

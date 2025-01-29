@@ -22,6 +22,9 @@ export class UiTabComponent {
   /** 클릭된 탭의 index */
   @Input() activeIndex?: number;
 
+  /** 세로 탭 사용 여부 */
+  @Input() vertical = false;
+
   /** 탭 클릭 이벤트 */
   @Output() change = new EventEmitter<UiTabChangeEvent>();
 

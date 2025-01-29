@@ -12,6 +12,7 @@
 }
 @else {
   <ui-tab
+    [vertical]="true"
     [tabs]="workHistoryTabList"
     [activeIndex]="activeIndex"
     (activeIndexChange)="onChange($event)"
