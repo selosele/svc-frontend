@@ -3,7 +3,12 @@
     <div class="widget-box widget-box1">
       <div class="widget-box__container">
         <div class="widget-box__item">
-          <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: 14 }" [title]="'마이페이지로 이동'" class="widget-box__item-profile">
+          <a
+            [routerLink]="'/hm/my-info'"
+            [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }"
+            [title]="'마이페이지로 이동'"
+            class="widget-box__item-profile"
+          >
             <div class="widget-box__item-profile__icon">
               <i class="pi pi-user"></i>
             </div>
