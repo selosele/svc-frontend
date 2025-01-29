@@ -7,7 +7,6 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { SystemMenuDetailComponent } from './system-menu-detail/system-menu-detail.component';
 import { MenuResponseDTO } from '@app/menu/menu.model';
 import { MenuStore } from '@app/menu/menu.store';
-import { MenuService } from '@app/menu/menu.service';
 
 @Component({
   standalone: true,
@@ -27,7 +26,6 @@ export class SystemMenuComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private menuStore: MenuStore,
-    private menuService: MenuService,
   ) {
     super();
   }

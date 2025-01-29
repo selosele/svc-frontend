@@ -2,7 +2,6 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulati
 import { RouterModule } from '@angular/router';
 import { CoreBaseComponent } from '../../core';
 import { UserSetupResponseDTO } from '@app/user/user.model';
-import { MenuService } from '@app/menu/menu.service';
 import { UserStore } from '@app/user/user.store';
 import { UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
@@ -31,7 +30,6 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
   constructor(
     private userStore: UserStore,
     private dialogService: UiDialogService,
-    protected menuService: MenuService,
   ) {
     super();
   }

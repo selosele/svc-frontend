@@ -12,7 +12,6 @@ import { UiMessageService } from './shared/services';
 import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
-import { MenuService } from './menu/menu.service';
 import { MenuResponseDTO } from './menu/menu.model';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent } from './shared/components/layout';
 import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
@@ -50,7 +49,6 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
     private userService: UserService,
     private roleService: RoleService,
     private codeService: CodeService,
-    private menuService: MenuService,
   ) {
     super();
   }

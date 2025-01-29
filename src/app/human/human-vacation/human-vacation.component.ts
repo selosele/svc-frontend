@@ -23,7 +23,6 @@ import { VacationService } from '@app/vacation/vacation.service';
 import { UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
 import { dateUtil } from '@app/shared/utils';
-import { MenuService } from '@app/menu/menu.service';
 import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 
 @Component({
@@ -61,7 +60,6 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     private workHistoryService: WorkHistoryService,
     private vacationStore: VacationStore,
     private vacationService: VacationService,
-    protected menuService: MenuService,
   ) {
     super();
   }

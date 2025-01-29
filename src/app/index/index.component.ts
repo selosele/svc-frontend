@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { MenuService } from '@app/menu/menu.service';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { CoreBaseComponent } from '@app/shared/components/core';
@@ -23,7 +22,6 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   constructor(
     private router: Router,
     private vacationStore: VacationStore,
-    private menuService: MenuService,
     private vacationService: VacationService,
   ) {
     super();
@@ -76,7 +74,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   /** 휴가관리 페이지로 이동한다. */
   onMoreClick(): void {
-    this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.menuService.getMenuIdByMenuUrl('/hm/vacations') } });
+    this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.getMenuIdByMenuUrl('/hm/vacations') } });
   }
 
 }

@@ -9,7 +9,12 @@
             </div>
             <p class="widget-box__item-profile__title">
               {{ user?.employeeName }}
-              <span>{{ user?.companyName }} / {{ user?.rankCodeName }}</span>
+              <span>
+                {{ user?.companyName }} / {{ user?.rankCodeName }}
+                @if (user?.quitYmd) {
+                  (퇴사)
+                }
+              </span>
             </p>
           </a>
         </div>

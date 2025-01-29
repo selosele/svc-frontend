@@ -5,7 +5,6 @@ import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiDialogService } from '@app/shared/services';
 import { RoleStore } from '@app/role/role.store';
-import { MenuService } from '@app/menu/menu.service';
 import { RoleService } from '@app/role/role.service';
 import { UserService } from '@app/user/user.service';
 import { SystemRoleDetailComponent } from './system-role-detail/system-role-detail.component';
@@ -29,7 +28,6 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
     private dialogService: UiDialogService,
     private userService: UserService,
     private roleService: RoleService,
-    private menuService: MenuService,
   ) {
     super();
   }

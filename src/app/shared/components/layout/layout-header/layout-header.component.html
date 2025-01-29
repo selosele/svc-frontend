@@ -13,7 +13,7 @@
     <div class="layout-header__right">
       <p class="layout-header__user-info">
         <layout-notification />
-        <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: menuService.getMenuIdByMenuUrl('/hm/my-info') }">{{ user?.employeeName }}</a> 님 반갑습니다
+        <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }">{{ user?.employeeName }}</a> 님 반갑습니다
       </p>
       
       <ui-button [size]="'small'" (click)="logout()">로그아웃</ui-button>
