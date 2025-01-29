@@ -18,17 +18,6 @@ export class MenuService {
     private menuStore: MenuStore,
   ) {}
 
-  /** 메뉴 ID 정보 */
-  public menuIdInfo = {
-
-    // 휴가관리
-    VACATIONS: 2,
-
-    // 마이페이지
-    MY_PAGE: 14,
-
-  };
-
   /** 메뉴접속이력 목록 저장 key */
   public readonly MENU_HISTORY_LIST_KEY = 'menuHistoryList';
 
@@ -180,6 +169,12 @@ export class MenuService {
     //list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
     this.menuStore.update('menuHistoryList', list);
     window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
+  }
+
+  /** 메뉴 URL로 메뉴 ID를 찾아서 반환한다. */
+  getMenuIdByMenuUrl(menuUrl: string): number {
+    return this.menuStore.select<MenuResponseDTO[]>('menuList').value
+      .find(x => x.menuUrl === menuUrl)?.menuId;
   }
 
   /** 메뉴 트리를 생성한다. */
