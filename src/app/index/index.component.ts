@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { BoardStore } from '@app/board/board.store';
+import { BoardService } from '@app/board/board.service';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent } from '@app/shared/components/ui';
+import { BoardResponseDTO } from '@app/board/board.model';
 import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 
 @Component({
@@ -21,10 +24,22 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private boardStore: BoardStore,
+    private boardService: BoardService,
     private vacationStore: VacationStore,
     private vacationService: VacationService,
   ) {
     super();
+  }
+
+  /** 메인화면 게시판 목록 */
+  get mainBoardList() {
+    return this.boardStore.select<BoardResponseDTO[]>('mainBoardList').value;
+  }
+
+  /** 메인화면 게시판 목록 데이터 로드 완료 여부 */
+  get mainBoardListDataLoad() {
+    return this.boardStore.select<boolean>('mainBoardListDataLoad').value;
   }
 
   /** 휴가 통계 정보 */
@@ -47,6 +62,19 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     if (!this.vacationStatResponseDataLoad && this.user) {
       this.listVacationStats();
     }
+
+    if (!this.mainBoardListDataLoad && this.user) {
+      this.listBoard();
+    }
+  }
+
+  /** 게시판 목록을 조회한다. */
+  listBoard(): void {
+    this.boardService.listBoard$({ mainShowYn: 'Y', useYn: 'Y' })
+    .subscribe((data) => {
+      this.boardStore.update('mainBoardList', data);
+      this.boardStore.update('mainBoardListDataLoad', true);
+    });
   }
 
   /** 휴가 통계 목록을 조회한다. */
@@ -73,7 +101,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 휴가관리 페이지로 이동한다. */
-  onMoreClick(): void {
+  onVacationMoreClick(): void {
     this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.getMenuIdByMenuUrl('/hm/vacations') } });
   }
 

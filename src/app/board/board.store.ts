@@ -11,8 +11,10 @@ export class BoardStore extends StoreService {
 
   override init() {
     this.creates([
-      { key: 'boardList', defaultValue: [] as BoardResponseDTO[] }, // 게시판 목록
-      { key: 'boardListDataLoad', defaultValue: false },            // 게시판 목록 데이터 로드 완료 여부
+      { key: 'boardList', defaultValue: [] as BoardResponseDTO[] },     // 게시판 목록
+      { key: 'boardListDataLoad', defaultValue: false },                // 게시판 목록 데이터 로드 완료 여부
+      { key: 'mainBoardList', defaultValue: [] as BoardResponseDTO[] }, // 메인화면 게시판 목록
+      { key: 'mainBoardListDataLoad', defaultValue: false },            // 메인화면 게시판 목록 데이터 로드 완료 여부
     ]);
   }
 

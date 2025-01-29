@@ -24,6 +24,12 @@ export class BoardService {
     });
   }
 
+  /** 게시판 목록을 조회한다. */
+  listBoard$(dto?: GetBoardRequestDTO) {
+    const params = this.httpService.createParams(dto);
+    return this.http.get<BoardResponseDTO[]>('/co/boards', { params });
+  }
+
   /** 게시판을 조회한다. */
   getBoard$(boardId: number) {
     return this.http.get<BoardResponseDTO>(`/co/boards/${boardId}`);
