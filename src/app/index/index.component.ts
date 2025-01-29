@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MenuService } from '@app/menu/menu.service';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
@@ -10,6 +10,7 @@ import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResu
 @Component({
   standalone: true,
   imports: [
+    RouterModule,
     UiSkeletonComponent,
     UiButtonComponent,
   ],
@@ -26,11 +27,6 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     private vacationService: VacationService,
   ) {
     super();
-  }
-
-  /** 메뉴 ID 정보 */
-  get menuInfo() {
-    return this.menuService.menuIdInfo;
   }
 
   /** 휴가 통계 정보 */
@@ -80,7 +76,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   /** 휴가관리 페이지로 이동한다. */
   onMoreClick(): void {
-    this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.menuInfo.VACATIONS } });
+    this.router.navigate(['/hm/vacations'], { queryParams: { menuId: this.menuService.getMenuIdByMenuUrl('/hm/vacations') } });
   }
 
 }

@@ -1,12 +1,28 @@
 <div class="widget-wrapper">
   <div class="widget-container widget-container1">
     <div class="widget-box widget-box1">
-      내 정보
+      <div class="widget-box__container">
+        <div class="widget-box__item">
+          <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: 14 }" [title]="'마이페이지로 이동'" class="widget-box__item-profile">
+            <div class="widget-box__item-profile__icon">
+              <i class="pi pi-user"></i>
+            </div>
+            <p class="widget-box__item-profile__title">
+              {{ user?.employeeName }}
+              <span>{{ user?.companyName }} / {{ user?.rankCodeName }}</span>
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="widget-box widget-box2">
+      게시판 탭
     </div>
   </div>
   
   <div class="widget-container widget-container2">
-    <div class="widget-box widget-box2">
+    <div class="widget-box widget-box3">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -48,7 +64,7 @@
       }
     </div>
   
-    <div class="widget-box widget-box3">
+    <div class="widget-box widget-box4">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -103,7 +119,7 @@
       }
     </div>
   
-    <div class="widget-box widget-box4">
+    <div class="widget-box widget-box5">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -141,7 +157,7 @@
   </div>
 
   <div class="widget-container widget-container3">
-    <div class="widget-box widget-box5">
+    <div class="widget-box widget-box6">
       급여정보
     </div>
   </div>

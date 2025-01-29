@@ -1,8 +1,8 @@
 .widget {
   &-wrapper {
     display: flex;
-    flex-wrap: wrap;
     gap: 1.5rem;
+    justify-content: space-between;
   }
 
   &-container {
@@ -12,15 +12,15 @@
     gap: 2rem;
 
     &1 {
-      width: calc(20% - 1rem);
+      width: calc(100% / 3);
     }
 
     &2 {
-      width: calc(40% - 1rem);
+      width: calc(100% / 3);
     }
 
     &3 {
-      width: calc(40% - 1rem);
+      width: calc(100% / 3);
     }
   }
 
@@ -46,6 +46,45 @@
     &__item {
       flex: 1;
       margin-top: 0.625rem;
+
+      &-profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        &__icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 3.75rem;
+          height: 3.75rem;
+          border-radius: 50%;
+          background-color: var(--primary-50);
+  
+          i {
+            font-size: 1.5rem;
+          }
+        }
+
+        &__title {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          font-weight: 700;
+          font-size: 1.3rem;
+          width: 100%;
+
+          span {
+            display: block;
+            width: 100%;
+            font-weight: 400;
+            font-size: 1rem;
+            text-align: center;
+          }
+        }
+      }
 
       ul {
         overflow: auto;
