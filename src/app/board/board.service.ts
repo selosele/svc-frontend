@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpService } from '@app/shared/services';
 import { BoardStore } from './board.store';
-import { BoardResponseDTO, SaveBoardRequestDTO } from './board.model';
+import { BoardResponseDTO, GetBoardRequestDTO, SaveBoardRequestDTO } from './board.model';
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {
 
   constructor(
     private http: HttpClient,
+    private httpService: HttpService,
     private boardStore: BoardStore,
   ) {}
 
   /** 게시판 목록을 조회한다. */
-  listBoard(): void {
-    this.http.get<BoardResponseDTO[]>('/co/boards')
+  listBoard(dto?: GetBoardRequestDTO): void {
+    const params = this.httpService.createParams(dto);
+
+    this.http.get<BoardResponseDTO[]>('/co/boards', { params })
     .subscribe((data) => {
       this.boardStore.update('boardList', data);
       this.boardStore.update('boardListDataLoad', true);

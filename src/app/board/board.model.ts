@@ -2,6 +2,14 @@ import { HttpRequestDTOBase } from '@app/shared/models';
 import { Transform } from 'class-transformer';
 import { isNotEmpty } from '@app/shared/utils';
 
+/** 게시판 조회 요청 DTO */
+export class GetBoardRequestDTO extends HttpRequestDTOBase {
+
+  /** 메인 화면 표출 여부 */
+  mainShowYn?: string;
+
+}
+
 /** 게시판 추가/수정 요청 DTO */
 export class SaveBoardRequestDTO extends HttpRequestDTOBase {
 
