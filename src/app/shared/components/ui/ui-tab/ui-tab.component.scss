@@ -1,6 +1,14 @@
 .ui-tab {
   margin-top: 1rem;
 
+  &.horizontal {
+    .p-tabview-nav {
+      overflow-x: auto;
+      overflow-y: hidden;
+      width: 100%;
+    }
+  }
+
   &.vertical {
     .p-tabview {
       display: flex;
