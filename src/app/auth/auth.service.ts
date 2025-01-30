@@ -63,9 +63,10 @@ export class AuthService {
   /** 로그아웃을 한다. */
   logout(): void {
     this.http.post<void>('/co/auth/logout', {})
-    .subscribe(() => {
+    .subscribe(async () => {
       this.clearAuthInfo();
-      this.router.navigateByUrl(LOGIN_PAGE_PATH);
+      await this.router.navigateByUrl(LOGIN_PAGE_PATH);
+      window.location.reload();
     });
   }
 
@@ -80,7 +81,7 @@ export class AuthService {
       }
     });
 
-    this.store.resetAll(); // 모든 상태를 초기화
+    //this.store.resetAll(); // 모든 상태를 초기화
   }
 
   /** 사용자의 아이디를 찾는다. */
