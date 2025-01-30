@@ -12,6 +12,9 @@ export class GetArticleRequestDTO extends HttpRequestDTOBase {
   /** 게시판 ID */
   boardId?: number;
 
+  /** 조회 개수 */
+  limit?: number;
+
 }
 
 /** 게시글 추가/수정 요청 DTO */

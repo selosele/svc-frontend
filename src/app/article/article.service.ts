@@ -32,6 +32,18 @@ export class ArticleService {
     });
   }
 
+  /** 메인화면 게시글 목록을 조회한다. */
+  listMainArticle(boardId: number, limit?: number): void {
+    this.listArticle$({ boardId, limit })
+    .subscribe((data) => {
+      const oldValue = this.articleStore.select<ArticleDataStateDTO>('mainArticleResponse').value;
+      this.articleStore.update('mainArticleResponse', {
+        ...oldValue,
+        [boardId]: { data, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
+      });
+    });
+  }
+
   /** 게시글을 조회한다. */
   getArticle$(articleId: number) {
     return this.http.get<ArticleResponseDTO>(`/co/articles/${articleId}`);

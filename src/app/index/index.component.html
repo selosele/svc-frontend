@@ -16,8 +16,12 @@
               {{ user?.employeeName }}
               <span>
                 {{ user?.companyName }} / {{ user?.rankCodeName }}
+                
                 @if (user?.quitYmd) {
-                  (퇴사)
+                  <span class="text-primary">(퇴사)</span>
+                }
+                @else {
+                  <span class="text-primary">(재직중)</span>
                 }
               </span>
             </p>
@@ -39,6 +43,37 @@
             [activeIndex]="activeIndex"
             (activeIndexChange)="onChange($event)"
           >
+            @if (!mainArticleResponseDataLoad) {
+              <ui-skeleton />
+              <ui-skeleton />
+              <ui-skeleton />
+            }
+            @else {
+              @if (mainArticleResponse?.articleList.length > 0) {
+                <ul class="widget-box__article-list">
+                  @for (i of mainArticleResponse?.articleList; track $index) {
+                    <li class="widget-box__article-list-item">
+                      <a href="javascript:void(0)" (click)="onArticleItemClick(i.articleId)">
+                        {{ i.articleTitle }}
+                      </a>
+                      <span>{{ i.createDt }}</span>
+                    </li>
+                  }
+                </ul>
+
+                <div class="widget-box__article-list-item__bottom">
+                  <ui-button
+                    [icon]="'pi-plus'"
+                    [rounded]="true"
+                    [title]="'더보기'"
+                    (click)="onArticleMoreClick(activeBoardId)"
+                  />
+                </div>
+              }
+              @else {
+                <p>게시글이 없어요.</p>
+              }
+            }
           </ui-tab>
         }
         @else {

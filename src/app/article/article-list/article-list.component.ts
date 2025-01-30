@@ -73,7 +73,7 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'articleTitle',      header: '제목',
+    { field: 'articleTitle', header: '제목',
       valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleTitle(data, Number(this.user?.userId)),
     },
     { field: 'articleWriterName', header: '작성자',
@@ -90,8 +90,8 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
 
   ngOnInit() {
 
-    // 로그인 화면에서 호출 시
-    if (this.from === 'login') {
+    // 로그인 화면 or 메인 화면에서 호출 시
+    if (this.from === 'login' || this.from === 'main') {
       if (!this.articleResponseDataLoad) {
         this.boardId = this.config.data['boardId'];
         this.articleService.listArticle(this.boardId);
