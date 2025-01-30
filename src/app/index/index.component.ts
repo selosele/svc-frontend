@@ -90,7 +90,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   /** 게시판 목록을 조회한다. */
   listBoard(): void {
-    this.boardService.listBoard$({ mainShowYn: 'Y', useYn: 'Y' })
+    this.boardService.listMainBoard$()
     .subscribe((data) => {
       this.boardStore.update('mainBoardList', data);
       this.boardStore.update('mainBoardListDataLoad', true);
