@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit($event)" (keydown.enter)="onEnterKey($event)">
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" (keyup.enter)="onEnterKey($event)">
   <ng-content></ng-content>
 
   <div class="ui-splitter__buttons">

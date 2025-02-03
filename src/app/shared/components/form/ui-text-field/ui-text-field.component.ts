@@ -23,8 +23,8 @@ export class UiTextFieldComponent extends FormFieldComponent {
   /** input type */
   @Input() type? = 'text';
 
-  /** input keydown 이벤트 */
-  @Output() keydown? = new EventEmitter<KeyboardEvent>();
+  /** input keyup 이벤트 */
+  @Output() keyup? = new EventEmitter<KeyboardEvent>();
 
   /** input blur 이벤트 */
   @Output() blur? = new EventEmitter<FocusEvent>();
@@ -33,10 +33,10 @@ export class UiTextFieldComponent extends FormFieldComponent {
     super.ngOnInit();
   }
 
-  /** input keydown 이벤트 */
-  protected onKeydown(event: KeyboardEvent): void {
+  /** input keyup 이벤트 */
+  protected onKeyup(event: KeyboardEvent): void {
     this.setErrorMessage();
-    this.keydown.emit(event);
+    this.keyup.emit(event);
   }
 
   /** input blur 이벤트 */

@@ -32,7 +32,7 @@ export class UiLoadingComponent {
   }
 
   /** Esc 키를 클릭해서 로딩을 종료한다. */
-  @HostListener('document:keydown.escape', ['$event'])
+  @HostListener('document:keyup.escape', ['$event'])
   protected onEscapeKey(event: KeyboardEvent): void {
     this.loadingService.stopLoading();
   }

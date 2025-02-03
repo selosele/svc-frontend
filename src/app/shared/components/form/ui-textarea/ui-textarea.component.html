@@ -13,7 +13,7 @@
     [placeholder]="placeholder"
     [class.block]="block"
     [class.readonly]="readonly"
-    (keydown)="setErrorMessage()"
+    (keyup)="setErrorMessage()"
     (blur)="setErrorMessage()"
   >
   </textarea>

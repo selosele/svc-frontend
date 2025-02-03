@@ -14,7 +14,7 @@
     [placeholder]="placeholder"
     [class.block]="block"
     [class.readonly]="readonly"
-    (keydown)="onKeydown($event)"
+    (keyup)="onKeyup($event)"
     (blur)="onBlur($event)"
   >
   <ng-content select="[button]"></ng-content>
