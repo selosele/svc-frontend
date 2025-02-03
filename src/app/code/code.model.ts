@@ -31,6 +31,10 @@ export class SaveCodeRequestDTO extends HttpRequestDTOBase {
   /** 코드 뎁스 */
   @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   codeDepth?: number;
+
+  /** 사용자 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
+  userId?: number;
     
 }
 
@@ -60,6 +64,9 @@ export class CodeResponseDTO {
   
   /** 사용 여부 */
   useYn?: string;
+
+  /** 사용자 ID */
+  userId?: number;
     
 }
 
