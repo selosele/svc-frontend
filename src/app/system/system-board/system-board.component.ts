@@ -54,6 +54,9 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
     { field: 'boardId',           header: '게시판 ID' },
     { field: 'boardName',         header: '게시판명' },
     { field: 'boardTypeCodeName', header: '게시판 구분' },
+    { field: 'articleCount',      header: '게시글 개수',
+      valueGetter: (data: BoardResponseDTO) => `${data.articleCount}개` 
+    },
     { field: 'useYn',             header: '사용 여부' },
   ];
 

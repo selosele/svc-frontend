@@ -61,4 +61,7 @@ export class BoardResponseDTO {
   /** 사용 여부 */
   useYn?: string;
 
+  /** 게시글 개수 */
+  articleCount?: number;
+
 }
