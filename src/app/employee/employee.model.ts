@@ -33,6 +33,9 @@ export class EmployeeResponseDTO {
   /** 직원 ID */
   employeeId?: number;
 
+  /** 사용자 ID */
+  userId?: number;
+
   /** 직원명 */
   employeeName?: string;
 
