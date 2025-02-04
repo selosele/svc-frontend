@@ -1,0 +1,33 @@
+@if (!payslipListDataLoad) {
+  <ui-skeleton />
+  <ui-skeleton />
+  <ui-skeleton />
+}
+@else {
+  <ui-table #table first
+    [title]="tableTitle"
+    [text]="tableText"
+    [useAdd]="false"
+    [useRemove]="false"
+    [useExportExcel]="true"
+    [emptymessage]="'급여명세서가 없어요. 급여명세서를 등록해보세요!'"
+    [cols]="cols"
+    [data]="payslipList"
+    [dataKey]="'payslipId'"
+    [selection]="selection"
+    [paginator]="true"
+    [fileName]="fileName"
+    [excelHeader]="excelHeader"
+    (refresh)="onRefresh()"
+    (rowSelect)="onRowSelect($event)"
+    (unRowSelect)="onRowUnselect($event)"
+  >
+    <ui-button buttons
+      [size]="'small'"
+      [icon]="'pi-plus'"
+      [label]="'급여명세서 등록'"
+      [outlined]="true"
+      (click)="addPayslip()"
+    />
+  </ui-table>
+}
