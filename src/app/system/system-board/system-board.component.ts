@@ -51,12 +51,13 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'boardId',           header: '게시판 ID' },
-    { field: 'boardName',         header: '게시판명' },
+    // { field: 'boardId',           header: '게시판 ID' },
     { field: 'boardTypeCodeName', header: '게시판 구분' },
+    { field: 'boardName',         header: '게시판명' },
     { field: 'articleCount',      header: '게시글',
       valueGetter: (data: BoardResponseDTO) => `${data.articleCount}개` 
     },
+    { field: 'mainShowYn',        header: '메인 화면 표출 여부' },
     { field: 'useYn',             header: '사용 여부' },
   ];
 
