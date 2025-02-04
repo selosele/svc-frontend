@@ -74,7 +74,7 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
   /** 테이블 컬럼 */
   cols = [
     { field: 'articleTitle', header: '제목',
-      valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleTitle(data, Number(this.user?.userId)),
+      valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleTitle(data, Number(this.user?.userId))
     },
     { field: 'articleWriterName', header: '작성자',
       valueGetter: (data: ArticleResultDTO) => this.articleService.getArticleWriterName(data)
