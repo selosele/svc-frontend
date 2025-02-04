@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SaveVacationRequestDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
+import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { TransformToDto } from '@app/shared/decorators';
 import { UiMessageService } from '@app/shared/services';
-import { WorkHistoryStore } from '@app/work-history/work-history.store';
 import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
 
 @Component({
@@ -31,14 +31,14 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private workHistoryStore: WorkHistoryStore,
     private messageService: UiMessageService,
+    private vacationStore: VacationStore,
     private vacationService: VacationService,
   ) {}
 
   /** 근무이력 ID */
   get workHistoryId() {
-    return this.workHistoryStore.select<number>('workHistoryId').value;
+    return this.vacationStore.select<number>('vacationWorkHistoryId').value;
   }
 
   /** 휴가 정보 */
@@ -77,7 +77,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.workHistoryStore.select<number>('workHistoryId').asObservable().subscribe((data) => {
+    this.vacationStore.select<number>('vacationWorkHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
       this.detailForm.get('workHistoryId').patchValue(data);
     });

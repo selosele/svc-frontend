@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from '@app/shared/services';
 import { WorkHistoryResponseDTO, SaveWorkHistoryRequestDTO, GetWorkHistoryRequestDTO } from './work-history.model';
-import { WorkHistoryStore } from './work-history.store';
 
 @Injectable({ providedIn: 'root' })
 export class WorkHistoryService {
@@ -10,13 +9,7 @@ export class WorkHistoryService {
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
-    private workHistoryStore: WorkHistoryStore,
   ) {}
-
-  /** 근무이력 ID 값을 설정한다. */
-  setWorkHistoryId(value: number): void {
-    this.workHistoryStore.update('workHistoryId', value);
-  }
 
   /** 근무이력 목록을 조회한다. */
   listWorkHistory$(dto: GetWorkHistoryRequestDTO) {

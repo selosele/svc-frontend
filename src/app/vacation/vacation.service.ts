@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService } from '@app/shared/services';
 import { VacationStore } from './vacation.store';
-import { WorkHistoryStore } from '@app/work-history/work-history.store';
 import { AddVacationCalcRequestDTO, GetVacationByMonthRequestDTO, GetVacationRequestDTO, GetVacationStatsRequestDTO, SaveVacationRequestDTO, VacationByMonthResponseDTO, VacationCalcResponseDTO, VacationDataStateDTO, VacationResponseDTO, VacationStatsResponseDTO } from '@app/vacation/vacation.model';
 import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 
@@ -14,7 +13,6 @@ export class VacationService {
     private http: HttpClient,
     private httpService: HttpService,
     private vacationStore: VacationStore,
-    private workHistoryStore: WorkHistoryStore,
   ) {}
 
   /** 휴가 목록을 조회한다. */
@@ -69,16 +67,8 @@ export class VacationService {
 
   /** 테이블 문구를 설정한다. */
   setVacationTableContent(index: number): void {
-    const workHistory = this.workHistoryStore.select<WorkHistoryResponseDTO[]>('workHistoryList').value[index];
-    const { quitYmd } = workHistory;
+    const workHistory = this.vacationStore.select<WorkHistoryResponseDTO[]>('vacationWorkHistoryList').value[index];
 
-    if (isNotBlank(quitYmd)) {
-      // this.vacationStore.update('isNotQuit', false);
-      // this.vacationStore.update('vacationTableTitle', '퇴사한 회사는 휴가계산을 제공하지 않아요.');
-      // return;
-    }
-
-    // this.vacationStore.update('isNotQuit', true);
     this.vacationStore.update('vacationTableTitle', this.showVacationCount(workHistory));
     this.vacationStore.update('vacationTableText', this.setVacationTableText(workHistory));
   }
@@ -127,6 +117,11 @@ export class VacationService {
       default:
         return null;
     }
+  }
+
+  /** 근무이력 ID 값을 설정한다. */
+  setWorkHistoryId(value: number): void {
+    this.vacationStore.update('vacationWorkHistoryId', value);
   }
 
 }

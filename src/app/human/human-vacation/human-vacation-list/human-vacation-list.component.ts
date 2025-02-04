@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
-import { WorkHistoryStore } from '@app/work-history/work-history.store';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -30,16 +29,10 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
   constructor(
     private fb: FormBuilder,
-    private workHistoryStore: WorkHistoryStore,
     private vacationStore: VacationStore,
     private vacationService: VacationService,
   ) {
     super();
-  }
-
-  /** 근무이력 ID */
-  get workHistoryId() {
-    return this.workHistoryStore.select<number>('workHistoryId').value;
   }
 
   /** 테이블 타이틀 */
@@ -53,6 +46,11 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
   /** splitter */
   @ViewChild('splitter') splitter: UiSplitterComponent;
+
+  /** 근무이력 ID */
+  get workHistoryId() {
+    return this.vacationStore.select<number>('vacationWorkHistoryId').value;
+  }
 
   /** 휴가 목록 */
   get vacationList() {
@@ -105,7 +103,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
       vacationEndYmd: [''],   // 휴가 종료일자
     });
 
-    this.workHistoryStore.select<number>('workHistoryId').asObservable().subscribe((data) => {
+    this.vacationStore.select<number>('vacationWorkHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
       
       if (!this.vacationListDataLoad) {
@@ -130,7 +128,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
     });
   }
 
-  /** 휴가를 등록한다. */
+  /** 휴가를 추가한다. */
   addVacation(): void {
     this.detail = {};
     this.splitter.show();

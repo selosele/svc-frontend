@@ -17,77 +17,75 @@
     [activeIndex]="activeIndex"
     (activeIndexChange)="onChange($event)"
   >
-    <!-- <ng-container *ngIf="isNotQuit$ | async"> -->
-      <ui-form [form]="caculateVacationForm" [useSubmit]="false" (submit)="onSubmit($event)">
-        <div class="grid">
-          <div class="col-fixed">
-            <div class="input-box">
-              <ui-dropdown
-                [control]="caculateVacationForm.get('annualTypeCode')"
-                [label]="'연차발생기준'"
-                [data]="annualTypeCodes"
-                (change)="onAnnualTypeCodeChange($event)"
-              />
-              
+    <ui-form [form]="caculateVacationForm" [useSubmit]="false" (submit)="onSubmit($event)">
+      <div class="grid">
+        <div class="col-fixed">
+          <div class="input-box">
+            <ui-dropdown
+              [control]="caculateVacationForm.get('annualTypeCode')"
+              [label]="'연차발생기준'"
+              [data]="annualTypeCodes"
+              (change)="onAnnualTypeCodeChange($event)"
+            />
+            
+            <ui-text-field
+              [control]="caculateVacationForm.get('joinYmd')"
+              [label]="'입사일자'"
+              [readonly]="true"
+            />
+            
+            @if (caculateVacationForm.get('quitYmd').value) {
               <ui-text-field
-                [control]="caculateVacationForm.get('joinYmd')"
-                [label]="'입사일자'"
+                [control]="caculateVacationForm.get('quitYmd')"
+                [label]="'퇴사일자'"
                 [readonly]="true"
               />
-              
-              @if (caculateVacationForm.get('quitYmd').value) {
-                <ui-text-field
-                  [control]="caculateVacationForm.get('quitYmd')"
-                  [label]="'퇴사일자'"
-                  [readonly]="true"
-                />
-              }
-            </div>
+            }
           </div>
         </div>
+      </div>
 
-        <ui-checkbox-group [label]="'휴가 계산에 포함할 휴가를 선택:'">
-          <div class="grid">
-            <div class="col">
-              <ui-card>
-                <ui-checkbox-list>
-                  @for (i of vacationTypeCodes; track $index) {
-                    <ui-checkbox
-                      [control]="caculateVacationForm.get('vacationTypeCodes')"
-                      [label]="i.label"
-                      [value]="i.value"
-                      (change)="onSubmit($event)"
-                    />
-                  }
-                </ui-checkbox-list>
-              </ui-card>
-            </div>
-            
-            <div class="col-fixed flex align-items-center">
-              <ui-button
-                [size]="'large'"
-                [icon]="'pi-undo'"
-                [severity]="'primary'"
-                [title]="'원래대로 복원'"
-                [text]="true"
-                (click)="onReset()"
-              />
-            </div>
-
-            <div class="col-fixed flex align-items-center">
-              <ui-button
-                [size]="'large'"
-                [icon]="'pi-save'"
-                [severity]="'success'"
-                [title]="'휴가계산 설정 저장'"
-                [text]="true"
-                (click)="onSave()"
-              />
-            </div>
+      <ui-checkbox-group [label]="'휴가 계산에 포함할 휴가를 선택:'">
+        <div class="grid">
+          <div class="col">
+            <ui-card>
+              <ui-checkbox-list>
+                @for (i of vacationTypeCodes; track $index) {
+                  <ui-checkbox
+                    [control]="caculateVacationForm.get('vacationTypeCodes')"
+                    [label]="i.label"
+                    [value]="i.value"
+                    (change)="onSubmit($event)"
+                  />
+                }
+              </ui-checkbox-list>
+            </ui-card>
           </div>
-        </ui-checkbox-group>
-      </ui-form>
-    <!-- </ng-container> -->
+          
+          <div class="col-fixed flex align-items-center">
+            <ui-button
+              [size]="'large'"
+              [icon]="'pi-undo'"
+              [severity]="'primary'"
+              [title]="'원래대로 복원'"
+              [text]="true"
+              (click)="onReset()"
+            />
+          </div>
+
+          <div class="col-fixed flex align-items-center">
+            <ui-button
+              [size]="'large'"
+              [icon]="'pi-save'"
+              [severity]="'success'"
+              [title]="'휴가계산 설정 저장'"
+              [text]="true"
+              (click)="onSave()"
+            />
+          </div>
+        </div>
+      </ui-checkbox-group>
+    </ui-form>
 
     <human-vacation-list
       [tableTitle]="vacationTableTitle"

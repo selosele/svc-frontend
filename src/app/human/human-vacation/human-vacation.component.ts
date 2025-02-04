@@ -16,7 +16,6 @@ import { UiCheckboxGroupComponent } from '@app/shared/components/form/ui-checkbo
 import { UiCheckboxListComponent } from '@app/shared/components/form/ui-checkbox-list/ui-checkbox-list.component';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { AddVacationCalcRequestDTO } from '@app/vacation/vacation.model';
-import { WorkHistoryStore } from '@app/work-history/work-history.store';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
@@ -56,10 +55,9 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private messageService: UiMessageService,
-    private workHistoryStore: WorkHistoryStore,
-    private workHistoryService: WorkHistoryService,
     private vacationStore: VacationStore,
     private vacationService: VacationService,
+    private workHistoryService: WorkHistoryService,
   ) {
     super();
   }
@@ -72,12 +70,12 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
    *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
    */
   get activeIndex() {
-    return this.workHistoryStore.select<number>('workHistoryTabIndex').value;
+    return this.vacationStore.select<number>('vacationWorkHistoryTabIndex').value;
   }
 
   /** 선택된 회사 탭의 index를 변경한다. */
   set activeIndex(value: number) {
-    this.workHistoryStore.update('workHistoryTabIndex', value);
+    this.vacationStore.update('vacationWorkHistoryTabIndex', value);
   }
 
   /** 선택된 회사 탭의 근무이력 ID */
@@ -107,23 +105,18 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 근무이력 탭 목록 */
   get workHistoryTabList() {
-    return this.workHistoryStore.select<Tab[]>('workHistoryTabList').value;
+    return this.vacationStore.select<Tab[]>('vacationWorkHistoryTabList').value;
   }
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
   get workHistoryListDataLoad() {
-    const data = this.workHistoryStore.select<Tab[]>('workHistoryTabList').value;
+    const data = this.vacationStore.select<Tab[]>('vacationWorkHistoryTabList').value;
     return data?.find(x => x.key === this.activeWorkHistoryId)?.dataLoad ?? false;
   }
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.workHistoryStore.select<WorkHistoryResponseDTO[]>('workHistoryList').value;
-  }
-
-  /** 재직 중인 회사인지 여부 */
-  get isNotQuit$() {
-    return this.vacationStore.select<boolean>('isNotQuit').asObservable();
+    return this.vacationStore.select<WorkHistoryResponseDTO[]>('vacationWorkHistoryList').value;
   }
 
   ngOnInit() {
@@ -132,7 +125,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.workHistoryService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
+    this.vacationService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
 
     this.caculateVacationForm = this.fb.group({
       workHistoryId: [this.user?.workHistoryId],          // 근무이력 ID
@@ -152,15 +145,15 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
-    this.workHistoryStore.update('workHistoryTabIndex', event.index);
+    this.vacationStore.update('vacationWorkHistoryTabIndex', event.index);
     this.activeWorkHistoryId = Number(event.activeKey);
 
     this.setAnnualTypeCode();
     //this.listWorkHistory();
     this.listVacationCalc(event.activeKey);
     
-    this.workHistoryService.setWorkHistoryId(event.activeKey);
-    this.vacationService.setVacationTableContent(this.workHistoryStore.select<number>('workHistoryTabIndex').value);
+    this.vacationService.setWorkHistoryId(event.activeKey);
+    this.vacationService.setVacationTableContent(this.vacationStore.select<number>('vacationWorkHistoryTabIndex').value);
   }
 
   /** 연차발생기준을 선택한다. */
@@ -230,8 +223,8 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       employeeId: this.user?.employeeId,
     })
     .subscribe((data) => {
-      this.workHistoryStore.update('workHistoryList', data);
-      this.workHistoryStore.update('workHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
+      this.vacationStore.update('vacationWorkHistoryList', data);
+      this.vacationStore.update('vacationWorkHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
 
       this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
       this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);
