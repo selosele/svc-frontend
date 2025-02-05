@@ -145,15 +145,15 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
-    this.vacationStore.update('vacationWorkHistoryTabIndex', event.index);
+    this.activeIndex = event.index;
     this.activeWorkHistoryId = Number(event.activeKey);
 
     this.setAnnualTypeCode();
     //this.listWorkHistory();
-    this.listVacationCalc(event.activeKey);
+    this.listVacationCalc(this.activeWorkHistoryId);
     
-    this.vacationService.setWorkHistoryId(event.activeKey);
-    this.vacationService.setVacationTableContent(this.vacationStore.select<number>('vacationWorkHistoryTabIndex').value);
+    this.vacationService.setWorkHistoryId(this.activeWorkHistoryId);
+    this.vacationService.setVacationTableContent(this.activeIndex);
   }
 
   /** 연차발생기준을 선택한다. */
