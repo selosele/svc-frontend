@@ -60,6 +60,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 테이블 엑셀 다운로드 헤더 */
   excelHeader = [
+    { 'totalAmountA00'   : '지급총액' },
+    { 'totalAmountB00'   : '공제합계' },
+    { 'totalAmount'      : '실지급액(지급총액-공제합계)' },
     { 'payslipPaymentYmd': '지급일자' },
     { 'payslipNote'      : '비고' },
   ];
@@ -67,10 +70,10 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 테이블 컬럼 */
   cols = [
     { field: 'totalAmountA00',       header: '지급총액',
-      valueGetter: (data: PayslipResponseDTO) => `${data.totalAmountA00}원(+)`
+      valueGetter: (data: PayslipResponseDTO) => `+${data.totalAmountA00}원`
     },
     { field: 'totalAmountB00',       header: '공제합계',
-      valueGetter: (data: PayslipResponseDTO) => `${data.totalAmountB00}원(-)`
+      valueGetter: (data: PayslipResponseDTO) => `-${data.totalAmountB00}원`
     },
     { field: 'totalAmount',          header: '실지급액(지급총액-공제합계)',
       valueGetter: (data: PayslipResponseDTO) => `<strong>${data.totalAmount}원</strong>`
@@ -82,6 +85,8 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   ];
 
   ngOnInit(): void {
+    this.fileName = `급여명세서 목록(${this.user?.employeeName})`;
+
     this.payslipStore.select<number>('payslipWorkHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
       

@@ -83,7 +83,7 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
 
     this.activeWorkHistoryId = Number(this.user?.workHistoryId);
 
-    if (!this.workHistoryListDataLoad) {
+    if (!this.workHistoryListDataLoad && this.user) {
       this.listWorkHistory();
     }
   }
