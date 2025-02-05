@@ -44,7 +44,7 @@ export class PayslipService {
       if (isNotBlank(quitYmd)) {
         return `최근 급여: <span class="text-primary">${currentPayslip?.totalAmount}원</span> (${dateUtil(currentPayslip?.payslipPaymentYmd).format('YYYY년 MM월 DD일')})`;
       }
-      return `이번 달 급여: <span class="text-primary">${currentPayslip?.totalAmount}원</span>`;
+      return `${dateUtil(currentPayslip?.payslipPaymentYmd).format('YYYY년 MM월')} 급여: <span class="text-primary">${currentPayslip?.totalAmount}원</span>`;
     })());
 
     this.payslipStore.update('payslipTableText', (() => {

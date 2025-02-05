@@ -4,8 +4,9 @@ import { CoreBaseComponent } from '@app/shared/components/core';
 import { PayslipStore } from '@app/payslip/payslip.store';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO } from '@app/payslip/payslip.model';
+import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
-import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
+import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { dateUtil } from '@app/shared/utils';
 
 @Component({
@@ -16,6 +17,7 @@ import { dateUtil } from '@app/shared/utils';
     UiSkeletonComponent,
     UiTableComponent,
     UiButtonComponent,
+    UiTextFieldComponent,
     UiDateFieldComponent,
   ],
   selector: 'salary-payslip-list',
@@ -58,6 +60,16 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     return list?.[this.workHistoryId]?.dataLoad ?? false;
   }
 
+  /** 근무이력 목록 */
+  get workHistoryList() {
+    return this.payslipStore.select<WorkHistoryResponseDTO[]>('payslipWorkHistoryList').value;
+  }
+
+  /** 선택된 회사 탭의 index */
+  get activeIndex() {
+    return this.payslipStore.select<number>('payslipWorkHistoryTabIndex').value;
+  }
+
   /** 급여명세서 검색 폼 */
   searchForm: FormGroup;
 
@@ -97,12 +109,17 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     this.fileName = `급여명세서 목록(${this.user?.employeeName})`;
 
     this.searchForm = this.fb.group({
+      joinYmd: [''],            // 입사일자
+      quitYmd: [''],            // 퇴사일자
       payslipPaymentYYYY: [''], // 급여명세서 지급 연도
       payslipPaymentMM: [''],   // 급여명세서 지급 월
     });
 
     this.payslipStore.select<number>('payslipWorkHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
+
+      this.searchForm.get('joinYmd').patchValue(this.workHistoryList[this.activeIndex]?.joinYmd);
+      this.searchForm.get('quitYmd').patchValue(this.workHistoryList[this.activeIndex]?.quitYmd);
       
       if (!this.payslipListDataLoad) {
         this.listPayslip({ workHistoryId: data, userId: this.user?.userId });
@@ -152,6 +169,14 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 급여명세서를 추가한다. */
   addPayslip(): void {
 
+  }
+
+  /** 입사일자 값을 설정한다. */
+  private setJoinYmd(): void {
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
+    const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.user?.quitYmd;
+    this.searchForm.get('joinYmd').patchValue(joinYmd);
+    this.searchForm.get('quitYmd').patchValue(quitYmd);
   }
 
 }

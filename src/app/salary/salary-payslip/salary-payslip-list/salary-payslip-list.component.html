@@ -25,33 +25,51 @@
   >
     <ui-form top [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
       <div class="grid">
-        <div class="col-fixed">
-          <div class="input-box">
-            <ui-date-field
-              [control]="searchForm.get('payslipPaymentYYYY')"
-              [label]="'급여명세서 지급 연도'"
-              [view]="'year'"
-              [dateFormat]="'yy'"
-              [placeholder]="'YYYY'"
-              [readonlyInput]="true"
-              (select)="onSearchFormSubmit()"
-              (clear)="onSearchFormSubmit()"
-              (clearClick)="onSearchFormSubmit()"
-            />
+        <div class="col-3">
+          <ui-date-field
+            [control]="searchForm.get('payslipPaymentYYYY')"
+            [label]="'급여명세서 지급 연도로 검색'"
+            [view]="'year'"
+            [dateFormat]="'yy'"
+            [placeholder]="'YYYY'"
+            [readonlyInput]="true"
+            (select)="onSearchFormSubmit()"
+            (clear)="onSearchFormSubmit()"
+            (clearClick)="onSearchFormSubmit()"
+          />
+        </div>
 
-            <ui-date-field
-              [control]="searchForm.get('payslipPaymentMM')"
-              [label]="'급여명세서 지급 월'"
-              [view]="'month'"
-              [dateFormat]="'mm'"
-              [placeholder]="'MM'"
-              [readonlyInput]="true"
-              (select)="onSearchFormSubmit()"
-              (clear)="onSearchFormSubmit()"
-              (clearClick)="onSearchFormSubmit()"
+        <div class="col-3">
+          <ui-date-field
+            [control]="searchForm.get('payslipPaymentMM')"
+            [label]="'급여명세서 지급 월로 검색'"
+            [view]="'month'"
+            [dateFormat]="'mm'"
+            [placeholder]="'MM'"
+            [readonlyInput]="true"
+            (select)="onSearchFormSubmit()"
+            (clear)="onSearchFormSubmit()"
+            (clearClick)="onSearchFormSubmit()"
+          />
+        </div>
+
+        <div class="col-3">
+          <ui-text-field
+            [control]="searchForm.get('joinYmd')"
+            [label]="'입사일자'"
+            [readonly]="true"
+          />
+        </div>
+
+        @if (searchForm.get('quitYmd').value) {
+          <div class="col-3">
+            <ui-text-field
+              [control]="searchForm.get('quitYmd')"
+              [label]="'퇴사일자'"
+              [readonly]="true"
             />
           </div>
-        </div>
+        }
       </div>
     </ui-form>
 
