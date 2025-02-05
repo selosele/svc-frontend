@@ -12,6 +12,8 @@
     [useExportExcel]="true"
     [emptymessage]="'급여명세서가 없어요. 급여명세서를 등록해보세요!'"
     [cols]="cols"
+    [rows]="12"
+    [rowsPerPageOptions]="[12, 24, 36]"
     [data]="payslipList"
     [dataKey]="'payslipId'"
     [selection]="selection"
@@ -20,8 +22,39 @@
     [excelHeader]="excelHeader"
     (refresh)="onRefresh()"
     (rowSelect)="onRowSelect($event)"
-    (unRowSelect)="onRowUnselect($event)"
   >
+    <ui-form top [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
+      <div class="grid">
+        <div class="col-fixed">
+          <div class="input-box">
+            <ui-date-field
+              [control]="searchForm.get('payslipPaymentYYYY')"
+              [label]="'급여명세서 지급 연도'"
+              [view]="'year'"
+              [dateFormat]="'yy'"
+              [placeholder]="'YYYY'"
+              [readonlyInput]="true"
+              (select)="onSearchFormSubmit()"
+              (clear)="onSearchFormSubmit()"
+              (clearClick)="onSearchFormSubmit()"
+            />
+
+            <ui-date-field
+              [control]="searchForm.get('payslipPaymentMM')"
+              [label]="'급여명세서 지급 월'"
+              [view]="'month'"
+              [dateFormat]="'mm'"
+              [placeholder]="'MM'"
+              [readonlyInput]="true"
+              (select)="onSearchFormSubmit()"
+              (clear)="onSearchFormSubmit()"
+              (clearClick)="onSearchFormSubmit()"
+            />
+          </div>
+        </div>
+      </div>
+    </ui-form>
+
     <ui-button buttons
       [size]="'small'"
       [icon]="'pi-plus'"

@@ -1,17 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { PayslipStore } from '@app/payslip/payslip.store';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO } from '@app/payslip/payslip.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
-import { dateUtil, numberWithCommas } from '@app/shared/utils';
+import { UiDateFieldComponent, UiFormComponent } from '@app/shared/components/form';
+import { dateUtil } from '@app/shared/utils';
 
 @Component({
   standalone: true,
   imports: [
+    ReactiveFormsModule,
+    UiFormComponent,
     UiSkeletonComponent,
     UiTableComponent,
     UiButtonComponent,
+    UiDateFieldComponent,
   ],
   selector: 'salary-payslip-list',
   templateUrl: './salary-payslip-list.component.html',
@@ -20,6 +25,7 @@ import { dateUtil, numberWithCommas } from '@app/shared/utils';
 export class SalaryPayslipListComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
+    private fb: FormBuilder,
     private payslipStore: PayslipStore,
     private payslipService: PayslipService,
   ) {
@@ -51,6 +57,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     const list = this.payslipStore.select<PayslipDataStateDTO>('payslipList').value;
     return list?.[this.workHistoryId]?.dataLoad ?? false;
   }
+
+  /** 급여명세서 검색 폼 */
+  searchForm: FormGroup;
 
   /** 테이블 선택된 행 */
   selection: PayslipResponseDTO;
@@ -87,6 +96,11 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   ngOnInit(): void {
     this.fileName = `급여명세서 목록(${this.user?.employeeName})`;
 
+    this.searchForm = this.fb.group({
+      payslipPaymentYYYY: [''], // 급여명세서 지급 연도
+      payslipPaymentMM: [''],   // 급여명세서 지급 월
+    });
+
     this.payslipStore.select<number>('payslipWorkHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
       
@@ -114,11 +128,6 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   onRowSelect(event: any): void {
     
   }
-
-  /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any): void {
-
-  }
   
   /** 테이블 새로고침 버튼을 클릭한다. */
   onRefresh(): void {
@@ -126,9 +135,18 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     this.refresh.emit();
   }
 
-  /** 삭제 버튼을 클릭한다. */
-  onRemove(): void {
-    
+  /** 급여명세서 검색 폼을 전송한다. */
+  onSearchFormSubmit(): void {
+    this.listPayslip({
+      ...this.searchForm.value,
+      workHistoryId: this.workHistoryId,
+      userId: this.user?.userId,
+    });
+  }
+
+  /** 급여명세서를 검색한다. */
+  onSubmit(value: GetPayslipRequestDTO): void {
+    this.listPayslip(value);
   }
 
   /** 급여명세서를 추가한다. */
