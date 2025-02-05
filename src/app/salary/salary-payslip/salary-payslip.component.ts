@@ -9,6 +9,8 @@ import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { SalaryPayslipListComponent } from './salary-payslip-list/salary-payslip-list.component';
+import { PayslipDataStateDTO } from '@app/payslip/payslip.model';
+import { isEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -44,6 +46,11 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
   /** 급여명세서 테이블 텍스트 */
   get payslipTableText() {
     return this.payslipStore.select<string>('payslipTableText').value;
+  }
+
+  /** // 급여명세서 목록 */
+  get payslipList() {
+    return this.payslipStore.select<PayslipDataStateDTO>('payslipList');
   }
 
   /**
@@ -90,13 +97,16 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
 
   /** 탭을 클릭한다. */
   onChange(event: UiTabChangeEvent): void {
-    this.payslipStore.update('payslipWorkHistoryTabIndex', event.index);
+    this.activeIndex = event.index;
     this.activeWorkHistoryId = Number(event.activeKey);
+    this.payslipService.setWorkHistoryId(this.activeWorkHistoryId);
 
-    //this.listWorkHistory();
-    
-    this.payslipService.setWorkHistoryId(event.activeKey);
-    this.payslipService.setPayslipTableContent(this.payslipStore.select<number>('payslipWorkHistoryTabIndex').value);
+    this.payslipList.asObservable().subscribe((payslipList) => {
+      if (isEmpty(payslipList)) return;
+
+      const currentPayslip = payslipList[this.activeWorkHistoryId]?.data[0];
+      this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
+    });
   }
 
   /** 근무이력 목록을 다시 조회한다. */
@@ -112,7 +122,13 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     .subscribe((data) => {
       this.payslipStore.update('payslipWorkHistoryList', data);
       this.payslipStore.update('payslipWorkHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
-      this.payslipService.setPayslipTableContent(this.activeIndex);
+      
+      this.payslipList.asObservable().subscribe((payslipList) => {
+        if (isEmpty(payslipList)) return;
+
+        const currentPayslip = payslipList[this.activeWorkHistoryId]?.data[0];
+        this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
+      });
     });
   }
 

@@ -13,7 +13,7 @@ export class PayslipStore extends StoreService {
 
   override init() {
     this.creates([
-      { key: 'payslipList', defaultValue: [] as PayslipDataStateDTO },                 // 급여명세서 목록
+      { key: 'payslipList', defaultValue: null as PayslipDataStateDTO },               // 급여명세서 목록
       { key: 'payslipTableTitle', defaultValue: null as string },                      // 급여명세서 탭별 테이블 타이틀
       { key: 'payslipTableText', defaultValue: null as string },                       // 급여명세서 탭별 테이블 텍스트
       
