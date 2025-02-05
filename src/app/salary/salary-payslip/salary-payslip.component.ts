@@ -48,7 +48,7 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     return this.payslipStore.select<string>('payslipTableText').value;
   }
 
-  /** // 급여명세서 목록 */
+  /** 급여명세서 목록 */
   get payslipList() {
     return this.payslipStore.select<PayslipDataStateDTO>('payslipList');
   }
