@@ -100,13 +100,7 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     this.activeIndex = event.index;
     this.activeWorkHistoryId = Number(event.activeKey);
     this.payslipService.setWorkHistoryId(this.activeWorkHistoryId);
-
-    this.payslipList.asObservable().subscribe((payslipList) => {
-      if (isEmpty(payslipList)) return;
-
-      const currentPayslip = payslipList[this.activeWorkHistoryId]?.data[0];
-      this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
-    });
+    this.setPayslipTableContent();
   }
 
   /** 근무이력 목록을 다시 조회한다. */
@@ -122,13 +116,17 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     .subscribe((data) => {
       this.payslipStore.update('payslipWorkHistoryList', data);
       this.payslipStore.update('payslipWorkHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
-      
-      this.payslipList.asObservable().subscribe((payslipList) => {
-        if (isEmpty(payslipList)) return;
+      this.setPayslipTableContent();
+    });
+  }
 
-        const currentPayslip = payslipList[this.activeWorkHistoryId]?.data[0];
-        this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
-      });
+  /** 테이블 문구를 설정한다. */
+  private setPayslipTableContent(): void {
+    this.payslipList.asObservable().subscribe((data) => {
+      if (isEmpty(data)) return;
+
+      const currentPayslip = data[this.activeWorkHistoryId]?.data[0];
+      this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
     });
   }
 
