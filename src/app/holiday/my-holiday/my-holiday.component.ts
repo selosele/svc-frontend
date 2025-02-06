@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -75,7 +76,7 @@ export class MyHolidayComponent extends CoreBaseComponent {
   }
 
   /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  onRowSelect(event: TableRowSelectEvent): void {
     this.holidayService.getHoliday$(this.user?.userId, event.data['ymd'])
     .subscribe((data) => {
       this.detail = data;
@@ -84,7 +85,7 @@ export class MyHolidayComponent extends CoreBaseComponent {
   }
 
   /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any): void {
+  onRowUnselect(event: TableRowUnSelectEvent): void {
     this.detail = {};
     this.splitter.hide();
   }

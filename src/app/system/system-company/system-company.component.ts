@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -79,7 +80,7 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
   }
 
   /** 회사정보목록 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  onRowSelect(event: TableRowSelectEvent): void {
     this.companyService.getCompany$(event.data['companyId'])
     .subscribe((data) => {
       this.detail = data;
@@ -88,7 +89,7 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
   }
 
   /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any): void {
+  onRowUnselect(event: TableRowUnSelectEvent): void {
     this.detail = {};
     this.splitter.hide();
   }

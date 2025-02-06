@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
+import { TableRowSelectEvent } from 'primeng/table';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UiDialogService, UiLoadingService } from '@app/shared/services';
 import { CoreBaseComponent } from '@app/shared/components/core';
@@ -183,7 +184,7 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
   }
 
   /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  onRowSelect(event: TableRowSelectEvent): void {
     this.getArticle(event.data['articleId']);
   }
   

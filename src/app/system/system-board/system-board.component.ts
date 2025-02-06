@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -79,7 +80,7 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 게시판 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  onRowSelect(event: TableRowSelectEvent): void {
     this.boardService.getBoard$(event.data['boardId'])
     .subscribe((data) => {
       this.detail = data;
@@ -88,7 +89,7 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any): void {
+  onRowUnselect(event: TableRowUnSelectEvent): void {
     this.detail = {};
     this.splitter.hide();
   }

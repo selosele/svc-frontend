@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
+import { TableRowSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -64,7 +65,7 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  onRowSelect(event: TableRowSelectEvent): void {
     combineLatest([
       this.userService.listUserByRole$({ roleIdList: [event.data['roleId']] }),
       this.menuService.listMenuByRole$({ roleIdList: [event.data['roleId']] })

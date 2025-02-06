@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { GetVacationRequestDTO, VacationDataStateDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
 import { VacationStore } from '@app/vacation/vacation.store';
@@ -149,7 +150,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
   }
 
   /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
+  onRowSelect(event: TableRowSelectEvent): void {
     this.vacationService.getVacation$(event.data['vacationId'])
     .subscribe((data) => {
       this.detail = data;
@@ -158,7 +159,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
   }
 
   /** 테이블 행을 선택 해제한다. */
-  onRowUnselect(event: any): void {
+  onRowUnselect(event: TableRowUnSelectEvent): void {
     this.detail = {};
     this.splitter.hide();
   }

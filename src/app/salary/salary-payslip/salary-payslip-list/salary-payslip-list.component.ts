@@ -1,13 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TableRowSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { PayslipStore } from '@app/payslip/payslip.store';
 import { PayslipService } from '@app/payslip/payslip.service';
+import { UiDialogService } from '@app/shared/services';
 import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO } from '@app/payslip/payslip.model';
 import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { dateUtil } from '@app/shared/utils';
+import { SalaryPayslipDetailComponent } from '../salary-payslip-detail/salary-payslip-detail.component';
 
 @Component({
   standalone: true,
@@ -30,6 +33,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     private fb: FormBuilder,
     private payslipStore: PayslipStore,
     private payslipService: PayslipService,
+    private dialogService: UiDialogService,
   ) {
     super();
   }
@@ -142,8 +146,10 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   }
 
   /** 테이블 행을 선택한다. */
-  onRowSelect(event: any): void {
-    
+  onRowSelect(event: TableRowSelectEvent): void {
+    this.dialogService.open(SalaryPayslipDetailComponent, {
+      
+    });
   }
   
   /** 테이블 새로고침 버튼을 클릭한다. */
@@ -168,7 +174,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 급여명세서를 추가한다. */
   addPayslip(): void {
+    this.dialogService.open(SalaryPayslipDetailComponent, {
 
+    });
   }
 
   /** 입사일자 값을 설정한다. */
