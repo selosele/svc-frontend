@@ -11,6 +11,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/s
 import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { dateUtil } from '@app/shared/utils';
 import { SalaryPayslipDetailComponent } from '../salary-payslip-detail/salary-payslip-detail.component';
+import { SaveSalaryPayslipComponent } from '../save-salary-payslip/save-salary-payslip.component';
 
 @Component({
   standalone: true,
@@ -174,7 +175,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 급여명세서를 추가한다. */
   addPayslip(): void {
-    this.dialogService.open(SalaryPayslipDetailComponent, {
+    this.dialogService.open(SaveSalaryPayslipComponent, {
 
     });
   }
