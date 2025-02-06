@@ -68,7 +68,7 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
     this.isEditable = false;
   }
 
-  /** 사이트타이틀명을 편집한다. */
+  /** 사이트타이틀명 편집 버튼을 클릭한다. */
   onEdit(event: Event): void {
     event.stopPropagation();
 
@@ -77,6 +77,12 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
     } else {
       this.isEditable = true;
     }
+  }
+
+  /** 사이트타이틀명을 편집한다. */
+  onKeyup() {
+    const siteTitleName = this.editName.nativeElement.value as string;
+    document.title = siteTitleName;
   }
 
   /** 사이트타이틀명을 저장한다. */
@@ -107,6 +113,7 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
     if (this.isEditVisible && !this.eRef.nativeElement.contains(event.target)) {
       this.isEditVisible = false;
       this.isEditable = false;
+      document.title = this.name;
     }
   }
 

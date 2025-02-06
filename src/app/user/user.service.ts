@@ -4,6 +4,7 @@ import { HttpService } from '@app/shared/services';
 import { UserStore } from './user.store';
 import { AuthService } from '@app/auth/auth.service';
 import { GetUserRequestDTO, UpdateUserPasswordRequestDTO, SaveUserRequestDTO, UserResponseDTO, UserSetupResponseDTO, AddUserRequestDTO } from './user.model';
+import { isNotBlank } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -39,6 +40,10 @@ export class UserService {
   getUserConfig(userId: number): void {
     this.http.get<UserSetupResponseDTO>(`/co/users/${userId}/setups`)
     .subscribe((data) => {
+      if (isNotBlank(data.siteTitleName)) {
+        document.title = data.siteTitleName;
+      }
+
       this.userStore.update('userSetup', data);
       this.userStore.update('userSetupDataLoad', true);
     });

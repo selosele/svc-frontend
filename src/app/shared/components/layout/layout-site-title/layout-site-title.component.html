@@ -1,7 +1,13 @@
 <div class="layout-site-title" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
   <div class="layout-site-title__text">
     @if (isEditable) {
-      <input type="text" class="layout-site-title__text" [value]="name" (keyup.enter)="onSubmit()" #editName>
+      <input #editName
+        type="text"
+        class="layout-site-title__text"
+        [value]="name"
+        (keyup)="onKeyup()"
+        (keyup.enter)="onSubmit()"
+      >
     }
     @else {
       <a [routerLink]="link">{{ name }}</a>
