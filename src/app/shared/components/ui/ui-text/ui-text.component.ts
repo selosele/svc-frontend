@@ -26,6 +26,9 @@ export class UiTextComponent {
   /** input name */
   @Input() name?: string;
 
+  /** input value */
+  @Input() value?: any;
+
   /** input placeholder */
   @Input() placeholder?: string = '';
 
