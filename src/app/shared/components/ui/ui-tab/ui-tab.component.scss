@@ -1,6 +1,7 @@
 .ui-tab {
   margin-top: 1rem;
 
+  // 가로 탭
   &.horizontal {
     .p-tabview-nav {
       overflow-x: auto;
@@ -9,6 +10,7 @@
     }
   }
 
+  // 세로 탭
   &.vertical {
     .p-tabview {
       display: flex;
@@ -21,8 +23,18 @@
       }
   
       .p-tabview-nav-container {
+        position: relative;
         width: 15.625rem;
-        background-color: var(--surface-50);
+
+        &:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 1px;
+          height: 100%;
+          background-color: var(--surface-b);
+        }
       }
   
       .p-tabview-panels {
@@ -42,9 +54,8 @@
         &.p-highlight {
           .p-tabview-nav-link {
             border-color: transparent;
-            border-left: 4px solid var(--primary-color);
-            background-color: var(--surface-0);
-            color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: var(--surface-0);
           }
         }
       }
