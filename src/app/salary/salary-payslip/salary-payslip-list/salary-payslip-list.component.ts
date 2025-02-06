@@ -149,7 +149,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.dialogService.open(SalaryPayslipDetailComponent, {
-      
+      header: '급여명세서 조회'
     });
   }
   
@@ -176,16 +176,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 급여명세서를 추가한다. */
   addPayslip(): void {
     this.dialogService.open(SaveSalaryPayslipComponent, {
-
+      header: '급여명세서 입력하기',
+      width: '1000px',
     });
-  }
-
-  /** 입사일자 값을 설정한다. */
-  private setJoinYmd(): void {
-    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
-    const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.user?.quitYmd;
-    this.searchForm.get('joinYmd').patchValue(joinYmd);
-    this.searchForm.get('quitYmd').patchValue(quitYmd);
   }
 
 }
