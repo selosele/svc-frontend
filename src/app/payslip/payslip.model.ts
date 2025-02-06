@@ -41,6 +41,12 @@ export class PayslipResponseDTO {
   /** 급여명세서 비고 */
   payslipNote?: string;
   
+  /** 직위 코드 */
+  rankCode?: string;
+  
+  /** 직위 코드명 */
+  rankCodeName?: string;
+  
   /** 급여명세서 지급내역 총 금액 */
   totalAmountA00?: string;
   
