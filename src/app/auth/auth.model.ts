@@ -133,6 +133,9 @@ export class AuthenticatedUser {
   /** 직원명 */
   employeeName?: string;
 
+  /** 생년월일 */
+  birthYmd?: string;
+
   /** 사용자 권한 목록 */
   roles?: string[];
 
