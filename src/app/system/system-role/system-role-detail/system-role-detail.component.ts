@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserResponseDTO } from '@app/user/user.model';
 import { MenuTree } from '@app/menu/menu.model';
 import { UiTableComponent, UiTreeTableComponent } from '@app/shared/components/ui';
@@ -16,17 +16,21 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
   templateUrl: './system-role-detail.component.html',
   styleUrl: './system-role-detail.component.scss'
 })
-export class SystemRoleDetailComponent implements OnInit {
+export class SystemRoleDetailComponent {
 
   constructor(
     private config: DynamicDialogConfig,
   ) {}
 
   /** 사용자 목록 */
-  userList: UserResponseDTO[];
+  get userList(): UserResponseDTO[] {
+    return this.config.data['userList'];
+  }
 
   /** 메뉴 트리 목록 */
-  menuTree: MenuTree[];
+  get menuTree(): MenuTree[] {
+    return this.config.data['menuTree'];
+  }
 
   /** 사용자 목록 테이블 컬럼 */
   userListcols = [
@@ -46,10 +50,5 @@ export class SystemRoleDetailComponent implements OnInit {
     { field: 'menuDepth',     header: '메뉴 뎁스' },
     { field: 'useYn',         header: '사용여부' },
   ];
-
-  ngOnInit() {
-    this.userList = this.config.data['userList'];
-    this.menuTree = this.config.data['menuTree'];
-  }
 
 }

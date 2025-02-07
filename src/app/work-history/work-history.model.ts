@@ -73,6 +73,18 @@ export class WorkHistoryResponseDTO {
   /** 사업자등록번호 */
   registrationNo?: string;
 
+  /** 직위 코드 */
+  rankCode?: string;
+
+  /** 직위 코드명 */
+  rankCodeName?: string;
+
+  /** 직책 코드 */
+  jobTitleCode?: string;
+
+  /** 직책 코드명 */
+  jobTitleCodeName?: string;
+
   /** 연차발생기준 코드 */
   annualTypeCode?: string;
 
