@@ -48,9 +48,9 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     return this.payslipStore.select<string>('payslipTableText').value;
   }
 
-  /** 급여명세서 목록 */
-  get payslipList() {
-    return this.payslipStore.select<PayslipDataStateDTO>('payslipList');
+  /** 급여명세서 정보 */
+  get payslipResponse() {
+    return this.payslipStore.select<PayslipDataStateDTO>('payslipResponse');
   }
 
   /**
@@ -122,10 +122,10 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
 
   /** 테이블 문구를 설정한다. */
   private setPayslipTableContent(): void {
-    this.payslipList.asObservable().subscribe((data) => {
+    this.payslipResponse.asObservable().subscribe((data) => {
       if (isEmpty(data)) return;
 
-      const currentPayslip = data[this.activeWorkHistoryId]?.data[0];
+      const currentPayslip = data[this.activeWorkHistoryId]?.data.payslipList[0];
       this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
     });
   }

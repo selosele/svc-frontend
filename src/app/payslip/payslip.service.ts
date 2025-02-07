@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PayslipStore } from './payslip.store';
 import { HttpService } from '@app/shared/services';
-import { GetPayslipRequestDTO, PayslipResponseDTO } from './payslip.model';
+import { GetPayslipRequestDTO, PayslipResponseDTO, PayslipResultDTO } from './payslip.model';
 import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 
@@ -22,8 +22,10 @@ export class PayslipService {
   }
 
   /** 급여명세서를 조회한다. */
-  getPayslip$(payslipId: number) {
-    return this.http.get<PayslipResponseDTO>(`/sa/payslips/${payslipId}`);
+  getPayslip$(dto?: GetPayslipRequestDTO) {
+    const params = this.httpService.createParams(dto);
+    const { payslipId } = dto;
+    return this.http.get<PayslipResponseDTO>(`/sa/payslips/${payslipId}`, { params });
   }
 
   /** 근무이력 ID 값을 설정한다. */
@@ -32,7 +34,7 @@ export class PayslipService {
   }
 
   /** 테이블 문구를 설정한다. */
-  setPayslipTableContent(index: number, currentPayslip: PayslipResponseDTO): void {
+  setPayslipTableContent(index: number, currentPayslip: PayslipResultDTO): void {
     const workHistory = this.payslipStore.select<WorkHistoryResponseDTO[]>('payslipWorkHistoryList').value[index];
     const { quitYmd } = workHistory;
 

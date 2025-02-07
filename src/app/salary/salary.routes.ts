@@ -13,7 +13,7 @@ export const salaryRoutes: Routes = [
     resolve: { code: codeResolver },
     data: {
       roles: [roles.EMPLOYEE.id],
-      codeKeys: ['SALARY_TYPE_00', 'SALARY_AMOUNT_A00', 'SALARY_AMOUNT_B00'],
+      codeKeys: ['SALARY_TYPE_00', 'SALARY_AMOUNT_A00', 'SALARY_AMOUNT_B00', 'RANK_00'],
     },
     loadComponent: () => import('./salary-payslip/salary-payslip.component').then(x => x.SalaryPayslipComponent),
   },

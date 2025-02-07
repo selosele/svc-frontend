@@ -1,4 +1,4 @@
-@if (!payslipListDataLoad) {
+@if (!payslipResponseDataLoad) {
   <ui-skeleton />
   <ui-skeleton />
   <ui-skeleton />
@@ -14,7 +14,7 @@
     [cols]="cols"
     [rows]="12"
     [rowsPerPageOptions]="[12, 24, 36]"
-    [data]="payslipList"
+    [data]="payslipResponse?.payslipList"
     [dataKey]="'payslipId'"
     [selection]="selection"
     [paginator]="true"

@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { TableRowSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { PayslipStore } from '@app/payslip/payslip.store';
 import { PayslipService } from '@app/payslip/payslip.service';
-import { UiDialogService } from '@app/shared/services';
-import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO } from '@app/payslip/payslip.model';
+import { UiDialogService, UiLoadingService } from '@app/shared/services';
+import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO, PayslipResultDTO } from '@app/payslip/payslip.model';
 import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -32,9 +34,11 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private payslipStore: PayslipStore,
     private payslipService: PayslipService,
     private dialogService: UiDialogService,
+    private loadingService: UiLoadingService,
   ) {
     super();
   }
@@ -54,14 +58,14 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   }
 
   /** 급여명세서 목록 */
-  get payslipList() {
-    const list = this.payslipStore.select<PayslipDataStateDTO>('payslipList').value;
+  get payslipResponse() {
+    const list = this.payslipStore.select<PayslipDataStateDTO>('payslipResponse').value;
     return list?.[this.workHistoryId]?.data ?? null;
   }
 
   /** 급여명세서 목록 데이터 로드 완료 여부 */
-  get payslipListDataLoad() {
-    const list = this.payslipStore.select<PayslipDataStateDTO>('payslipList').value;
+  get payslipResponseDataLoad() {
+    const list = this.payslipStore.select<PayslipDataStateDTO>('payslipResponse').value;
     return list?.[this.workHistoryId]?.dataLoad ?? false;
   }
 
@@ -74,6 +78,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   get activeIndex() {
     return this.payslipStore.select<number>('payslipWorkHistoryTabIndex').value;
   }
+
+  /** 직위 코드 데이터 목록 */
+  rankCodes: DropdownData[];
 
   /** 급여명세서 검색 폼 */
   searchForm: FormGroup;
@@ -96,21 +103,25 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 테이블 컬럼 */
   cols = [
     { field: 'totalAmountA00',       header: '지급총액',
-      valueGetter: (data: PayslipResponseDTO) => `+${data.totalAmountA00}원`
+      valueGetter: (data: PayslipResultDTO) => `+${data.totalAmountA00}원`
     },
     { field: 'totalAmountB00',       header: '공제합계',
-      valueGetter: (data: PayslipResponseDTO) => `-${data.totalAmountB00}원`
+      valueGetter: (data: PayslipResultDTO) => `-${data.totalAmountB00}원`
     },
     { field: 'totalAmount',          header: '실지급액(지급총액-공제합계)',
-      valueGetter: (data: PayslipResponseDTO) => `<strong>${data.totalAmount}원</strong>`
+      valueGetter: (data: PayslipResultDTO) => `<strong>${data.totalAmount}원</strong>`
     },
     { field: 'payslipPaymentYmd',    header: '지급일자',
-      valueGetter: (data: PayslipResponseDTO) => `${dateUtil(data.payslipPaymentYmd).format('YYYY년 MM월 DD일')}`
+      valueGetter: (data: PayslipResultDTO) => `${dateUtil(data.payslipPaymentYmd).format('YYYY년 MM월 DD일')}`
     },
     { field: 'payslipNote',          header: '비고' },
   ];
 
   ngOnInit(): void {
+    this.route.data.subscribe(({ code }) => {
+      this.rankCodes = code['RANK_00'];
+    });
+
     this.fileName = `급여명세서 목록(${this.user?.employeeName})`;
 
     this.searchForm = this.fb.group({
@@ -126,7 +137,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       this.searchForm.get('joinYmd').patchValue(this.workHistoryList[this.activeIndex]?.joinYmd);
       this.searchForm.get('quitYmd').patchValue(this.workHistoryList[this.activeIndex]?.quitYmd);
       
-      if (!this.payslipListDataLoad) {
+      if (!this.payslipResponseDataLoad) {
         this.listPayslip({ workHistoryId: data, userId: this.user?.userId });
       }
     });
@@ -138,8 +149,8 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
     this.payslipService.listPayslip$(dto)
     .subscribe((data) => {
-      const oldValue = this.payslipStore.select<PayslipDataStateDTO>('payslipList').value;
-      this.payslipStore.update('payslipList', {
+      const oldValue = this.payslipStore.select<PayslipDataStateDTO>('payslipResponse').value;
+      this.payslipStore.update('payslipResponse', {
         ...oldValue,
         [workHistoryId]: { data, dataLoad: true } // 근무이력 탭별로 급여명세서 목록을 상태관리
       });
@@ -148,8 +159,23 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
-    this.dialogService.open(SalaryPayslipDetailComponent, {
-      header: '급여명세서 조회'
+    const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
+
+    this.payslipService.getPayslip$({
+      payslipId: event.data['payslipId'],
+      workHistoryId: this.workHistoryId,
+      userId: this.user?.userId
+    })
+    .subscribe((data) => {
+      clearTimeout(loadingTimeout);
+      this.loadingService.setLoading(false);
+  
+      this.dialogService.open(SalaryPayslipDetailComponent, {
+        focusOnShow: false,
+        header: '급여명세서 조회',
+        width: '1000px',
+        data,
+      });
     });
   }
   
@@ -176,8 +202,13 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 급여명세서를 추가한다. */
   addPayslip(): void {
     this.dialogService.open(SaveSalaryPayslipComponent, {
+      focusOnShow: false,
       header: '급여명세서 입력하기',
       width: '1000px',
+      data: {
+        workHistoryId: this.workHistoryId,
+        rankCodes: this.rankCodes,
+      },
     });
   }
 

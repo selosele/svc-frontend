@@ -23,8 +23,8 @@ export class GetPayslipRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 급여명세서 응답 DTO */
-export class PayslipResponseDTO {
+/** 급여명세서 조회 결과 DTO */
+export class PayslipResultDTO {
 
   /** 급여명세서 ID */
   payslipId?: number;
@@ -47,6 +47,9 @@ export class PayslipResponseDTO {
   /** 직위 코드명 */
   rankCodeName?: string;
   
+  /** 입사일자 */
+  joinYmd?: string;
+  
   /** 급여명세서 지급내역 총 금액 */
   totalAmountA00?: string;
   
@@ -55,6 +58,49 @@ export class PayslipResponseDTO {
   
   /** 급여명세서 실지급액(지급내역-공제내역) */
   totalAmount?: string;
+  
+  /** 이전/다음 급여명세서 flag */
+  prevNextFlag?: string;
+
+}
+
+/** 급여명세서 급여내역 상세 응답 DTO */
+export class PayslipDetailResponseDTO {
+
+  /** 급여내역 상세 ID */
+  salaryId?: number;
+
+  /** 급여명세서 ID */
+  payslipId?: number;
+
+  /** 급여내역 구분 코드 */
+  salaryTypeCode?: string;
+
+  /** 급여내역 구분 코드명 */
+  salaryTypeCodeName?: string;
+  
+  /** 급여내역 금액 코드 */
+  salaryAmountCode?: string;
+  
+  /** 급여내역 금액 코드명 */
+  salaryAmountCodeName?: string;
+  
+  /** 급여내역 금액 */
+  salaryAmount?: string;
+
+}
+
+/** 급여명세서 응답 DTO */
+export class PayslipResponseDTO {
+
+  /** 급여명세서 */
+  payslip?: PayslipResultDTO;
+
+  /** 급여내역 상세 */
+  payslipDetail?: PayslipDetailResponseDTO;
+
+  /** 급여명세서 목록 */
+  payslipList?: PayslipResultDTO[];
 
 }
 
@@ -63,7 +109,7 @@ export class PayslipDataStateDTO {
 
   /** 근무이력 탭별 급여명세서 목록 및 데이터 로드 완료 여부 */
   [key: number]: {
-    data: PayslipResponseDTO[],
+    data: PayslipResponseDTO,
     dataLoad: boolean,
   };
 
