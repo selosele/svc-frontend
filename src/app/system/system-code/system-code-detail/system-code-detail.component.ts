@@ -110,16 +110,16 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     // 코드 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalCodeId)) {
       this.codeService.addCode$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('originalCodeId').patchValue(data.codeId);
+        this.detailForm.get('originalCodeId').patchValue(response.codeId);
         this.refresh.emit();
       });
     }
     // 있으면 수정 API를 탄다.
     else {
       this.codeService.updateCode$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });

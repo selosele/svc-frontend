@@ -58,18 +58,18 @@ export class SystemMenuComponent extends CoreBaseComponent implements OnInit {
   /** 메뉴 목록을 조회한다. */
   listMenu(): void {
     this.menuService.listSysMenu$()
-    .subscribe((data) => {
+    .subscribe((response) => {
       this.menuService.listMenu(); // 메뉴입력시마다 GNB 메뉴를 새로고침해야 함
       this.menuStore.update('sysMenuListDataLoad', true);
-      this.menuStore.update('sysMenuTree', this.menuService.createSysMenuTree(data));
+      this.menuStore.update('sysMenuTree', this.menuService.createSysMenuTree(response));
     });
   }
 
   /** 메뉴 tree 노드를 선택한다. */
   onNodeSelect(event: TreeNodeSelectEvent): void {
     this.menuService.getMenu$(+event.node.key)
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

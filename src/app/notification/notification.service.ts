@@ -14,10 +14,10 @@ export class NotificationService {
   /** 알림 개수 및 목록을 조회한다. */
   listNotification(): void {
     this.http.get<NotificationResponseDTO>('/co/notifications')
-    .subscribe((data) => {
-      this.notificationStore.update('notificationList', data.list);
-      this.notificationStore.update('notificationCount', data.total);
-      this.notificationStore.update('notificationHtmlTitle', `${data.total}개의 읽지 않은 알림`);
+    .subscribe((response) => {
+      this.notificationStore.update('notificationList', response.list);
+      this.notificationStore.update('notificationCount', response.total);
+      this.notificationStore.update('notificationHtmlTitle', `${response.total}개의 읽지 않은 알림`);
     });
   }
 

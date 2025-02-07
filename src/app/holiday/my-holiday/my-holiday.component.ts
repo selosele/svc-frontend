@@ -78,8 +78,8 @@ export class MyHolidayComponent extends CoreBaseComponent {
   /** 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.holidayService.getHoliday$(this.user?.userId, event.data['ymd'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

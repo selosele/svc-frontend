@@ -23,11 +23,11 @@ export class ArticleService {
   /** 게시글 목록을 조회한다. */
   listArticle(boardId: number): void {
     this.listArticle$({ boardId })
-    .subscribe((data) => {
+    .subscribe((response) => {
       const oldValue = this.articleStore.select<ArticleDataStateDTO>('articleResponse').value;
       this.articleStore.update('articleResponse', {
         ...oldValue,
-        [boardId]: { data, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
+        [boardId]: { data: response, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
       });
     });
   }
@@ -35,11 +35,11 @@ export class ArticleService {
   /** 메인화면 게시글 목록을 조회한다. */
   listMainArticle(boardId: number, limit?: number): void {
     this.listArticle$({ boardId, limit })
-    .subscribe((data) => {
+    .subscribe((response) => {
       const oldValue = this.articleStore.select<ArticleDataStateDTO>('mainArticleResponse').value;
       this.articleStore.update('mainArticleResponse', {
         ...oldValue,
-        [boardId]: { data, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
+        [boardId]: { data: response, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
       });
     });
   }

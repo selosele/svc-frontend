@@ -26,8 +26,8 @@ export class MenuService {
     const params = this.httpService.createParams(dto);
 
     this.http.get<MenuResponseDTO[]>('/co/menus', { params })
-    .subscribe((data) => {
-      this.setMenuList(data);
+    .subscribe((response) => {
+      this.setMenuList(response);
     });
   }
 
@@ -73,8 +73,8 @@ export class MenuService {
   /** 메뉴 즐겨찾기 목록을 조회한다. */
   listMenuBookmark(): void {
     this.http.get<MenuBookmarkResponseDTO>('/co/menubookmarks')
-    .subscribe((data) => {
-      this.menuStore.update('menuBookmarkList', data.menuBookmarkList);
+    .subscribe((response) => {
+      this.menuStore.update('menuBookmarkList', response.menuBookmarkList);
       this.menuStore.update('menuBookmarkListDataLoad', true);
     });
   }

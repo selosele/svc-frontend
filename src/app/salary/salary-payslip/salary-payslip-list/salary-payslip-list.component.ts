@@ -148,11 +148,11 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     const { workHistoryId } = dto;
 
     this.payslipService.listPayslip$(dto)
-    .subscribe((data) => {
+    .subscribe((response) => {
       const oldValue = this.payslipStore.select<PayslipDataStateDTO>('payslipResponse').value;
       this.payslipStore.update('payslipResponse', {
         ...oldValue,
-        [workHistoryId]: { data, dataLoad: true } // 근무이력 탭별로 급여명세서 목록을 상태관리
+        [workHistoryId]: { data: response, dataLoad: true } // 근무이력 탭별로 급여명세서 목록을 상태관리
       });
     });
   }
@@ -166,7 +166,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       workHistoryId: this.workHistoryId,
       userId: this.user?.userId
     })
-    .subscribe((data) => {
+    .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
   
@@ -174,7 +174,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
         focusOnShow: false,
         header: '급여명세서 조회',
         width: '1000px',
-        data,
+        data: response,
       });
     });
   }

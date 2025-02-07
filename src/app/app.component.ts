@@ -137,8 +137,8 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
         this.hasBookmark = false;
         this.menuService.listMenuBookmark();
         this.menuService.listMenu$()
-        .subscribe((data) => {
-          this.menuService.setMenuList(data);
+        .subscribe((response) => {
+          this.menuService.setMenuList(response);
           this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
         });
@@ -146,13 +146,13 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
     }
     else {
       this.menuService.addMenuBookmark$({ menuId: this.currentMenuId, userId: Number(this.user?.userId) })
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess('즐겨찾기 추가되었어요.');
         this.hasBookmark = true;
         this.menuService.listMenuBookmark();
         this.menuService.listMenu$()
-        .subscribe((data) => {
-          this.menuService.setMenuList(data);
+        .subscribe((response) => {
+          this.menuService.setMenuList(response);
           this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
         });

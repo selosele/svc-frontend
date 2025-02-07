@@ -194,10 +194,10 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
     if (!confirm) return;
 
     this.userService.updateUser$({ userId: this.detail?.userId, userActiveYn })
-    .subscribe((data) => {
+    .subscribe((response) => {
       this.messageService.toastSuccess('정상적으로 처리되었어요.');
 
-      this.detail = data;
+      this.detail = response;
       this.detailForm.patchValue({
         ...this.detailForm.value,
         ...this.detail,
@@ -217,16 +217,16 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
     // 사용자 ID가 없으면 추가 API를 타고
     if (isEmpty(value.userId)) {
       this.userService.addUser$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('userId').patchValue(data.userId);
+        this.detailForm.get('userId').patchValue(response.userId);
         this.refresh.emit();
       });
     }
     // 있으면 수정 API를 탄다.
     else {
       this.userService.updateUser$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });

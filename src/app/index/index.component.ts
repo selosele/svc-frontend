@@ -127,10 +127,10 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   /** 게시판 목록을 조회한다. */
   listBoard(): void {
     this.boardService.listMainBoard$()
-    .subscribe((data) => {
-      this.boardStore.update('mainBoardList', data);
+    .subscribe((response) => {
+      this.boardStore.update('mainBoardList', response);
       this.boardStore.update('mainBoardListDataLoad', true);
-      this.boardStore.update('mainBoardTabList', data.map(x => ({ title: x.boardName, key: x.boardId, dataLoad: true })));
+      this.boardStore.update('mainBoardTabList', response.map(x => ({ title: x.boardName, key: x.boardId, dataLoad: true })));
       this.boardStore.update('mainBoardTabKey', Number(this.mainBoardTabList[0].key))
 
       this.activeBoardId = Number(this.mainBoardTabList[0].key);
@@ -154,15 +154,15 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
     
     this.articleService.getArticle$(articleId)
-    .subscribe((data) => {
+    .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
 
       const modal = this.dialogService.open(ArticleViewComponent, {
         focusOnShow: false,
-        header: data.article.articleTitle,
+        header: response.article.articleTitle,
         width: '1000px',
-        data,
+        data: response,
       });
 
       modal?.onClose.subscribe((result) => {
@@ -181,13 +181,13 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
     
     this.boardService.getBoard$(boardId)
-    .subscribe((data) => {
+    .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
 
       this.dialogService.open(ArticleListComponent, {
         focusOnShow: false,
-        header: data.boardName,
+        header: response.boardName,
         width: '1200px',
         height: '100%',
         data: { boardId, from: 'main' },
@@ -198,8 +198,8 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   /** 휴가 통계 목록을 조회한다. */
   listVacationStats(): void {
     this.vacationService.listVacationStats$({ userId: this.user?.userId })
-    .subscribe((data) => {
-      this.vacationStore.update('vacationStatResponse', data);
+    .subscribe((response) => {
+      this.vacationStore.update('vacationStatResponse', response);
       this.vacationStore.update('vacationStatResponseDataLoad', true);
     });
   }
@@ -213,8 +213,8 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       workHistoryId: i.workHistoryId,
       vacationTypeCode: i.vacationTypeCode
     })
-    .subscribe((data) => {
-      this.vacationListByMonth = data;
+    .subscribe((response) => {
+      this.vacationListByMonth = response;
     });
   }
 

@@ -135,16 +135,16 @@ export class SystemMenuDetailComponent {
     // 메뉴 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalMenuId)) {
       this.menuService.addMenu$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('originalMenuId').patchValue(data.menuId);
+        this.detailForm.get('originalMenuId').patchValue(response.menuId);
         this.refresh.emit();
       });
     }
     // 있으면 수정 API를 탄다.
     else {
       this.menuService.updateMenu$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });

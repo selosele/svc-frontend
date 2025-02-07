@@ -92,8 +92,8 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
   /** 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.companyService.getCompanyApply$(event.data['companyApplyId'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

@@ -19,8 +19,8 @@ export class UserService {
   /** 사용자 목록을 조회한다. */
   listUser(): void {
     this.http.get<UserResponseDTO[]>('/co/users')
-    .subscribe((data) => {
-      this.userStore.update('userList', data);
+    .subscribe((response) => {
+      this.userStore.update('userList', response);
       this.userStore.update('userListDataLoad', true);
     });
   }
@@ -39,12 +39,12 @@ export class UserService {
   /** 사용자 설정을 조회한다. */
   getUserConfig(userId: number): void {
     this.http.get<UserSetupResponseDTO>(`/co/users/${userId}/setups`)
-    .subscribe((data) => {
-      if (isNotBlank(data.siteTitleName)) {
-        document.title = data.siteTitleName;
+    .subscribe((response) => {
+      if (isNotBlank(response.siteTitleName)) {
+        document.title = response.siteTitleName;
       }
 
-      this.userStore.update('userSetup', data);
+      this.userStore.update('userSetup', response);
       this.userStore.update('userSetupDataLoad', true);
     });
   }

@@ -129,10 +129,10 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
     // 휴가 ID가 없으면 추가 API를 타고
     if (isEmpty(value.vacationId)) {
       this.vacationService.addVacation$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('vacationId').patchValue(data.vacationId);
-        this.refresh.emit(data.workHistoryId);
+        this.detailForm.get('vacationId').patchValue(response.vacationId);
+        this.refresh.emit(response.workHistoryId);
       });
     }
     // 있으면 수정 API를 탄다.

@@ -114,9 +114,9 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
     // 근무이력 ID가 없으면 추가 API를 타고
     if (isEmpty(value.workHistoryId)) {
       this.workHistoryService.addWorkHistory$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('workHistoryId').patchValue(data.workHistoryId);
+        this.detailForm.get('workHistoryId').patchValue(response.workHistoryId);
         this.refresh.emit();
       });
     }

@@ -118,16 +118,16 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
     // 게시판 ID가 없으면 추가 API를 타고
     if (isEmpty(value.boardId)) {
       this.boardService.addBoard$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('boardId').patchValue(data.boardId);
+        this.detailForm.get('boardId').patchValue(response.boardId);
         this.refresh.emit();
       });
     }
     // 있으면 수정 API를 탄다.
     else {
       this.boardService.updateBoard$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });

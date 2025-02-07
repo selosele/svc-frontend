@@ -110,7 +110,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
     // 게시글 ID가 없으면 추가 API를 타고
     if (isEmpty(value.articleId)) {
       this.articleService.addArticle$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.dialogRef.close({ action: 'save' });
       });
@@ -118,7 +118,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
     // 있으면 수정 API를 탄다.
     else {
       this.articleService.updateArticle$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.dialogRef.close({ action: 'save' });
       });

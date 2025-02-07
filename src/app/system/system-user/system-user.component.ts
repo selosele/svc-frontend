@@ -93,8 +93,8 @@ export class SystemUserComponent extends CoreBaseComponent implements OnInit {
   /** 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.userService.getUser$(event.data['userId'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

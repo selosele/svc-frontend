@@ -194,7 +194,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     if (!confirm) return;
 
     this.employeeService.updateEmployee$(value)
-    .subscribe((data) => {
+    .subscribe((response) => {
       const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
       alert.onClose.subscribe((data) => {
         this.authService.logout();
@@ -216,8 +216,8 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** 근무이력정보 테이블 행을 선택한다. */
   onRowSelect1(event: any): void {
     this.workHistoryService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
-    .subscribe((data) => {
-      this.workHistoryDetail = data;
+    .subscribe((response) => {
+      this.workHistoryDetail = response;
       this.splitter1.show();
     });
   }
@@ -252,8 +252,8 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** 회사등록신청현황 테이블 행을 선택한다. */
   onRowSelect2(event: any): void {
     this.companyService.getCompanyApply$(event.data['companyApplyId'])
-    .subscribe((data) => {
-      this.companyApplyDetail = data;
+    .subscribe((response) => {
+      this.companyApplyDetail = response;
       this.splitter2.show();
     });
   }

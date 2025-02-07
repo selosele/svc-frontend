@@ -100,9 +100,9 @@ export class MyHolidayDetailComponent extends CoreBaseComponent implements OnIni
     // 휴일 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalYmd)) {
       this.holidayService.addHoliday$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('originalYmd').patchValue(data.ymd);
+        this.detailForm.get('originalYmd').patchValue(response.ymd);
         this.refresh.emit();
       });
     }

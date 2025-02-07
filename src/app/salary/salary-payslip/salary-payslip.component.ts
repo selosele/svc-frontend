@@ -113,9 +113,9 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     this.workHistoryService.listWorkHistory$({
       employeeId: this.user?.employeeId,
     })
-    .subscribe((data) => {
-      this.payslipStore.update('payslipWorkHistoryList', data);
-      this.payslipStore.update('payslipWorkHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
+    .subscribe((response) => {
+      this.payslipStore.update('payslipWorkHistoryList', response);
+      this.payslipStore.update('payslipWorkHistoryTabList', response.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
       this.setPayslipTableContent();
     });
   }

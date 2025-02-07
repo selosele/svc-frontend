@@ -77,8 +77,8 @@ export class LayoutMenuBookmarkComponent implements OnInit {
     .subscribe(() => {
 
       this.menuService.listMenu$()
-      .subscribe((data) => {
-        this.menuService.setMenuList(data);
+      .subscribe((response) => {
+        this.menuService.setMenuList(response);
         this.menuStore.update('hasBookmark', false);
         this.menuStore.update('menuBookmarkList', this.menuBookmarkList.filter(x => x.menuBookmarkId !== menuBookmarkId));
       });
@@ -91,8 +91,8 @@ export class LayoutMenuBookmarkComponent implements OnInit {
     .subscribe(() => {
 
       this.menuService.listMenu$()
-      .subscribe((data) => {
-        this.menuService.setMenuList(data);
+      .subscribe((response) => {
+        this.menuService.setMenuList(response);
         this.menuStore.update('hasBookmark', false);
         this.menuStore.update('menuBookmarkList', []);
       });

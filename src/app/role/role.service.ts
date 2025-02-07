@@ -14,8 +14,8 @@ export class RoleService {
   /** 권한 목록을 조회한다. */
   listRole(): void {
     this.http.get<RoleResponseDTO>('/co/roles')
-    .subscribe((data) => {
-      this.roleStore.update('roleList', data.roleList);
+    .subscribe((response) => {
+      this.roleStore.update('roleList', response.roleList);
       this.roleStore.update('roleListDataLoad', true);
     });
   }

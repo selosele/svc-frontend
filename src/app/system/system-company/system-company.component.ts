@@ -82,8 +82,8 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
   /** 회사정보목록 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.companyService.getCompany$(event.data['companyId'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

@@ -131,9 +131,9 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
       corporateName: event.query,
       companyName: event.query,
     })
-    .subscribe((data) => {
+    .subscribe((response) => {
       const filtered = [];
-      const groupByData = groupBy<CompanyOpenAPIResponseDTO>(data, 'bzno'); // bzno(사업자등록번호)를 기준으로 중복 제거
+      const groupByData = groupBy<CompanyOpenAPIResponseDTO>(response, 'bzno'); // bzno(사업자등록번호)를 기준으로 중복 제거
 
       for (const company of groupByData) {
         if (this.hasCompanyNameValue(company.corpNm, event.query) || this.hasCompanyNameValue(company.enpPbanCmpyNm, event.query)) {

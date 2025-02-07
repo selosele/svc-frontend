@@ -91,7 +91,7 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
     value.applyStateCode = 'NEW';
 
     this.companyService.updateCompanyApply$(value)
-    .subscribe((data) => {
+    .subscribe((response) => {
       this.messageService.toastSuccess('정상적으로 재신청되었어요.');
       this.refresh.emit();
     });

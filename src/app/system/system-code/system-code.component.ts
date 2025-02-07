@@ -70,7 +70,7 @@ export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
 
   /** 코드 목록을 조회한다. */
   listCode(): void {
-    this.codeService.listCode$().subscribe((data) => {
+    this.codeService.listCode$().subscribe((response) => {
 
     });
   }
@@ -84,8 +84,8 @@ export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
   /** 테이블 행을 선택한다. */
   onNodeSelect(event: any) {
     this.codeService.getCode$(event.node.data['codeId'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

@@ -82,8 +82,8 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
   /** 게시판 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.boardService.getBoard$(event.data['boardId'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

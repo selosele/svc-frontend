@@ -86,10 +86,10 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
     // 1. 인증코드 발송
     if (this.userCertHistory === null) {
       this.authService.findUserPassword1$(value)
-      .subscribe((data) => {
+      .subscribe((response) => {
         this.timer && clearInterval(this.timer);
   
-        let remainingSeconds = Number(data.validTime);
+        let remainingSeconds = Number(response.validTime);
         let formattedTime = new BehaviorSubject<string>(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
   
         this.timer = setInterval(() => {
@@ -104,7 +104,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
         formattedTime.subscribe((time) => {
           this.certCodeLabel = `인증코드(${time})`;
         });
-        this.authStore.update('userCertHistory', data);
+        this.authStore.update('userCertHistory', response);
         this.messageService.toastSuccess('인증코드를 메일로 발송했어요. 메일을 확인해주세요.');
       });
     }

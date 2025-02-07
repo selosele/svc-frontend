@@ -120,11 +120,11 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
     const { workHistoryId } = dto;
 
     this.vacationService.listVacation$(dto)
-    .subscribe((data) => {
+    .subscribe((response) => {
       const oldValue = this.vacationStore.select<VacationDataStateDTO>('vacationList').value;
       this.vacationStore.update('vacationList', {
         ...oldValue,
-        [workHistoryId]: { data, dataLoad: true } // 근무이력 탭별로 휴가 목록을 상태관리
+        [workHistoryId]: { data: response, dataLoad: true } // 근무이력 탭별로 휴가 목록을 상태관리
       });
     });
   }
@@ -152,8 +152,8 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
   /** 테이블 행을 선택한다. */
   onRowSelect(event: TableRowSelectEvent): void {
     this.vacationService.getVacation$(event.data['vacationId'])
-    .subscribe((data) => {
-      this.detail = data;
+    .subscribe((response) => {
+      this.detail = response;
       this.splitter.show();
     });
   }

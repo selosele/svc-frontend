@@ -14,8 +14,8 @@ export class EmployeeService {
   /** 직원을 조회한다. */
   getEmployee(employeeId: number): void {
     this.http.get<EmployeeResponseDTO>(`/hm/employees/${employeeId}`)
-    .subscribe((data) => {
-      this.employeeStore.update('employee', data);
+    .subscribe((response) => {
+      this.employeeStore.update('employee', response);
       this.employeeStore.update('employeeDataLoad', true);
     });
   }

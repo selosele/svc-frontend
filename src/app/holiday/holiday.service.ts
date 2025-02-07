@@ -14,8 +14,8 @@ export class HolidayService {
   /** 휴일 목록을 조회한다. */
   listHoliday(userId: number): void {
     this.http.get<HolidayResponseDTO[]>(`/co/holidays/${userId}`)
-    .subscribe((data) => {
-      this.holidayStore.update('holidayList', data);
+    .subscribe((response) => {
+      this.holidayStore.update('holidayList', response);
       this.holidayStore.update('holidayListDataLoad', true);
     });
   }

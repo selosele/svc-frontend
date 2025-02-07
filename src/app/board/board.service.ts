@@ -18,8 +18,8 @@ export class BoardService {
     const params = this.httpService.createParams(dto);
 
     this.http.get<BoardResponseDTO[]>('/co/boards', { params })
-    .subscribe((data) => {
-      this.boardStore.update('boardList', data);
+    .subscribe((response) => {
+      this.boardStore.update('boardList', response);
       this.boardStore.update('boardListDataLoad', true);
     });
   }

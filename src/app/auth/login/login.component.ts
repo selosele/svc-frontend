@@ -103,15 +103,15 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
 
     this.articleService.getArticle$(articleId)
-    .subscribe((data) => {
+    .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
 
       const modal = this.dialogService.open(ArticleViewComponent, {
         focusOnShow: false,
-        header: data.article.articleTitle,
+        header: response.article.articleTitle,
         width: '1000px',
-        data,
+        data: response,
       });
 
       modal?.onClose.subscribe((result) => {
@@ -128,9 +128,9 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
   /** 공지사항 목록을 조회한다. */
   listArticle(): void {
     this.articleService.listArticle$({ boardId: 2 })
-    .subscribe((data) => {
+    .subscribe((response) => {
       this.articleStore.update('noticeListDataLoad', true);
-      this.articleStore.update('noticeList', data.articleList);
+      this.articleStore.update('noticeList', response.articleList);
     });
   }
 
@@ -139,13 +139,13 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
 
     this.boardService.getBoard$(boardId)
-    .subscribe((data) => {
+    .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
 
       this.dialogService.open(ArticleListComponent, {
         focusOnShow: false,
-        header: data.boardName,
+        header: response.boardName,
         width: '1200px',
         height: '100%',
         data: { boardId, from: 'login' },

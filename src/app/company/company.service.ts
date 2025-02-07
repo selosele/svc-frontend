@@ -18,8 +18,8 @@ export class CompanyService {
     const params = this.httpService.createParams(dto);
 
     this.http.get<CompanyResponseDTO[]>('/hm/companies', { params })
-    .subscribe((data) => {
-      this.companyStore.update('companyList', data);
+    .subscribe((response) => {
+      this.companyStore.update('companyList', response);
       this.companyStore.update('companyListDataLoad', true);
     });
   }
@@ -56,8 +56,8 @@ export class CompanyService {
     const params = this.httpService.createParams(dto);
 
     this.http.get<CompanyApplyResponseDTO[]>('/hm/company-applies', { params })
-    .subscribe((data) => {
-      this.companyStore.update('companyApplyList', data);
+    .subscribe((response) => {
+      this.companyStore.update('companyApplyList', response);
       this.companyStore.update('companyApplyListDataLoad', true);
     });
   }

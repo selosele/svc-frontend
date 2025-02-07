@@ -131,7 +131,7 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
     if (!confirm) return;
 
     this.companyService.updateCompanyApply$(value)
-    .subscribe((data) => {
+    .subscribe((response) => {
       this.messageService.toastSuccess(`정상적으로 ${this.applyStateCodeName}되었어요.`);
       this.refresh.emit();
     });

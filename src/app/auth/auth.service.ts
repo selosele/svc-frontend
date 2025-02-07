@@ -20,8 +20,8 @@ export class AuthService {
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
     this.http.post<LoginResponseDTO>('/co/auth/login', dto)
-    .subscribe((data) => {
-      const accessToken = data.accessToken;
+    .subscribe((response) => {
+      const accessToken = response.accessToken;
       if (isNotBlank(accessToken)) {
         
         // 액세스 토큰 설정
@@ -43,8 +43,8 @@ export class AuthService {
   /** 특정 사용자로 로그인한다. */
   superLogin(dto: LoginRequestDTO): void {
     this.http.post<LoginResponseDTO>('/co/auth/superlogin', dto)
-    .subscribe(async (data) => {
-      const accessToken = data.accessToken;
+    .subscribe(async (response) => {
+      const accessToken = response.accessToken;
       if (isNotBlank(accessToken)) {
 
         // 로그인 정보 삭제

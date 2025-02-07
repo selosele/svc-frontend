@@ -222,12 +222,12 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       ...this.caculateVacationForm.value,
       employeeId: this.user?.employeeId,
     })
-    .subscribe((data) => {
-      this.vacationStore.update('vacationWorkHistoryList', data);
-      this.vacationStore.update('vacationWorkHistoryTabList', data.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
+    .subscribe((response) => {
+      this.vacationStore.update('vacationWorkHistoryList', response);
+      this.vacationStore.update('vacationWorkHistoryTabList', response.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
 
-      this.caculateVacationForm.get('joinYmd').patchValue(data[this.activeIndex]?.joinYmd);
-      this.caculateVacationForm.get('quitYmd').patchValue(data[this.activeIndex]?.quitYmd);
+      this.caculateVacationForm.get('joinYmd').patchValue(response[this.activeIndex]?.joinYmd);
+      this.caculateVacationForm.get('quitYmd').patchValue(response[this.activeIndex]?.quitYmd);
       this.vacationService.setVacationTableContent(this.activeIndex);
     });
   }
@@ -235,12 +235,12 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   /** 휴가 계산 설정 목록을 조회한다. */
   private listVacationCalc(workHistoryId: number): void {
     this.vacationService.listVacationCalc$(workHistoryId)
-    .subscribe((data) => {
+    .subscribe((response) => {
 
       // 사용자 지정 휴가계산설정이 있으면 설정해주고
-      if (data?.length > 0) {
-        this.caculateVacationForm.get('annualTypeCode').patchValue(data[0].annualTypeCode);
-        this.caculateVacationForm.get('vacationTypeCodes').patchValue(data.map(x => x.vacationTypeCode));
+      if (response?.length > 0) {
+        this.caculateVacationForm.get('annualTypeCode').patchValue(response[0].annualTypeCode);
+        this.caculateVacationForm.get('vacationTypeCodes').patchValue(response.map(x => x.vacationTypeCode));
       }
       // 없으면 기본 값을 설정한다.
       else {
