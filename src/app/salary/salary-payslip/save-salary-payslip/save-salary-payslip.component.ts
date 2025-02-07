@@ -7,6 +7,8 @@ import { UiSkeletonComponent } from '@app/shared/components/ui';
 import { UiDropdownComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
+import { PayslipResultDTO } from '@app/payslip/payslip.model';
+import { isObjectEmpty } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -32,6 +34,11 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
     super();
   }
 
+  /** 급여명세서 */
+  get payslip(): PayslipResultDTO {
+    return this.config.data['payslip'];
+  }
+
   /** 근무이력 ID */
   get workHistoryId(): number {
     return this.config.data['workHistoryId'];
@@ -50,15 +57,19 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
 
   ngOnInit() {
     this.payslipForm = this.fb.group({
-      rankCode: [this.user?.rankCode], // 직위 코드
+      rankCode: [], // 직위 코드
     });
 
     this.payslipDetailForm = this.fb.group({
-      originalYmd: [''], // 기존 일자
+      salaryId: [''], // 급여내역 상세 ID
     });
 
     // 급여명세서 신규 추가일경우 근무이력을 조회해서 필요한 정보를 설정한다.
-    this.getWorkHistory();
+    if (isObjectEmpty(this.payslip)) {
+      this.getWorkHistory();
+    } else {
+      this.payslipForm.get('rankCode').patchValue(this.user?.rankCode);
+    }
   }
 
   /** 급여명세서를 저장한다. */
