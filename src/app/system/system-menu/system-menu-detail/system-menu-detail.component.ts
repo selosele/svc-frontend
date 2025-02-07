@@ -8,7 +8,7 @@ import { RoleStore } from '@app/role/role.store';
 import { CodeService } from '@app/code/code.service';
 import { MenuService } from '@app/menu/menu.service';
 import { MenuResponseDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
-import { RoleResponseDTO } from '@app/role/role.model';
+import { RoleResultDTO } from '@app/role/role.model';
 import { TransformToDto } from '@app/shared/decorators';
 
 @Component({
@@ -53,7 +53,7 @@ export class SystemMenuDetailComponent {
   ynCodes = this.codeService.createYnCodeData();
 
   /** 모든 권한 목록 */
-  roles: RoleResponseDTO[] = [];
+  roles: RoleResultDTO[] = [];
 
   /** 권한 목록 기본 값 */
   defaultRoles: string[] = [];
@@ -104,7 +104,7 @@ export class SystemMenuDetailComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.detail && this.detailForm) {
       this.useRemove = true;
-      this.roles = this.roleStore.select<RoleResponseDTO[]>('roleList').value;
+      this.roles = this.roleStore.select<RoleResultDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
       
       if (isObjectEmpty(changes.detail.currentValue)) {

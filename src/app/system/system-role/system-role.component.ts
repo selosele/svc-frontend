@@ -9,7 +9,7 @@ import { RoleStore } from '@app/role/role.store';
 import { RoleService } from '@app/role/role.service';
 import { UserService } from '@app/user/user.service';
 import { SystemRoleDetailComponent } from './system-role-detail/system-role-detail.component';
-import { RoleResponseDTO } from '@app/role/role.model';
+import { RoleResultDTO } from '@app/role/role.model';
 
 @Component({
   standalone: true,
@@ -34,8 +34,8 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 권한 목록 */
-  get roleList(): RoleResponseDTO[] {
-    return this.roleStore.select<RoleResponseDTO[]>('roleList').value;
+  get roleList(): RoleResultDTO[] {
+    return this.roleStore.select<RoleResultDTO[]>('roleList').value;
   }
 
   /** 권한 목록 데이터 로드 완료 여부 */
@@ -44,7 +44,7 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 테이블 선택된 행 */
-  selection: RoleResponseDTO;
+  selection: RoleResultDTO;
 
   /** 테이블 컬럼 */
   cols = [

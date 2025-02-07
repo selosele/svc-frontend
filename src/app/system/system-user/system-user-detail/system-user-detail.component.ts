@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/user/user.model';
-import { RoleResponseDTO } from '@app/role/role.model';
+import { RoleResultDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
 import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
@@ -66,7 +66,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
   defaultUserActiveYn = 'Y';
 
   /** 모든 권한 목록 */
-  roles: RoleResponseDTO[] = [];
+  roles: RoleResultDTO[] = [];
 
   /** 권한 목록 기본 값 */
   defaultRoles: string[] = [];
@@ -151,7 +151,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
       this.isUserSelf = Number(this.user?.userId) === this.detail.userId;
 
       this.useRemove = !this.isUserSelf;
-      this.roles = this.roleStore.select<RoleResponseDTO[]>('roleList').value;
+      this.roles = this.roleStore.select<RoleResultDTO[]>('roleList').value;
       this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
 
       if (isObjectEmpty(changes.detail.currentValue)) {
