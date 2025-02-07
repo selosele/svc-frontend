@@ -130,8 +130,8 @@ export class SaveMenuBookmarkRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 메뉴 즐겨찾기 응답 DTO */
-export class MenuBookmarkResponseDTO {
+/** 메뉴 즐겨찾기 조회 결과 DTO */
+export class MenuBookmarkResultDTO {
 
   /** 메뉴 즐겨찾기 ID */
   menuBookmarkId?: number;
@@ -147,6 +147,17 @@ export class MenuBookmarkResponseDTO {
 
   /** 메뉴 URL */
   menuUrl?: string;
+
+}
+
+/** 메뉴 즐겨찾기 응답 DTO */
+export class MenuBookmarkResponseDTO {
+
+  /** 메뉴 즐겨찾기 */
+  menuBookmark?: MenuBookmarkResultDTO;
+
+  /** 메뉴 즐겨찾기 목록 */
+  menuBookmarkList?: MenuBookmarkResultDTO[];
 
 }
 

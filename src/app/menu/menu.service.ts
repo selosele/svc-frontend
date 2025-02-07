@@ -72,9 +72,9 @@ export class MenuService {
 
   /** 메뉴 즐겨찾기 목록을 조회한다. */
   listMenuBookmark(): void {
-    this.http.get<MenuBookmarkResponseDTO[]>('/co/menubookmarks')
+    this.http.get<MenuBookmarkResponseDTO>('/co/menubookmarks')
     .subscribe((data) => {
-      this.menuStore.update('menuBookmarkList', data);
+      this.menuStore.update('menuBookmarkList', data.menuBookmarkList);
       this.menuStore.update('menuBookmarkListDataLoad', true);
     });
   }

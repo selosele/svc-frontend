@@ -6,7 +6,7 @@ import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { UiButtonComponent } from '../../ui';
 import { MenuStore } from '@app/menu/menu.store';
 import { MenuService } from '@app/menu/menu.service';
-import { MenuBookmarkResponseDTO } from '@app/menu/menu.model';
+import { MenuBookmarkResultDTO } from '@app/menu/menu.model';
 import { isEmpty } from '@app/shared/utils';
 
 @Component({
@@ -47,7 +47,7 @@ export class LayoutMenuBookmarkComponent implements OnInit {
 
   /** 메뉴 즐겨찾기 목록 */
   get menuBookmarkList() {
-    return this.menuStore.select<MenuBookmarkResponseDTO[]>('menuBookmarkList').value;
+    return this.menuStore.select<MenuBookmarkResultDTO[]>('menuBookmarkList').value;
   }
 
   /** 메뉴 즐겨찾기 목록 데이터 로드 완료 여부 */
