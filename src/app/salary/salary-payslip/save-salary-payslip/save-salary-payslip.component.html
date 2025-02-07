@@ -1,1 +1,76 @@
-급여명세서 입력
+<h2 class="mt-2 mb-4 text-center">2025년 02월 급여명세서</h2>
+
+<div class="ui-basic-table">
+  <ui-form [form]="payslipForm" [useSubmit]="false" (submit)="onSubmit($event)">
+    <table>
+      <caption>급여명세서 기본 정보</caption>
+      <colgroup>
+        <col style="width: 16.66%;">
+        <col style="width: 16.66%;">
+        <col style="width: 16.66%;">
+        <col style="width: 16.66%;">
+        <col style="width: 16.66%;">
+        <col style="width: 16.66%;">
+      </colgroup>
+      <tbody>
+        <tr>
+          <th scope="row">성명</th>
+          <td>{{ user?.employeeName }}</td>
+          <th scope="row">생년월일</th>
+          <td>{{ user?.birthYmd }}</td>
+          <th scope="row">입사일자</th>
+          <td>{{ user?.joinYmd }}</td>
+        </tr>
+        <tr>
+          <th scope="row">부서</th>
+          <td>SI사업부</td>
+          <th scope="row">직급</th>
+          <td>
+            <ui-dropdown
+              [control]="payslipForm.get('rankCode')"
+              [data]="rankCodes"
+            />
+          </td>
+          <th scope="row">급여지급일</th>
+          <td>2023-05-22</td>
+        </tr>
+      </tbody>
+    </table>
+  </ui-form>
+</div>
+
+<div class="ui-basic-table mt-4">
+  <h3 class="mt-0 mb-2">세부 내역</h3>
+
+  <ui-form [form]="payslipDetailForm" [useSubmit]="false" (submit)="onSubmitDetail($event)">
+    <table>
+      <caption>급여명세서 세부 내역 - 지급내역, 지급액, 공제내역, 공제액</caption>
+      <colgroup>
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">지급내역</th>
+          <th scope="col">지급액</th>
+          <th scope="col">공제내역</th>
+          <th scope="col">공제액</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">기본급</th>
+          <td>
+            <!-- <ui-text-field /> -->
+          </td>
+          <th scope="row">소득세</th>
+          <td>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ui-form>
+</div>
