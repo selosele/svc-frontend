@@ -82,7 +82,7 @@
           <ui-checkbox-list>
             @for (i of roles; track $index) {
               <ui-checkbox
-                [control]="detailForm.get('menuRoles')"
+                [control]="detailForm.get('menuRoleList')"
                 [label]="i.roleName"
                 [value]="i.roleId"
               />

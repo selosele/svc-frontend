@@ -49,7 +49,7 @@ export class SaveMenuRequestDTO extends HttpRequestDTOBase {
   menuShowYn?: string;
 
   /** 메뉴 권한 목록 */
-  menuRoles?: string[];
+  menuRoleList?: string[];
 
 }
 
@@ -87,12 +87,12 @@ export class MenuResponseDTO {
   menuBookmarkId?: number;
 
   /** 메뉴 권한 목록 */
-  menuRoles?: MenuRoleResponseDTO[];
+  menuRoleList?: MenuRoleResultDTO[];
 
 }
 
-/** 메뉴 권한 응답 DTO */
-export class MenuRoleResponseDTO {
+/** 메뉴 권한 조회 결과 DTO */
+export class MenuRoleResultDTO {
 
   /** 메뉴 ID */
   menuId?: number;
@@ -102,6 +102,17 @@ export class MenuRoleResponseDTO {
   
   /** 권한명 */
   roleName?: string;
+
+}
+
+/** 메뉴 권한 응답 DTO */
+export class MenuRoleResponseDTO {
+
+  /** 메뉴 권한 */
+  menuRole?: MenuRoleResultDTO;
+
+  /** 메뉴 권한 목록 */
+  menuRoleList?: MenuRoleResultDTO[];
 
 }
 
