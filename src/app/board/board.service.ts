@@ -19,7 +19,7 @@ export class BoardService {
 
     this.http.get<BoardResponseDTO>('/co/boards', { params })
     .subscribe((response) => {
-      this.boardStore.update('boardList', response);
+      this.boardStore.update('boardList', response.boardList);
       this.boardStore.update('boardListDataLoad', true);
     });
   }
