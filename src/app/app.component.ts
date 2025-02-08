@@ -12,7 +12,7 @@ import { UiMessageService } from './shared/services';
 import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
-import { MenuResponseDTO } from './menu/menu.model';
+import { MenuResultDTO } from './menu/menu.model';
 import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent } from './shared/components/layout';
 import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 import { MAIN_PAGE_PATH2 } from './shared/utils';
@@ -66,7 +66,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
   currentPageTitle$ = this.menuService.getCurrentPageTitle$();
   
   /** 현재 메뉴 */
-  currentMenu: MenuResponseDTO;
+  currentMenu: MenuResultDTO;
 
   /** 현재 메뉴 ID */
   get currentMenuId() {
@@ -113,7 +113,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
           this.notificationStore.update('isNotificationLayerVisible', false);
 
           // 즐겨찾기 등의 표시를 위해 현재 메뉴를 찾기
-          this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
+          this.currentMenu = this.menuStore.select<MenuResultDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
           this.hasBookmark = this.currentMenu?.menuBookmarkId !== null;
         }
@@ -138,8 +138,8 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
         this.menuService.listMenuBookmark();
         this.menuService.listMenu$()
         .subscribe((response) => {
-          this.menuService.setMenuList(response);
-          this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
+          this.menuService.setMenuList(response.menuList);
+          this.currentMenu = this.menuStore.select<MenuResultDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
         });
       });
@@ -152,8 +152,8 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
         this.menuService.listMenuBookmark();
         this.menuService.listMenu$()
         .subscribe((response) => {
-          this.menuService.setMenuList(response);
-          this.currentMenu = this.menuStore.select<MenuResponseDTO[]>('menuList').value
+          this.menuService.setMenuList(response.menuList);
+          this.currentMenu = this.menuStore.select<MenuResultDTO[]>('menuList').value
             ?.find(x => x.menuId === this.currentMenuId);
         });
       });

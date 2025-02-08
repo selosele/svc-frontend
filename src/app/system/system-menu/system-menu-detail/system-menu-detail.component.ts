@@ -7,7 +7,7 @@ import { UiMessageService } from '@app/shared/services';
 import { RoleStore } from '@app/role/role.store';
 import { CodeService } from '@app/code/code.service';
 import { MenuService } from '@app/menu/menu.service';
-import { MenuResponseDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
+import { MenuResultDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
 import { RoleResultDTO } from '@app/role/role.model';
 import { TransformToDto } from '@app/shared/decorators';
 
@@ -39,7 +39,7 @@ export class SystemMenuDetailComponent {
   ) {}
 
   /** 메뉴 정보 */
-  @Input() detail: MenuResponseDTO = null;
+  @Input() detail: MenuResultDTO = null;
 
   /** 메뉴 정보 존재 여부 */
   get isDetailNotEmpty() {
@@ -137,7 +137,7 @@ export class SystemMenuDetailComponent {
       this.menuService.addMenu$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('originalMenuId').patchValue(response.menuId);
+        this.detailForm.get('originalMenuId').patchValue(response.menu.menuId);
         this.refresh.emit();
       });
     }

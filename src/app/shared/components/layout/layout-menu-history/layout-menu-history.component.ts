@@ -6,7 +6,7 @@ import { MenuItem } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuStore } from '@app/menu/menu.store';
 import { MenuService } from '@app/menu/menu.service';
-import { MenuResponseDTO } from '../../../../menu/menu.model';
+import { MenuResultDTO } from '../../../../menu/menu.model';
 import { UiButtonComponent } from '../../ui';
 import { isEmpty, isNotEmpty } from '@app/shared/utils';
 
@@ -45,11 +45,11 @@ export class LayoutMenuHistoryComponent implements OnInit {
 
   /** 메뉴접속이력 목록 */
   get menuHistoryList() {
-    return this.menuStore.select<MenuResponseDTO[]>('menuHistoryList').value;
+    return this.menuStore.select<MenuResultDTO[]>('menuHistoryList').value;
   }
 
   /** 메뉴접속이력 로컬스토리지 목록 */
-  get menuHistoryStorageList(): MenuResponseDTO[] {
+  get menuHistoryStorageList(): MenuResultDTO[] {
     return JSON.parse(window.localStorage.getItem(this.menuService.MENU_HISTORY_LIST_KEY))
       ?? [];
   }
@@ -66,7 +66,7 @@ export class LayoutMenuHistoryComponent implements OnInit {
 
     combineLatest([
       this.route.queryParams,
-      this.menuStore.select<MenuResponseDTO[]>('menuList').asObservable()
+      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable()
     ])
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;

@@ -5,7 +5,7 @@ import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { SystemMenuDetailComponent } from './system-menu-detail/system-menu-detail.component';
-import { MenuResponseDTO } from '@app/menu/menu.model';
+import { MenuResultDTO } from '@app/menu/menu.model';
 import { MenuStore } from '@app/menu/menu.store';
 
 @Component({
@@ -47,7 +47,7 @@ export class SystemMenuComponent extends CoreBaseComponent implements OnInit {
   data: TreeNode[] = [];
 
   /** 메뉴 정보 */
-  detail: MenuResponseDTO = null;
+  detail: MenuResultDTO = null;
 
   ngOnInit() {
     if (!this.sysMenuListDataLoad && this.user) {
@@ -61,7 +61,7 @@ export class SystemMenuComponent extends CoreBaseComponent implements OnInit {
     .subscribe((response) => {
       this.menuService.listMenu(); // 메뉴입력시마다 GNB 메뉴를 새로고침해야 함
       this.menuStore.update('sysMenuListDataLoad', true);
-      this.menuStore.update('sysMenuTree', this.menuService.createSysMenuTree(response));
+      this.menuStore.update('sysMenuTree', this.menuService.createSysMenuTree(response.menuList));
     });
   }
 
@@ -69,7 +69,7 @@ export class SystemMenuComponent extends CoreBaseComponent implements OnInit {
   onNodeSelect(event: TreeNodeSelectEvent): void {
     this.menuService.getMenu$(+event.node.key)
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.menu;
       this.splitter.show();
     });
   }

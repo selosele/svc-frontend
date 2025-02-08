@@ -5,7 +5,7 @@ import { combineLatest } from 'rxjs';
 import { TreeNode } from 'primeng/api';
 import { MenuStore } from './menu.store';
 import { HttpService } from '@app/shared/services';
-import { GetMenuRequestDTO, MenuBookmarkResponseDTO, MenuResponseDTO, MenuTree, SaveMenuBookmarkRequestDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
+import { GetMenuRequestDTO, MenuBookmarkResponseDTO, MenuResponseDTO, MenuResultDTO, MenuTree, SaveMenuBookmarkRequestDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
 import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
@@ -25,28 +25,28 @@ export class MenuService {
   listMenu(dto?: GetMenuRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<MenuResponseDTO[]>('/co/menus', { params })
+    this.http.get<MenuResponseDTO>('/co/menus', { params })
     .subscribe((response) => {
-      this.setMenuList(response);
+      this.setMenuList(response.menuList);
     });
   }
 
   /** 메뉴 목록을 조회한다. */
   listMenu$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<MenuResponseDTO[]>('/co/menus', { params });
+    return this.http.get<MenuResponseDTO>('/co/menus', { params });
   }
 
   /** 시스템관리 > 메뉴관리 > 메뉴 목록을 조회한다. */
   listSysMenu$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<MenuResponseDTO[]>('/co/menus/sys', { params });
+    return this.http.get<MenuResponseDTO>('/co/menus/sys', { params });
   }
 
   /** 권한별 메뉴 목록을 조회한다. */
   listMenuByRole$(dto?: GetMenuRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<MenuResponseDTO[]>('/co/menus', { params });
+    return this.http.get<MenuResponseDTO>('/co/menus', { params });
   }
 
   /** 메뉴를 조회한다. */
@@ -98,7 +98,7 @@ export class MenuService {
   setData(): void {
     combineLatest([
       this.route.queryParams,
-      this.menuStore.select<MenuResponseDTO[]>('menuList').asObservable()
+      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable()
     ])
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
@@ -116,7 +116,7 @@ export class MenuService {
   setBreadcrumb(): void {
     combineLatest([
       this.route.queryParams,
-      this.menuStore.select<MenuResponseDTO[]>('menuList').asObservable()
+      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable()
     ])
     .subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
@@ -137,7 +137,7 @@ export class MenuService {
   }
 
   /** 메뉴 목록 데이터를 설정한다. */
-  setMenuList(menuList: MenuResponseDTO[]): void {
+  setMenuList(menuList: MenuResultDTO[]): void {
     const menuTree = this.createMenuTree(menuList);
     this.menuStore.update('menuTree', menuTree);
     this.menuStore.update('menuList', menuList);
@@ -165,7 +165,7 @@ export class MenuService {
   }
 
   /** 메뉴접속이력 목록 데이터를 설정한다. */
-  setMenuHistoryList(list: MenuResponseDTO[]): void {
+  setMenuHistoryList(list: MenuResultDTO[]): void {
     //list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
     this.menuStore.update('menuHistoryList', list);
     window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
@@ -173,12 +173,12 @@ export class MenuService {
 
   /** 메뉴 URL로 메뉴 ID를 찾아서 반환한다. */
   getMenuIdByMenuUrl(menuUrl: string): number {
-    return this.menuStore.select<MenuResponseDTO[]>('menuList').value
+    return this.menuStore.select<MenuResultDTO[]>('menuList').value
       .find(x => x.menuUrl === menuUrl)?.menuId;
   }
 
   /** 메뉴 트리를 생성한다. */
-  createMenuTree(data: MenuResponseDTO[], upMenuId = null): MenuTree[] {
+  createMenuTree(data: MenuResultDTO[], upMenuId = null): MenuTree[] {
     const tree: MenuTree[] = [];
 
     for (const menu of data) {
@@ -191,7 +191,7 @@ export class MenuService {
   }
 
   /** 시스템관리 > 메뉴관리 > 메뉴트리를 생성한다. */
-  createSysMenuTree(data: MenuResponseDTO[], upMenuId = null): TreeNode[] {
+  createSysMenuTree(data: MenuResultDTO[], upMenuId = null): TreeNode[] {
     const tree: TreeNode[] = [];
 
     for (const menu of data) {

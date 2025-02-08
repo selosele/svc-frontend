@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 import { filter, firstValueFrom, take } from 'rxjs';
 import { MenuStore } from '@app/menu/menu.store';
 import { MenuService } from '@app/menu/menu.service';
-import { MenuResponseDTO } from '@app/menu/menu.model';
+import { MenuResultDTO } from '@app/menu/menu.model';
 import { ERROR_PAGE_PATH, LOGIN_PAGE_PATH, MAIN_PAGE_PATH1, MAIN_PAGE_PATH2 } from '@app/shared/utils';
 
 /** 메뉴 guard */
@@ -18,7 +18,7 @@ export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
   }
   
   const menuList = await firstValueFrom(
-    menuStore.select<MenuResponseDTO[]>('menuList').pipe(
+    menuStore.select<MenuResultDTO[]>('menuList').pipe(
       filter((menuList) => Array.isArray(menuList) && menuList.length > 0),
       take(1)
     )

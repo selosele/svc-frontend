@@ -69,13 +69,13 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
     combineLatest([
       this.userService.listUserByRole$({ roleIdList: [event.data['roleId']] }),
       this.menuService.listMenuByRole$({ roleIdList: [event.data['roleId']] })
-    ]).subscribe(([userList, menuList]) => {
-      const menuTree = this.menuService.createMenuTree(menuList);
+    ]).subscribe(([userResponse, menuResponse]) => {
+      const menuTree = this.menuService.createMenuTree(menuResponse.menuList);
 
       this.dialogService.open(SystemRoleDetailComponent, {
         focusOnShow: false,
         header: `"${event.data['roleName']}" 권한별 사용자 및 메뉴 목록 조회`,
-        data: { userList, menuTree },
+        data: { userList: userResponse, menuTree },
       });
     });
   }

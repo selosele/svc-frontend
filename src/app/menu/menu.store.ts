@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MenuItem, TreeNode } from 'primeng/api';
 import { StoreService } from '@app/shared/services';
-import { MenuBookmarkResultDTO, MenuResponseDTO, MenuTree } from './menu.model';
+import { MenuBookmarkResultDTO, MenuResultDTO, MenuTree } from './menu.model';
 
 @Injectable({ providedIn: 'root' })
 export class MenuStore extends StoreService {
@@ -12,7 +12,7 @@ export class MenuStore extends StoreService {
 
   override init() {
     this.creates([
-      { key: 'menuList', defaultValue: [] as MenuResponseDTO[] }, // 메뉴 목록
+      { key: 'menuList', defaultValue: [] as MenuResultDTO[] },   // 메뉴 목록
       { key: 'menuListDataLoad', defaultValue: false },           // 메뉴 목록 데이터 로드 완료 여부
       { key: 'sysMenuTree', defaultValue: [] as TreeNode[] },     // 시스템관리 > 메뉴관리 > 메뉴 트리 목록
       { key: 'sysMenuListDataLoad', defaultValue: false },        // 시스템관리 > 메뉴관리 > 메뉴 목록 데이터 로드 완료 여부
@@ -23,7 +23,7 @@ export class MenuStore extends StoreService {
       { key: 'hasBookmark', defaultValue: false },                // 현재 메뉴가 즐겨찾기 추가되어 있는지 여부
       { key: 'menuBookmarkList', defaultValue: [] as MenuBookmarkResultDTO[] },   // 메뉴 즐겨찾기 목록
       { key: 'menuBookmarkListDataLoad', defaultValue: false },                   // 메뉴 즐겨찾기 목록 데이터 로드 완료 여부
-      { key: 'menuHistoryList', defaultValue: [] as MenuResponseDTO[] },          // 메뉴접속이력 목록
+      { key: 'menuHistoryList', defaultValue: [] as MenuResultDTO[] },            // 메뉴접속이력 목록
       { key: 'breadcrumbList', defaultValue: [] as MenuItem[] },                  // breadcrumb 목록
     ]);
   }

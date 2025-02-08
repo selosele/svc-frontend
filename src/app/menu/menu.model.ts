@@ -53,8 +53,8 @@ export class SaveMenuRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 메뉴 응답 DTO */
-export class MenuResponseDTO {
+/** 메뉴 조회 결과 DTO */
+export class MenuResultDTO {
 
   /** 메뉴 ID */
   menuId?: number;
@@ -88,6 +88,17 @@ export class MenuResponseDTO {
 
   /** 메뉴 권한 목록 */
   menuRoleList?: MenuRoleResultDTO[];
+
+}
+
+/** 메뉴 응답 DTO */
+export class MenuResponseDTO {
+
+  /** 메뉴 */
+  menu?: MenuResultDTO;
+  
+  /** 메뉴 목록 */
+  menuList?: MenuResultDTO[];
 
 }
 
@@ -162,10 +173,10 @@ export class MenuBookmarkResponseDTO {
 }
 
 /** 메뉴 트리 */
-export class MenuTree extends MenuResponseDTO {
+export class MenuTree extends MenuResultDTO {
 
   /** 메뉴 */
-  data?: MenuResponseDTO;
+  data?: MenuResultDTO;
 
   /** 하위 메뉴 목록 */
   children?: MenuTree[];
