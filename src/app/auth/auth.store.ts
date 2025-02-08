@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StoreService } from '@app/shared/services';
-import { UserCertHistoryResponseDTO } from './auth.model';
+import { UserCertHistoryResultDTO } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore extends StoreService {
@@ -11,7 +11,7 @@ export class AuthStore extends StoreService {
 
   override init() {
     this.creates([
-      { key: 'userCertHistory', defaultValue: null as UserCertHistoryResponseDTO }, // 사용자 본인인증 이력
+      { key: 'userCertHistory', defaultValue: null as UserCertHistoryResultDTO }, // 사용자 본인인증 이력
     ]);
   }
 

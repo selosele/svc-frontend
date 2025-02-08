@@ -7,7 +7,7 @@ import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.com
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiContentTitleComponent } from '@app/shared/components/ui';
-import { FindUserInfoRequestDTO, GetUserCertHistoryRequestDTO, UserCertHistoryResponseDTO } from '../auth.model';
+import { FindUserInfoRequestDTO, GetUserCertHistoryRequestDTO, UserCertHistoryResultDTO } from '../auth.model';
 import { UiMessageService } from '@app/shared/services';
 import { AuthStore } from '../auth.store';
 import { dateUtil } from '@app/shared/utils';
@@ -50,7 +50,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 사용자 본인인증 이력 */
   get userCertHistory() {
-    return this.authStore.select<UserCertHistoryResponseDTO>('userCertHistory').value;
+    return this.authStore.select<UserCertHistoryResultDTO>('userCertHistory').value;
   }
 
   ngOnInit() {
@@ -89,22 +89,22 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
       .subscribe((response) => {
         this.timer && clearInterval(this.timer);
   
-        let remainingSeconds = Number(response.validTime);
-        let formattedTime = new BehaviorSubject<string>(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
+        let remainingSeconds = Number(response.userCertHistory.validTime);
+        let formattedTime$ = new BehaviorSubject<string>(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
   
         this.timer = setInterval(() => {
           if (remainingSeconds > 0) {
             remainingSeconds--;
-            formattedTime.next(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
+            formattedTime$.next(dateUtil.duration(remainingSeconds, 'seconds').format('mm:ss'));
           } else {
             clearInterval(this.timer);
           }
         }, 1000);
   
-        formattedTime.subscribe((time) => {
+        formattedTime$.subscribe((time) => {
           this.certCodeLabel = `인증코드(${time})`;
         });
-        this.authStore.update('userCertHistory', response);
+        this.authStore.update('userCertHistory', response.userCertHistory);
         this.messageService.toastSuccess('인증코드를 메일로 발송했어요. 메일을 확인해주세요.');
       });
     }

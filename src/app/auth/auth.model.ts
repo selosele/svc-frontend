@@ -62,8 +62,8 @@ export class GetUserCertHistoryRequestDTO extends HttpRequestDTOBase {
     
 }
 
-/** 사용자 본인인증 이력 응답 DTO */
-export class UserCertHistoryResponseDTO {
+/** 사용자 본인인증 이력 조회 결과 DTO */
+export class UserCertHistoryResultDTO {
 
   /** 직원명 */
   certHistoryId?: number;
@@ -91,6 +91,17 @@ export class UserCertHistoryResponseDTO {
 
   /** 등록일시 */
   createDt?: string;
+    
+}
+
+/** 사용자 본인인증 이력 응답 DTO */
+export class UserCertHistoryResponseDTO {
+
+  /** 사용자 본인인증 이력 */
+  userCertHistory?: UserCertHistoryResultDTO;
+
+  /** 사용자 본인인증 이력 목록 */
+  userCertHistoryList?: UserCertHistoryResultDTO[];
     
 }
 
