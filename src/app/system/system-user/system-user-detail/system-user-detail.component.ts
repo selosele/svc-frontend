@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { SaveUserRequestDTO, UserResponseDTO, UserRoleResponseDTO } from '@app/user/user.model';
+import { SaveUserRequestDTO, UserResponseDTO, UserRoleResultDTO } from '@app/user/user.model';
 import { RoleResultDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
@@ -201,7 +201,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
       this.detailForm.patchValue({
         ...this.detailForm.value,
         ...this.detail,
-        roles: this.detail?.roles?.map((x: UserRoleResponseDTO) => x.roleId),
+        roles: this.detail?.roles?.map((x: UserRoleResultDTO) => x.roleId),
       });
       this.refresh.emit();
     });

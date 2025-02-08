@@ -45,7 +45,7 @@ export class UserResponseDTO {
   lastLoginDt?: string;
 
   /** 사용자 권한 목록 */
-  roles?: UserRoleResponseDTO[];
+  roles?: UserRoleResultDTO[];
 
   /** 직원 정보 */
   employee?: EmployeeResponseDTO;
@@ -102,8 +102,8 @@ export class UpdateUserPasswordRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 사용자 권한 응답 DTO */
-export class UserRoleResponseDTO {
+/** 사용자 권한 조회 결과 DTO */
+export class UserRoleResultDTO {
 
   /** 사용자 ID */
   userId?: number;
@@ -113,5 +113,16 @@ export class UserRoleResponseDTO {
 
   /** 권한명 */
   roleName?: string;
+    
+}
+
+/** 사용자 권한 응답 DTO */
+export class UserRoleResponseDTO {
+
+  /** 사용자 권한 */
+  userRole?: UserRoleResultDTO;
+
+  /** 사용자 권한 목록 */
+  userRoleList?: UserRoleResultDTO[];
     
 }
