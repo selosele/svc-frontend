@@ -64,8 +64,8 @@ export class PayslipResultDTO {
 
 }
 
-/** 급여명세서 급여내역 상세 응답 DTO */
-export class PayslipDetailResponseDTO {
+/** 급여명세서 급여내역 상세 조회 결과 DTO */
+export class PayslipDetailResultDTO {
 
   /** 급여내역 상세 ID */
   salaryId?: number;
@@ -97,7 +97,7 @@ export class PayslipResponseDTO {
   payslip?: PayslipResultDTO;
 
   /** 급여내역 상세 */
-  payslipDetail?: PayslipDetailResponseDTO;
+  payslipDetail?: PayslipDetailResultDTO;
 
   /** 급여명세서 목록 */
   payslipList?: PayslipResultDTO[];
