@@ -18,9 +18,9 @@ export class UserService {
 
   /** 사용자 목록을 조회한다. */
   listUser(): void {
-    this.http.get<UserResponseDTO[]>('/co/users')
+    this.http.get<UserResponseDTO>('/co/users')
     .subscribe((response) => {
-      this.userStore.update('userList', response);
+      this.userStore.update('userList', response.userList);
       this.userStore.update('userListDataLoad', true);
     });
   }
@@ -28,7 +28,7 @@ export class UserService {
   /** 권한별 사용자 목록을 조회한다. */
   listUserByRole$(dto: GetUserRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<UserResponseDTO[]>('/co/users', { params });
+    return this.http.get<UserResponseDTO>('/co/users', { params });
   }
 
   /** 사용자를 조회한다. */

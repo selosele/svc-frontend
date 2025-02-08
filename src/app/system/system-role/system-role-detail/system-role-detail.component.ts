@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserResponseDTO } from '@app/user/user.model';
+import { UserResultDTO } from '@app/user/user.model';
 import { MenuTree } from '@app/menu/menu.model';
 import { UiTableComponent, UiTreeTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -23,7 +23,7 @@ export class SystemRoleDetailComponent {
   ) {}
 
   /** 사용자 목록 */
-  get userList(): UserResponseDTO[] {
+  get userList(): UserResultDTO[] {
     return this.config.data['userList'];
   }
 

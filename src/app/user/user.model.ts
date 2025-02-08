@@ -29,8 +29,8 @@ export class SaveUserRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 사용자 응답 DTO */
-export class UserResponseDTO {
+/** 사용자 조회 결과 DTO */
+export class UserResultDTO {
 
   /** 사용자 ID */
   userId?: number;
@@ -49,6 +49,17 @@ export class UserResponseDTO {
 
   /** 직원 정보 */
   employee?: EmployeeResponseDTO;
+    
+}
+
+/** 사용자 응답 DTO */
+export class UserResponseDTO {
+
+  /** 사용자 */
+  user?: UserResultDTO;
+
+  /** 사용자 목록 */
+  userList?: UserResultDTO[];
     
 }
 

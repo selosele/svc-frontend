@@ -5,7 +5,7 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UserService } from '@app/user/user.service';
 import { UserStore } from '@app/user/user.store';
-import { UserResponseDTO } from '@app/user/user.model';
+import { UserResultDTO } from '@app/user/user.model';
 import { SystemUserDetailComponent } from './system-user-detail/system-user-detail.component';
 import { isBlank } from '@app/shared/utils';
 
@@ -36,8 +36,8 @@ export class SystemUserComponent extends CoreBaseComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 사용자 목록 */
-  get userList(): UserResponseDTO[] {
-    return this.userStore.select<UserResponseDTO[]>('userList').value;
+  get userList(): UserResultDTO[] {
+    return this.userStore.select<UserResultDTO[]>('userList').value;
   }
 
   /** 사용자 목록 데이터 로드 완료 여부 */
@@ -46,10 +46,10 @@ export class SystemUserComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 사용자 정보 */
-  detail: UserResponseDTO = null;
+  detail: UserResultDTO = null;
 
   /** 테이블 선택된 행 */
-  selection: UserResponseDTO;
+  selection: UserResultDTO;
 
   /** 테이블 컬럼 */
   cols = [
@@ -94,7 +94,7 @@ export class SystemUserComponent extends CoreBaseComponent implements OnInit {
   onRowSelect(event: TableRowSelectEvent): void {
     this.userService.getUser$(event.data['userId'])
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.user;
       this.splitter.show();
     });
   }

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { SaveUserRequestDTO, UserResponseDTO, UserRoleResultDTO } from '@app/user/user.model';
+import { SaveUserRequestDTO, UserResultDTO, UserRoleResultDTO } from '@app/user/user.model';
 import { RoleResultDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
@@ -49,7 +49,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
   }
 
   /** 사용자 정보 */
-  @Input() detail: UserResponseDTO = null;
+  @Input() detail: UserResultDTO = null;
 
   /** 사용자 정보 존재 여부 */
   get isDetailNotEmpty() {
@@ -197,7 +197,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
     .subscribe((response) => {
       this.messageService.toastSuccess('정상적으로 처리되었어요.');
 
-      this.detail = response;
+      this.detail = response.user;
       this.detailForm.patchValue({
         ...this.detailForm.value,
         ...this.detail,
@@ -219,7 +219,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
       this.userService.addUser$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('userId').patchValue(response.userId);
+        this.detailForm.get('userId').patchValue(response.user.userId);
         this.refresh.emit();
       });
     }
