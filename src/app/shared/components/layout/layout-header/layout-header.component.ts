@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CoreBaseComponent } from '../../core';
-import { UserSetupResponseDTO } from '@app/user/user.model';
+import { UserSetupResultDTO } from '@app/user/user.model';
 import { UserStore } from '@app/user/user.store';
 import { UiDialogService } from '@app/shared/services';
 import { LayoutSiteTitleComponent } from '../layout-site-title/layout-site-title.component';
@@ -45,7 +45,7 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
 
   /** 사용자 설정 */
   get userSetup() {
-    return this.userStore.select<UserSetupResponseDTO>('userSetup').value;
+    return this.userStore.select<UserSetupResultDTO>('userSetup').value;
   }
 
   ngOnInit() {

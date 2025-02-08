@@ -63,8 +63,8 @@ export class AddUserRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 사용자 설정 응답 DTO */
-export class UserSetupResponseDTO {
+/** 사용자 설정 조회 결과 DTO */
+export class UserSetupResultDTO {
 
   /** 사용자 설정 ID */
   userSetupId?: number;
@@ -74,6 +74,17 @@ export class UserSetupResponseDTO {
 
   /** 사이트타이틀명 */
   siteTitleName?: string;
+    
+}
+
+/** 사용자 설정 응답 DTO */
+export class UserSetupResponseDTO {
+
+  /** 사용자 설정 */
+  userSetup?: UserSetupResultDTO;
+
+  /** 사용자 설정 목록 */
+  userSetupList?: UserSetupResultDTO[];
     
 }
 

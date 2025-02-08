@@ -101,7 +101,7 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
     
     this.userService.addUserSetup$({ userId, siteTitleName })
     .subscribe((response) => {
-      this.userStore.update('userSetup', response);
+      this.userStore.update('userSetup', response.userSetup);
       this.messageService.toastSuccess('저장되었어요.');
     });
   }

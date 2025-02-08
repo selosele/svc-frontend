@@ -40,11 +40,11 @@ export class UserService {
   getUserConfig(userId: number): void {
     this.http.get<UserSetupResponseDTO>(`/co/users/${userId}/setups`)
     .subscribe((response) => {
-      if (isNotBlank(response.siteTitleName)) {
-        document.title = response.siteTitleName;
+      if (isNotBlank(response.userSetup.siteTitleName)) {
+        document.title = response.userSetup.siteTitleName;
       }
 
-      this.userStore.update('userSetup', response);
+      this.userStore.update('userSetup', response.userSetup);
       this.userStore.update('userSetupDataLoad', true);
     });
   }
