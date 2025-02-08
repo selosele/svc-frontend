@@ -5,7 +5,7 @@ import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenField
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { HolidayService } from '@app/holiday/holiday.service';
-import { HolidayResponseDTO, SaveHolidayRequestDTO } from '@app/holiday/holiday.model';
+import { HolidayResultDTO, SaveHolidayRequestDTO } from '@app/holiday/holiday.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 
@@ -36,7 +36,7 @@ export class MyHolidayDetailComponent extends CoreBaseComponent implements OnIni
   }
 
   /** 휴일 정보 */
-  @Input() detail: HolidayResponseDTO = null;
+  @Input() detail: HolidayResultDTO = null;
 
   /** 휴일 상세 조회 폼 */
   detailForm: FormGroup;
@@ -102,7 +102,7 @@ export class MyHolidayDetailComponent extends CoreBaseComponent implements OnIni
       this.holidayService.addHoliday$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('originalYmd').patchValue(response.ymd);
+        this.detailForm.get('originalYmd').patchValue(response.holiday.ymd);
         this.refresh.emit();
       });
     }

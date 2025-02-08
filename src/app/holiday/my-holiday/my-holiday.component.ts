@@ -4,7 +4,7 @@ import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { MyHolidayDetailComponent } from './my-holiday-detail/my-holiday-detail.component';
-import { HolidayResponseDTO } from '@app/holiday/holiday.model';
+import { HolidayResultDTO } from '@app/holiday/holiday.model';
 import { HolidayService } from '@app/holiday/holiday.service';
 import { HolidayStore } from '../holiday.store';
 
@@ -35,8 +35,8 @@ export class MyHolidayComponent extends CoreBaseComponent {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 휴일 목록 */
-  get holidayList(): HolidayResponseDTO[] {
-    return this.holidayStore.select<HolidayResponseDTO[]>('holidayList').value;
+  get holidayList(): HolidayResultDTO[] {
+    return this.holidayStore.select<HolidayResultDTO[]>('holidayList').value;
   }
 
   /** 휴일 목록 데이터 로드 완료 여부 */
@@ -45,10 +45,10 @@ export class MyHolidayComponent extends CoreBaseComponent {
   }
 
   /** 휴일 정보 */
-  detail: HolidayResponseDTO = null;
+  detail: HolidayResultDTO = null;
 
   /** 테이블 선택된 행 */
-  selection: HolidayResponseDTO;
+  selection: HolidayResultDTO;
 
   /** 테이블 컬럼 */
   cols = [
@@ -79,7 +79,7 @@ export class MyHolidayComponent extends CoreBaseComponent {
   onRowSelect(event: TableRowSelectEvent): void {
     this.holidayService.getHoliday$(this.user?.userId, event.data['ymd'])
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.holiday;
       this.splitter.show();
     });
   }

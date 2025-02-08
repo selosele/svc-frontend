@@ -49,9 +49,8 @@ export class SaveHolidayRequestDTO extends HttpRequestDTOBase {
 
 }
 
-
-/** 휴일 응답 DTO */
-export class HolidayResponseDTO {
+/** 휴일 조회 결과 DTO */
+export class HolidayResultDTO {
 
   /** 일자 */
   ymd?: string;
@@ -76,5 +75,17 @@ export class HolidayResponseDTO {
 
   /** 사용 여부 */
   useYn?: string;
+
+}
+
+
+/** 휴일 응답 DTO */
+export class HolidayResponseDTO {
+
+  /** 휴일 */
+  holiday?: HolidayResultDTO;
+
+  /** 휴일 목록 */
+  holidayList?: HolidayResultDTO[];
 
 }
