@@ -7,15 +7,15 @@
   >
     <i class="pi pi-bell"></i>
 
-    @if (notificationCount > 0) {
-      <span>{{ notificationCount }}</span>
+    @if (notificationTotal > 0) {
+      <span>{{ notificationTotal }}</span>
     }
   </button>
 
   @if (isNotificationLayerVisible) {
     <div class="layout-notification__list">
       <div class="flex justify-content-between align-items-center p-3 bg-blue-50">
-        <p><span class="text-primary">{{ notificationCount }}</span>개의 읽지 않은 알림</p>
+        <p><span class="text-primary">{{ notificationTotal }}</span>개의 읽지 않은 알림</p>
 
         <div class="flex justify-content-end">
           <ui-button

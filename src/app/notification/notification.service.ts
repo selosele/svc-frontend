@@ -15,9 +15,9 @@ export class NotificationService {
   listNotification(): void {
     this.http.get<NotificationResponseDTO>('/co/notifications')
     .subscribe((response) => {
-      this.notificationStore.update('notificationList', response.list);
-      this.notificationStore.update('notificationCount', response.total);
-      this.notificationStore.update('notificationHtmlTitle', `${response.total}개의 읽지 않은 알림`);
+      this.notificationStore.update('notificationList', response.notificationList);
+      this.notificationStore.update('notificationTotal', response.notificationTotal);
+      this.notificationStore.update('notificationHtmlTitle', `${response.notificationTotal}개의 읽지 않은 알림`);
     });
   }
 

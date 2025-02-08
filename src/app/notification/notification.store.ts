@@ -12,7 +12,7 @@ export class NotificationStore extends StoreService {
   override init() {
     this.creates([
       { key: 'notificationList', defaultValue: [] as NotificationResultDTO[] }, // 알림 목록
-      { key: 'notificationCount', defaultValue: null as number },               // 알림 개수
+      { key: 'notificationTotal', defaultValue: null as number },               // 알림 개수
       { key: 'notificationHtmlTitle', defaultValue: null as string },           // 알림 HTML 타이틀
       { key: 'isNotificationLayerVisible', defaultValue: false },               // 알림창 표출 상태
     ]);

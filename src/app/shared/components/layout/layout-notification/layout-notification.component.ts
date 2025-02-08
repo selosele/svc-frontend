@@ -26,8 +26,8 @@ export class LayoutNotificationComponent implements OnInit {
   ) {}
 
   /** 알림 개수 */
-  get notificationCount() {
-    return this.notificationStore.select<number>('notificationCount').value;
+  get notificationTotal() {
+    return this.notificationStore.select<number>('notificationTotal').value;
   }
 
   /** 알림 목록 */

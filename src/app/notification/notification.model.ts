@@ -43,10 +43,13 @@ export class NotificationResultDTO {
 /** 알림 응답 DTO */
 export class NotificationResponseDTO {
 
-  /** 알림 개수 */
-  total?: number;
+  /** 알림 */
+  notification?: NotificationResultDTO;
 
   /** 알림 목록 */
-  list?: NotificationResultDTO[];
+  notificationList?: NotificationResultDTO[];
+
+  /** 알림 개수 */
+  notificationTotal?: number;
 
 }
