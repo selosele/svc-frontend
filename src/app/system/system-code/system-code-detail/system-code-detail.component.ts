@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CodeResponseDTO, SaveCodeRequestDTO } from '@app/code/code.model';
+import { CodeResultDTO, SaveCodeRequestDTO } from '@app/code/code.model';
 import { CodeService } from '@app/code/code.service';
 import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
@@ -31,7 +31,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 코드 정보 */
-  @Input() detail: CodeResponseDTO = null;
+  @Input() detail: CodeResultDTO = null;
 
   /** 코드 정보 존재 여부 */
   get isDetailNotEmpty() {
@@ -112,7 +112,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
       this.codeService.addCode$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('originalCodeId').patchValue(response.codeId);
+        this.detailForm.get('originalCodeId').patchValue(response.code.codeId);
         this.refresh.emit();
       });
     }

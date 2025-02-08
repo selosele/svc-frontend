@@ -38,8 +38,8 @@ export class SaveCodeRequestDTO extends HttpRequestDTOBase {
     
 }
 
-/** 코드 응답 DTO */
-export class CodeResponseDTO {
+/** 코드 조회 결과 DTO */
+export class CodeResultDTO {
 
   /** 코드 ID */
   codeId?: string;
@@ -70,11 +70,22 @@ export class CodeResponseDTO {
     
 }
 
-/** 코드 트리 */
-export class CodeTree extends CodeResponseDTO {
+/** 코드 응답 DTO */
+export class CodeResponseDTO {
 
   /** 코드 */
-  data?: CodeResponseDTO;
+  code?: CodeResultDTO;
+
+  /** 코드 목록 */
+  codeList?: CodeResultDTO[];
+    
+}
+
+/** 코드 트리 */
+export class CodeTree extends CodeResultDTO {
+
+  /** 코드 */
+  data?: CodeResultDTO;
 
   /** 하위 코드 목록 */
   children?: CodeTree[];

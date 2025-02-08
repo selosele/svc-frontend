@@ -5,7 +5,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTreeTabl
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CodeStore } from '@app/code/code.store';
 import { CodeService } from '../../code/code.service';
-import { CodeResponseDTO, CodeTree } from '../../code/code.model';
+import { CodeResultDTO, CodeTree } from '../../code/code.model';
 import { SystemCodeDetailComponent } from './system-code-detail/system-code-detail.component';
 
 @Component({
@@ -48,7 +48,7 @@ export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 코드 정보 */
-  detail: CodeResponseDTO = null;
+  detail: CodeResultDTO = null;
 
   /** 테이블 선택된 행 */
   selection: TreeNode;
@@ -85,7 +85,7 @@ export class SystemCodeComponent extends CoreBaseComponent implements OnInit {
   onNodeSelect(event: any) {
     this.codeService.getCode$(event.node.data['codeId'])
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.code;
       this.splitter.show();
     });
   }
