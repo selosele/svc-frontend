@@ -5,7 +5,7 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { BoardStore } from '@app/board/board.store';
 import { BoardService } from '@app/board/board.service';
-import { BoardResponseDTO } from '@app/board/board.model';
+import { BoardResultDTO } from '@app/board/board.model';
 import { SystemBoardDetailComponent } from './system-board-detail/system-board-detail.component';
 
 @Component({
@@ -35,8 +35,8 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 게시판 목록 */
-  get boardList(): BoardResponseDTO[] {
-    return this.boardStore.select<BoardResponseDTO[]>('boardList').value;
+  get boardList(): BoardResultDTO[] {
+    return this.boardStore.select<BoardResultDTO[]>('boardList').value;
   }
 
   /** 게시판 목록 데이터 로드 완료 여부 */
@@ -45,10 +45,10 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 게시판 정보 */
-  detail: BoardResponseDTO = null;
+  detail: BoardResultDTO = null;
 
   /** 테이블 선택된 행 */
-  selection: BoardResponseDTO;
+  selection: BoardResultDTO;
 
   /** 테이블 컬럼 */
   cols = [
@@ -56,7 +56,7 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
     { field: 'boardTypeCodeName', header: '게시판 구분' },
     { field: 'boardName',         header: '게시판명' },
     { field: 'articleCount',      header: '게시글',
-      valueGetter: (data: BoardResponseDTO) => `${data.articleCount}개` 
+      valueGetter: (data: BoardResultDTO) => `${data.articleCount}개` 
     },
     { field: 'mainShowYn',        header: '메인 화면 표출 여부' },
     { field: 'useYn',             header: '사용 여부' },
@@ -83,7 +83,7 @@ export class SystemBoardComponent extends CoreBaseComponent implements OnInit {
   onRowSelect(event: TableRowSelectEvent): void {
     this.boardService.getBoard$(event.data['boardId'])
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.board;
       this.splitter.show();
     });
   }

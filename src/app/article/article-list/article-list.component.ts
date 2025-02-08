@@ -153,15 +153,15 @@ export class ArticleListComponent extends CoreBaseComponent implements OnInit, O
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
 
     this.articleService.getArticle$(articleId)
-    .subscribe((data) => {
+    .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
 
       const modal = this.dialogService.open(ArticleViewComponent, {
         focusOnShow: false,
-        header: data.article.articleTitle,
+        header: response.article.articleTitle,
         width: '1000px',
-        data,
+        data: response,
       });
 
       modal?.onClose.subscribe((result) => {

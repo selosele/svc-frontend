@@ -3,7 +3,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { ArticleResultDTO } from '../article.model';
 import { ArticleService } from '../article.service';
-import { BoardResponseDTO } from '@app/board/board.model';
+import { BoardResultDTO } from '@app/board/board.model';
 import { UiMessageService } from '@app/shared/services';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { isEmpty } from '@app/shared/utils';
@@ -30,7 +30,7 @@ export class ArticleViewComponent extends CoreBaseComponent {
   }
 
   /** 게시판 */
-  get board(): BoardResponseDTO {
+  get board(): BoardResultDTO {
     return this.config.data['board'];
   }
 

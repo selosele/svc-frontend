@@ -10,10 +10,11 @@ import { VacationService } from '@app/vacation/vacation.service';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { ArticleViewComponent } from '@app/article/article-view/article-view.component';
 import { ArticleListComponent } from '@app/article/article-list/article-list.component';
+import { SaveArticleComponent } from '@app/article/save-article/save-article.component';
 import { UiButtonComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
-import { BoardResponseDTO } from '@app/board/board.model';
-import { ArticleDataStateDTO } from '@app/article/article.model';
+import { BoardResultDTO } from '@app/board/board.model';
+import { ArticleDataStateDTO, ArticleResultDTO } from '@app/article/article.model';
 import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 import { isObjectEmpty } from '@app/shared/utils';
 
@@ -47,7 +48,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   /** 게시판 목록 */
   get mainBoardList() {
-    return this.boardStore.select<BoardResponseDTO[]>('mainBoardList').value;
+    return this.boardStore.select<BoardResultDTO[]>('mainBoardList').value;
   }
 
   /** 게시판 목록 데이터 로드 완료 여부 */
@@ -128,9 +129,9 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   listBoard(): void {
     this.boardService.listMainBoard$()
     .subscribe((response) => {
-      this.boardStore.update('mainBoardList', response);
       this.boardStore.update('mainBoardListDataLoad', true);
-      this.boardStore.update('mainBoardTabList', response.map(x => ({ title: x.boardName, key: x.boardId, dataLoad: true })));
+      this.boardStore.update('mainBoardList', response.boardList);
+      this.boardStore.update('mainBoardTabList', response.boardList.map(x => ({ title: x.boardName, key: x.boardId, dataLoad: true })));
       this.boardStore.update('mainBoardTabKey', Number(this.mainBoardTabList[0].key))
 
       this.activeBoardId = Number(this.mainBoardTabList[0].key);
@@ -168,9 +169,17 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       modal?.onClose.subscribe((result) => {
         if (isObjectEmpty(result)) return;
 
+        // 게시글 추가/수정/삭제
+        if (result.action === 'save') {
+          this.articleService.listMainArticle(this.activeBoardId, this.articleLimit);
+        }
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
-        if (result.action === 'reload') {
+        else if (result.action === 'reload') {
           this.onArticleItemClick(result.data.articleId);
+        }
+        // 게시글 수정 modal 표출
+        else if (result.action === 'update') {
+          this.updateArticle(result.action, result.data);
         }
       });
     });
@@ -187,10 +196,68 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
       this.dialogService.open(ArticleListComponent, {
         focusOnShow: false,
-        header: response.boardName,
+        header: response.board.boardName,
         width: '1200px',
         height: '100%',
         data: { boardId, from: 'main' },
+      });
+    });
+  }
+
+  /** 게시글 수정 modal을 표출한다. */
+  updateArticle(action: string, article: ArticleResultDTO): void {
+    const modal = this.dialogService.open(SaveArticleComponent, {
+      focusOnShow: false,
+      header: '게시글 수정하기',
+      width: '1000px',
+      data: { action, article }
+    });
+
+    modal.onClose.subscribe((result) => {
+      if (isObjectEmpty(result)) return;
+
+      // 게시글 추가/수정/삭제
+      if (result.action === 'save') {
+        this.articleService.listMainArticle(this.activeBoardId, this.articleLimit);
+      }
+      // 게시글 새로고침(예: 이전/다음 게시글로 이동)
+      else if (result.action === 'reload') {
+        this.getArticle(result.data.articleId);
+      }
+    });
+  }
+
+  /** 게시글을 조회한다. */
+  getArticle(articleId: number): void {
+    const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
+
+    this.articleService.getArticle$(articleId)
+    .subscribe((response) => {
+      clearTimeout(loadingTimeout);
+      this.loadingService.setLoading(false);
+
+      const modal = this.dialogService.open(ArticleViewComponent, {
+        focusOnShow: false,
+        header: response.article.articleTitle,
+        width: '1000px',
+        data: response,
+      });
+
+      modal?.onClose.subscribe((result) => {
+        if (isObjectEmpty(result)) return;
+
+        // 게시글 추가/수정/삭제
+        if (result.action === 'save') {
+          this.articleService.listMainArticle(this.activeBoardId, this.articleLimit);
+        }
+        // 게시글 새로고침(예: 이전/다음 게시글로 이동)
+        else if (result.action === 'reload') {
+          this.getArticle(result.data.articleId);
+        }
+        // 게시글 수정 modal 표출
+        else if (result.action === 'update') {
+          this.updateArticle(result.action, result.data);
+        }
       });
     });
   }

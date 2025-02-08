@@ -145,7 +145,7 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
 
       this.dialogService.open(ArticleListComponent, {
         focusOnShow: false,
-        header: response.boardName,
+        header: response.board.boardName,
         width: '1200px',
         height: '100%',
         data: { boardId, from: 'login' },

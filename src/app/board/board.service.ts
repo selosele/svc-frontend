@@ -17,7 +17,7 @@ export class BoardService {
   listBoard(dto?: GetBoardRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<BoardResponseDTO[]>('/co/boards', { params })
+    this.http.get<BoardResponseDTO>('/co/boards', { params })
     .subscribe((response) => {
       this.boardStore.update('boardList', response);
       this.boardStore.update('boardListDataLoad', true);
@@ -27,7 +27,7 @@ export class BoardService {
   /** 메인화면 게시판 목록을 조회한다. */
   listMainBoard$(dto?: GetBoardRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<BoardResponseDTO[]>('/co/boards/main', { params });
+    return this.http.get<BoardResponseDTO>('/co/boards/main', { params });
   }
 
   /** 게시판을 조회한다. */

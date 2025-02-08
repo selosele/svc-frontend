@@ -34,8 +34,8 @@ export class SaveBoardRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 게시판 응답 DTO */
-export class BoardResponseDTO {
+/** 게시판 조회 결과 DTO */
+export class BoardResultDTO {
 
   /** 게시판 ID */
   boardId?: number;
@@ -63,5 +63,16 @@ export class BoardResponseDTO {
 
   /** 게시글 개수 */
   articleCount?: number;
+
+}
+
+/** 게시판 응답 DTO */
+export class BoardResponseDTO {
+
+  /** 게시판 */
+  board?: BoardResultDTO;
+
+  /** 게시판 목록 */
+  boardList?: BoardResultDTO[];
 
 }

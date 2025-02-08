@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UiMessageService } from '@app/shared/services';
 import { CodeService } from '@app/code/code.service';
 import { BoardService } from '@app/board/board.service';
-import { BoardResponseDTO, SaveBoardRequestDTO } from '@app/board/board.model';
+import { BoardResultDTO, SaveBoardRequestDTO } from '@app/board/board.model';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { TransformToDto } from '@app/shared/decorators';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
@@ -35,7 +35,7 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 게시판 정보 */
-  @Input() detail: BoardResponseDTO = null;
+  @Input() detail: BoardResultDTO = null;
 
   /** 게시판 상세 조회 폼 */
   detailForm: FormGroup;
@@ -120,7 +120,7 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
       this.boardService.addBoard$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('boardId').patchValue(response.boardId);
+        this.detailForm.get('boardId').patchValue(response.board.boardId);
         this.refresh.emit();
       });
     }

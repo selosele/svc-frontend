@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { isNotEmpty } from '@app/shared/utils';
 import { HttpRequestDTOBase } from '@app/shared/models';
-import { BoardResponseDTO } from '@app/board/board.model';
+import { BoardResultDTO } from '@app/board/board.model';
 
 /** 게시글 조회 요청 DTO */
 export class GetArticleRequestDTO extends HttpRequestDTOBase {
@@ -85,7 +85,7 @@ export class ArticleResultDTO {
 export class ArticleResponseDTO {
 
   /** 게시판 */
-  board?: BoardResponseDTO;
+  board?: BoardResultDTO;
 
   /** 게시글 */
   article?: ArticleResultDTO;
