@@ -146,7 +146,7 @@ export class CompanyOpenAPIResponseDTO {
   /** 기업의 주식이 코스닥 시장에 상장 등록된 일자 */
   enpKosdaqLstgDt?: string;
 
-  /** 기업의 주식이 코스닥 시장에 상장 페지된 일자 */
+  /** 기업의 주식이 코스닥 시장에 상장 폐지된 일자 */
   enpKosdaqLstgAbolDt?: string;
 
   /** 기업의 KONEX(자본시장을 통한 초기 중소기업 지원을 강화하여 창조경제 생태계 기반을 조성하기 위해 개설된 중소기업전용 주식시장) 상장 일자 */
