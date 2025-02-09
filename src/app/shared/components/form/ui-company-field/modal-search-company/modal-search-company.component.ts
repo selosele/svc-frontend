@@ -6,7 +6,7 @@ import { AutoCompleteCompleteEvent, AutoCompleteSelectEvent } from 'primeng/auto
 import { UiMessageService } from '@app/shared/services';
 import { CompanyStore } from '@app/company/company.store';
 import { CompanyService } from '@app/company/company.service';
-import { CompanyOpenAPIResponseDTO, CompanyResponseDTO, GetCompanyRequestDTO } from '@app/company/company.model';
+import { CompanyOpenAPIResponseDTO, CompanyResultDTO, GetCompanyRequestDTO } from '@app/company/company.model';
 import { groupBy } from '@app/shared/utils';
 import { LayoutPageDescriptionComponent } from '../../../layout';
 import { UiButtonComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '../../../ui';
@@ -50,8 +50,8 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
   @ViewChild('splitter') splitter: UiSplitterComponent;
 
   /** 회사 목록 */
-  get companyList(): CompanyResponseDTO[] {
-    return this.companyStore.select<CompanyResponseDTO[]>('companyList').value;
+  get companyList() {
+    return this.companyStore.select<CompanyResultDTO[]>('companyList').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 */
@@ -65,7 +65,7 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
   }
 
   /** 회사 정보 */
-  detail: CompanyResponseDTO = null;
+  detail: CompanyResultDTO = null;
 
   /** 회사 검색 폼 */
   searchForm: FormGroup;
@@ -114,7 +114,7 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
   }
 
   /** 테이블 행을 더블 클릭한다. */
-  onRowDblClick(rowData: CompanyResponseDTO): void {
+  onRowDblClick(rowData: CompanyResultDTO): void {
     this.dialogRef.close(rowData);
   }
 

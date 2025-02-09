@@ -17,9 +17,9 @@ export class CompanyService {
   listCompany(dto?: GetCompanyRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<CompanyResponseDTO[]>('/hm/companies', { params })
+    this.http.get<CompanyResponseDTO>('/hm/companies', { params })
     .subscribe((response) => {
-      this.companyStore.update('companyList', response);
+      this.companyStore.update('companyList', response.companyList);
       this.companyStore.update('companyListDataLoad', true);
     });
   }

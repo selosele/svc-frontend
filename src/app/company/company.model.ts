@@ -40,8 +40,8 @@ export class SaveCompanyRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 회사 응답 DTO */
-export class CompanyResponseDTO {
+/** 회사 조회 결과 DTO */
+export class CompanyResultDTO {
 
   /** 회사 ID */
   companyId?: number;
@@ -63,6 +63,17 @@ export class CompanyResponseDTO {
 
   /** 삭제 여부 */
   deleteYn?: string;
+
+}
+
+/** 회사 응답 DTO */
+export class CompanyResponseDTO {
+
+  /** 회사 */
+  company?: CompanyResultDTO;
+
+  /** 회사 목록 */
+  companyList?: CompanyResultDTO[];
 
 }
 

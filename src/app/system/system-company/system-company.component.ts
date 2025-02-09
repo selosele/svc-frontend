@@ -5,7 +5,7 @@ import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSpli
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CompanyStore } from '@app/company/company.store';
 import { CompanyService } from '@app/company/company.service';
-import { CompanyResponseDTO } from '@app/company/company.model';
+import { CompanyResultDTO } from '@app/company/company.model';
 import { SystemCompanyDetailComponent } from './system-company-detail/system-company-detail.component';
 import { SystemCompanyApplyComponent } from './system-company-apply/system-company-apply.component';
 
@@ -39,7 +39,7 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
 
   /** 회사 목록 */
   get companyList() {
-    return this.companyStore.select<CompanyResponseDTO[]>('companyList').value;
+    return this.companyStore.select<CompanyResultDTO[]>('companyList').value;
   }
 
   /** 회사 목록 데이터 로드 완료 여부 */
@@ -48,10 +48,10 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
   }
 
   /** 회사 정보 */
-  detail: CompanyResponseDTO = null;
+  detail: CompanyResultDTO = null;
 
   /** 테이블 선택된 행 */
-  selection: CompanyResponseDTO;
+  selection: CompanyResultDTO;
 
   /** 테이블 컬럼 */
   cols = [
@@ -83,7 +83,7 @@ export class SystemCompanyComponent extends CoreBaseComponent implements OnInit 
   onRowSelect(event: TableRowSelectEvent): void {
     this.companyService.getCompany$(event.data['companyId'])
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.company;
       this.splitter.show();
     });
   }

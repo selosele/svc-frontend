@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CompanyResponseDTO, SaveCompanyRequestDTO } from '@app/company/company.model';
+import { CompanyResultDTO, SaveCompanyRequestDTO } from '@app/company/company.model';
 import { CompanyService } from '@app/company/company.service';
 import { UiMessageService } from '@app/shared/services';
 import { FormValidator, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -28,7 +28,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 회사 정보 */
-  @Input() detail: CompanyResponseDTO = null;
+  @Input() detail: CompanyResultDTO = null;
 
   /** 회사 상세 조회 폼 */
   detailForm: FormGroup;
@@ -88,7 +88,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
       this.companyService.addCompany$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('companyId').patchValue(response.companyId);
+        this.detailForm.get('companyId').patchValue(response.company.companyId);
         this.refresh.emit();
       });
     }
