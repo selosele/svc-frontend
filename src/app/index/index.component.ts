@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { UiDialogService, UiLoadingService } from '@app/shared/services';
 import { BoardStore } from '@app/board/board.store';
@@ -21,6 +22,7 @@ import { isObjectEmpty } from '@app/shared/utils';
 @Component({
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
     UiSkeletonComponent,
     UiButtonComponent,

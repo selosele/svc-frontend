@@ -210,7 +210,8 @@
               <ul class="widget-box__item-list">
                 @for (i of vacationStatResponse?.vacationList; track $index) {
                   <li>
-                    <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationTypeCodeName }}</span> {{ i.vacationStartYmd }} ~ {{ i.vacationEndYmd }} ({{ i.vacationUseCount }}일)
+                    <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationTypeCodeName }}</span>
+                    {{ ngDate(i.vacationStartYmd) | date: 'yyyy년 MM월 dd일' }} ~ {{ ngDate(i.vacationEndYmd) | date: 'yyyy년 MM월 dd일' }} ({{ i.vacationUseCount }}일)
                   </li>
                 }
               </ul>
