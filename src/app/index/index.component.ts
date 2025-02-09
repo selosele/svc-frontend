@@ -16,7 +16,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiTabComponent } from '@app/sha
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { BoardResultDTO } from '@app/board/board.model';
 import { ArticleDataStateDTO, ArticleResultDTO } from '@app/article/article.model';
-import { VacationByMonthResponseDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
+import { VacationByMonthResultDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 import { isObjectEmpty } from '@app/shared/utils';
 
 @Component({
@@ -107,7 +107,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   activeBoardId: number;
 
   /** 월별 휴가사용일수 목록 */
-  vacationListByMonth: VacationByMonthResponseDTO[] = [];
+  vacationListByMonth: VacationByMonthResultDTO[] = [];
 
   /** 휴가통계 목록 클릭된 항목의 ID */
   statsItemClickId: number;
@@ -283,7 +283,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       vacationTypeCode: i.vacationTypeCode
     })
     .subscribe((response) => {
-      this.vacationListByMonth = response;
+      this.vacationListByMonth = response.vacationByMonthList;
     });
   }
 

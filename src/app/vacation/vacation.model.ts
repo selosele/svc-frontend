@@ -200,14 +200,25 @@ export class GetVacationByMonthRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 월별 휴가사용일수 응답 DTO */
-export class VacationByMonthResponseDTO {
+/** 월별 휴가사용일수 조회 결과 DTO */
+export class VacationByMonthResultDTO {
 
   /** 휴가 사용일수 */
   vacationUseCount?: number;
 
   /** 휴가 사용 월 */
   vacationMonth?: string;
+
+}
+
+/** 월별 휴가사용일수 응답 DTO */
+export class VacationByMonthResponseDTO {
+
+  /** 월별 휴가사용일수 */
+  vacationByMonth?: VacationByMonthResultDTO;
+
+  /** 월별 휴가사용일수 목록 */
+  vacationByMonthList?: VacationByMonthResultDTO[];
 
 }
 

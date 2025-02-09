@@ -62,7 +62,7 @@ export class VacationService {
   /** 월별 휴가사용일수 목록을 조회한다. */
   listVacationByMonth$(dto: GetVacationByMonthRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<VacationByMonthResponseDTO[]>('/hm/vacations/stats/month', { params });
+    return this.http.get<VacationByMonthResponseDTO>('/hm/vacations/stats/month', { params });
   }
 
   /** 테이블 문구를 설정한다. */
