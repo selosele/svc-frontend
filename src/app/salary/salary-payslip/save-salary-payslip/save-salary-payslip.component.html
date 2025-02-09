@@ -2,8 +2,8 @@
   {{ title }}
 </h2>
 
-<div class="ui-basic-table type1">
-  <ui-form [form]="payslipForm" [useSubmit]="false" (submit)="onSubmit($event)">
+<ui-form [form]="payslipForm" [useSubmit]="false" (submit)="onSubmit($event)">
+  <div class="ui-basic-table type1">
     <table>
       <caption>급여명세서 기본 정보</caption>
       <colgroup>
@@ -49,11 +49,9 @@
         </tr>
       </tbody>
     </table>
-  </ui-form>
-</div>
+  </div>
 
-<div class="ui-basic-table type2 mt-4">
-  <ui-form [form]="payslipDetailForm" [useSubmit]="false" (submit)="onSubmitDetail($event)">
+  <div class="ui-basic-table type2 mt-4">
     <table>
       <caption>급여명세서 세부 내역 - 지급(지급내역, 지급액), 공제(공제내역, 공제액)</caption>
       <colgroup>
@@ -78,54 +76,54 @@
         <tr>
           <th scope="row">기본급</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
           <th scope="row">소득세</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
         </tr>
         <tr>
           <th scope="row">상여</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
           <th scope="row">지방소득세</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
         </tr>
         <tr>
           <th scope="row">인센티브</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
           <th scope="row">건강보험료정산</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
         </tr>
         <tr>
           <th scope="row">직책수당</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
           <th scope="row">장기요양보험정산</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
         </tr>
         <tr>
           <th scope="row">특별수당</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
           <th scope="row">연말정산소득세</th>
           <td>
-            <ui-text-field [control]="payslipDetailForm.get('salaryAmount')" />
+            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
           </td>
         </tr>
       </tbody>
     </table>
-  </ui-form>
-</div>
+  </div>
+</ui-form>

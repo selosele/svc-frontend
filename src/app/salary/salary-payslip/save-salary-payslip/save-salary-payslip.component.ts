@@ -82,9 +82,6 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   /** 급여명세서 폼 */
   payslipForm: FormGroup;
 
-  /** 급여명세서 급여내역 상세 폼 */
-  payslipDetailForm: FormGroup;
-
   ngOnInit() {
     this.payslipForm = this.fb.group({
       payslipId: [''],                                   // 급여명세서 ID
@@ -92,13 +89,14 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
       payslipPaymentYmd: ['', [FormValidator.required]], // 급여명세서 지급일자
       payslipNote: ['', [FormValidator.maxLength(255)]], // 급여명세서 비고
       rankCode: ['', [FormValidator.required]],          // 직위 코드
-    });
 
-    this.payslipDetailForm = this.fb.group({
-      salaryId: [''],         // 급여내역 상세 ID
-      salaryTypeCode: [''],   // 급여내역 구분 코드
-      salaryAmountCode: [''], // 급여내역 금액 코드
-      salaryAmount: [''],     // 급여내역 금액
+      // 급여명세서 급여내역 상세
+      payslipSalaryDetail: this.fb.group({
+        salaryId: [''],         // 급여내역 상세 ID
+        salaryTypeCode: [''],   // 급여내역 구분 코드
+        salaryAmountCode: [''], // 급여내역 금액 코드
+        salaryAmount: [''],     // 급여내역 금액
+      }),
     });
 
     // 급여명세서 신규 추가일경우 근무이력을 조회해서 필요한 정보를 설정한다.
@@ -111,12 +109,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
 
   /** 급여명세서를 저장한다. */
   onSubmit(value): void {
-
-  }
-
-  /** 급여명세서 급여내역 상세를 저장한다. */
-  onSubmitDetail(value): void {
-
+    console.log(value);
   }
 
   /** 급여지급일 input 값을 변경한다. */

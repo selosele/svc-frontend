@@ -12,7 +12,7 @@ import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { dateUtil } from '@app/shared/utils';
-import { SalaryPayslipDetailComponent } from '../salary-payslip-detail/salary-payslip-detail.component';
+import { SalaryPayslipSalaryDetailComponent } from '../salary-payslip-salary-detail/salary-payslip-salary-detail.component';
 import { SaveSalaryPayslipComponent } from '../save-salary-payslip/save-salary-payslip.component';
 
 @Component({
@@ -182,7 +182,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
   
-      this.dialogService.open(SalaryPayslipDetailComponent, {
+      this.dialogService.open(SalaryPayslipSalaryDetailComponent, {
         focusOnShow: false,
         header: '급여명세서 조회',
         width: '1000px',
