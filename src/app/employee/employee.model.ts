@@ -1,5 +1,5 @@
 import { HttpRequestDTOBase } from '@app/shared/models';
-import { SaveWorkHistoryRequestDTO, WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { SaveWorkHistoryRequestDTO, WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 
 /** 직원 추가/수정 요청 DTO */
 export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
@@ -54,7 +54,7 @@ export class EmployeeResponseDTO {
   /** 사용자 마지막 로그인 일시 */
   lastLoginDt?: string;
 
-  /** 근무이력 정보 */
-  workHistories?: WorkHistoryResponseDTO[];
+  /** 근무이력 목록 */
+  workHistoryList?: WorkHistoryResultDTO[];
 
 }

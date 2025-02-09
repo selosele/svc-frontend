@@ -11,7 +11,7 @@ import { FormValidator } from '@app/shared/components/form/form-validator/form-v
 import { UiMessageService } from '@app/shared/services';
 import { isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
-import { SaveWorkHistoryRequestDTO, WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { SaveWorkHistoryRequestDTO, WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
@@ -41,7 +41,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
   }
 
   /** 회사 정보 */
-  @Input() detail: WorkHistoryResponseDTO = null;
+  @Input() detail: WorkHistoryResultDTO = null;
 
   /** 회사 상세 조회 폼 */
   detailForm: FormGroup;
@@ -116,7 +116,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
       this.workHistoryService.addWorkHistory$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('workHistoryId').patchValue(response.workHistoryId);
+        this.detailForm.get('workHistoryId').patchValue(response.workHistory.workHistoryId);
         this.refresh.emit();
       });
     }

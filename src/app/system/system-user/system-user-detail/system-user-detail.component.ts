@@ -182,7 +182,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
         roles: this.detail?.roles?.map(x => x.roleId) || this.defaultRoles,
         employee: {
           ...this.detail?.employee,
-          workHistory: this.detail?.employee?.workHistories[0],
+          workHistory: this.detail?.employee?.workHistoryList[0],
         },
       });
     }

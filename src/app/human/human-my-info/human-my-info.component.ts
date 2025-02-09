@@ -12,7 +12,7 @@ import { isEmpty } from '@app/shared/utils';
 import { EmployeeService } from '@app/employee/employee.service';
 import { CompanyService } from '@app/company/company.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
-import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
 import { CompanyApplyResultDTO } from '@app/company/company.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
@@ -77,7 +77,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** 근무이력 목록 */
   get workHistoryList() {
     const employee = this.employeeStore.select<EmployeeResponseDTO>('employee').value;
-    return employee.workHistories;
+    return employee.workHistoryList;
   }
 
   /** 회사등록신청 목록 */
@@ -106,7 +106,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     { field: 'joinYmd',     header: '입사일자' },
     { field: 'quitYmd',     header: '퇴사일자' },
     { header: '재직기간',
-      valueGetter: (data: WorkHistoryResponseDTO) => {
+      valueGetter: (data: WorkHistoryResultDTO) => {
         if (data.workDiffY === 0) return `${data.workDiffM}개월`;
         if (data.workDiffM === 0) return `${data.workDiffY}년`;
         
@@ -116,10 +116,10 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   ];
 
   /** 근무이력정보 */
-  workHistoryDetail: WorkHistoryResponseDTO = null;
+  workHistoryDetail: WorkHistoryResultDTO = null;
 
   /** 근무이력정보 테이블 선택된 행 */
-  selection1: WorkHistoryResponseDTO;
+  selection1: WorkHistoryResultDTO;
 
   /** 회사등록신청현황 테이블 컬럼 */
   cols2 = [
@@ -217,7 +217,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   onRowSelect1(event: any): void {
     this.workHistoryService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
     .subscribe((response) => {
-      this.workHistoryDetail = response;
+      this.workHistoryDetail = response.workHistory;
       this.splitter1.show();
     });
   }
@@ -323,7 +323,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   private setMyInfoFormData(employee: EmployeeResponseDTO): void {
     this.employeeForm.patchValue({
       ...employee,
-      workHistory: employee?.workHistories[0],
+      workHistory: employee?.workHistoryList[0],
     });
   }
 

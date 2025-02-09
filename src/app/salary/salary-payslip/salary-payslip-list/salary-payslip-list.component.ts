@@ -8,7 +8,7 @@ import { PayslipService } from '@app/payslip/payslip.service';
 import { UiDialogService, UiLoadingService } from '@app/shared/services';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO, PayslipResultDTO } from '@app/payslip/payslip.model';
-import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { dateUtil } from '@app/shared/utils';
@@ -71,7 +71,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.payslipStore.select<WorkHistoryResponseDTO[]>('payslipWorkHistoryList').value;
+    return this.payslipStore.select<WorkHistoryResultDTO[]>('payslipWorkHistoryList').value;
   }
 
   /** 선택된 회사 탭의 index */

@@ -16,7 +16,7 @@ export class WorkHistoryService {
     const { employeeId } = dto;
     const params = this.httpService.createParams(dto);
 
-    return this.http.get<WorkHistoryResponseDTO[]>(`/hm/employees/${employeeId}/companies`, { params });
+    return this.http.get<WorkHistoryResponseDTO>(`/hm/employees/${employeeId}/companies`, { params });
   }
 
   /** 근무이력을 조회한다. */

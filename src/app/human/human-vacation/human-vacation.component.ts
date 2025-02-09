@@ -22,7 +22,7 @@ import { VacationService } from '@app/vacation/vacation.service';
 import { UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
 import { dateUtil } from '@app/shared/utils';
-import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 
 @Component({
   standalone: true,
@@ -116,7 +116,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.vacationStore.select<WorkHistoryResponseDTO[]>('vacationWorkHistoryList').value;
+    return this.vacationStore.select<WorkHistoryResultDTO[]>('vacationWorkHistoryList').value;
   }
 
   ngOnInit() {
@@ -223,8 +223,8 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       employeeId: this.user?.employeeId,
     })
     .subscribe((response) => {
-      this.vacationStore.update('vacationWorkHistoryList', response);
-      this.vacationStore.update('vacationWorkHistoryTabList', response.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
+      this.vacationStore.update('vacationWorkHistoryList', response.workHistoryList);
+      this.vacationStore.update('vacationWorkHistoryTabList', response.workHistoryList.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
 
       this.caculateVacationForm.get('joinYmd').patchValue(response[this.activeIndex]?.joinYmd);
       this.caculateVacationForm.get('quitYmd').patchValue(response[this.activeIndex]?.quitYmd);

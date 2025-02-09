@@ -55,8 +55,8 @@ export class SaveWorkHistoryRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 근무이력 응답 DTO */
-export class WorkHistoryResponseDTO {
+/** 근무이력 조회 결과 DTO */
+export class WorkHistoryResultDTO {
 
   /** 근무이력 ID */
   workHistoryId?: number;
@@ -111,5 +111,16 @@ export class WorkHistoryResponseDTO {
 
   /** 잔여 연차 개수 */
   vacationRemainCountByFiscalYear?: number;
+
+}
+
+/** 근무이력 응답 DTO */
+export class WorkHistoryResponseDTO {
+
+  /** 근무이력 */
+  workHistory?: WorkHistoryResultDTO;
+  
+  /** 근무이력 목록 */
+  workHistoryList?: WorkHistoryResultDTO[];
 
 }

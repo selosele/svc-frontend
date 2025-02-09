@@ -4,7 +4,7 @@ import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService } from '@app/shared/services';
 import { VacationStore } from './vacation.store';
 import { AddVacationCalcRequestDTO, GetVacationByMonthRequestDTO, GetVacationRequestDTO, GetVacationStatsRequestDTO, SaveVacationRequestDTO, VacationByMonthResponseDTO, VacationCalcResponseDTO, VacationDataStateDTO, VacationResponseDTO, VacationStatsResponseDTO } from '@app/vacation/vacation.model';
-import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 
 @Injectable({ providedIn: 'root' })
 export class VacationService {
@@ -67,14 +67,14 @@ export class VacationService {
 
   /** 테이블 문구를 설정한다. */
   setVacationTableContent(index: number): void {
-    const workHistory = this.vacationStore.select<WorkHistoryResponseDTO[]>('vacationWorkHistoryList').value[index];
+    const workHistory = this.vacationStore.select<WorkHistoryResultDTO[]>('vacationWorkHistoryList').value[index];
 
     this.vacationStore.update('vacationTableTitle', this.showVacationCount(workHistory));
     this.vacationStore.update('vacationTableText', this.setVacationTableText(workHistory));
   }
 
   /** 테이블 텍스트를 설정한다. */
-  setVacationTableText(workHistory: WorkHistoryResponseDTO): string {
+  setVacationTableText(workHistory: WorkHistoryResultDTO): string {
     let text = '';
     const { annualTypeCode, joinYmd, quitYmd, vacationTotalCountByJoinYmd } = workHistory;
     switch (annualTypeCode) {
@@ -102,7 +102,7 @@ export class VacationService {
   }
 
   /** 잔여 휴가를 표출한다. */
-  showVacationCount(workHistory: WorkHistoryResponseDTO): string {
+  showVacationCount(workHistory: WorkHistoryResultDTO): string {
     const { annualTypeCode, vacationTotalCountByJoinYmd, vacationTotalCountByFiscalYear, vacationRemainCountByJoinYmd, vacationRemainCountByFiscalYear } = workHistory;
     switch (annualTypeCode) {
 

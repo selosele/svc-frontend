@@ -5,7 +5,7 @@ import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { PayslipStore } from '@app/payslip/payslip.store';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
-import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
+import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { SalaryPayslipListComponent } from './salary-payslip-list/salary-payslip-list.component';
@@ -82,7 +82,7 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.payslipStore.select<WorkHistoryResponseDTO[]>('payslipWorkHistoryList').value;
+    return this.payslipStore.select<WorkHistoryResultDTO[]>('payslipWorkHistoryList').value;
   }
 
   ngOnInit() {
@@ -114,8 +114,8 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
       employeeId: this.user?.employeeId,
     })
     .subscribe((response) => {
-      this.payslipStore.update('payslipWorkHistoryList', response);
-      this.payslipStore.update('payslipWorkHistoryTabList', response.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
+      this.payslipStore.update('payslipWorkHistoryList', response.workHistoryList);
+      this.payslipStore.update('payslipWorkHistoryTabList', response.workHistoryList.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
       this.setPayslipTableContent();
     });
   }
