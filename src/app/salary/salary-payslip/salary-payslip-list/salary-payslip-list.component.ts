@@ -79,6 +79,15 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     return this.payslipStore.select<number>('payslipWorkHistoryTabIndex').value;
   }
 
+  /** 급여내역 구분 코드 데이터 목록 */
+  salaryTypecodes: DropdownData[];
+
+  /** 지급내역 금액 코드 데이터 목록 */
+  salaryAmountA00Codes: DropdownData[];
+
+  /** 공제내역 금액 코드 데이터 목록 */
+  salaryAmountB00Codes: DropdownData[];
+
   /** 직위 코드 데이터 목록 */
   rankCodes: DropdownData[];
 
@@ -119,6 +128,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   ngOnInit(): void {
     this.route.data.subscribe(({ code }) => {
+      this.salaryTypecodes = code['SALARY_TYPE_00'];
+      this.salaryAmountA00Codes = code['SALARY_AMOUNT_A00'];
+      this.salaryAmountB00Codes = code['SALARY_AMOUNT_B00'];
       this.rankCodes = code['RANK_00'];
     });
 
@@ -207,6 +219,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       width: '1000px',
       data: {
         workHistoryId: this.workHistoryId,
+        salaryTypecodes: this.salaryTypecodes,
+        salaryAmountA00Codes: this.salaryAmountA00Codes,
+        salaryAmountB00Codes: this.salaryAmountB00Codes,
         rankCodes: this.rankCodes,
       },
     });
