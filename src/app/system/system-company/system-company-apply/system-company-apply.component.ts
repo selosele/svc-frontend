@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { CompanyApplyResponseDTO } from '@app/company/company.model';
+import { CompanyApplyResultDTO } from '@app/company/company.model';
 import { UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { CompanyStore } from '@app/company/company.store';
@@ -35,7 +35,7 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
 
   /** 회사등록신청 목록 */
   get companyApplyList() {
-    return this.companyStore.select<CompanyApplyResponseDTO[]>('companyApplyList').value;
+    return this.companyStore.select<CompanyApplyResultDTO[]>('companyApplyList').value;
   }
 
   /** 회사등록신청 목록 데이터 로드 완료 여부 */
@@ -51,7 +51,7 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
     { field: 'applyDt',            header: '신청일시' },
     { field: 'applicantName',      header: '신청자명' },
     { field: 'applyStateCodeName', header: '신청상태',
-      valueGetter: (data: CompanyApplyResponseDTO) => {
+      valueGetter: (data: CompanyApplyResultDTO) => {
         const colorClass = this.getColorClass(data.applyStateCode);
         return `<span class="px-3 py-1 ${colorClass}">${data.applyStateCodeName}</span>`;
       }
@@ -59,10 +59,10 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
   ];
 
   /** 회사등록신청 정보 */
-  detail: CompanyApplyResponseDTO = null;
+  detail: CompanyApplyResultDTO = null;
 
   /** 테이블 선택된 행 */
-  selection: CompanyApplyResponseDTO;
+  selection: CompanyApplyResultDTO;
 
   /** 데이터 새로고침 이벤트 */
   @Output() refresh = new EventEmitter<void>();
@@ -93,7 +93,7 @@ export class SystemCompanyApplyComponent extends CoreBaseComponent implements On
   onRowSelect(event: TableRowSelectEvent): void {
     this.companyService.getCompanyApply$(event.data['companyApplyId'])
     .subscribe((response) => {
-      this.detail = response;
+      this.detail = response.companyApply;
       this.splitter.show();
     });
   }

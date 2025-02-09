@@ -14,7 +14,7 @@ import { CompanyService } from '@app/company/company.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { WorkHistoryResponseDTO } from '@app/work-history/work-history.model';
 import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
-import { CompanyApplyResponseDTO } from '@app/company/company.model';
+import { CompanyApplyResultDTO } from '@app/company/company.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
@@ -75,14 +75,14 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 근무이력 목록 */
-  get workHistoryList(): WorkHistoryResponseDTO[] {
+  get workHistoryList() {
     const employee = this.employeeStore.select<EmployeeResponseDTO>('employee').value;
     return employee.workHistories;
   }
 
   /** 회사등록신청 목록 */
-  get companyApplyList(): CompanyApplyResponseDTO[] {
-    return this.companyStore.select<CompanyApplyResponseDTO[]>('companyApplyList').value
+  get companyApplyList() {
+    return this.companyStore.select<CompanyApplyResultDTO[]>('companyApplyList').value
   }
 
   /** 비밀번호 변경 폼 */
@@ -129,7 +129,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     { field: 'applyContent',       header: '내용' },
     { field: 'applyDt',            header: '신청일시' },
     { field: 'applyStateCodeName', header: '신청상태',
-      valueGetter: (data: CompanyApplyResponseDTO) => {
+      valueGetter: (data: CompanyApplyResultDTO) => {
         const colorClass = this.getColorClass(data.applyStateCode);
         return `<span class="px-3 py-1 ${colorClass}">${data.applyStateCodeName}</span>`;
       }
@@ -137,10 +137,10 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   ];
 
   /** 회사등록신청 정보 */
-  companyApplyDetail: CompanyApplyResponseDTO = null;
+  companyApplyDetail: CompanyApplyResultDTO = null;
 
   /** 회사등록신청현황 테이블 선택된 행 */
-  selection2: CompanyApplyResponseDTO;
+  selection2: CompanyApplyResultDTO;
 
   ngOnInit() {
     this.route.data.subscribe(({ code }) => {
@@ -253,7 +253,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   onRowSelect2(event: any): void {
     this.companyService.getCompanyApply$(event.data['companyApplyId'])
     .subscribe((response) => {
-      this.companyApplyDetail = response;
+      this.companyApplyDetail = response.companyApply;
       this.splitter2.show();
     });
   }

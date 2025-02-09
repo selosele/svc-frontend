@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
-import { roles } from '@app/shared/utils';
+import { dateUtil, roles } from '@app/shared/utils';
 
 /**
  * 모든 컴포넌트의 기본이 되는 컴포넌트.
@@ -41,6 +41,11 @@ export class CoreBaseComponent {
   /** 메뉴 URL로 메뉴 ID를 찾아서 반환한다. */
   protected getMenuIdByMenuUrl(menuUrl: string): number {
     return this.menuService.getMenuIdByMenuUrl(menuUrl);
+  }
+
+  /** Angular 템플릿에서 사용할 수 있도록 string -> Date로 변환 후 반환한다. */
+  protected ngDate(date: string, format = 'YYYY-MM-DD'): Date {
+    return new Date(dateUtil(date).format(format));
   }
 
 }

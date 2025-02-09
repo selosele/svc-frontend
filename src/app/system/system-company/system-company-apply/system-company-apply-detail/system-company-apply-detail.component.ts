@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DropdownChangeEvent } from 'primeng/dropdown';
 import { UiMessageService } from '@app/shared/services';
 import { CompanyService } from '@app/company/company.service';
-import { CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from '@app/company/company.model';
+import { CompanyApplyResultDTO, SaveCompanyApplyRequestDTO } from '@app/company/company.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
 import { FormValidator, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
@@ -33,7 +33,7 @@ export class SystemCompanyApplyDetailComponent implements OnInit, OnChanges {
   ) {}
 
   /** 회사등록신청 정보 */
-  @Input() detail: CompanyApplyResponseDTO = null;
+  @Input() detail: CompanyApplyResultDTO = null;
 
   /** 회사등록신청 상세 조회 폼 */
   detailForm: FormGroup;

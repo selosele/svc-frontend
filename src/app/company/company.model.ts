@@ -233,8 +233,8 @@ export class SaveCompanyApplyRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 회사등록신청 응답 DTO */
-export class CompanyApplyResponseDTO {
+/** 회사등록신청 조회 결과 DTO */
+export class CompanyApplyResultDTO {
 
   /** 회사등록신청 ID */
   companyApplyId?: number;
@@ -271,5 +271,16 @@ export class CompanyApplyResponseDTO {
 
   /** 반려일시 */
   rejectDt?: string;
+
+}
+
+/** 회사등록신청 응답 DTO */
+export class CompanyApplyResponseDTO {
+
+  /** 회사등록신청 */
+  companyApply?: CompanyApplyResultDTO;
+
+  /** 회사등록신청 목록 */
+  companyApplyList?: CompanyApplyResultDTO[];
 
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CompanyService } from '@app/company/company.service';
-import { CompanyApplyResponseDTO, SaveCompanyApplyRequestDTO } from '@app/company/company.model';
+import { CompanyApplyResultDTO, SaveCompanyApplyRequestDTO } from '@app/company/company.model';
 import { UiMessageService } from '@app/shared/services';
 import { isObjectEmpty } from '@app/shared/utils';
 import { FormValidator, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -29,7 +29,7 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
   ) {}
 
   /** 회사등록신청 정보 */
-  @Input() detail: CompanyApplyResponseDTO = null;
+  @Input() detail: CompanyApplyResultDTO = null;
 
   /** 회사등록신청 상세 조회 폼 */
   detailForm: FormGroup;

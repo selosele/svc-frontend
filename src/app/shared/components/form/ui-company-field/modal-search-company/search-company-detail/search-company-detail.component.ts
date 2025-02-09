@@ -61,7 +61,7 @@ export class SearchCompanyDetailComponent implements OnInit {
     if (!confirm) return;
 
     this.companyService.addCompanyApply$(value)
-    .subscribe(() => {
+    .subscribe((response) => {
       this.messageService.toastSuccess('정상적으로 등록신청되었어요. 마이페이지 > 회사등록신청현황에서 확인해주세요.');
     });
   }

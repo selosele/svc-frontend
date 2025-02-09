@@ -55,9 +55,9 @@ export class CompanyService {
   listCompanyApply(dto?: GetCompanyApplyRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<CompanyApplyResponseDTO[]>('/hm/company-applies', { params })
+    this.http.get<CompanyApplyResponseDTO>('/hm/company-applies', { params })
     .subscribe((response) => {
-      this.companyStore.update('companyApplyList', response);
+      this.companyStore.update('companyApplyList', response.companyApplyList);
       this.companyStore.update('companyApplyListDataLoad', true);
     });
   }
@@ -69,7 +69,7 @@ export class CompanyService {
 
   /** 회사등록신청을 추가한다. */
   addCompanyApply$(dto: SaveCompanyApplyRequestDTO) {
-    return this.http.post<void>('/hm/company-applies', dto);
+    return this.http.post<CompanyApplyResponseDTO>('/hm/company-applies', dto);
   }
 
   /** 회사등록신청을 수정한다. */
