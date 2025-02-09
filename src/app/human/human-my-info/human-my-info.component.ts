@@ -13,7 +13,7 @@ import { EmployeeService } from '@app/employee/employee.service';
 import { CompanyService } from '@app/company/company.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
-import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
+import { EmployeeResultDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
 import { CompanyApplyResultDTO } from '@app/company/company.model';
 import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -76,7 +76,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    const employee = this.employeeStore.select<EmployeeResponseDTO>('employee').value;
+    const employee = this.employeeStore.select<EmployeeResultDTO>('employee').value;
     return employee.workHistoryList;
   }
 
@@ -151,7 +151,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
     this.initForm();
 
-    if (isEmpty(this.employeeStore.select<EmployeeResponseDTO>('employee').value) && this.user) {
+    if (isEmpty(this.employeeStore.select<EmployeeResultDTO>('employee').value) && this.user) {
       this.getEmployee();
     }
     this.setMyInfoForm();
@@ -314,13 +314,13 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 직원 정보 폼을 설정한다. */
   private setMyInfoForm(): void {
-    this.employeeStore.select<EmployeeResponseDTO>('employee').asObservable().subscribe((data) => {
+    this.employeeStore.select<EmployeeResultDTO>('employee').asObservable().subscribe((data) => {
       this.setMyInfoFormData(data);
     });
   }
 
   /** 직원 정보 폼 데이터를 설정한다. */
-  private setMyInfoFormData(employee: EmployeeResponseDTO): void {
+  private setMyInfoFormData(employee: EmployeeResultDTO): void {
     this.employeeForm.patchValue({
       ...employee,
       workHistory: employee?.workHistoryList[0],

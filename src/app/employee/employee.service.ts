@@ -15,7 +15,7 @@ export class EmployeeService {
   getEmployee(employeeId: number): void {
     this.http.get<EmployeeResponseDTO>(`/hm/employees/${employeeId}`)
     .subscribe((response) => {
-      this.employeeStore.update('employee', response);
+      this.employeeStore.update('employee', response.employee);
       this.employeeStore.update('employeeDataLoad', true);
     });
   }

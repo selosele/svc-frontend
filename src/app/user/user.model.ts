@@ -1,4 +1,4 @@
-import { EmployeeResponseDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
+import { EmployeeResultDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
 import { HttpRequestDTOBase } from '@app/shared/models';
 
 /** 사용자 조회 요청 DTO */
@@ -48,7 +48,7 @@ export class UserResultDTO {
   roles?: UserRoleResultDTO[];
 
   /** 직원 정보 */
-  employee?: EmployeeResponseDTO;
+  employee?: EmployeeResultDTO;
     
 }
 

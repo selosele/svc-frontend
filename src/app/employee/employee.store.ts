@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StoreService } from '@app/shared/services';
-import { EmployeeResponseDTO } from './employee.model';
+import { EmployeeResultDTO } from './employee.model';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeStore extends StoreService {
@@ -11,8 +11,8 @@ export class EmployeeStore extends StoreService {
 
   override init() {
     this.creates([
-      { key: 'employee', defaultValue: null as EmployeeResponseDTO }, // 직원 정보
-      { key: 'employeeDataLoad', defaultValue: false },               // 직원 정보 데이터 로드 완료 여부
+      { key: 'employee', defaultValue: null as EmployeeResultDTO }, // 직원 정보
+      { key: 'employeeDataLoad', defaultValue: false },             // 직원 정보 데이터 로드 완료 여부
     ]);
   }
 

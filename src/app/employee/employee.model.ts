@@ -27,8 +27,8 @@ export class SaveEmployeeRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 직원 응답 DTO */
-export class EmployeeResponseDTO {
+/** 직원 조회 결과 DTO */
+export class EmployeeResultDTO {
 
   /** 직원 ID */
   employeeId?: number;
@@ -56,5 +56,16 @@ export class EmployeeResponseDTO {
 
   /** 근무이력 목록 */
   workHistoryList?: WorkHistoryResultDTO[];
+
+}
+
+/** 직원 응답 DTO */
+export class EmployeeResponseDTO {
+
+  /** 직원 */
+  employee?: EmployeeResultDTO;
+
+  /** 직원 목록 */
+  employeeList?: EmployeeResultDTO[];
 
 }
