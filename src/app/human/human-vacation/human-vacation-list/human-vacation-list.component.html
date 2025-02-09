@@ -1,4 +1,4 @@
-@if (!vacationListDataLoad) {
+@if (!vacationResponseDataLoad) {
   <ui-skeleton />
   <ui-skeleton />
   <ui-skeleton />
@@ -13,7 +13,7 @@
       [useExportExcel]="true"
       [emptymessage]="'휴가 기록이 없어요. 휴가를 사용한 적이 있다면 등록해보세요!'"
       [cols]="cols"
-      [data]="vacationList"
+      [data]="vacationResponse.vacationList"
       [dataKey]="'vacationId'"
       [selection]="selection"
       [paginator]="true"

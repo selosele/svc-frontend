@@ -13,7 +13,7 @@ export class VacationStore extends StoreService {
 
   override init() {
     this.creates([
-      { key: 'vacationList', defaultValue: null as VacationDataStateDTO },              // 휴가 목록
+      { key: 'vacationResponse', defaultValue: null as VacationDataStateDTO },          // 휴가 정보
       { key: 'vacationTableTitle', defaultValue: null as string },                      // 휴가 탭별 테이블 타이틀
       { key: 'vacationTableText', defaultValue: null as string },                       // 휴가 탭별 테이블 텍스트
       { key: 'vacationStatResponse', defaultValue: null as VacationStatsResponseDTO },  // 휴가 통계 정보

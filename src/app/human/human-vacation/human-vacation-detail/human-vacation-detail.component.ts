@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SaveVacationRequestDTO, VacationResponseDTO } from '@app/vacation/vacation.model';
+import { SaveVacationRequestDTO, VacationResultDTO } from '@app/vacation/vacation.model';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
@@ -42,7 +42,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   }
 
   /** 휴가 정보 */
-  @Input() detail: VacationResponseDTO = null;
+  @Input() detail: VacationResultDTO = null;
 
   /** 휴가 상세 조회 폼 */
   detailForm: FormGroup;
@@ -131,8 +131,8 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       this.vacationService.addVacation$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.detailForm.get('vacationId').patchValue(response.vacationId);
-        this.refresh.emit(response.workHistoryId);
+        this.detailForm.get('vacationId').patchValue(response.vacation.vacationId);
+        this.refresh.emit(response.vacation.workHistoryId);
       });
     }
     // 있으면 수정 API를 탄다.

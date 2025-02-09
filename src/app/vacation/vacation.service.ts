@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { HttpService } from '@app/shared/services';
 import { VacationStore } from './vacation.store';
-import { AddVacationCalcRequestDTO, GetVacationByMonthRequestDTO, GetVacationRequestDTO, GetVacationStatsRequestDTO, SaveVacationRequestDTO, VacationByMonthResponseDTO, VacationCalcResponseDTO, VacationDataStateDTO, VacationResponseDTO, VacationStatsResponseDTO } from '@app/vacation/vacation.model';
+import { AddVacationCalcRequestDTO, GetVacationByMonthRequestDTO, GetVacationRequestDTO, GetVacationStatsRequestDTO, SaveVacationRequestDTO, VacationByMonthResponseDTO, VacationCalcResponseDTO, VacationResponseDTO, VacationStatsResponseDTO } from '@app/vacation/vacation.model';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 
 @Injectable({ providedIn: 'root' })
@@ -18,7 +18,7 @@ export class VacationService {
   /** 휴가 목록을 조회한다. */
   listVacation$(dto: GetVacationRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<VacationResponseDTO[]>('/hm/vacations', { params });
+    return this.http.get<VacationResponseDTO>('/hm/vacations', { params });
   }
 
   /** 휴가를 조회한다. */
@@ -44,7 +44,7 @@ export class VacationService {
 
   /** 휴가 계산 설정 목록을 조회한다. */
   listVacationCalc$(workHistoryId: number) {
-    return this.http.get<VacationCalcResponseDTO[]>(`/hm/vacations/calcs/${workHistoryId}`);
+    return this.http.get<VacationCalcResponseDTO>(`/hm/vacations/calcs/${workHistoryId}`);
   }
 
   /** 휴가 계산 설정을 추가한다. */
@@ -56,7 +56,7 @@ export class VacationService {
   /** 휴가 통계 목록을 조회한다. */
   listVacationStats$(dto: GetVacationStatsRequestDTO) {
     const params = this.httpService.createParams(dto);
-    return this.http.get<VacationStatsResponseDTO[]>('/hm/vacations/stats', { params });
+    return this.http.get<VacationStatsResponseDTO>('/hm/vacations/stats', { params });
   }
 
   /** 월별 휴가사용일수 목록을 조회한다. */

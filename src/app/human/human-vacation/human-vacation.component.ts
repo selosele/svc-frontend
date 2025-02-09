@@ -226,8 +226,8 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       this.vacationStore.update('vacationWorkHistoryList', response.workHistoryList);
       this.vacationStore.update('vacationWorkHistoryTabList', response.workHistoryList.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
 
-      this.caculateVacationForm.get('joinYmd').patchValue(response[this.activeIndex]?.joinYmd);
-      this.caculateVacationForm.get('quitYmd').patchValue(response[this.activeIndex]?.quitYmd);
+      this.caculateVacationForm.get('joinYmd').patchValue(response.workHistoryList[this.activeIndex]?.joinYmd);
+      this.caculateVacationForm.get('quitYmd').patchValue(response.workHistoryList[this.activeIndex]?.quitYmd);
       this.vacationService.setVacationTableContent(this.activeIndex);
     });
   }
@@ -238,9 +238,9 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     .subscribe((response) => {
 
       // 사용자 지정 휴가계산설정이 있으면 설정해주고
-      if (response?.length > 0) {
-        this.caculateVacationForm.get('annualTypeCode').patchValue(response[0].annualTypeCode);
-        this.caculateVacationForm.get('vacationTypeCodes').patchValue(response.map(x => x.vacationTypeCode));
+      if (response.vacationCalcList?.length > 0) {
+        this.caculateVacationForm.get('annualTypeCode').patchValue(response.vacationCalcList[0].annualTypeCode);
+        this.caculateVacationForm.get('vacationTypeCodes').patchValue(response.vacationCalcList.map(x => x.vacationTypeCode));
       }
       // 없으면 기본 값을 설정한다.
       else {

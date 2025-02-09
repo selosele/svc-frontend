@@ -49,8 +49,8 @@ export class SaveVacationRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 휴가 응답 DTO */
-export class VacationResponseDTO {
+/** 휴가 조회 결과 DTO */
+export class VacationResultDTO {
 
   /** 휴가 ID */
   vacationId?: number;
@@ -84,6 +84,17 @@ export class VacationResponseDTO {
 
 }
 
+/** 휴가 응답 DTO */
+export class VacationResponseDTO {
+
+  /** 휴가 */
+  vacation?: VacationResultDTO;
+
+  /** 휴가 목록 */
+  vacationList?: VacationResultDTO[];
+
+}
+
 /** 휴가 계산 설정 추가 요청 DTO */
 export class AddVacationCalcRequestDTO extends HttpRequestDTOBase {
 
@@ -101,8 +112,8 @@ export class AddVacationCalcRequestDTO extends HttpRequestDTOBase {
 
 }
 
-/** 휴가 계산 설정 응답 DTO */
-export class VacationCalcResponseDTO {
+/** 휴가 계산 설정 조회 결과 DTO */
+export class VacationCalcResultDTO {
 
   /** 휴가 계산 설정 ID */
   vacationCalcId?: number;
@@ -118,6 +129,17 @@ export class VacationCalcResponseDTO {
 
   /** 휴가 구분 코드 */
   vacationTypeCode?: string;
+
+}
+
+/** 휴가 계산 설정 응답 DTO */
+export class VacationCalcResponseDTO {
+
+  /** 휴가 계산 설정 */
+  vacationCalc?: VacationCalcResultDTO;
+
+  /** 휴가 계산 설정 목록 */
+  vacationCalcList?: VacationCalcResultDTO[];
 
 }
 
@@ -182,7 +204,7 @@ export class VacationStatsResponseDTO {
   statsList?: VacationStatsResultDTO[];
 
   /** 휴가 목록 */
-  vacationList?: VacationResponseDTO[];
+  vacationList?: VacationResultDTO[];
 
 }
 
@@ -227,7 +249,7 @@ export class VacationDataStateDTO {
 
   /** 근무이력 탭별 휴가 목록 및 데이터 로드 완료 여부 */
   [key: number]: {
-    data: VacationResponseDTO[],
+    data: VacationResponseDTO,
     dataLoad: boolean,
   };
 
