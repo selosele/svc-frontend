@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { UiSkeletonComponent } from '@app/shared/components/ui';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
@@ -23,7 +22,6 @@ import { TransformToDto } from '@app/shared/decorators';
     UiTextareaComponent,
     UiDateFieldComponent,
     UiDropdownComponent,
-    UiSkeletonComponent,
   ],
   selector: 'modal-save-salary-payslip',
   templateUrl: './save-salary-payslip.component.html',
