@@ -44,7 +44,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   /** 휴가 정보 */
   @Input() detail: VacationResultDTO = null;
 
-  /** 휴가 상세 조회 폼 */
+  /** 휴가 상세 조회 form */
   detailForm: FormGroup;
 
   /** 휴가 구분 코드 데이터 목록 */

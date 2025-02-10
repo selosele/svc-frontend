@@ -44,7 +44,7 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
     super();
   }
 
-  /** 로그인 폼 */
+  /** 로그인 form */
   loginForm: FormGroup;
 
   /** 로컬스토리지에 저장된 사용자 계정 */

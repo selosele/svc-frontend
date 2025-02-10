@@ -56,7 +56,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
     return isNotObjectEmpty(this.detail);
   }
 
-  /** 사용자 상세 조회 폼 */
+  /** 사용자 상세 조회 form */
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */

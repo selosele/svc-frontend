@@ -38,7 +38,7 @@ export class SystemCodeDetailComponent implements OnInit, OnChanges {
     return isNotObjectEmpty(this.detail);
   }
 
-  /** 코드 상세 조회 폼 */
+  /** 코드 상세 조회 form */
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */

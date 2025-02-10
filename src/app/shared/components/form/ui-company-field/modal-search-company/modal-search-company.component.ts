@@ -67,7 +67,7 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
   /** 회사 정보 */
   detail: CompanyResultDTO = null;
 
-  /** 회사 검색 폼 */
+  /** 회사 검색 form */
   searchForm: FormGroup;
 
   /** Open API로 조회한 회사 목록 */

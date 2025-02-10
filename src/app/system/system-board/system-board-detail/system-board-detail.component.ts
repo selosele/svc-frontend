@@ -37,7 +37,7 @@ export class SystemBoardDetailComponent implements OnInit, OnChanges {
   /** 게시판 정보 */
   @Input() detail: BoardResultDTO = null;
 
-  /** 게시판 상세 조회 폼 */
+  /** 게시판 상세 조회 form */
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */

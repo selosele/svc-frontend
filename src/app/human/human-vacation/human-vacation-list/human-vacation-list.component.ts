@@ -65,7 +65,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
     return list?.[this.workHistoryId]?.dataLoad ?? false;
   }
 
-  /** 휴가 검색 폼 */
+  /** 휴가 검색 form */
   searchForm: FormGroup;
 
   /** 휴가 정보 */
@@ -135,7 +135,7 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
     this.splitter.show();
   }
 
-  /** 휴가 검색 폼을 전송한다. */
+  /** 휴가 검색 form을 전송한다. */
   onSearchFormSubmit(): void {
     this.listVacation({
       ...this.searchForm.value,

@@ -36,10 +36,10 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
     super();
   }
 
-  /** 아이디 찾기 폼 */
+  /** 아이디 찾기 form */
   findAccountForm: FormGroup;
 
-  /** 비밀번호 찾기 폼 */
+  /** 비밀번호 찾기 form */
   findPasswordForm: FormGroup;
 
   /** 인증코드 label */
@@ -72,7 +72,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
     });
   }
 
-  /** 아이디 찾기 폼을 전송한다. */
+  /** 아이디 찾기 form을 전송한다. */
   onSubmitFindAccount(value: FindUserInfoRequestDTO): void {
     this.authService.findUserAccount$(value)
     .subscribe(() => {
@@ -80,7 +80,7 @@ export class FindMyInfoComponent extends CoreBaseComponent implements OnInit {
     });
   }
 
-  /** 비밀번호 찾기 폼을 전송한다. */
+  /** 비밀번호 찾기 form을 전송한다. */
   onSubmitFindPassword(value: FindUserInfoRequestDTO): void {
 
     // 1. 인증코드 발송

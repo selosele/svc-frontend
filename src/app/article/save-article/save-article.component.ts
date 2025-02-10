@@ -41,7 +41,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
   /** 게시글 정보 */
   @Input() detail: ArticleResultDTO = null;
 
-  /** 게시글 상세 조회 폼 */
+  /** 게시글 상세 조회 form */
   detailForm: FormGroup;
 
   /** 삭제 버튼 사용 여부 */

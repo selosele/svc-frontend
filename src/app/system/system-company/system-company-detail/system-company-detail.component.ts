@@ -30,7 +30,7 @@ export class SystemCompanyDetailComponent implements OnInit, OnChanges {
   /** 회사 정보 */
   @Input() detail: CompanyResultDTO = null;
 
-  /** 회사 상세 조회 폼 */
+  /** 회사 상세 조회 form */
   detailForm: FormGroup;
 
   /** 삭제 버튼 사용 여부 */

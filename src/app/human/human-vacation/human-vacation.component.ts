@@ -81,7 +81,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   /** 선택된 회사 탭의 근무이력 ID */
   activeWorkHistoryId: number;
 
-  /** 휴가 계산 폼 */
+  /** 휴가 계산 form */
   caculateVacationForm: FormGroup;
 
   /** 연차발생기준 코드 데이터 목록 */
@@ -193,7 +193,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     this.listWorkHistory();
   }
 
-  /** 휴가 계산 폼을 초기화한다. */
+  /** 휴가 계산 form을 초기화한다. */
   onReset(): void {
     // this.setAnnualTypeCode();
     this.listVacationCalc(this.activeWorkHistoryId);

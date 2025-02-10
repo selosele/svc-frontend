@@ -35,7 +35,7 @@ export function isObjectEmpty(value: object): boolean {
   return isEmpty(value) || Object.keys(value).length === 0;
 }
 
-/** 객체가 비었는지 확인한다. */
+/** 객체가 있는지 확인한다. */
 export function isNotObjectEmpty(value: object): boolean {
   return !isObjectEmpty(value);
 }

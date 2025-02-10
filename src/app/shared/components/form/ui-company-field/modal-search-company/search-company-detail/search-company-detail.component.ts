@@ -31,7 +31,7 @@ export class SearchCompanyDetailComponent implements OnInit {
     private companyService: CompanyService,
   ) {}
 
-  /** 회사 상세 조회 폼 */
+  /** 회사 상세 조회 form */
   detailForm: FormGroup;
 
   /** 데이터 새로고침 이벤트 */

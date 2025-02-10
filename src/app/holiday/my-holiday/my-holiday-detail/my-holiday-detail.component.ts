@@ -38,7 +38,7 @@ export class MyHolidayDetailComponent extends CoreBaseComponent implements OnIni
   /** 휴일 정보 */
   @Input() detail: HolidayResultDTO = null;
 
-  /** 휴일 상세 조회 폼 */
+  /** 휴일 상세 조회 form */
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */

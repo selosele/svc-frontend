@@ -91,7 +91,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   /** 직위 코드 데이터 목록 */
   rankCodes: DropdownData[];
 
-  /** 급여명세서 검색 폼 */
+  /** 급여명세서 검색 form */
   searchForm: FormGroup;
 
   /** 테이블 선택된 행 */
@@ -197,7 +197,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     this.refresh.emit();
   }
 
-  /** 급여명세서 검색 폼을 전송한다. */
+  /** 급여명세서 검색 form을 전송한다. */
   onSearchFormSubmit(): void {
     this.listPayslip({
       ...this.searchForm.value,

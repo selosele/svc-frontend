@@ -46,7 +46,7 @@ export class SystemMenuDetailComponent {
     return isNotObjectEmpty(this.detail);
   }
 
-  /** 메뉴 상세 조회 폼 */
+  /** 메뉴 상세 조회 form */
   detailForm: FormGroup;
 
   /** Y/N 데이터 목록 */

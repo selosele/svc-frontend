@@ -85,10 +85,10 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     return this.companyStore.select<CompanyApplyResultDTO[]>('companyApplyList').value
   }
 
-  /** 비밀번호 변경 폼 */
+  /** 비밀번호 변경 form */
   changePasswordForm: FormGroup;
 
-  /** 직원 정보 폼 */
+  /** 직원 정보 form */
   employeeForm: FormGroup;
 
   /** 성별 코드 데이터 목록 */
@@ -275,7 +275,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     this.splitter2.hide();
   }
 
-  /** 폼을 초기화한다. */
+  /** form을 초기화한다. */
   private initForm(): void {
     this.changePasswordForm = this.fb.group({
       currentPassword: ['', [FormValidator.required, FormValidator.maxLength(12)]],       // 현재 비밀번호
@@ -312,14 +312,14 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     });
   }
 
-  /** 직원 정보 폼을 설정한다. */
+  /** 직원 정보 form을 설정한다. */
   private setMyInfoForm(): void {
     this.employeeStore.select<EmployeeResultDTO>('employee').asObservable().subscribe((data) => {
       this.setMyInfoFormData(data);
     });
   }
 
-  /** 직원 정보 폼 데이터를 설정한다. */
+  /** 직원 정보 form 데이터를 설정한다. */
   private setMyInfoFormData(employee: EmployeeResultDTO): void {
     this.employeeForm.patchValue({
       ...employee,

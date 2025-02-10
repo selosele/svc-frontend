@@ -31,7 +31,7 @@ export class HumanMyInfoCompanyApplyDetailComponent implements OnInit, OnChanges
   /** 회사등록신청 정보 */
   @Input() detail: CompanyApplyResultDTO = null;
 
-  /** 회사등록신청 상세 조회 폼 */
+  /** 회사등록신청 상세 조회 form */
   detailForm: FormGroup;
 
   /** 삭제 버튼 사용 여부 */

@@ -43,7 +43,7 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
   /** 회사 정보 */
   @Input() detail: WorkHistoryResultDTO = null;
 
-  /** 회사 상세 조회 폼 */
+  /** 회사 상세 조회 form */
   detailForm: FormGroup;
 
   /** 직위 코드 데이터 목록 */
