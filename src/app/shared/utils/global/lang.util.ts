@@ -53,6 +53,15 @@ export function groupBy<T>(arr: T[], key: string): T[] {
 }
 
 /** 숫자를 천 단위 콤마기호와 함께 문자열로 반환한다. */
-export function numberWithCommas(value: number): string {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+export function numberWithCommas(value: number | string): string {
+  if (typeof value === 'number') {
+    if (!isFinite(value)) return '0'; // 숫자가 아닌 경우 0을 반환
+    value = value.toFixed(0);         // 소수점 이하 버리기
+  }
+  
+  if (typeof value === 'string') {
+    value = value.replace(/[^0-9.-]/g, ''); // 숫자, 마이너스, 소수점만 남기기
+  }
+
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
