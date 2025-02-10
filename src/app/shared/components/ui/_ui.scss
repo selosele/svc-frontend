@@ -38,34 +38,18 @@
     text-align: left;
   }
 
-  &.type1 {
+  // &.type1 {
 
-  }
+  // }
 
   &.type2 {
     th {
       border: 1px solid var(--surface-d);
       text-align: center;
-
-      &:first-child {
-        border-left: 0;
-      }
-
-      &:last-child {
-        border-right: 0;
-      }
     }
 
     td {
       border: 1px solid var(--surface-d);
-
-      &:first-child {
-        border-left: 0;
-      }
-
-      &:last-child {
-        border-right: 0;
-      }
     }
   
     thead {
