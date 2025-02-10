@@ -16,6 +16,7 @@
     [class.readonly]="readonly"
     (keyup)="onKeyup($event)"
     (blur)="onBlur($event)"
+    (input)="onInput($event)"
   >
   <ng-content select="[button]"></ng-content>
 </div>

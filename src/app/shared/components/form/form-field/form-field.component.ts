@@ -65,6 +65,8 @@ export class FormFieldComponent implements OnInit {
 
   /** 오류 메시지를 설정한다. */
   protected setErrorMessage(): void {
+    if (isObjectEmpty(this.control)) return;
+    
     const { errors } = this.control;
     
     if (isObjectEmpty(errors)) {
@@ -90,7 +92,7 @@ export class FormFieldComponent implements OnInit {
 
   /** 재귀 함수로 FormControl을 찾아서 반환한다. */
   private findControl(control: AbstractControl) {
-    const parent = control.parent;
+    const parent = control?.parent;
     if (!parent) return null;
 
     const formGroup = parent.controls;

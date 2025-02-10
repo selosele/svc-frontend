@@ -18,23 +18,23 @@ import { FormFieldComponent } from '../form-field/form-field.component';
 })
 export class UiCheckboxComponent extends FormFieldComponent {
 
-  /** 체크박스 change 이벤트 */
+  /** change 이벤트 */
   @Output() change? = new EventEmitter<CheckboxChangeEvent>();
 
-  /** 체크박스 blur 이벤트 */
+  /** blur 이벤트 */
   @Output() blur? = new EventEmitter<Event>();
 
   override ngOnInit() {
     super.ngOnInit();
   }
 
-  /** 체크박스 change 이벤트 */
+  /** change 이벤트 */
   protected onChange(event: CheckboxChangeEvent): void {
     this.setErrorMessage();
     this.change.emit(event);
   }
 
-  /** 체크박스 blur 이벤트 */
+  /** blur 이벤트 */
   protected onBlur(event: Event): void {
     this.setErrorMessage();
     this.blur.emit(event);

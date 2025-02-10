@@ -48,19 +48,19 @@ export class UiDateFieldComponent extends FormFieldComponent {
   /** 캘린더 팝업 위치 */
   @Input() appendTo = 'body';
 
-  /** 캘린더 input change 이벤트 */
+  /** change 이벤트 */
   @Output() input? = new EventEmitter<any>();
 
-  /** 캘린더 input blur 이벤트 */
+  /** blur 이벤트 */
   @Output() blur? = new EventEmitter<Event>();
 
-  /** 캘린더 input select 이벤트 */
+  /** select 이벤트 */
   @Output() select? = new EventEmitter<Date>();
 
-  /** 캘린더 input clear 이벤트 */
+  /** clear 이벤트 */
   @Output() clear? = new EventEmitter<any>();
 
-  /** 캘린더 input clear 버튼 클릭 이벤트 */
+  /** clear 버튼 클릭 이벤트 */
   @Output() clearClick? = new EventEmitter<any>();
 
   override ngOnInit() {
@@ -74,31 +74,31 @@ export class UiDateFieldComponent extends FormFieldComponent {
     }
   }
 
-  /** 캘린더 input change 이벤트 */
+  /** change 이벤트 */
   protected onInput(event: any): void {
     this.setErrorMessage();
     this.input.emit(event);
   }
 
-  /** 캘린더 input change 이벤트 */
+  /** change 이벤트 */
   protected onBlur(event: Event): void {
     this.setErrorMessage();
     this.blur.emit(event);
   }
 
-  /** 캘린더 input select 이벤트 */
+  /** select 이벤트 */
   protected onSelect(event: Date): void {
     this.setErrorMessage();
     this.select.emit(event);
   }
 
-  /** 캘린더 input clear 이벤트 */
+  /** clear 이벤트 */
   protected onClear(event: any): void {
     this.setErrorMessage();
     this.clear.emit(event);
   }
 
-  /** 캘린더 input clear 버튼 클릭 이벤트 */
+  /** clear 버튼 클릭 이벤트 */
   protected onClearClick(event: any): void {
     this.setErrorMessage();
     this.clearClick.emit(event);

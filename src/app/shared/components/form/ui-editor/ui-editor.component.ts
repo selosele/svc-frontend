@@ -23,10 +23,10 @@ export class UiEditorComponent extends FormFieldComponent {
   /** 에디터 height */
   @Input() height = '320px';
 
-  /** 에디터 init 이벤트 */
+  /** init 이벤트 */
   @Output() init? = new EventEmitter<EditorInitEvent>();
 
-  /** 에디터 change 이벤트 */
+  /** change 이벤트 */
   @Output() textChange? = new EventEmitter<EditorTextChangeEvent>();
 
   override ngOnInit() {
