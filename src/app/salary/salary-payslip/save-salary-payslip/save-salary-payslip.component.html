@@ -2,7 +2,7 @@
   {{ title }}
 </h2>
 
-<ui-form [form]="payslipForm" [useSubmit]="false" (submit)="onSubmit($event)">
+<ui-form [form]="payslipForm" (submit)="onSubmit($event)">
   <div class="ui-basic-table type1">
     <table>
       <caption>급여명세서 기본 정보</caption>
@@ -33,6 +33,7 @@
               [control]="payslipForm.get('payslipPaymentYmd')"
               [dateFormat]="'yy-mm-dd'"
               [placeholder]="'예) 2024-03-01'"
+              [showErrorMessage]="false"
               (select)="onPayslipPaymentYmdChange($event)"
               (clear)="onPayslipPaymentYmdChange()"
               (clearClick)="onPayslipPaymentYmdChange()"
@@ -51,79 +52,69 @@
     </table>
   </div>
 
-  <div class="ui-basic-table type2 mt-4">
-    <table>
-      <caption>급여명세서 세부 내역 - 지급(지급내역, 지급액), 공제(공제내역, 공제액)</caption>
-      <colgroup>
-        <col style="width: 25%;">
-        <col style="width: 25%;">
-        <col style="width: 25%;">
-        <col style="width: 25%;">
-      </colgroup>
-      <thead>
-        <tr>
-          <th scope="col" colspan="2">지급</th>
-          <th scope="col" colspan="2">공제</th>
-        </tr>
-        <tr>
-          <th scope="col">{{ salaryTypeA00code.label }}</th>
-          <th scope="col">지급액</th>
-          <th scope="col">{{ salaryTypeB00code.label }}</th>
-          <th scope="col">공제액</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">기본급</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-          <th scope="row">소득세</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">상여</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-          <th scope="row">지방소득세</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">인센티브</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-          <th scope="row">건강보험료정산</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">직책수당</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-          <th scope="row">장기요양보험정산</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">특별수당</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-          <th scope="row">연말정산소득세</th>
-          <td>
-            <ui-text-field [control]="payslipForm.get('payslipSalaryDetail.salaryAmount')" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="flex">
+    <div class="ui-basic-table type2 flex-grow-1 mt-4">
+      <table>
+        <caption>급여명세서 세부 내역 - 지급(지급내역, 지급액)</caption>
+        <colgroup>
+          <col style="width: 50%;">
+          <col style="width: 50%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col" colspan="2">지급</th>
+          </tr>
+          <tr>
+            <th scope="col">{{ salaryTypeA00code.label }}</th>
+            <th scope="col">지급액</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of salaryAmountA00Codes; track $index) {
+            <tr>
+              <th scope="row">{{ i.label }}</th>
+              <td>
+                <ui-text-field
+                  [control]="getPayslipSalaryDetailControl(i.value, 'salaryAmount')"
+                  (input)="onSalaryAmountChange($event, i.value, 'salaryAmount')"
+                />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ui-basic-table type2 flex-grow-1 mt-4">
+      <table>
+        <caption>급여명세서 세부 내역 - 공제(공제내역, 공제액)</caption>
+        <colgroup>
+          <col style="width: 50%;">
+          <col style="width: 50%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col" colspan="2">공제</th>
+          </tr>
+          <tr>
+            <th scope="col">{{ salaryTypeB00code.label }}</th>
+            <th scope="col">공제액</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of salaryAmountB00Codes; track $index) {
+            <tr>
+              <th scope="row">{{ i.label }}</th>
+              <td>
+                <ui-text-field
+                  [control]="getPayslipSalaryDetailControl(i.value, 'salaryAmount')"
+                  (input)="onSalaryAmountChange($event, i.value, 'salaryAmount')"
+                />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </ui-form>

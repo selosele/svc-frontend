@@ -11,7 +11,7 @@ import { GetPayslipRequestDTO, PayslipDataStateDTO, PayslipResponseDTO, PayslipR
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { UiButtonComponent, UiSkeletonComponent, UiTableComponent } from '@app/shared/components/ui';
 import { UiDateFieldComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { dateUtil } from '@app/shared/utils';
+import { dateUtil, isObjectEmpty } from '@app/shared/utils';
 import { SalaryPayslipSalaryDetailComponent } from '../salary-payslip-salary-detail/salary-payslip-salary-detail.component';
 import { SaveSalaryPayslipComponent } from '../save-salary-payslip/save-salary-payslip.component';
 
@@ -213,7 +213,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 급여명세서를 추가한다. */
   addPayslip(): void {
-    this.dialogService.open(SaveSalaryPayslipComponent, {
+    const modal = this.dialogService.open(SaveSalaryPayslipComponent, {
       focusOnShow: false,
       header: '급여명세서 입력하기',
       width: '1000px',
@@ -224,6 +224,15 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
         salaryAmountB00Codes: this.salaryAmountB00Codes,
         rankCodes: this.rankCodes,
       },
+    });
+
+    modal.onClose.subscribe((result) => {
+      if (isObjectEmpty(result)) return;
+
+      // 급여명세서 추가/수정/삭제
+      if (result.action === 'save') {
+        this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
+      }
     });
   }
 

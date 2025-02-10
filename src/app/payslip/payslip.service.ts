@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PayslipStore } from './payslip.store';
 import { HttpService } from '@app/shared/services';
-import { GetPayslipRequestDTO, PayslipResponseDTO, PayslipResultDTO } from './payslip.model';
+import { GetPayslipRequestDTO, PayslipResponseDTO, PayslipResultDTO, SavePayslipRequestDTO } from './payslip.model';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
 
@@ -26,6 +26,11 @@ export class PayslipService {
     const params = this.httpService.createParams(dto);
     const { payslipId } = dto;
     return this.http.get<PayslipResponseDTO>(`/sa/payslips/${payslipId}`, { params });
+  }
+
+  /** 급여명세서를 추가한다. */
+  addPayslip$(dto?: SavePayslipRequestDTO) {
+    return this.http.post<PayslipResponseDTO>('/sa/payslips', dto);
   }
 
   /** 근무이력 ID 값을 설정한다. */

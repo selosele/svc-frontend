@@ -1,4 +1,6 @@
+import { Transform } from 'class-transformer';
 import { HttpRequestDTOBase } from '@app/shared/models';
+import { isNotEmpty } from '@app/shared/utils';
 
 /** 급여명세서 조회 요청 DTO */
 export class GetPayslipRequestDTO extends HttpRequestDTOBase {
@@ -20,6 +22,53 @@ export class GetPayslipRequestDTO extends HttpRequestDTOBase {
 
   /** 급여명세서 지급 월 */
   payslipPaymentMM?: string;
+
+}
+
+/** 급여명세서 추가/수정 요청 DTO */
+export class SavePayslipRequestDTO extends HttpRequestDTOBase {
+
+  /** 급여명세서 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
+  payslipId?: number;
+
+  /** 사용자 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
+  userId?: number;
+
+  /** 직원 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
+  employeeId?: number;
+
+  /** 근무이력 ID */
+  @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
+  workHistoryId?: number;
+
+  /** 급여명세서 지급일자 */
+  payslipPaymentYmd?: string;
+
+  /** 급여명세서 비고 */
+  payslipNote?: string;
+
+  /** 직위 코드 */
+  rankCode?: string;
+
+  /** 급여명세서 급여내역 상세 */
+  payslipSalaryDetailList?: AddPayslipSalaryDetailRequestDTO[];
+
+}
+
+/** 급여명세서 급여내역 상세 추가 요청 DTO */
+export class AddPayslipSalaryDetailRequestDTO extends HttpRequestDTOBase {
+
+  /** 급여내역 구분 코드 */
+  salaryTypeCode?: string;
+  
+  /** 급여내역 금액 코드 */
+  salaryAmountCode?: string;
+  
+  /** 급여내역 금액 */
+  salaryAmount?: string;
 
 }
 
@@ -62,6 +111,9 @@ export class PayslipResultDTO {
   /** 이전/다음 급여명세서 flag */
   prevNextFlag?: string;
 
+  /** 급여명세서 급여내역 상세 */
+  payslipSalaryDetailList?: AddPayslipSalaryDetailRequestDTO[];
+
 }
 
 /** 급여명세서 급여내역 상세 조회 결과 DTO */
@@ -86,7 +138,7 @@ export class PayslipSalaryDetailResultDTO {
   salaryAmountCodeName?: string;
   
   /** 급여내역 금액 */
-  salaryAmount?: string;
+  salaryAmount?: number;
 
 }
 
@@ -95,9 +147,6 @@ export class PayslipResponseDTO {
 
   /** 급여명세서 */
   payslip?: PayslipResultDTO;
-
-  /** 급여내역 상세 */
-  payslipSalaryDetail?: PayslipSalaryDetailResultDTO;
 
   /** 급여명세서 목록 */
   payslipList?: PayslipResultDTO[];
