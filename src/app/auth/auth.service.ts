@@ -113,7 +113,7 @@ export class AuthService {
     return this.jwtHelper.decodeToken<AuthenticatedUser>(this.getAccessToken());
   }
 
-  /** 1개의 권한을 가지고 있는지 여부를 반환한다. */
+  /** 1개의 권한 보유 여부를 반환한다. */
   hasRole(roleId: string): boolean {
     const user = this.getAuthenticatedUser();
     if (!user) return false;
@@ -123,7 +123,7 @@ export class AuthService {
     return false;
   }
 
-  /** 모든 권한을 가지고 있는지 여부를 반환한다. */
+  /** 모든 권한 보유 여부를 반환한다. */
   hasRoleAll(...roleIds: string[]): boolean {
     const user = this.getAuthenticatedUser();
     if (!user) return false;
