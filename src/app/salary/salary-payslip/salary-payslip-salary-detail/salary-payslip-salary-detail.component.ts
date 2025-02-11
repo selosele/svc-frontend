@@ -77,7 +77,7 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
 
   ngOnInit() {
     const date = dateUtil(this.payslip.payslipPaymentYmd).format('YYYY년 MM월');
-    this.title = `${date} 급여명세서`;
+    this.title = `${date} 급여명세서 (${this.payslip.totalAmount}원)`;
   }
 
   /** 이전/다음 급여명세서로 이동한다. */
