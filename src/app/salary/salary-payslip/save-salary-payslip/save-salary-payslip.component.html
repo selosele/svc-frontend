@@ -20,7 +20,7 @@
           <td>{{ joinYmd }}</td>
         </tr>
         <tr>
-          <th scope="row">직급</th>
+          <th scope="row">직위</th>
           <td>
             <ui-dropdown
               [control]="payslipForm.get('rankCode')"
@@ -75,6 +75,7 @@
               <th scope="row">{{ i.label }}</th>
               <td>
                 <ui-text-field
+                  [align]="'right'"
                   [control]="getPayslipSalaryDetailControl(i.value, 'salaryAmount')"
                   (input)="onSalaryAmountChange($event, i.value, 'salaryAmount')"
                 />
@@ -107,6 +108,7 @@
               <th scope="row">{{ i.label }}</th>
               <td>
                 <ui-text-field
+                  [align]="'right'"
                   [control]="getPayslipSalaryDetailControl(i.value, 'salaryAmount')"
                   (input)="onSalaryAmountChange($event, i.value, 'salaryAmount')"
                 />

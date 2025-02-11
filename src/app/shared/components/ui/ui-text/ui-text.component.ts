@@ -17,6 +17,9 @@ export class UiTextComponent {
   /** block 스타일 input 여부 */
   @Input() block?: boolean;
 
+  /** input align */
+  @Input() align?: string;
+
   /** input label */
   @Input() label?: string;
 

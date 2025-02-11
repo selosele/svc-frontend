@@ -11,6 +11,9 @@
     [readonly]="readonly"
     [placeholder]="placeholder"
     [class.block]="block"
+    [class.text-left]="align === 'left'"
+    [class.text-center]="align === 'center'"
+    [class.text-right]="align === 'right'"
     [class.readonly]="readonly"
     (input)="onInput($event)"
   >

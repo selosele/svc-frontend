@@ -39,6 +39,9 @@ export class FormFieldComponent implements OnInit {
   /** input placeholder */
   @Input() placeholder?: string = '';
 
+  /** input align */
+  @Input() align?: string;
+
   /** input value */
   @Input() value?: any = '';
 
