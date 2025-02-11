@@ -8,7 +8,7 @@ import { UserService } from '@app/user/user.service';
 import { UiMessageService } from '@app/shared/services';
 import { EmployeeStore } from '@app/employee/employee.store';
 import { CompanyStore } from '@app/company/company.store';
-import { isEmpty } from '@app/shared/utils';
+import { dateUtil, isBlank, isEmpty } from '@app/shared/utils';
 import { EmployeeService } from '@app/employee/employee.service';
 import { CompanyService } from '@app/company/company.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
@@ -103,8 +103,17 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** 근무이력정보 테이블 컬럼 */
   cols1 = [
     { field: 'companyName', header: '회사명' },
-    { field: 'joinYmd',     header: '입사일자' },
-    { field: 'quitYmd',     header: '퇴사일자' },
+    { field: 'joinYmd',     header: '입사일자',
+      valueGetter: (data: WorkHistoryResultDTO) => `${dateUtil(data.joinYmd).format('YYYY년 MM월 DD일')}`
+    },
+    { field: 'quitYmd',     header: '퇴사일자',
+      valueGetter: (data: WorkHistoryResultDTO) => {
+        if (isBlank(data.quitYmd)) {
+          return '<span class="mr-2 px-2 py-1 bg-primary-50 text-primary">재직중</span>';
+        }
+        return `${dateUtil(data.quitYmd).format('YYYY년 MM월 DD일')}`;
+      }
+    },
     { header: '재직기간',
       valueGetter: (data: WorkHistoryResultDTO) => {
         if (data.workDiffY === 0) return `${data.workDiffM}개월`;
