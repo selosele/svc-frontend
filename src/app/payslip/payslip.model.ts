@@ -17,6 +17,9 @@ export class GetPayslipRequestDTO extends HttpRequestDTOBase {
   /** 근무이력 ID */
   workHistoryId?: number;
 
+  /** 급여명세서 지급일자 */
+  payslipPaymentYmd?: string;
+
   /** 급여명세서 지급 연도 */
   payslipPaymentYYYY?: string;
 

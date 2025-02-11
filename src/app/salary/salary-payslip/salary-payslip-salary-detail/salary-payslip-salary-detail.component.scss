@@ -1,0 +1,50 @@
+.salary-detail {
+  &__top {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--surface-50);
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      & + & {
+        margin-left: 0.75rem;
+        padding-left: 0.75rem;
+        border-left: 1px solid var(--surface-200);
+      }
+    }
+  }
+
+  &__content {
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    position: sticky;
+    bottom: -1rem;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.5rem 0;
+    background-color: var(--surface-0);
+
+    &__prevnext {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    &__crud {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}

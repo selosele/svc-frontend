@@ -1,1 +1,60 @@
-급여명세서 상세 조회
+<div class="salary-detail">
+  <!-- <div class="salary-detail__top">
+    <div class="salary-detail__top__item">
+      <i class="pi pi-clock"></i>
+      <p>{{ article.createDt }}</p>
+    </div>
+  </div>
+
+  <div class="salary-detail__content">
+    <div [innerHTML]="article.articleContent"></div>
+  </div> -->
+
+  <div class="salary-detail__buttons">
+    <div class="salary-detail__buttons__prevnext">
+      @if (payslipList.length > 0) {
+        <ui-button
+          [icon]="'pi-chevron-left'"
+          [rounded]="true"
+          [text]="true"
+          [severity]="'primary'"
+          [disabled]="prevPayslip == null"
+          [title]="'이전 급여명세서'"
+          (click)="goPrevNextPayslip(prevPayslip?.payslipId, prevPayslip?.payslipPaymentYmd)"
+        />
+
+        <ui-button
+          [icon]="'pi-chevron-right'"
+          [rounded]="true"
+          [text]="true"
+          [severity]="'primary'"
+          [disabled]="nextPayslip == null"
+          [title]="'다음 급여명세서'"
+          (click)="goPrevNextPayslip(nextPayslip?.payslipId, nextPayslip?.payslipPaymentYmd)"
+        />
+      }
+    </div>
+
+    <div class="salary-detail__buttons__crud">
+      @if (payslip.employeeId == user?.employeeId) {
+        <ui-button
+          [size]="'small'"
+          [severity]="'primary'"
+          (click)="updatePayslip(payslip)"
+        >
+          수정
+        </ui-button>
+      }
+  
+      @if (isSystemAdmin || payslip.employeeId == user?.employeeId) {
+        <ui-button
+          [size]="'small'"
+          [severity]="'danger'"
+          (click)="removePayslip(payslip.payslipId)"
+        >
+          삭제
+        </ui-button>
+      }
+    </div>
+  </div>
+</div>

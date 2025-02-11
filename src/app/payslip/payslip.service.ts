@@ -33,6 +33,11 @@ export class PayslipService {
     return this.http.post<PayslipResponseDTO>('/sa/payslips', dto);
   }
 
+  /** 급여명세서를 삭제한다. */
+  removePayslip$(payslipId: number) {
+    return this.http.delete<void>(`/sa/payslips/${payslipId}`);
+  }
+
   /** 근무이력 ID 값을 설정한다. */
   setWorkHistoryId(value: number): void {
     this.payslipStore.update('payslipWorkHistoryId', value);

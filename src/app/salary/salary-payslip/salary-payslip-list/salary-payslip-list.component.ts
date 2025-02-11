@@ -169,25 +169,51 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     });
   }
 
-  /** 테이블 행을 선택한다. */
-  onRowSelect(event: TableRowSelectEvent): void {
+  /** 급여명세서를 조회한다. */
+  getPayslip(dto: GetPayslipRequestDTO): void {
     const loadingTimeout = setTimeout(() => this.loadingService.setLoading(true), 500);
 
     this.payslipService.getPayslip$({
-      payslipId: event.data['payslipId'],
+      payslipId: dto.payslipId,
+      payslipPaymentYmd: dto.payslipPaymentYmd,
       workHistoryId: this.workHistoryId,
       userId: this.user?.userId
     })
     .subscribe((response) => {
       clearTimeout(loadingTimeout);
       this.loadingService.setLoading(false);
-  
-      this.dialogService.open(SalaryPayslipSalaryDetailComponent, {
+
+      const modal = this.dialogService.open(SalaryPayslipSalaryDetailComponent, {
         focusOnShow: false,
         header: '급여명세서 조회',
         width: '1000px',
         data: response,
       });
+
+      modal?.onClose.subscribe((result) => {
+        if (isObjectEmpty(result)) return;
+
+        // 급여명세서 추가/수정/삭제
+        if (result.action === 'save') {
+          this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
+        }
+        // 급여명세서 새로고침(예: 이전/다음 급여명세서로 이동)
+        else if (result.action === 'reload') {
+          this.getPayslip({ payslipId: result.data.payslipId, payslipPaymentYmd: result.data.payslipPaymentYmd });
+        }
+        // 급여명세서 수정 modal 표출
+        else if (result.action === 'update') {
+          this.updateArticle(result.action, result.data);
+        }
+      });
+    });
+  }
+
+  /** 테이블 행을 선택한다. */
+  onRowSelect(event: TableRowSelectEvent): void {
+    this.getPayslip({
+      payslipId: event.data['payslipId'],
+      payslipPaymentYmd: event.data['payslipPaymentYmd'],
     });
   }
   
@@ -215,7 +241,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
   addPayslip(): void {
     const modal = this.dialogService.open(SaveSalaryPayslipComponent, {
       focusOnShow: false,
-      header: '급여명세서 입력하기',
+      header: '급여명세서 등록하기',
       width: '1000px',
       data: {
         workHistoryId: this.workHistoryId,
@@ -232,6 +258,29 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       // 급여명세서 추가/수정/삭제
       if (result.action === 'save') {
         this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
+      }
+    });
+  }
+
+  /** 급여명세서 수정 modal을 표출한다. */
+  updateArticle(action: string, payslip: PayslipResultDTO): void {
+    const modal = this.dialogService.open(SaveSalaryPayslipComponent, {
+      focusOnShow: false,
+      header: '급여명세서 수정하기',
+      width: '1000px',
+      data: { action, payslip }
+    });
+
+    modal.onClose.subscribe((result) => {
+      if (isObjectEmpty(result)) return;
+
+      // 급여명세서 추가/수정/삭제
+      if (result.action === 'save') {
+        this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
+      }
+      // 급여명세서 새로고침(예: 이전/다음 게시글로 이동)
+      else if (result.action === 'reload') {
+        this.getPayslip({ payslipId: result.data.payslipId, payslipPaymentYmd: result.data.payslipPaymentYmd });
       }
     });
   }
