@@ -9,7 +9,7 @@ import { UiMessageService } from '@app/shared/services';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { PayslipResultDTO, SavePayslipRequestDTO } from '@app/payslip/payslip.model';
-import { dateUtil, isEmpty, isObjectEmpty, numberWithCommas } from '@app/shared/utils';
+import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
 import { TransformToDto } from '@app/shared/decorators';
 
 @Component({
@@ -169,7 +169,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   onSalaryAmountChange(event: Event, salaryAmountCode: string, controlName: string): void {
     const value = (event.target as HTMLInputElement).value;
     const formControl = this.getPayslipSalaryDetailControl(salaryAmountCode, controlName);
-    formControl.patchValue(numberWithCommas(value));
+    formControl.patchValue(this.numberWithCommas(value));
   }
 
   /** 급여명세서 급여내역 상세 form 컨트롤을 반환한다. */
