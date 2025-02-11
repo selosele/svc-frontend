@@ -187,7 +187,12 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
         focusOnShow: false,
         header: '급여명세서 조회',
         width: '1000px',
-        data: response,
+        data: {
+          ...response,
+          salaryTypecodes: this.salaryTypecodes,
+          salaryAmountA00Codes: this.salaryAmountA00Codes,
+          salaryAmountB00Codes: this.salaryAmountB00Codes,
+        },
       });
 
       modal?.onClose.subscribe((result) => {

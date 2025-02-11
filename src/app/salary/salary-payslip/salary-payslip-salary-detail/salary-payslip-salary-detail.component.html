@@ -1,14 +1,116 @@
 <div class="salary-detail">
-  <!-- <div class="salary-detail__top">
-    <div class="salary-detail__top__item">
-      <i class="pi pi-clock"></i>
-      <p>{{ article.createDt }}</p>
-    </div>
-  </div>
+  <h2 class="mt-2 mb-4 pb-4 border-bottom-1 border-gray-300">
+    {{ title }}
+  </h2>
 
   <div class="salary-detail__content">
-    <div [innerHTML]="article.articleContent"></div>
-  </div> -->
+    <div class="ui-basic-table type1">
+      <table>
+        <caption>급여명세서 기본 정보</caption>
+        <colgroup>
+          <col style="width: 25%;">
+          <col style="width: 25%;">
+          <col style="width: 25%;">
+          <col style="width: 25%;">
+        </colgroup>
+        <tbody>
+          <tr>
+            <th scope="row">성명</th>
+            <td>{{ user?.employeeName }}</td>
+            <th scope="row">입사일자</th>
+            <td>{{ ngDate(payslip.joinYmd) | date: 'yyyy-MM-dd' }}</td>
+          </tr>
+          <tr>
+            <th scope="row">직위</th>
+            <td>{{ payslip.rankCodeName }}</td>
+            <th scope="row">급여지급일</th>
+            <td>{{ ngDate(payslip.payslipPaymentYmd) | date: 'yyyy-MM-dd' }}</td>
+          </tr>
+          <tr>
+            <th scope="row">비고</th>
+            <td colspan="3">{{ payslip.payslipNote }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="flex">
+      <div class="ui-basic-table type2 flex-grow-1 mt-4">
+        <table>
+          <caption>급여명세서 세부 내역 - 지급(지급내역, 지급액)</caption>
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" colspan="2">지급</th>
+            </tr>
+            <tr>
+              <th scope="col">{{ salaryTypeA00code.label }}</th>
+              <th scope="col">지급액</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (i of payslip.payslipSalaryDetailList; track $index) {
+              @if (i.salaryTypeCode === salaryTypeA00code.value) {
+                <tr>
+                  <th scope="row">{{ i.salaryAmountCodeName }}</th>
+                  <td class="text-right">{{ numberWithCommas(i.salaryAmount) }}</td>
+                </tr>
+              }
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">지급총액</th>
+              <td class="text-right">{{ payslip.totalAmountA00 }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+  
+      <div class="ui-basic-table type2 flex-grow-1 mt-4">
+        <table>
+          <caption>급여명세서 세부 내역 - 공제(공제내역, 공제액)</caption>
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" colspan="2">공제</th>
+            </tr>
+            <tr>
+              <th scope="col">{{ salaryTypeB00code.label }}</th>
+              <th scope="col">공제액</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (i of payslip.payslipSalaryDetailList; track $index) {
+              @if (i.salaryTypeCode === salaryTypeB00code.value) {
+                <tr>
+                  <th scope="row">{{ i.salaryAmountCodeName }}</th>
+                  <td class="text-right">{{ numberWithCommas(i.salaryAmount) }}</td>
+                </tr>
+              }
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">공제합계</th>
+              <td class="text-right">{{ payslip.totalAmountB00 }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-4 text-right">
+      <span class="text-lg">실지급액(지급총액-공제합계)</span>
+      <strong class="block text-2xl">{{ payslip.totalAmount }}원</strong>
+    </div>
+  </div>
 
   <div class="salary-detail__buttons">
     <div class="salary-detail__buttons__prevnext">

@@ -64,5 +64,16 @@
         background-color: var(--primary-50);
       }
     }
+
+    tfoot {
+      th {
+        background-color: var(--gray-50);
+      }
+
+      td {
+        background-color: var(--gray-50);
+        font-weight: 700;
+      }
+    }
   }
 }
