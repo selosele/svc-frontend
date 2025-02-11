@@ -118,7 +118,7 @@ export class LoginComponent extends CoreBaseComponent implements OnInit {
         if (isObjectEmpty(result)) return;
 
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
-        if (result.action === 'reload') {
+        if (result.action === this.actions.RELOAD) {
           this.getArticle(result.data.articleId);
         }
       });

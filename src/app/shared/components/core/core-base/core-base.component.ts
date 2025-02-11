@@ -38,6 +38,22 @@ export class CoreBaseComponent {
     return this.authService.hasRole(roles.SYSTEM_ADMIN.id);
   }
 
+  /** 액션 목록 */
+  protected get actions() {
+    return {
+
+      /** 추가/수정/삭제 */
+      SAVE: 'SAVE',
+    
+      /** 수정 */
+      UPDATE: 'UPDATE',
+    
+      /** 새로고침 */
+      RELOAD: 'RELOAD',
+    
+    };
+  }
+
   /** 메뉴 URL로 메뉴 ID를 찾아서 반환한다. */
   protected getMenuIdByMenuUrl(menuUrl: string): number {
     return this.menuService.getMenuIdByMenuUrl(menuUrl);

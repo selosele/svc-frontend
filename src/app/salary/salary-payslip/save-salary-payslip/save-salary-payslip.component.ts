@@ -142,7 +142,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
       this.payslipService.addPayslip$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.dialogRef.close({ action: 'save' });
+        this.dialogRef.close({ action: this.actions.SAVE });
       });
     }
     // 있으면 수정 API를 탄다.
@@ -150,7 +150,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
     //   this.payslipService.updatePayslip$(value)
     //   .subscribe((response) => {
     //     this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-    //     this.dialogRef.close({ action: 'save' });
+    //     this.dialogRef.close({ action: this.actions.SAVE });
     //   });
     // }
   }

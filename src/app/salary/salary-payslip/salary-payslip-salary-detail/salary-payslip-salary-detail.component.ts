@@ -52,12 +52,12 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent {
     if (isEmpty(payslipId)) {
       return;
     }
-    this.dialogRef.close({ action: 'reload', data: { payslipId, payslipPaymentYmd } });
+    this.dialogRef.close({ action: this.actions.RELOAD, data: { payslipId, payslipPaymentYmd } });
   }
 
   /** 급여명세서 수정 modal을 표출한다. */
   updatePayslip(payslip: PayslipResultDTO): void {
-    this.dialogRef.close({ action: 'update', data: payslip });
+    this.dialogRef.close({ action: this.actions.UPDATE, data: payslip });
   }
 
   /** 급여명세서를 삭제한다. */
@@ -68,7 +68,7 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent {
     this.payslipService.removePayslip$(payslipId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
-      this.dialogRef.close({ action: 'save' });
+      this.dialogRef.close({ action: this.actions.SAVE });
     });
   }
 

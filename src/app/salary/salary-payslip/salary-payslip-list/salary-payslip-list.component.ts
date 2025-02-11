@@ -194,15 +194,15 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
         if (isObjectEmpty(result)) return;
 
         // 급여명세서 추가/수정/삭제
-        if (result.action === 'save') {
+        if (result.action === this.actions.SAVE) {
           this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
         }
         // 급여명세서 새로고침(예: 이전/다음 급여명세서로 이동)
-        else if (result.action === 'reload') {
+        else if (result.action === this.actions.RELOAD) {
           this.getPayslip({ payslipId: result.data.payslipId, payslipPaymentYmd: result.data.payslipPaymentYmd });
         }
         // 급여명세서 수정 modal 표출
-        else if (result.action === 'update') {
+        else if (result.action === this.actions.UPDATE) {
           this.updateArticle(result.action, result.data);
         }
       });
@@ -256,7 +256,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       if (isObjectEmpty(result)) return;
 
       // 급여명세서 추가/수정/삭제
-      if (result.action === 'save') {
+      if (result.action === this.actions.SAVE) {
         this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
       }
     });
@@ -275,11 +275,11 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       if (isObjectEmpty(result)) return;
 
       // 급여명세서 추가/수정/삭제
-      if (result.action === 'save') {
+      if (result.action === this.actions.SAVE) {
         this.listPayslip({ workHistoryId: this.workHistoryId, userId: this.user?.userId });
       }
       // 급여명세서 새로고침(예: 이전/다음 게시글로 이동)
-      else if (result.action === 'reload') {
+      else if (result.action === this.actions.RELOAD) {
         this.getPayslip({ payslipId: result.data.payslipId, payslipPaymentYmd: result.data.payslipPaymentYmd });
       }
     });

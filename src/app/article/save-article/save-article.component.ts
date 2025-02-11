@@ -87,7 +87,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
     });
 
     // 게시글 수정 modal 표출
-    if (this.action === 'update') {
+    if (this.action === this.actions.UPDATE) {
       this.detailForm.patchValue({
         ...this.article,
         useNicknameYn: this.article.articleWriterNickname ? ['Y'] : [],
@@ -112,7 +112,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
       this.articleService.addArticle$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.dialogRef.close({ action: 'save' });
+        this.dialogRef.close({ action: this.actions.SAVE });
       });
     }
     // 있으면 수정 API를 탄다.
@@ -120,7 +120,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
       this.articleService.updateArticle$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-        this.dialogRef.close({ action: 'save' });
+        this.dialogRef.close({ action: this.actions.SAVE });
       });
     }
   }
@@ -145,7 +145,7 @@ export class SaveArticleComponent extends CoreBaseComponent implements OnInit {
   /** 게시글 조회 화면으로 돌아간다. */
   goToArticle(): void {
     const articleId = this.detailForm.get('articleId').value;
-    this.dialogRef.close({ action: 'reload', data: { articleId } });
+    this.dialogRef.close({ action: this.actions.RELOAD, data: { articleId } });
   }
 
 }

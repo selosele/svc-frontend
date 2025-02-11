@@ -172,15 +172,15 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
         if (isObjectEmpty(result)) return;
 
         // 게시글 추가/수정/삭제
-        if (result.action === 'save') {
+        if (result.action === this.actions.SAVE) {
           this.articleService.listMainArticle(this.activeBoardId, this.articleLimit);
         }
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
-        else if (result.action === 'reload') {
+        else if (result.action === this.actions.RELOAD) {
           this.onArticleItemClick(result.data.articleId);
         }
         // 게시글 수정 modal 표출
-        else if (result.action === 'update') {
+        else if (result.action === this.actions.UPDATE) {
           this.updateArticle(result.action, result.data);
         }
       });
@@ -219,11 +219,11 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       if (isObjectEmpty(result)) return;
 
       // 게시글 추가/수정/삭제
-      if (result.action === 'save') {
+      if (result.action === this.actions.SAVE) {
         this.articleService.listMainArticle(this.activeBoardId, this.articleLimit);
       }
       // 게시글 새로고침(예: 이전/다음 게시글로 이동)
-      else if (result.action === 'reload') {
+      else if (result.action === this.actions.RELOAD) {
         this.getArticle(result.data.articleId);
       }
     });
@@ -249,15 +249,15 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
         if (isObjectEmpty(result)) return;
 
         // 게시글 추가/수정/삭제
-        if (result.action === 'save') {
+        if (result.action === this.actions.SAVE) {
           this.articleService.listMainArticle(this.activeBoardId, this.articleLimit);
         }
         // 게시글 새로고침(예: 이전/다음 게시글로 이동)
-        else if (result.action === 'reload') {
+        else if (result.action === this.actions.RELOAD) {
           this.getArticle(result.data.articleId);
         }
         // 게시글 수정 modal 표출
-        else if (result.action === 'update') {
+        else if (result.action === this.actions.UPDATE) {
           this.updateArticle(result.action, result.data);
         }
       });

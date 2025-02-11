@@ -64,12 +64,12 @@ export class ArticleViewComponent extends CoreBaseComponent {
     if (isEmpty(articleId)) {
       return;
     }
-    this.dialogRef.close({ action: 'reload', data: { articleId } });
+    this.dialogRef.close({ action: this.actions.RELOAD, data: { articleId } });
   }
 
   /** 게시글 수정 modal을 표출한다. */
   updateArticle(article: ArticleResultDTO): void {
-    this.dialogRef.close({ action: 'update', data: article });
+    this.dialogRef.close({ action: this.actions.UPDATE, data: article });
   }
 
   /** 게시글을 삭제한다. */
@@ -80,7 +80,7 @@ export class ArticleViewComponent extends CoreBaseComponent {
     this.articleService.removeArticle$(articleId)
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
-      this.dialogRef.close({ action: 'save' });
+      this.dialogRef.close({ action: this.actions.SAVE });
     });
   }
 
