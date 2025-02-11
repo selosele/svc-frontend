@@ -26,10 +26,12 @@
             <th scope="row">급여지급일</th>
             <td>{{ ngDate(payslip.payslipPaymentYmd) | date: 'yyyy-MM-dd' }}</td>
           </tr>
-          <tr>
-            <th scope="row">비고</th>
-            <td colspan="3">{{ payslip.payslipNote }}</td>
-          </tr>
+          @if (payslip.payslipNote) {
+            <tr>
+              <th scope="row">비고</th>
+              <td colspan="3">{{ payslip.payslipNote }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
