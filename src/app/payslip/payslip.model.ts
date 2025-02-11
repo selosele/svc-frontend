@@ -115,7 +115,7 @@ export class PayslipResultDTO {
   prevNextFlag?: string;
 
   /** 급여명세서 급여내역 상세 */
-  payslipSalaryDetailList?: AddPayslipSalaryDetailRequestDTO[];
+  payslipSalaryDetailList?: PayslipSalaryDetailResultDTO[];
 
 }
 
