@@ -55,7 +55,7 @@
           </thead>
           <tbody>
             @for (i of payslip.payslipSalaryDetailList; track $index) {
-              @if (i.salaryTypeCode === salaryTypeA00code.value) {
+              @if (i.salaryTypeCode === salaryTypeA00code.value && isSalaryAmountExist(i.salaryAmount)) {
                 <tr>
                   <th scope="row">{{ i.salaryAmountCodeName }}</th>
                   <td class="text-right">{{ numberWithCommas(i.salaryAmount) }}</td>
@@ -90,7 +90,7 @@
           </thead>
           <tbody>
             @for (i of payslip.payslipSalaryDetailList; track $index) {
-              @if (i.salaryTypeCode === salaryTypeB00code.value) {
+              @if (i.salaryTypeCode === salaryTypeB00code.value && isSalaryAmountExist(i.salaryAmount)) {
                 <tr>
                   <th scope="row">{{ i.salaryAmountCodeName }}</th>
                   <td class="text-right">{{ numberWithCommas(i.salaryAmount) }}</td>

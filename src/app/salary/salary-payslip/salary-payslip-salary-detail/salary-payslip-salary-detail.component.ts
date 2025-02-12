@@ -5,7 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UiMessageService } from '@app/shared/services';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { PayslipResultDTO } from '@app/payslip/payslip.model';
-import { dateUtil, isEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isNotEmpty } from '@app/shared/utils';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 
@@ -103,6 +103,11 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.dialogRef.close({ action: this.actions.SAVE });
     });
+  }
+
+  /** 급여내역 금액이 존재하는지 확인한다(금액이 0일 경우 false로 평가되는 현상을 피하기 위함). */
+  isSalaryAmountExist(value: number): boolean {
+    return isNotEmpty(value);
   }
 
 }
