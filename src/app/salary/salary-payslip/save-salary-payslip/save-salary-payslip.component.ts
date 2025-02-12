@@ -4,6 +4,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
+import { UiButtonComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
@@ -22,6 +23,7 @@ import { TransformToDto } from '@app/shared/decorators';
     UiTextareaComponent,
     UiDateFieldComponent,
     UiDropdownComponent,
+    UiButtonComponent,
   ],
   selector: 'modal-save-salary-payslip',
   templateUrl: './save-salary-payslip.component.html',
@@ -82,6 +84,11 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
     return this.payslipForm.get('payslipSalaryDetailList') as FormArray;
   }
 
+  /** 게시글 추가/수정/삭제 등의 action */
+  get action(): string {
+    return this.config.data['action'];
+  }
+
   /** 제목 */
   title = '0000년 00월 급여명세서';
 
@@ -98,7 +105,14 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
     if (isObjectEmpty(this.payslip)) {
       this.getWorkHistory();
     } else {
-      this.payslipForm.get('rankCode').patchValue(this.user?.rankCode);
+      this.payslipForm.patchValue({
+        ...this.payslip,
+        payslipPaymentYmd: dateUtil(this.payslip.payslipPaymentYmd).format('YYYY-MM-DD')
+      });
+
+      for (const i of this.payslipSalaryDetailList.controls) {
+        i.get('salaryAmount').patchValue(this.numberWithCommas(i.value['salaryAmount']));
+      }
     }
   }
 
@@ -146,13 +160,13 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
       });
     }
     // 있으면 수정 API를 탄다.
-    // else {
-    //   this.payslipService.updatePayslip$(value)
-    //   .subscribe((response) => {
-    //     this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
-    //     this.dialogRef.close({ action: this.actions.SAVE });
-    //   });
-    // }
+    else {
+      this.payslipService.updatePayslip$(value)
+      .subscribe((response) => {
+        this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
+        this.dialogRef.close({ action: this.actions.SAVE });
+      });
+    }
   }
 
   /** 급여지급일 input 값을 변경한다. */
@@ -177,6 +191,14 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
     const formArray = this.payslipForm.get('payslipSalaryDetailList') as FormArray;
     const formControl = formArray.controls.find(x => x.value['salaryAmountCode'] === salaryAmountCode);
     return formControl?.get(controlName);
+  }
+
+  /** 급여명세서 조회 화면으로 돌아간다. */
+  goToPayslip(): void {
+    const payslipId = this.payslipForm.get('payslipId').value;
+    const payslipPaymentYmd = this.payslipForm.get('payslipPaymentYmd').value;
+
+    this.dialogRef.close({ action: this.actions.RELOAD, data: { payslipId, payslipPaymentYmd } });
   }
 
   /** 근무이력을 조회한다. */

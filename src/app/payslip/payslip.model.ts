@@ -81,6 +81,9 @@ export class PayslipResultDTO {
   /** 급여명세서 ID */
   payslipId?: number;
   
+  /** 사용자 ID */
+  userId?: number;
+  
   /** 직원 ID */
   employeeId?: number;
 

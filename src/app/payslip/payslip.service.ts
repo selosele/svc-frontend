@@ -33,6 +33,12 @@ export class PayslipService {
     return this.http.post<PayslipResponseDTO>('/sa/payslips', dto);
   }
 
+  /** 급여명세서를 수정한다. */
+  updatePayslip$(dto?: SavePayslipRequestDTO) {
+    const { payslipId } = dto;
+    return this.http.put<PayslipResponseDTO>(`/sa/payslips/${payslipId}`, dto);
+  }
+
   /** 급여명세서를 삭제한다. */
   removePayslip$(payslipId: number) {
     return this.http.delete<void>(`/sa/payslips/${payslipId}`);

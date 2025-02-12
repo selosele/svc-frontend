@@ -119,4 +119,13 @@
       </table>
     </div>
   </div>
+
+  @if (action === actions.UPDATE) {
+    <ui-button button
+      [text]="true"
+      (click)="goToPayslip()"
+    >
+      뒤로가기
+    </ui-button>
+  }
 </ui-form>

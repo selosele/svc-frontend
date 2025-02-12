@@ -273,7 +273,15 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
       focusOnShow: false,
       header: '급여명세서 수정하기',
       width: '1000px',
-      data: { action, payslip }
+      data: {
+        action,
+        payslip,
+        workHistoryId: this.workHistoryId,
+        salaryTypecodes: this.salaryTypecodes,
+        salaryAmountA00Codes: this.salaryAmountA00Codes,
+        salaryAmountB00Codes: this.salaryAmountB00Codes,
+        rankCodes: this.rankCodes,
+      }
     });
 
     modal.onClose.subscribe((result) => {
