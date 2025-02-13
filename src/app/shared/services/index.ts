@@ -1,3 +1,6 @@
+// file
+export * from './file/file.service';
+
 // http
 export * from './http/http.service';
 

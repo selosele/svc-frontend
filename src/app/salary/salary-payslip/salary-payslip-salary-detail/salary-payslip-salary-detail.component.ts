@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UiMessageService } from '@app/shared/services';
+import { FileService, UiMessageService } from '@app/shared/services';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { PayslipResultDTO } from '@app/payslip/payslip.model';
 import { dateUtil, isEmpty, isNotEmpty } from '@app/shared/utils';
@@ -25,10 +25,14 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
     private config: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
+    private fileService: FileService,
     private payslipService: PayslipService,
   ) {
     super();
   }
+
+  /** 급여명세서 조회 화면 */
+  @ViewChild('salaryDetailView') salaryDetailView: ElementRef<HTMLElement>;
 
   /** 제목 */
   title: string;
@@ -102,6 +106,17 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
     .subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.dialogRef.close({ action: this.actions.SAVE });
+    });
+  }
+
+  /** 급여명세서를 PDF로 다운로드 받는다. */
+  async exportPdf(): Promise<void> {
+    this.fileService.exportPdf({
+      element: this.salaryDetailView.nativeElement,
+      fileName: `급여명세서(${this.user?.employeeName}).pdf`,
+      ignoreElements: ['btnExportPdf'],
+      orientation: 'landscape',
+      margin: 10,
     });
   }
 
