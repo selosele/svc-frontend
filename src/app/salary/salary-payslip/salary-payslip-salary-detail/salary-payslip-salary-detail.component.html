@@ -143,6 +143,15 @@
       @if (payslip.employeeId == user?.employeeId) {
         <ui-button
           [size]="'small'"
+          [severity]="'secondary'"
+          [title]="'현재 급여명세서를 복사해서 새 급여명세서를 등록하는 기능이에요.'"
+          (click)="updatePayslip(payslip, actions.COPY)"
+        >
+          복사
+        </ui-button>
+        
+        <ui-button
+          [size]="'small'"
           [severity]="'primary'"
           (click)="updatePayslip(payslip)"
         >

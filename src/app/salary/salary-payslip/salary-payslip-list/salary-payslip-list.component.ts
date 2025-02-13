@@ -210,6 +210,10 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
         else if (result.action === this.actions.UPDATE) {
           this.updateArticle(result.action, result.data);
         }
+        // 급여명세서 수정(복사) modal 표출
+        else if (result.action === this.actions.COPY) {
+          this.updateArticle(result.action, result.data);
+        }
       });
     });
   }
@@ -269,9 +273,17 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 급여명세서 수정 modal을 표출한다. */
   updateArticle(action: string, payslip: PayslipResultDTO): void {
+    let actionName = '';
+    if (action === this.actions.UPDATE) {
+      actionName = '수정';
+    }
+    else if (action === this.actions.COPY) {
+      actionName = '등록';
+    }
+
     const modal = this.dialogService.open(SaveSalaryPayslipComponent, {
       focusOnShow: false,
-      header: '급여명세서 수정하기',
+      header: `급여명세서 ${actionName}하기`,
       width: '1000px',
       data: {
         action,

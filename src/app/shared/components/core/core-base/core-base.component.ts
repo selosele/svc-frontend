@@ -48,6 +48,9 @@ export class CoreBaseComponent {
       /** 수정 */
       UPDATE: 'UPDATE',
     
+      /** 복사 */
+      COPY: 'COPY',
+    
       /** 새로고침 */
       RELOAD: 'RELOAD',
     

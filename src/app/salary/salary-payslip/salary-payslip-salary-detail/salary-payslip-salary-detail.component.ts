@@ -88,9 +88,9 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
     this.dialogRef.close({ action: this.actions.RELOAD, data: { payslipId, payslipPaymentYmd } });
   }
 
-  /** 급여명세서 수정 modal을 표출한다. */
-  updatePayslip(payslip: PayslipResultDTO): void {
-    this.dialogRef.close({ action: this.actions.UPDATE, data: payslip });
+  /** 급여명세서 수정(or 복사) modal을 표출한다. */
+  updatePayslip(payslip: PayslipResultDTO, action = this.actions.UPDATE): void {
+    this.dialogRef.close({ action, data: payslip });
   }
 
   /** 급여명세서를 삭제한다. */

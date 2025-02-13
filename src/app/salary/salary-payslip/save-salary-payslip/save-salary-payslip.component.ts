@@ -103,7 +103,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   ngOnInit() {
     this.initForm();
 
-    // 급여명세서 신규 추가일경우 근무이력을 조회해서 필요한 정보를 설정한다.
+    // 급여명세서 신규 추가일 경우 근무이력을 조회해서 필요한 정보를 설정한다.
     if (isObjectEmpty(this.payslip)) {
       this.getWorkHistory();
     } else {
@@ -142,13 +142,13 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   /** 급여명세서를 저장한다. */
   @TransformToDto(SavePayslipRequestDTO)
   async onSubmit(value: SavePayslipRequestDTO): Promise<void> {
-    const crudName = isEmpty(value.payslipId) ? '등록' : '수정';
+    const crudName = (isEmpty(value.payslipId) || this.action === this.actions.COPY) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`${crudName}하시겠어요?`);
     if (!confirm) return;
 
-    // 급여명세서 ID가 없으면 추가 API를 타고
-    if (isEmpty(value.payslipId)) {
+    // 급여명세서 ID가 없거나 복사 등록일 경우 추가 API를 타고
+    if (isEmpty(value.payslipId) || this.action === this.actions.COPY) {
       this.payslipService.addPayslip$(value)
       .subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
