@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator, UiDateFieldComponent, UiDropdownComponent, UiFormComponent, UiTextareaComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent } from '@app/shared/components/ui';
+import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
 import { UiMessageService } from '@app/shared/services';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
@@ -24,6 +25,7 @@ import { TransformToDto } from '@app/shared/decorators';
     UiDateFieldComponent,
     UiDropdownComponent,
     UiButtonComponent,
+    LayoutPageDescriptionComponent,
   ],
   selector: 'modal-save-salary-payslip',
   templateUrl: './save-salary-payslip.component.html',
@@ -105,14 +107,8 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
     if (isObjectEmpty(this.payslip)) {
       this.getWorkHistory();
     } else {
-      this.payslipForm.patchValue({
-        ...this.payslip,
-        payslipPaymentYmd: dateUtil(this.payslip.payslipPaymentYmd).format('YYYY-MM-DD')
-      });
-
-      for (const i of this.payslipSalaryDetailList.controls) {
-        i.get('salaryAmount').patchValue(this.numberWithCommas(i.value['salaryAmount']));
-      }
+      this.setFormValue();
+      this.setTitle(this.payslip.payslipPaymentYmd);
     }
   }
 
@@ -171,12 +167,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
 
   /** 급여지급일 input 값을 변경한다. */
   onPayslipPaymentYmdChange(event?: Date): void {
-    if (isEmpty(event)) {
-      this.title = '0000년 00월 급여명세서';
-    } else {
-      const date = dateUtil(event).format('YYYY년 MM월');
-      this.title = `${date} 급여명세서`;
-    }
+    this.setTitle(event);
   }
 
   /** 급여내역 금액 input 값을 변경한다. */
@@ -208,6 +199,28 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
       this.payslipForm.get('rankCode').patchValue(response.workHistory.rankCode);
       this.joinYmd = dateUtil(response.workHistory.joinYmd).format('YYYY-MM-DD');
     });
+  }
+
+  /** 급여명세서 form 값을 설정한다. */
+  private setFormValue(): void {
+    this.payslipForm.patchValue({
+      ...this.payslip,
+      payslipPaymentYmd: dateUtil(this.payslip.payslipPaymentYmd).format('YYYY-MM-DD')
+    });
+
+    for (const i of this.payslipSalaryDetailList.controls) {
+      i.get('salaryAmount').patchValue(this.numberWithCommas(i.value['salaryAmount']));
+    }
+  }
+
+  /** 급여명세서 제목을 설정한다. */
+  private setTitle(title: string | Date): void {
+    if (isEmpty(title)) {
+      this.title = '0000년 00월 급여명세서';
+    } else {
+      const date = dateUtil(title).format('YYYY년 MM월');
+      this.title = `${date} 급여명세서`;
+    }
   }
 
 }
