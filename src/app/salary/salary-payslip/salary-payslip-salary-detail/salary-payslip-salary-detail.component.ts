@@ -111,9 +111,11 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
 
   /** 급여명세서를 PDF로 다운로드 받는다. */
   async exportPdf(): Promise<void> {
+    const date = dateUtil(this.payslip.payslipPaymentYmd).format('YYYY년 MM월');
+
     this.fileService.exportPdf({
       element: this.salaryDetailView.nativeElement,
-      fileName: `급여명세서(${this.payslip.companyName}, ${this.user?.employeeName}).pdf`,
+      fileName: `${date} 급여명세서(${this.payslip.companyName}, ${this.user?.employeeName}).pdf`,
       ignoreElements: ['btnExportPdf'],
       orientation: 'landscape',
       margin: 10,
