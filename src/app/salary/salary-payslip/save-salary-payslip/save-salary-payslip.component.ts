@@ -103,10 +103,11 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   ngOnInit() {
     this.initForm();
 
-    // 급여명세서 신규 추가일 경우 근무이력을 조회해서 필요한 정보를 설정한다.
+    // 급여명세서 신규 추가일 경우
     if (isObjectEmpty(this.payslip)) {
       this.getWorkHistory();
     } else {
+      this.getWorkHistory();
       this.setFormValue();
       this.setTitle(this.payslip.payslipPaymentYmd);
     }
