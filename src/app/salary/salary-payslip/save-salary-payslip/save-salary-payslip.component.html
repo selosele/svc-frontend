@@ -130,7 +130,7 @@
     </div>
   </div>
 
-  @if (action === actions.UPDATE) {
+  @if (action === actions.UPDATE || action === actions.COPY) {
     <ui-button button
       [text]="true"
       (click)="goToPayslip()"
