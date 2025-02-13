@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { FormValidator, UiCheckboxComponent, UiFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { UiButtonComponent, UiCardComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiCardComponent, UiSkeletonComponent } from '@app/shared/components/ui';
 import { UiDialogService, UiLoadingService } from '@app/shared/services';
 import { AuthStore } from '../auth.store';
 import { ArticleService } from '@app/article/article.service';
@@ -25,6 +25,7 @@ import { ArticleStore } from '@app/article/article.store';
     UiButtonComponent,
     UiTextFieldComponent,
     UiCheckboxComponent,
+    UiSkeletonComponent,
 ],
   selector: 'view-login',
   templateUrl: './login.component.html',

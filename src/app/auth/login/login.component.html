@@ -2,23 +2,28 @@
   <div class="login__form">
     <h1 class="login__title">휴가&middot;급여기록부</h1>
     
-    @if (noticeList?.length > 0) {
-      <div class="notice-list">
-        <a href="javascript:void(0)" (click)="getArticle(noticeList[0].articleId)">
-          <i class="pi pi-bell"></i>
-          {{ noticeList[0].articleTitle }}
-        </a>
-
-        <ui-button
-          [icon]="'pi-plus'"
-          [size]="'small'"
-          [rounded]="true"
-          [text]="true"
-          [title]="'공지사항 더보기'"
-          (click)="listArticleModal(2)"
-        />
-      </div>
-    }
+    <div class="notice-list">
+      @if (!noticeListDataLoad) {
+        <ui-skeleton />
+      }
+      @else {
+        @if (noticeList?.length > 0) {
+          <a href="javascript:void(0)" (click)="getArticle(noticeList[0].articleId)">
+            <i class="pi pi-bell"></i>
+            {{ noticeList[0].articleTitle }}
+          </a>
+  
+          <ui-button
+            [icon]="'pi-plus'"
+            [size]="'small'"
+            [rounded]="true"
+            [text]="true"
+            [title]="'공지사항 더보기'"
+            (click)="listArticleModal(2)"
+          />
+        }
+      }
+    </div>
 
     <ui-card>
       <p>전에 다녔던 회사 급여명세서가 어디 있더라?</p>
