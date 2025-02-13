@@ -81,7 +81,7 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
 
   ngOnInit() {
     const date = dateUtil(this.payslip.payslipPaymentYmd).format('YYYY년 MM월');
-    this.title = `${date} 급여명세서 (${this.payslip.totalAmount}원)`;
+    this.title = `${date} 급여명세서 (${this.payslip.companyName} - ${this.payslip.totalAmount}원)`;
   }
 
   /** 이전/다음 급여명세서로 이동한다. */
@@ -113,7 +113,7 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
   async exportPdf(): Promise<void> {
     this.fileService.exportPdf({
       element: this.salaryDetailView.nativeElement,
-      fileName: `급여명세서(${this.user?.employeeName}).pdf`,
+      fileName: `급여명세서(${this.payslip.companyName}, ${this.user?.employeeName}).pdf`,
       ignoreElements: ['btnExportPdf'],
       orientation: 'landscape',
       margin: 10,

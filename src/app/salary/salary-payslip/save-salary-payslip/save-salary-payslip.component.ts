@@ -92,7 +92,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   }
 
   /** 제목 */
-  title = '0000년 00월 급여명세서';
+  title = `0000년 00월 급여명세서 (${this.payslip.companyName})`;
 
   /** 입사일자 */
   joinYmd: string;
@@ -217,10 +217,10 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   /** 급여명세서 제목을 설정한다. */
   private setTitle(title: string | Date): void {
     if (isEmpty(title)) {
-      this.title = '0000년 00월 급여명세서';
+      this.title = `0000년 00월 급여명세서 (${this.payslip.companyName})`;
     } else {
       const date = dateUtil(title).format('YYYY년 MM월');
-      this.title = `${date} 급여명세서`;
+      this.title = `${date} 급여명세서 (${this.payslip.companyName})`;
     }
   }
 

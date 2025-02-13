@@ -105,6 +105,9 @@ export class PayslipResultDTO {
   /** 입사일자 */
   joinYmd?: string;
   
+  /** 회사명 */
+  companyName?: string;
+  
   /** 급여명세서 지급내역 총 금액 */
   totalAmountA00?: string;
   
