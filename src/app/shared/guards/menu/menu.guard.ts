@@ -41,7 +41,7 @@ export const menuGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
 
   if (isExcludePath(route.routeConfig.path)) {
     
-    // 미사용 or 삭제된 메뉴일경우 에러페이지로 이동한다.
+    // 미사용 or 삭제된 메뉴일 경우 에러페이지로 이동한다.
     if (!currentMenu || currentMenu.useYn === 'N' || currentMenu.deleteYn === 'Y') {
       await router.navigateByUrl(ERROR_PAGE_PATH);
       return false;
