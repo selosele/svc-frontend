@@ -164,7 +164,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
   detectScrollEnd(): void {
     if (this.lmh) {
       const lmhBottom = this.lmh.nativeElement.getBoundingClientRect().bottom;
-      this.isScroll = lmhBottom >= window.innerHeight;
+      this.isScroll = Math.ceil(lmhBottom) >= window.innerHeight;
     } else {
       this.isScroll = false;
     }
