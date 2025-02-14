@@ -92,7 +92,7 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   }
 
   /** 제목 */
-  title = `0000년 00월 급여명세서 (${this.payslip.companyName})`;
+  title = `0000년 00월 급여명세서`;
 
   /** 입사일자 */
   joinYmd: string;
