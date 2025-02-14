@@ -148,6 +148,15 @@ export class PayslipSalaryDetailResultDTO {
   
   /** 급여내역 금액 */
   salaryAmount?: number;
+  
+  /** 이전달 급여내역 금액 */
+  prevSalaryAmount?: number;
+  
+  /** 이전달 급여내역 금액 차이 */
+  salaryAmountCompare?: number;
+  
+  /** 이전달 급여내역 금액 차이 퍼센테이지 */
+  salaryAmountComparePercent?: number;
 
 }
 

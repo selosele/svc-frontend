@@ -68,7 +68,25 @@
               @for (i of payslip.payslipSalaryDetailList; track $index) {
                 @if (i.salaryTypeCode === salaryTypeA00code.value && isSalaryAmountExist(i.salaryAmount)) {
                   <tr>
-                    <th scope="row">{{ i.salaryAmountCodeName }}</th>
+                    <th scope="row">
+                      {{ i.salaryAmountCodeName }}
+
+                      @if (getCompareHtmlClass(i.salaryAmountCompare) === 'plus') {
+                        <span class="salary-detail__content-compare plus" [title]="getCompareHtmlTitle(i.salaryAmountCompare, i.salaryAmountComparePercent)">
+                          {{ getCompareChar(i.salaryAmountCompare) }}
+                        </span>
+                      }
+                      @else if (getCompareHtmlClass(i.salaryAmountCompare) === 'minus') {
+                        <span class="salary-detail__content-compare minus" [title]="getCompareHtmlTitle(i.salaryAmountCompare, i.salaryAmountComparePercent)">
+                          {{ getCompareChar(i.salaryAmountCompare) }}
+                        </span>
+                      }
+                      @else if (getCompareHtmlClass(i.salaryAmountCompare) === '') {
+                        <span class="salary-detail__content-compare">
+                          {{ getCompareChar(i.salaryAmountCompare) }}
+                        </span>
+                      }
+                    </th>
                     <td class="text-right">{{ numberWithCommas(i.salaryAmount) }}</td>
                   </tr>
                 }
@@ -103,7 +121,25 @@
               @for (i of payslip.payslipSalaryDetailList; track $index) {
                 @if (i.salaryTypeCode === salaryTypeB00code.value && isSalaryAmountExist(i.salaryAmount)) {
                   <tr>
-                    <th scope="row">{{ i.salaryAmountCodeName }}</th>
+                    <th scope="row">
+                      {{ i.salaryAmountCodeName }}
+
+                      @if (getCompareHtmlClass(i.salaryAmountCompare) === 'plus') {
+                        <span class="salary-detail__content-compare plus" [title]="getCompareHtmlTitle(i.salaryAmountCompare, i.salaryAmountComparePercent)">
+                          {{ getCompareChar(i.salaryAmountCompare) }}
+                        </span>
+                      }
+                      @else if (getCompareHtmlClass(i.salaryAmountCompare) === 'minus') {
+                        <span class="salary-detail__content-compare minus" [title]="getCompareHtmlTitle(i.salaryAmountCompare, i.salaryAmountComparePercent)">
+                          {{ getCompareChar(i.salaryAmountCompare) }}
+                        </span>
+                      }
+                      @else if (getCompareHtmlClass(i.salaryAmountCompare) === '') {
+                        <span class="salary-detail__content-compare">
+                          {{ getCompareChar(i.salaryAmountCompare) }}
+                        </span>
+                      }
+                    </th>
                     <td class="text-right">{{ numberWithCommas(i.salaryAmount) }}</td>
                   </tr>
                 }

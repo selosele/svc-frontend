@@ -127,4 +127,25 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
     return isNotEmpty(value);
   }
 
+  /** 이전달 급여와 비교한 증감 기호를 반환한다. */
+  getCompareChar(value: number): string {
+    if (value > 0) return '+';
+    if (value < 0) return '-';
+    return '';
+  }
+
+  /** 이전달 급여와 비교한 증감에 따른 HTML 클래스명을 반환한다. */
+  getCompareHtmlClass(value: number): string {
+    if (value > 0) return 'plus';
+    if (value < 0) return 'minus';
+    return '';
+  }
+
+  /** 이전달 급여와 비교한 증감에 따른 HTML title을 반환한다. */
+  getCompareHtmlTitle(value: number, valuePercent: number): string {
+    if (value > 0) return `${Math.abs(value)}원 (${valuePercent.toFixed(2)}%) 올랐어요`;
+    if (value < 0) return `${Math.abs(value)}원 (${valuePercent.toFixed(2)}%) 내렸어요`;
+    return '';
+  }
+
 }
