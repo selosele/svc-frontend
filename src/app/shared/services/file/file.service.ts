@@ -33,22 +33,23 @@ export class FileService {
     // 다운로드 받을 화면 캡처
     const canvas = await html2canvas(options.element, canvasOptions);
 
-    const margin = options.margin ?? 0; // 여백 (단위: mm)
+    // 여백 (단위: mm)
+    const margin = options.margin ?? 0;
   
     // PDF 크기 설정 (캔버스 크기 기반)
-    const pdfWidth = canvas.width * 0.264583 + margin * 2;   // 픽셀 → mm (1px = 0.264583mm)
-    const pdfHeight = canvas.height * 0.264583 + margin * 2; // 픽셀 → mm
+    const pdfWidth = (canvas.width * 0.264583) + (margin * 2);   // 픽셀 → mm (1px = 0.264583mm)
+    const pdfHeight = (canvas.height * 0.264583) + (margin * 2); // 픽셀 → mm
   
     // PDF 생성
     const imgData = canvas.toDataURL('image/png');
     const pdf = new jsPDF({
-      orientation: options.orientation, // landscape: 가로 방향, portrait: 세로 방향
-      unit: 'mm',                       // 단위: mm
-      format: [pdfWidth, pdfHeight],    // PDF 크기를 캔버스 크기에 맞춤
+      orientation: options.orientation ?? 'portrait', // landscape: 가로 방향, portrait: 세로 방향
+      unit: 'mm',                                     // 단위: mm
+      format: [pdfWidth, pdfHeight],                  // PDF 크기를 캔버스 크기에 맞춤
     });
   
     // PDF에 이미지 추가
-    pdf.addImage(imgData, 'PNG', margin, margin, pdfWidth - margin * 2, pdfHeight - margin * 2);
+    pdf.addImage(imgData, 'PNG', margin, margin, pdfWidth - (margin * 2), pdfHeight - (margin * 2));
   
     // PDF 저장
     pdf.save(options.fileName);
