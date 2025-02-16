@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
-import { dateUtil, roles } from '@app/shared/utils';
+import { dateUtil, numberWithCommas as _numberWithCommas, roles } from '@app/shared/utils';
 
 /**
  * 모든 컴포넌트의 기본이 되는 컴포넌트.
@@ -69,16 +69,7 @@ export class CoreBaseComponent {
 
   /** 숫자를 천 단위 콤마기호와 함께 문자열로 반환한다. */
   protected numberWithCommas(value: number | string): string {
-    if (typeof value === 'number') {
-      if (!isFinite(value)) return '0';  // 숫자가 아닌 경우 0을 반환
-      value = value?.toFixed(0);         // 소수점 이하 버리기
-    }
-    
-    if (typeof value === 'string') {
-      value = value?.replace(/[^0-9.-]/g, ''); // 숫자, 마이너스, 소수점만 남기기
-    }
-  
-    return value?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return _numberWithCommas(value);
   }
 
 }
