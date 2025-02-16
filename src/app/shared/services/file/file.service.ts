@@ -30,7 +30,7 @@ export class FileService {
       }
     };
   
-    // 급여명세서 조회 화면 캡처
+    // 다운로드 받을 화면 캡처
     const canvas = await html2canvas(options.element, canvasOptions);
 
     const margin = options.margin ?? 0; // 여백 (단위: mm)
