@@ -102,28 +102,28 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 테이블 엑셀 다운로드 헤더 */
   excelHeader = [
-    { 'totalAmountA00'   : '지급총액' },
-    { 'totalAmountB00'   : '공제합계' },
-    { 'totalAmount'      : '실지급액(지급총액-공제합계)' },
+    { 'totalAmountA00'   : '지급총액', '_numberFormat': 'Y' },
+    { 'totalAmountB00'   : '공제합계', '_numberFormat': 'Y' },
+    { 'totalAmount'      : '실지급액(지급총액-공제합계)', '_numberFormat': 'Y' },
     { 'payslipPaymentYmd': '지급일자' },
     { 'payslipNote'      : '비고' },
   ];
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'totalAmountA00',       header: '지급총액',
-      valueGetter: (data: PayslipResultDTO) => `+${data.totalAmountA00}원`
+    { field: 'totalAmountA00',    header: '지급총액',
+      valueGetter: (data: PayslipResultDTO) => `+${this.numberWithCommas(data.totalAmountA00)}원`
     },
-    { field: 'totalAmountB00',       header: '공제합계',
-      valueGetter: (data: PayslipResultDTO) => `-${data.totalAmountB00}원`
+    { field: 'totalAmountB00',    header: '공제합계',
+      valueGetter: (data: PayslipResultDTO) => `-${this.numberWithCommas(data.totalAmountB00)}원`
     },
-    { field: 'totalAmount',          header: '실지급액(지급총액-공제합계)',
-      valueGetter: (data: PayslipResultDTO) => `<strong>${data.totalAmount}원</strong>`
+    { field: 'totalAmount',       header: '실지급액(지급총액-공제합계)',
+      valueGetter: (data: PayslipResultDTO) => `<strong>${this.numberWithCommas(data.totalAmount)}원</strong>`
     },
-    { field: 'payslipPaymentYmd',    header: '지급일자',
+    { field: 'payslipPaymentYmd', header: '지급일자',
       valueGetter: (data: PayslipResultDTO) => `${dateUtil(data.payslipPaymentYmd).format('YYYY년 MM월 DD일')}`
     },
-    { field: 'payslipNote',          header: '비고' },
+    { field: 'payslipNote',       header: '비고' },
   ];
 
   ngOnInit(): void {

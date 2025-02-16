@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import FileSaver from 'file-saver';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
 import { UiContentTitleComponent } from '../ui-content-title/ui-content-title.component';
-import FileSaver from 'file-saver';
+import { numberWithCommas } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -82,18 +83,25 @@ export class UiTableButtonsComponent {
     if (!this.excelHeader) {
       return this.value;
     }
-
-    const headerMapping = Object.assign({}, ...this.excelHeader);
+  
     const transformedData = this.value.map(x => {
       const transformedItem = {};
-      for (const key in headerMapping) {
+      this.excelHeader.forEach(header => {
+        const key = Object.keys(header)[0]; // 데이터 키
+        const columnName = header[key];     // 컬럼명
+        const numberFormat = header._numberFormat || 'N'; // 숫자 포맷 여부
+  
         if (x.hasOwnProperty(key)) {
-          transformedItem[headerMapping[key]] = x[key];
+          let value = x[key];
+          if (numberFormat === 'Y' && typeof value === 'number') {
+            value = numberWithCommas(value);
+          }
+          transformedItem[columnName] = value;
         }
-      }
+      });
       return transformedItem;
     });
-    
+  
     return transformedData;
   }
 
