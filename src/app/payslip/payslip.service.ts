@@ -4,7 +4,7 @@ import { PayslipStore } from './payslip.store';
 import { HttpService } from '@app/shared/services';
 import { GetPayslipRequestDTO, PayslipResponseDTO, PayslipResultDTO, SavePayslipRequestDTO } from './payslip.model';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
-import { dateUtil, isEmpty, isNotBlank } from '@app/shared/utils';
+import { dateUtil, isEmpty, isNotBlank, numberWithCommas } from '@app/shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class PayslipService {
@@ -60,9 +60,9 @@ export class PayslipService {
       }
 
       if (isNotBlank(quitYmd)) {
-        return `최근 급여: <span class="text-primary">${currentPayslip?.totalAmount}원</span> (${dateUtil(currentPayslip?.payslipPaymentYmd).format('YYYY년 MM월 DD일')})`;
+        return `최근 급여: <span class="text-primary">${numberWithCommas(currentPayslip?.totalAmount)}원</span> (${dateUtil(currentPayslip?.payslipPaymentYmd).format('YYYY년 MM월 DD일')})`;
       }
-      return `${dateUtil(currentPayslip?.payslipPaymentYmd).format('YYYY년 MM월')} 급여: <span class="text-primary">${currentPayslip?.totalAmount}원</span>`;
+      return `${dateUtil(currentPayslip?.payslipPaymentYmd).format('YYYY년 MM월')} 급여: <span class="text-primary">${numberWithCommas(currentPayslip?.totalAmount)}원</span>`;
     })());
 
     this.payslipStore.update('payslipTableText', (() => {

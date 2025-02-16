@@ -109,13 +109,37 @@ export class PayslipResultDTO {
   companyName?: string;
   
   /** 급여명세서 지급내역 총 금액 */
-  totalAmountA00?: string;
+  totalAmountA00?: number;
   
   /** 급여명세서 공제내역 총 금액 */
-  totalAmountB00?: string;
+  totalAmountB00?: number;
+
+  /** 이전 달 지급내역 총 금액 */
+  prevTotalAmountA00?: number;
+  
+  /** 이전 달 공제내역 총 금액 */
+  prevTotalAmountB00?: number;
+  
+  /** 이전 달 총 금액 차이 */
+  totalAmountCompare?: number;
+  
+  /** 이전 달 총 금액 차이 퍼센테이지 */
+  totalAmountComparePercent?: number;
+
+  /** 이전 달 지급내역 금액 차이 */
+  totalAmountCompareA00?: number;
+
+  /** 이전 달 공제내역 금액 차이 */
+  totalAmountCompareB00?: number;
+
+  /** 이전 달 지급내역 금액 차이 퍼센테이지 */
+  totalAmountComparePercentA00?: number;
+
+  /** 이전 달 공제내역 금액 차이 퍼센테이지 */
+  totalAmountComparePercentB00?: number;
   
   /** 급여명세서 실지급액(지급내역-공제내역) */
-  totalAmount?: string;
+  totalAmount?: number;
   
   /** 이전/다음 급여명세서 flag */
   prevNextFlag?: string;
@@ -149,13 +173,13 @@ export class PayslipSalaryDetailResultDTO {
   /** 급여내역 금액 */
   salaryAmount?: number;
   
-  /** 이전달 급여내역 금액 */
+  /** 이전 달 급여내역 금액 */
   prevSalaryAmount?: number;
   
-  /** 이전달 급여내역 금액 차이 */
+  /** 이전 달 급여내역 금액 차이 */
   salaryAmountCompare?: number;
   
-  /** 이전달 급여내역 금액 차이 퍼센테이지 */
+  /** 이전 달 급여내역 금액 차이 퍼센테이지 */
   salaryAmountComparePercent?: number;
 
 }

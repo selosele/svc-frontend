@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CheckboxChangeEvent } from 'primeng/checkbox';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileService, UiMessageService } from '@app/shared/services';
@@ -8,12 +10,15 @@ import { PayslipResultDTO } from '@app/payslip/payslip.model';
 import { dateUtil, isEmpty, isNotEmpty } from '@app/shared/utils';
 import { UiButtonComponent } from '@app/shared/components/ui';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { UiCheckboxComponent, UiFormComponent } from '@app/shared/components/form';
 
 @Component({
   standalone: true,
   imports: [
     CommonModule,
+    UiFormComponent,
     UiButtonComponent,
+    UiCheckboxComponent,
   ],
   selector: 'salary-payslip-salary-detail',
   templateUrl: './salary-payslip-salary-detail.component.html',
@@ -22,6 +27,7 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
 export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
+    private fb: FormBuilder,
     private config: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
@@ -36,6 +42,12 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
 
   /** 제목 */
   title: string;
+
+  /** 급여명세서 form */
+  payslipForm: FormGroup;
+
+  /** 이전 달 비교 문구 표출 상태 */
+  isShowCompareActive = false;
 
   /** 지급내역 코드 데이터 */
   get salaryTypeA00code(): DropdownData {
@@ -80,8 +92,12 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
   }
 
   ngOnInit() {
+    this.payslipForm = this.fb.group({
+      showCompareYn: [], // 이전 달 비교 활성화 여부
+    });
+
     const date = dateUtil(this.payslip.payslipPaymentYmd).format('YYYY년 MM월');
-    this.title = `${date} 급여명세서 (${this.payslip.companyName} - ${this.payslip.totalAmount}원)`;
+    this.title = `${date} 급여명세서 (${this.payslip.companyName} - ${this.numberWithCommas(this.payslip.totalAmount)}원)`;
   }
 
   /** 이전/다음 급여명세서로 이동한다. */
@@ -112,12 +128,13 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
   /** 급여명세서를 PDF로 다운로드 받는다. */
   async exportPdf(): Promise<void> {
     const date = dateUtil(this.payslip.payslipPaymentYmd).format('YYYY년 MM월');
+    const pdfElement = this.salaryDetailView.nativeElement;
 
-    this.fileService.exportPdf({
-      element: this.salaryDetailView.nativeElement,
+    await this.fileService.exportPdf({
+      element: pdfElement,
       fileName: `${date} 급여명세서(${this.payslip.companyName}, ${this.user?.employeeName}).pdf`,
-      ignoreElements: ['btnExportPdf'],
-      orientation: 'landscape',
+      ignoreElements: ['btnExportPdf', 'salaryDetailUtilBox1'],
+      orientation: (pdfElement.scrollWidth > pdfElement.scrollHeight) ? 'landscape' : 'portrait',
       margin: 10,
     });
   }
@@ -127,25 +144,25 @@ export class SalaryPayslipSalaryDetailComponent extends CoreBaseComponent implem
     return isNotEmpty(value);
   }
 
-  /** 이전달 급여와 비교한 증감 기호를 반환한다. */
-  getCompareChar(value: number): string {
-    if (value > 0) return '+';
-    if (value < 0) return '-';
-    return '';
+  /** 이전 달 급여와 비교한 문구를 반환한다. */
+  getCompareText(value: number, valuePercent: number): string {
+    let text = '변동없음';
+    if (value > 0) {
+      text = `<span class="text-red-500 font-bold">+${this.numberWithCommas(Math.abs(value))}원 (${valuePercent?.toFixed(2)}%)</span>`;
+    }
+    else if (value < 0) {
+      text = `<span class="text-primary font-bold">-${this.numberWithCommas(Math.abs(value))}원 (${valuePercent?.toFixed(2)}%)</span>`;
+    }
+    return text;
   }
 
-  /** 이전달 급여와 비교한 증감에 따른 HTML 클래스명을 반환한다. */
-  getCompareHtmlClass(value: number): string {
-    if (value > 0) return 'plus';
-    if (value < 0) return 'minus';
-    return '';
-  }
-
-  /** 이전달 급여와 비교한 증감에 따른 HTML title을 반환한다. */
-  getCompareHtmlTitle(value: number, valuePercent: number): string {
-    if (value > 0) return `${Math.abs(value)}원 (${valuePercent.toFixed(2)}%) 올랐어요`;
-    if (value < 0) return `${Math.abs(value)}원 (${valuePercent.toFixed(2)}%) 내렸어요`;
-    return '';
+  /** 이전 달과 비교해서 보기 체크박스를 선택한다. */
+  onShowCompareYnChange(event: CheckboxChangeEvent): void {
+    if (event.checked[0] === 'Y') {
+      this.isShowCompareActive = true;
+    } else {
+      this.isShowCompareActive = false;
+    }
   }
 
 }
