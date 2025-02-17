@@ -99,7 +99,7 @@ export class UiTableComponent {
   @Input() fileName?: string;
 
   /** 테이블 엑셀 다운로드 헤더 */
-  @Input() excelHeader?: { [key: string]: string }[];
+  @Input() excelHeader?: { [key: string]: any }[];
 
   /** 테이블 엑셀 다운로드 버튼 사용여부 */
   @Input() useExportExcel = false;

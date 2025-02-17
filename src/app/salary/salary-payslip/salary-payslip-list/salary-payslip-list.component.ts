@@ -102,9 +102,9 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
 
   /** 테이블 엑셀 다운로드 헤더 */
   excelHeader = [
-    { 'totalAmountA00'   : '지급총액', '_numberFormat': 'Y' },
-    { 'totalAmountB00'   : '공제합계', '_numberFormat': 'Y' },
-    { 'totalAmount'      : '실지급액(지급총액-공제합계)', '_numberFormat': 'Y' },
+    { 'totalAmountA00'   : '지급총액', '_numberFormat': true },
+    { 'totalAmountB00'   : '공제합계', '_numberFormat': true },
+    { 'totalAmount'      : '실지급액(지급총액-공제합계)', '_numberFormat': true },
     { 'payslipPaymentYmd': '지급일자' },
     { 'payslipNote'      : '비고' },
   ];

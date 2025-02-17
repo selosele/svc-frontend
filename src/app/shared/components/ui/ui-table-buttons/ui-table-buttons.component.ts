@@ -26,7 +26,7 @@ export class UiTableButtonsComponent {
   @Input() fileName?: string;
 
   /** 테이블 엑셀 다운로드 헤더 */
-  @Input() excelHeader?: { [key: string]: string }[];
+  @Input() excelHeader?: { [key: string]: any }[];
 
   /** 테이블 타이틀 */
   @Input() title?: string;
@@ -89,11 +89,11 @@ export class UiTableButtonsComponent {
       this.excelHeader.forEach(header => {
         const key = Object.keys(header)[0]; // 데이터 키
         const columnName = header[key];     // 컬럼명
-        const numberFormat = header._numberFormat || 'N'; // 숫자 포맷 여부
+        const numberFormat = header._numberFormat || false; // 숫자 포맷 여부
   
         if (x.hasOwnProperty(key)) {
           let value = x[key];
-          if (numberFormat === 'Y' && typeof value === 'number') {
+          if (numberFormat && typeof value === 'number') {
             value = numberWithCommas(value);
           }
           transformedItem[columnName] = value;
