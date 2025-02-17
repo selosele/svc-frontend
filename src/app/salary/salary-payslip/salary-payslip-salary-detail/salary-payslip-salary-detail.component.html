@@ -83,11 +83,11 @@
                       <th scope="row">{{ i.salaryAmountCodeName }}</th>
                       <td class="text-right">
                         <div [class.salary-detail__content-compare--active]="isShowCompareActive">
-                          {{ numberWithCommas(i.salaryAmount) }}
-
                           @if (isShowCompareActive) {
                             <span class="salary-detail__content-compare-text" [innerHTML]="getCompareText(i.salaryAmountCompare, i.salaryAmountComparePercent)"></span>
                           }
+
+                          {{ numberWithCommas(i.salaryAmount) }}
                         </div>
                       </td>
                     </tr>
@@ -99,11 +99,11 @@
                   <th scope="row">지급총액</th>
                   <td class="text-right">
                     <div [class.salary-detail__content-compare--active]="isShowCompareActive">
-                      {{ numberWithCommas(payslip.totalAmountA00) }}
-
                       @if (isShowCompareActive) {
                         <span class="salary-detail__content-compare-text" [innerHTML]="getCompareText(payslip.totalAmountCompareA00, payslip.totalAmountComparePercentA00)"></span>
                       }
+
+                      {{ numberWithCommas(payslip.totalAmountA00) }}
                     </div>
                   </td>
                 </tr>
@@ -134,11 +134,11 @@
                       <th scope="row">{{ i.salaryAmountCodeName }}</th>
                       <td class="text-right">
                         <div [class.salary-detail__content-compare--active]="isShowCompareActive">
-                          {{ numberWithCommas(i.salaryAmount) }}
-
                           @if (isShowCompareActive) {
                             <span class="salary-detail__content-compare-text" [innerHTML]="getCompareText(i.salaryAmountCompare, i.salaryAmountComparePercent)"></span>
                           }
+
+                          {{ numberWithCommas(i.salaryAmount) }}
                         </div>
                       </td>
                     </tr>
@@ -150,11 +150,11 @@
                   <th scope="row">공제합계</th>
                   <td class="text-right">
                     <div [class.salary-detail__content-compare--active]="isShowCompareActive">
-                      {{ numberWithCommas(payslip.totalAmountB00) }}
-
                       @if (isShowCompareActive) {
                         <span class="salary-detail__content-compare-text" [innerHTML]="getCompareText(payslip.totalAmountCompareB00, payslip.totalAmountComparePercentB00)"></span>
                       }
+
+                      {{ numberWithCommas(payslip.totalAmountB00) }}
                     </div>
                   </td>
                 </tr>
@@ -166,11 +166,11 @@
         <div class="mt-4 text-right">
           <span class="text-lg">실지급액(지급총액-공제합계)</span>
           <strong class="block text-2xl">
-            {{ numberWithCommas(payslip.totalAmount) }}원
-
             @if (isShowCompareActive) {
               <span class="ml-1 text-base font-normal" [innerHTML]="getCompareText(payslip.totalAmountCompare, payslip.totalAmountComparePercent)"></span>
             }
+
+            {{ numberWithCommas(payslip.totalAmount) }}원
           </strong>
         </div>
       </div>
