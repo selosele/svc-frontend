@@ -40,7 +40,7 @@ export class CoreBaseComponent {
 
   /** 최상위 요소의 style을 반환한다. */
   protected get documentStyle() {
-    return getComputedStyle(document.documentElement);
+    return window.getComputedStyle(document.documentElement);
   }
 
   /** css text-color 변수 값을 반환한다. */
