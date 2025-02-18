@@ -2,6 +2,7 @@ export * from './ui-accordion/ui-accordion.component';
 export * from './ui-alert/ui-alert.component';
 export * from './ui-button/ui-button.component';
 export * from './ui-card/ui-card.component';
+export * from './ui-chart/ui-chart.component';
 export * from './ui-confirm/ui-confirm.component';
 export * from './ui-content-title/ui-content-title.component';
 export * from './ui-flex-box/ui-flex-box.component';
