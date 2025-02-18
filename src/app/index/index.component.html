@@ -131,17 +131,30 @@
     </div>
 
     <div class="widget-box widget-box4">
-      <div class="widget-box__title">
-        <strong>급여차트</strong>
-        <ui-button
-          [icon]="'pi-plus'"
-          [text]="true"
-          [title]="'자세히 보기'"
-          (click)="onSalaryMoreClick()"
-        />
-      </div>
-
-
+      <ui-chart
+        [type]="'doughnut'"
+        [height]="'300px'"
+        [data]="{
+          labels: ['A', 'B', 'C'],
+          datasets: [
+            {
+              data: [300, 50, 100],
+              backgroundColor: [documentStyle.getPropertyValue('--primary-500'), documentStyle.getPropertyValue('--orange-500'), documentStyle.getPropertyValue('--gray-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--primary-400'), documentStyle.getPropertyValue('--orange-400'), documentStyle.getPropertyValue('--gray-400')]
+            }
+          ]
+        }"
+        [options]="{
+          cutout: '60%',
+          plugins: {
+            legend: {
+              labels: {
+                color: textColor
+              }
+            }
+          }
+        }"
+      />
     </div>
   </div>
 

@@ -14,7 +14,7 @@ import { CoreBaseComponent } from '@app/shared/components/core';
 import { ArticleViewComponent } from '@app/article/article-view/article-view.component';
 import { ArticleListComponent } from '@app/article/article-list/article-list.component';
 import { SaveArticleComponent } from '@app/article/save-article/save-article.component';
-import { UiButtonComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiChartComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { BoardResultDTO } from '@app/board/board.model';
 import { ArticleDataStateDTO, ArticleResultDTO } from '@app/article/article.model';
@@ -30,6 +30,7 @@ import { isObjectEmpty } from '@app/shared/utils';
     UiSkeletonComponent,
     UiButtonComponent,
     UiTabComponent,
+    UiChartComponent,
   ],
   selector: 'view-index',
   templateUrl: './index.component.html',

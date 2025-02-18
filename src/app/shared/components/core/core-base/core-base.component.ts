@@ -38,6 +38,16 @@ export class CoreBaseComponent {
     return this.authService.hasRole(roles.SYSTEM_ADMIN.id);
   }
 
+  /** 최상위 요소의 style을 반환한다. */
+  protected get documentStyle() {
+    return getComputedStyle(document.documentElement);
+  }
+
+  /** css text-color 변수 값을 반환한다. */
+  protected get textColor() {
+    return this.documentStyle.getPropertyValue('--text-color');
+  }
+
   /** 액션 목록 */
   protected get actions() {
     return {
