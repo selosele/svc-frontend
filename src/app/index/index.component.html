@@ -85,12 +85,63 @@
   
   <div class="widget-container widget-container2">
     <div class="widget-box widget-box3">
-      급여정보 및 급여통계
+      @if (!mainPayslipResponseDataLoad) {
+        <ui-skeleton />
+        <ui-skeleton />
+        <ui-skeleton />
+      }
+      @else {
+        <div class="widget-box__title">
+          <strong>최근 급여</strong>
+          <ui-button
+            [icon]="'pi-plus'"
+            [text]="true"
+            [title]="'자세히 보기'"
+            (click)="onSalaryMoreClick()"
+          />
+        </div>
+  
+        <div class="widget-box__container">
+          <div class="widget-box__item p-2">
+            <div class="flex justify-content-between">
+              <p>
+                <span class="block">{{ ngDate(mainPayslipResponse.payslipList[0].payslipPaymentYmd) | date: 'yyyy년 MM월 dd일' }}</span>
+                <strong class="block text-3xl text-primary">{{ numberWithCommas(mainPayslipResponse.payslipList[0].totalAmount) }}원</strong>
+              </p>
+
+              <p class="flex flex-wrap justify-content-end">
+                <span class="flex justify-content-between w-12rem">
+                  <span>지급총액</span>
+                  <span class="font-bold text-red-500">+{{ numberWithCommas(mainPayslipResponse.payslipList[0].totalAmountA00) }}원</span>
+                </span>
+                <span class="flex justify-content-between w-12rem">
+                  <span>공제합계</span>
+                  <span class="font-bold text-primary">-{{ numberWithCommas(mainPayslipResponse.payslipList[0].totalAmountB00) }}원</span>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="widget-box widget-box4">
+      <div class="widget-box__title">
+        <strong>급여차트</strong>
+        <ui-button
+          [icon]="'pi-plus'"
+          [text]="true"
+          [title]="'자세히 보기'"
+          (click)="onSalaryMoreClick()"
+        />
+      </div>
+
+
     </div>
   </div>
 
   <div class="widget-container widget-container3">
-    <div class="widget-box widget-box4">
+    <div class="widget-box widget-box5">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -132,7 +183,7 @@
       }
     </div>
   
-    <div class="widget-box widget-box5">
+    <div class="widget-box widget-box6">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -187,7 +238,7 @@
       }
     </div>
   
-    <div class="widget-box widget-box6">
+    <div class="widget-box widget-box7">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />

@@ -26,6 +26,9 @@ export class GetPayslipRequestDTO extends HttpRequestDTOBase {
   /** 급여명세서 지급 월 */
   payslipPaymentMM?: string;
 
+  /** 최신 급여명세서 조회 여부 (Y/N) */
+  isGetCurrent?: string;
+
 }
 
 /** 급여명세서 추가/수정 요청 DTO */

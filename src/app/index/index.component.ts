@@ -6,6 +6,8 @@ import { BoardStore } from '@app/board/board.store';
 import { BoardService } from '@app/board/board.service';
 import { ArticleStore } from '@app/article/article.store';
 import { ArticleService } from '@app/article/article.service';
+import { PayslipStore } from '@app/payslip/payslip.store';
+import { PayslipService } from '@app/payslip/payslip.service';
 import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { CoreBaseComponent } from '@app/shared/components/core';
@@ -16,6 +18,7 @@ import { UiButtonComponent, UiSkeletonComponent, UiTabComponent } from '@app/sha
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { BoardResultDTO } from '@app/board/board.model';
 import { ArticleDataStateDTO, ArticleResultDTO } from '@app/article/article.model';
+import { PayslipResponseDTO } from '@app/payslip/payslip.model';
 import { VacationByMonthResultDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 import { isObjectEmpty } from '@app/shared/utils';
 
@@ -42,6 +45,8 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     private boardService: BoardService,
     private articleStore: ArticleStore,
     private articleService: ArticleService,
+    private payslipStore: PayslipStore,
+    private payslipService: PayslipService,
     private vacationStore: VacationStore,
     private vacationService: VacationService,
   ) {
@@ -93,6 +98,16 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     return article?.[this.activeBoardId]?.dataLoad ?? false;
   }
 
+  /** 메인화면 > 급여명세서 정보 */
+  get mainPayslipResponse() {
+    return this.payslipStore.select<PayslipResponseDTO>('mainPayslipResponse').value;
+  }
+
+  /** 메인화면 > 급여명세서 정보 데이터 로드 완료 여부 */
+  get mainPayslipResponseDataLoad() {
+    return this.payslipStore.select<boolean>('mainPayslipResponseDataLoad').value;
+  }
+
   /** 휴가 통계 정보 */
   get vacationStatResponse() {
     return this.vacationStore.select<VacationStatsResponseDTO>('vacationStatResponse').value;
@@ -120,6 +135,10 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
     if (!this.mainBoardListDataLoad && !this.mainArticleResponseDataLoad && this.user) {
       this.listBoard();
+    }
+
+    if (!this.mainPayslipResponseDataLoad && this.user) {
+      this.getCurrentPayslip();
     }
 
     if (!this.vacationStatResponseDataLoad && this.user) {
@@ -262,6 +281,24 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
         }
       });
     });
+  }
+
+  /** 최신 급여명세서를 조회한다. */
+  getCurrentPayslip(): void {
+    this.payslipService.listPayslip$({
+      userId: this.user?.userId,
+      workHistoryId: this.user?.workHistoryId,
+      isGetCurrent: 'Y',
+    })
+    .subscribe((response) => {
+      this.payslipStore.update('mainPayslipResponse', response);
+      this.payslipStore.update('mainPayslipResponseDataLoad', true);
+    });
+  }
+
+  /** 급여관리 페이지로 이동한다. */
+  onSalaryMoreClick(): void {
+    this.router.navigate(['/sa/payslips'], { queryParams: { menuId: this.getMenuIdByMenuUrl('/sa/payslips') } });
   }
 
   /** 휴가 통계 목록을 조회한다. */
