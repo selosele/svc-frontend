@@ -15,6 +15,11 @@
     transform: translateY(calc(-4.375rem - 1px));
   }
 
+  &.isScrollTop {
+    border-bottom: 1px solid var(--surface-300);
+    background-color: var(--surface-0);
+  }
+
   &__inner {
     display: flex;
     width: 100%;

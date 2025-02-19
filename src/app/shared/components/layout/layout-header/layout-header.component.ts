@@ -43,6 +43,9 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
   /** 스크롤 여부 */
   isScrollDown = true;
 
+  /** 페이지 최상단에 스크롤되었는지 여부 */
+  isScrollTop = false;
+
   /** 사용자 설정 */
   get userSetup() {
     return this.userStore.select<UserSetupResultDTO>('userSetup').value;
@@ -68,12 +71,12 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
   /** 스크롤 시, header를 위로 이동한다. */
   @HostListener('document:scroll', ['$event'])
   onDocumentScroll(event: Event): void {
-    if (window.scrollY < 0)
-      return;
+    if (window.scrollY < 0) return;
 
     if (Math.abs(window.scrollY - this.lastScrollTop) < this.header.nativeElement.offsetTop)
       return;
 
+    this.isScrollTop = window.scrollY > 0;
     this.isScrollDown = window.scrollY < this.lastScrollTop;
     this.lastScrollTop = window.scrollY;
   }
