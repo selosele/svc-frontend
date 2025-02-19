@@ -27,6 +27,12 @@
   &-box {
     width: 100%;
 
+    &1,
+    &3,
+    &5 {
+      height: 8.75rem;
+    }
+
     &__title {
       display: flex;
       justify-content: space-between;

@@ -40,8 +40,8 @@
         @if (mainBoardList?.length > 0) {
           <ui-tab
             [tabs]="mainBoardTabList"
-            [activeIndex]="activeIndex"
-            (activeIndexChange)="onChange($event)"
+            [activeIndex]="mainBoardTabIndex"
+            (activeIndexChange)="onMainBoardTabChange($event)"
           >
             @if (!mainArticleResponseDataLoad) {
               <ui-skeleton />
@@ -103,21 +103,21 @@
   
         <div class="widget-box__container">
           <div class="widget-box__item p-2">
-            @if (mainPayslipResponse?.payslipList.length > 0) {
+            @if (currentPayslip !== null) {
               <div class="flex justify-content-between">
                 <p>
-                  <span class="block">{{ ngDate(mainPayslipResponse.payslipList[0].payslipPaymentYmd) | date: 'yyyy년 MM월 dd일' }}</span>
-                  <strong class="block text-3xl text-primary">{{ numberWithCommas(mainPayslipResponse.payslipList[0].totalAmount) }}원</strong>
+                  <span class="block">{{ ngDate(currentPayslip.payslipPaymentYmd) | date: 'yyyy년 MM월 dd일' }}</span>
+                  <strong class="block text-3xl text-primary">{{ numberWithCommas(currentPayslip.totalAmount) }}원</strong>
                 </p>
   
                 <p class="flex flex-wrap justify-content-end">
                   <span class="flex justify-content-between align-items-center w-12rem">
                     <span class="font-bold">지급총액</span>
-                    <span>{{ numberWithCommas(mainPayslipResponse.payslipList[0].totalAmountA00) }}원</span>
+                    <span>{{ numberWithCommas(currentPayslip.totalAmountA00) }}원</span>
                   </span>
                   <span class="flex justify-content-between align-items-center w-12rem">
                     <span class="font-bold">공제합계</span>
-                    <span>{{ numberWithCommas(mainPayslipResponse.payslipList[0].totalAmountB00) }}원</span>
+                    <span>{{ numberWithCommas(currentPayslip.totalAmountB00) }}원</span>
                   </span>
                 </p>
               </div>
@@ -131,30 +131,30 @@
     </div>
 
     <div class="widget-box widget-box4">
-      <ui-chart
-        [type]="'doughnut'"
-        [height]="'300px'"
-        [data]="{
-          labels: ['A', 'B', 'C'],
-          datasets: [
-            {
-              data: [300, 50, 100],
-              backgroundColor: [documentStyle.getPropertyValue('--primary-500'), documentStyle.getPropertyValue('--orange-500'), documentStyle.getPropertyValue('--gray-500')],
-              hoverBackgroundColor: [documentStyle.getPropertyValue('--primary-400'), documentStyle.getPropertyValue('--orange-400'), documentStyle.getPropertyValue('--gray-400')]
-            }
-          ]
-        }"
-        [options]="{
-          cutout: '60%',
-          plugins: {
-            legend: {
-              labels: {
-                color: textColor
-              }
-            }
+      @if (!mainPayslipResponseDataLoad) {
+        <ui-skeleton />
+        <ui-skeleton />
+        <ui-skeleton />
+      }
+      @else {
+        <ui-tab
+          [tabs]="mainPayslipTabList"
+          [activeIndex]="mainPayslipTabIndex"
+          (activeIndexChange)="onMainPayslipTabChange($event)"
+        >
+          @if (mainPayslipResponse?.payslip !== null) {
+            <ui-chart
+              [type]="'bar'"
+              [height]="'300px'"
+              [data]="chartData"
+              [options]="chartOptions"
+            />
           }
-        }"
-      />
+          @else {
+            <p>급여명세서를 등록하면 급여차트를 확인할 수 있어요.</p>
+          }
+        </ui-tab>
+      }
     </div>
   </div>
 

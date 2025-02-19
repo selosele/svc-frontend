@@ -71,19 +71,19 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
   /** 선택된 게시판 탭의 게시판 ID */
   get mainBoardTabKey() {
-    return this.boardStore.select<number>('mainBoardTabKey').value
+    return this.boardStore.select<number>('mainBoardTabKey').value;
   }
 
   /**
    * 선택된 게시판 탭의 index
    *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
    */
-  get activeIndex() {
+  get mainBoardTabIndex() {
     return this.boardStore.select<number>('mainBoardTabIndex').value;
   }
 
   /** 선택된 게시판 탭의 index를 변경한다. */
-  set activeIndex(value: number) {
+  set mainBoardTabIndex(value: number) {
     this.boardStore.update('mainBoardTabIndex', value);
   }
 
@@ -109,6 +109,34 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     return this.payslipStore.select<boolean>('mainPayslipResponseDataLoad').value;
   }
 
+  /** 메인화면 > 최신 급여명세서 정보 */
+  get currentPayslip() {
+    return this.mainPayslipResponse?.payslip;
+  }
+
+  /** 급여 탭 목록 */
+  get mainPayslipTabList() {
+    return this.payslipStore.select<Tab[]>('mainPayslipTabList').value;
+  }
+
+  /** 선택된 급여 탭의 key */
+  get mainPayslipTabKey() {
+    return this.payslipStore.select<string>('mainPayslipTabKey').value || 'A00';
+  }
+
+  /**
+   * 선택된 급여 탭의 index
+   *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
+   */
+  get mainPayslipTabIndex() {
+    return this.payslipStore.select<number>('mainPayslipTabIndex').value;
+  }
+
+  /** 선택된 급여 탭의 index를 변경한다. */
+  set mainPayslipTabIndex(value: number) {
+    this.payslipStore.update('mainPayslipTabIndex', value);
+  }
+
   /** 휴가 통계 정보 */
   get vacationStatResponse() {
     return this.vacationStore.select<VacationStatsResponseDTO>('vacationStatResponse').value;
@@ -118,6 +146,12 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   get vacationStatResponseDataLoad() {
     return this.vacationStore.select<boolean>('vacationStatResponseDataLoad').value;
   }
+
+  /** 급여차트 데이터 */
+  chartData: any;
+
+  /** 급여차트 옵션 */
+  chartOptions: any;
 
   /** 선택된 게시판 탭의 게시판 ID */
   activeBoardId: number;
@@ -142,6 +176,10 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       this.getCurrentPayslip();
     }
 
+    if (this.currentPayslip !== null) {
+      this.initChartData();
+    }
+
     if (!this.vacationStatResponseDataLoad && this.user) {
       this.listVacationStats();
     }
@@ -162,7 +200,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 게시판 탭을 클릭한다. */
-  onChange(event: UiTabChangeEvent): void {
+  onMainBoardTabChange(event: UiTabChangeEvent): void {
     this.boardStore.update('mainBoardTabIndex', event.index);
     this.boardStore.update('mainBoardTabKey', Number(event.activeKey));
     this.activeBoardId = Number(event.activeKey);
@@ -292,9 +330,63 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       isGetCurrent: 'Y',
     })
     .subscribe((response) => {
-      this.payslipStore.update('mainPayslipResponse', response);
       this.payslipStore.update('mainPayslipResponseDataLoad', true);
+      this.payslipStore.update('mainPayslipResponse', response);
+      this.payslipStore.update('mainPayslipTabList', [
+        { title: '지급내역', key: 'A00', dataLoad: true },
+        { title: '공제내역', key: 'B00', dataLoad: true },
+      ]);
+      this.initChartData();
     });
+  }
+
+  /** 급여차트를 초기화한다. */
+  initChartData(): void {
+    const labels = this.getSalaryAmountCodeNameList(this.mainPayslipTabKey);
+    const data = this.getSalaryAmountList(this.mainPayslipTabKey);
+
+    this.chartData = {
+      labels,
+      datasets: [
+        {
+          label: '금액',
+          data,
+          backgroundColor: [
+            this.documentStyle.getPropertyValue('--primary-500'),
+            this.documentStyle.getPropertyValue('--orange-500'),
+            this.documentStyle.getPropertyValue('--gray-500'),
+          ],
+          hoverBackgroundColor: [
+            this.documentStyle.getPropertyValue('--primary-400'),
+            this.documentStyle.getPropertyValue('--orange-400'),
+            this.documentStyle.getPropertyValue('--gray-400'),
+          ]
+        }
+      ]
+    };
+
+    this.chartOptions = {};
+  }
+
+  /** 급여차트 탭을 클릭한다. */
+  onMainPayslipTabChange(event: UiTabChangeEvent): void {
+    this.payslipStore.update('mainPayslipTabIndex', event.index);
+    this.payslipStore.update('mainPayslipTabKey', event.activeKey);
+    this.initChartData();
+  }
+
+  /** 메인화면 > 최신 급여명세서 정보 > 급여내역 금액 코드명 목록을 반환한다. */
+  getSalaryAmountCodeNameList(salaryTypeCode: string) {
+    return this.currentPayslip?.payslipSalaryDetailList
+      .filter(x => x.salaryTypeCode === salaryTypeCode && x.salaryAmount !== null)
+      .map(x => x.salaryAmountCodeName);
+  }
+
+  /** 메인화면 > 최신 급여명세서 정보 > 급여내역 금액 목록을 반환한다. */
+  getSalaryAmountList(salaryTypeCode: string) {
+    return this.currentPayslip?.payslipSalaryDetailList
+      .filter(x => x.salaryTypeCode === salaryTypeCode && x.salaryAmount !== null)
+      .map(x => x.salaryAmount);
   }
 
   /** 급여관리 페이지로 이동한다. */
