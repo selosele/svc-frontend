@@ -52,12 +52,14 @@
               @if (mainArticleResponse?.articleList.length > 0) {
                 <ul class="widget-box__article-list">
                   @for (i of mainArticleResponse?.articleList; track $index) {
-                    <li class="widget-box__article-list-item">
-                      <a href="javascript:void(0)" (click)="onArticleItemClick(i.articleId)">
-                        {{ i.articleTitle }}
-                      </a>
-                      <span>{{ i.createDt }}</span>
-                    </li>
+                    @if ($index < 4) {
+                      <li class="widget-box__article-list-item">
+                        <a href="javascript:void(0)" (click)="onArticleItemClick(i.articleId)">
+                          {{ i.articleTitle }}
+                        </a>
+                        <span>{{ i.createDt }}</span>
+                      </li>
+                    }
                   }
                 </ul>
 
@@ -102,7 +104,7 @@
         </div>
   
         <div class="widget-box__container">
-          <div class="widget-box__item p-2">
+          <div class="widget-box__item">
             @if (currentPayslip !== null) {
               <div class="flex justify-content-between">
                 <p>
@@ -121,6 +123,21 @@
                   </span>
                 </p>
               </div>
+
+              <div class="mt-4">
+                <ui-tab
+                  [tabs]="mainPayslipTabList"
+                  [activeIndex]="mainPayslipTabIndex"
+                  (activeIndexChange)="onMainPayslipTabChange($event)"
+                >
+                  <ui-chart
+                    [type]="'bar'"
+                    [height]="'320px'"
+                    [data]="chartData"
+                    [options]="chartOptions"
+                  />
+                </ui-tab>
+              </div>
             }
             @else {
               <p>급여내역이 없어요.</p>
@@ -129,37 +146,10 @@
         </div>
       }
     </div>
-
-    <div class="widget-box widget-box4">
-      @if (!mainPayslipResponseDataLoad) {
-        <ui-skeleton />
-        <ui-skeleton />
-        <ui-skeleton />
-      }
-      @else {
-        <ui-tab
-          [tabs]="mainPayslipTabList"
-          [activeIndex]="mainPayslipTabIndex"
-          (activeIndexChange)="onMainPayslipTabChange($event)"
-        >
-          @if (mainPayslipResponse?.payslip !== null) {
-            <ui-chart
-              [type]="'bar'"
-              [height]="'300px'"
-              [data]="chartData"
-              [options]="chartOptions"
-            />
-          }
-          @else {
-            <p>급여명세서를 등록하면 급여차트를 확인할 수 있어요.</p>
-          }
-        </ui-tab>
-      }
-    </div>
   </div>
 
   <div class="widget-container widget-container3">
-    <div class="widget-box widget-box5">
+    <div class="widget-box widget-box4">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -201,7 +191,7 @@
       }
     </div>
   
-    <div class="widget-box widget-box6">
+    <div class="widget-box widget-box5">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />
@@ -256,7 +246,7 @@
       }
     </div>
   
-    <div class="widget-box widget-box7">
+    <div class="widget-box widget-box6">
       @if (!vacationStatResponseDataLoad) {
         <ui-skeleton />
         <ui-skeleton />

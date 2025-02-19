@@ -9,7 +9,19 @@
     font-size: 1.5rem;
 
     a {
+      position: relative;
       white-space: nowrap;
+      font-weight: 700;
+
+      &:after {
+        content: "";
+        display: inline-block;
+        width: 0.625rem;
+        height: 0.625rem;
+        margin-left: 0.625rem;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+      }
     }
 
     &[type="text"] {
