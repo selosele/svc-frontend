@@ -141,6 +141,15 @@
             }
             @else {
               <p>급여내역이 없어요.</p>
+
+              <div class="mt-2">
+                <ui-button
+                  [block]="true"
+                  [outlined]="true"
+                  [label]="'급여명세서 등록하러 가기'"
+                  (click)="onSalaryMoreClick()"
+                />
+              </div>
             }
           </div>
         </div>
@@ -240,6 +249,15 @@
             }
             @else {
               <p>아직 사용한 휴가가 없어요.</p>
+
+              <div class="mt-2">
+                <ui-button
+                  [block]="true"
+                  [outlined]="true"
+                  [label]="'휴가 등록하러 가기'"
+                  (click)="onVacationMoreClick()"
+                />
+              </div>
             }
           </div>
         </div>
@@ -277,6 +295,15 @@
             }
             @else {
               <p>아직 사용한 휴가가 없어요.</p>
+
+              <div class="mt-2">
+                <ui-button
+                  [block]="true"
+                  [outlined]="true"
+                  [label]="'휴가 등록하러 가기'"
+                  (click)="onVacationMoreClick()"
+                />
+              </div>
             }
           </div>
         </div>
