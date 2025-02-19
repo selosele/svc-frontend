@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 
 @Component({
@@ -8,9 +8,10 @@ import { ChartModule } from 'primeng/chart';
   ],
   selector: 'ui-chart',
   templateUrl: './ui-chart.component.html',
-  styleUrl: './ui-chart.component.scss'
+  styleUrl: './ui-chart.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UiChartComponent implements OnInit {
+export class UiChartComponent {
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -30,18 +31,5 @@ export class UiChartComponent implements OnInit {
 
   /** 차트 height */
   @Input() height?: string;
-
-  themeEffect = effect(() => {
-    this.initChart();
-  });
-
-  ngOnInit() {
-    this.initChart();
-  }
-
-  /** 차트를 초기화한다. */
-  initChart() {
-    this.cd.markForCheck();
-  }
 
 }
