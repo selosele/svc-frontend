@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, Input, NgZone, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UiMessageService } from '@app/shared/services';
 import { UserStore } from '@app/user/user.store';
@@ -18,10 +18,9 @@ import { CoreBaseComponent } from '../../core';
   styleUrl: './layout-site-title.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutSiteTitleComponent extends CoreBaseComponent implements AfterViewChecked {
+export class LayoutSiteTitleComponent extends CoreBaseComponent {
 
   constructor(
-    private zone: NgZone,
     private eRef: ElementRef,
     private userStore: UserStore,
     private messageService: UiMessageService,
@@ -45,23 +44,13 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
   /** 사이트타이틀명 편집 상태 */
   isEditable = false;
 
-  ngAfterViewChecked() {
-    this.zone.runOutsideAngular(() => {
-      if (this.isEditable && this.editName) {
-        setTimeout(() => {
-          this.editName.nativeElement.focus();
-        });
-      }
-    });
-  }
-
   /** 편집버튼을 활성화한다. */
-  onMouseEnter(): void {
+  onEditVisibleActivate(): void {
     this.isEditVisible = true;
   }
 
   /** 편집버튼을 비활성화한다. */
-  onMouseLeave(): void {
+  onEditVisibleDeActivate(): void {
     if (this.isEditable) return;
 
     this.isEditVisible = false;
@@ -70,23 +59,27 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
 
   /** 사이트타이틀명 편집 버튼을 클릭한다. */
   onEdit(event: Event): void {
+    event.preventDefault();
     event.stopPropagation();
 
     if (this.isEditable) {
-      this.onSubmit();
+      this.onSubmit(event);
     } else {
       this.isEditable = true;
     }
   }
 
   /** 사이트타이틀명을 편집한다. */
-  onKeyup() {
+  onKeyup(): void {
     const siteTitleName = this.editName.nativeElement.value as string;
     document.title = siteTitleName;
   }
 
   /** 사이트타이틀명을 저장한다. */
-  onSubmit(): void {
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
     const userId = this.user?.userId;
     const siteTitleName = this.editName.nativeElement.value as string;
 
@@ -111,6 +104,16 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements After
   onDocumentClick(event: Event): void {
     // 클릭된 요소가 편집필드 내부에 있는지 확인
     if (this.isEditVisible && !this.eRef.nativeElement.contains(event.target)) {
+      this.isEditVisible = false;
+      this.isEditable = false;
+      document.title = this.name;
+    }
+  }
+
+  /** Esc 키를 클릭해서 편집필드를 닫는다. */
+  @HostListener('document:keyup.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent): void {
+    if (this.isEditVisible) {
       this.isEditVisible = false;
       this.isEditable = false;
       document.title = this.name;

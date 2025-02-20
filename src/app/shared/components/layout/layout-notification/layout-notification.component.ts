@@ -95,4 +95,12 @@ export class LayoutNotificationComponent implements OnInit {
     }
   }
 
+  /** Esc 키를 클릭해서 알림창을 닫는다. */
+  @HostListener('document:keyup.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent): void {
+    if (this.isNotificationLayerVisible) {
+      this.notificationStore.update('isNotificationLayerVisible', false);
+    }
+  }
+
 }
