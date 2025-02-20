@@ -21,7 +21,7 @@
               [control]="detailForm.get('useNicknameYn')"
               [label]="'닉네임 사용'"
               [value]="'Y'"
-              [style]="{ display: 'flex' }"
+              [ngStyle]="{ display: 'flex' }"
               (change)="onUseNicknameYnChange($event)"
             />
           </ui-text-field>

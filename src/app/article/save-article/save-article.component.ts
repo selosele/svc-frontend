@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
@@ -14,6 +15,7 @@ import { ArticleService } from '../article.service';
 @Component({
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     UiFormComponent,
     UiCheckboxComponent,

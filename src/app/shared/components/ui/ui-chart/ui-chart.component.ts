@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 
 @Component({
@@ -13,10 +13,6 @@ import { ChartModule } from 'primeng/chart';
 })
 export class UiChartComponent {
 
-  constructor(
-    private cd: ChangeDetectorRef,
-  ) {}
-
   /** 차트 데이터 */
   @Input() data: any;
 
@@ -27,7 +23,7 @@ export class UiChartComponent {
   @Input() type?: 'bar' | 'line' | 'scatter' | 'bubble' | 'pie' | 'doughnut' | 'polarArea' | 'radar';
 
   /** 차트 width */
-  @Input() width?: string;
+  @Input() width? = '100%';
 
   /** 차트 height */
   @Input() height?: string;

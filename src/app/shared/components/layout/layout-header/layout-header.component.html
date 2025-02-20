@@ -1,7 +1,7 @@
-<header class="layout-header" [class.scroll]="!isScrollDown" [class.isScrollTop]="isScrollTop" #header>
+<header class="layout-header" [class.is-hidden]="!isScrollDown" [class.is-active]="isScrollActive" #header>
   <div class="layout-header__inner">
     @if (userSetup == null) {
-      <div style="width: 17.5rem;">
+      <div [ngStyle]="{ width: '17.5rem' }">
         <ui-skeleton />
       </div>
     } @else {

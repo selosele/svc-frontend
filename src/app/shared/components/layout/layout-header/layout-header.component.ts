@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CoreBaseComponent } from '../../core';
 import { UserSetupResultDTO } from '@app/user/user.model';
@@ -13,6 +14,7 @@ import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.com
 @Component({
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
     UiButtonComponent,
     UiSkeletonComponent,
@@ -43,8 +45,8 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
   /** 스크롤 여부 */
   isScrollDown = true;
 
-  /** 페이지 최상단에 스크롤되었는지 여부 */
-  isScrollTop = false;
+  /** 스크롤 활성화 여부 */
+  isScrollActive = false;
 
   /** 사용자 설정 */
   get userSetup() {
@@ -68,7 +70,7 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
     });
   }
 
-  /** 스크롤 시, header를 위로 이동한다. */
+  /** 스크롤시, header를 위로 이동한다. */
   @HostListener('document:scroll', ['$event'])
   onDocumentScroll(event: Event): void {
     if (window.scrollY < 0) return;
@@ -76,7 +78,7 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
     if (Math.abs(window.scrollY - this.lastScrollTop) < this.header.nativeElement.offsetTop)
       return;
 
-    this.isScrollTop = window.scrollY > 0;
+    this.isScrollActive = window.scrollY > 0;
     this.isScrollDown = window.scrollY < this.lastScrollTop;
     this.lastScrollTop = window.scrollY;
   }

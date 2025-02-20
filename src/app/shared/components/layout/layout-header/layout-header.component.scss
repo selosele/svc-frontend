@@ -11,11 +11,11 @@
   transition: transform 0.3s;
   will-change: transform;
 
-  &.scroll {
+  &.is-hidden {
     transform: translateY(calc(-4.375rem - 1px));
   }
 
-  &.isScrollTop {
+  &.is-active {
     border-bottom: 1px solid var(--surface-300);
     background-color: var(--surface-0);
   }
@@ -33,6 +33,11 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
+
+    button {
+      padding: 0.3rem;
+      font-size: 0.875rem;
+    }
   }
 
   &__user-info {
