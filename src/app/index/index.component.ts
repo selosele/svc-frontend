@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { UiDialogService, UiLoadingService } from '@app/shared/services';
+import { EmployeeStore } from '@app/employee/employee.store';
+import { EmployeeService } from '@app/employee/employee.service';
 import { BoardStore } from '@app/board/board.store';
 import { BoardService } from '@app/board/board.service';
 import { ArticleStore } from '@app/article/article.store';
@@ -16,6 +18,7 @@ import { ArticleListComponent } from '@app/article/article-list/article-list.com
 import { SaveArticleComponent } from '@app/article/save-article/save-article.component';
 import { UiButtonComponent, UiChartComponent, UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
+import { EmployeeResultDTO } from '@app/employee/employee.model';
 import { BoardResultDTO } from '@app/board/board.model';
 import { ArticleDataStateDTO, ArticleResultDTO } from '@app/article/article.model';
 import { PayslipResponseDTO } from '@app/payslip/payslip.model';
@@ -42,6 +45,8 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     private router: Router,
     private loadingService: UiLoadingService,
     private dialogService: UiDialogService,
+    private employeeStore: EmployeeStore,
+    private employeeService: EmployeeService,
     private boardStore: BoardStore,
     private boardService: BoardService,
     private articleStore: ArticleStore,
@@ -52,6 +57,16 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     private vacationService: VacationService,
   ) {
     super();
+  }
+
+  /** 직원 정보 */
+  get mainEmployee() {
+    return this.employeeStore.select<EmployeeResultDTO>('mainEmployee').value;
+  }
+
+  /** 직원 정보 데이터 로드 완료 여부 */
+  get mainEmployeeDataLoad() {
+    return this.employeeStore.select<boolean>('mainEmployeeDataLoad').value;
   }
 
   /** 게시판 목록 */
@@ -99,17 +114,17 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     return article?.[this.activeBoardId]?.dataLoad ?? false;
   }
 
-  /** 메인화면 > 급여명세서 정보 */
+  /** 급여명세서 정보 */
   get mainPayslipResponse() {
     return this.payslipStore.select<PayslipResponseDTO>('mainPayslipResponse').value;
   }
 
-  /** 메인화면 > 급여명세서 정보 데이터 로드 완료 여부 */
+  /** 급여명세서 정보 데이터 로드 완료 여부 */
   get mainPayslipResponseDataLoad() {
     return this.payslipStore.select<boolean>('mainPayslipResponseDataLoad').value;
   }
 
-  /** 메인화면 > 최신 급여명세서 정보 */
+  /** 최신 급여명세서 정보 */
   get currentPayslip() {
     return this.mainPayslipResponse?.payslip;
   }
@@ -168,6 +183,10 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   ngOnInit() {
     this.activeBoardId = this.boardStore.select<number>('mainBoardTabKey').value;
 
+    if (!this.mainEmployeeDataLoad && this.user) {
+      this.getEmployee();
+    }
+
     if (!this.mainBoardListDataLoad && !this.mainArticleResponseDataLoad && this.user) {
       this.listBoard();
     }
@@ -183,6 +202,15 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     if (!this.vacationStatResponseDataLoad && this.user) {
       this.listVacationStats();
     }
+  }
+
+  /** 직원을 조회한다. */
+  getEmployee(): void {
+    this.employeeService.getEmployee$(this.user?.employeeId)
+    .subscribe((response) => {
+      this.employeeStore.update('mainEmployee', response.employee);
+      this.employeeStore.update('mainEmployeeDataLoad', true);
+    });
   }
 
   /** 게시판 목록을 조회한다. */
@@ -375,14 +403,14 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     this.initChartData();
   }
 
-  /** 메인화면 > 최신 급여명세서 정보 > 급여내역 금액 코드명 목록을 반환한다. */
+  /** 최신 급여명세서 정보 > 급여내역 금액 코드명 목록을 반환한다. */
   getSalaryAmountCodeNameList(salaryTypeCode: string) {
     return this.currentPayslip?.payslipSalaryDetailList
       .filter(x => x.salaryTypeCode === salaryTypeCode && x.salaryAmount !== null)
       .map(x => x.salaryAmountCodeName);
   }
 
-  /** 메인화면 > 최신 급여명세서 정보 > 급여내역 금액 목록을 반환한다. */
+  /** 최신 급여명세서 정보 > 급여내역 금액 목록을 반환한다. */
   getSalaryAmountList(salaryTypeCode: string) {
     return this.currentPayslip?.payslipSalaryDetailList
       .filter(x => x.salaryTypeCode === salaryTypeCode && x.salaryAmount !== null)

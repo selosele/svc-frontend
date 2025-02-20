@@ -20,6 +20,11 @@ export class EmployeeService {
     });
   }
 
+  /** 직원을 조회한다. */
+  getEmployee$(employeeId: number) {
+    return this.http.get<EmployeeResponseDTO>(`/hm/employees/${employeeId}`);
+  }
+
   /** 직원을 수정한다. */
   updateEmployee$(dto: SaveEmployeeRequestDTO) {
     const { employeeId } = dto;

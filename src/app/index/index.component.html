@@ -1,33 +1,45 @@
 <div class="widget-wrapper">
   <div class="widget-container widget-container1">
     <div class="widget-box widget-box1">
-      <div class="widget-box__container">
-        <div class="widget-box__item">
-          <a
-            [routerLink]="'/hm/my-info'"
-            [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }"
-            [title]="'마이페이지로 이동'"
-            class="widget-box__item-profile"
-          >
-            <div class="widget-box__item-profile__icon">
-              <i class="pi pi-user"></i>
-            </div>
-            <p class="widget-box__item-profile__title">
-              {{ user?.employeeName }}
-              <span>
-                {{ user?.companyName }} / {{ user?.rankCodeName }}
-                
-                @if (user?.quitYmd) {
-                  <span class="text-primary">(퇴사)</span>
-                }
-                @else {
-                  <span class="text-primary">(재직중)</span>
-                }
-              </span>
-            </p>
-          </a>
+      @if (!mainEmployeeDataLoad) {
+        <ui-skeleton />
+        <ui-skeleton />
+        <ui-skeleton />
+      }
+      @else {
+        <div class="widget-box__container">
+          <div class="widget-box__item">
+            <a
+              [routerLink]="'/hm/my-info'"
+              [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }"
+              [title]="'마이페이지로 이동'"
+              class="widget-box__item-profile"
+            >
+              <div class="widget-box__item-profile__icon">
+                <i class="pi pi-user"></i>
+              </div>
+              <p class="widget-box__item-profile__title">
+                {{ mainEmployee?.employeeName }}
+                <span>
+                  {{ mainEmployee?.workHistoryList[0].companyName }} / {{ mainEmployee?.workHistoryList[0].rankCodeName }}
+                  
+                  @if (mainEmployee?.workHistoryList[0].quitYmd) {
+                    <span class="text-primary">(퇴사)</span>
+                  }
+                  @else {
+                    <span class="text-primary">(재직중)</span>
+                  }
+                </span>
+
+                <span class="text-base">
+                  <i class="pi pi-clock"></i>
+                  최근 접속: {{ mainEmployee.lastLoginDt | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}
+                </span>
+              </p>
+            </a>
+          </div>
         </div>
-      </div>
+      }
     </div>
 
     <div class="widget-box widget-box2">
@@ -108,7 +120,7 @@
             @if (currentPayslip !== null) {
               <div class="flex justify-content-between">
                 <p>
-                  <span class="block">{{ ngDate(currentPayslip.payslipPaymentYmd) | date: 'yyyy년 MM월 dd일' }}</span>
+                  <span class="block mb-1">{{ ngDate(currentPayslip.payslipPaymentYmd) | date: 'yyyy년 MM월 dd일' }}</span>
                   <strong class="block text-3xl text-primary">{{ numberWithCommas(currentPayslip.totalAmount) }}원</strong>
                 </p>
   
