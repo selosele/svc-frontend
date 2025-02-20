@@ -2,6 +2,7 @@
 $general-width: 1920 !default;
 $normal-width: 1600 !default;
 $standard-width: 1420 !default;
+$standard-width2: 1280 !default;
 $large-width: 1200 !default;
 $big-width: 1024 !default;
 $medium-width: 768 !default;
@@ -15,6 +16,7 @@ $tiny-width: 320 !default;
 $min-general-width: calc($general-width / 16) + 0em !default;
 $min-normal-width: calc($normal-width / 16) + 0em !default;
 $min-standard-width: calc($standard-width / 16) + 0em !default;
+$min-standard-width2: calc($standard-width2 / 16) + 0em !default;
 $min-large-width: calc($large-width / 16) + 0em !default;
 $min-big-width: calc($big-width / 16) + 0em !default;
 $min-medium-width: calc($medium-width / 16) + 0em !default;

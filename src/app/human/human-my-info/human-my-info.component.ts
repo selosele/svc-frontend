@@ -301,8 +301,8 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
         FormValidator.maxLength(30),
       ]],
       genderCode: ['', [FormValidator.required]],         // 성별 코드
-      birthYmd: ['', [FormValidator.required]],           // 생년월일
-      phoneNo: ['', [FormValidator.required]],            // 휴대폰번호
+      birthYmd: [''],                                     // 생년월일
+      phoneNo: [''],                                      // 휴대폰번호
       emailAddr: ['', [                                   // 이메일주소
         FormValidator.required,
         FormValidator.email,

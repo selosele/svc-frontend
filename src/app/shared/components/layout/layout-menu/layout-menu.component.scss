@@ -1,12 +1,23 @@
+// 변수
+@import '../../../../styles/base/variables';
+
 .layout-menu  {
   height: 100%;
 
   &__depth1 {
     display: table;
-    width: 50rem;
+    width: 39rem;
     height: 100%;
     padding: 0;
     text-align: center;
+
+    @media (min-width: $min-standard-width2) {
+      width: 42rem;
+    }
+
+    @media (min-width: $min-standard-width) {
+      width: 50rem;
+    }
 
     > li {
       display: table-cell;
