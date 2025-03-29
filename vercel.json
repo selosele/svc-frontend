@@ -7,7 +7,7 @@
   ],
   "headers": [
     {
-      "source": "**/*.js",
+      "source": "/(.*)\\.(js|css|json)$",
       "headers": [
         { "key": "Content-Encoding", "value": "gzip" }
       ]
