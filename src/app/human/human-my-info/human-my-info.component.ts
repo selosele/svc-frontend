@@ -224,7 +224,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 근무이력정보 테이블 행을 선택한다. */
   onRowSelect1(event: any): void {
-    this.workHistoryService.getWorkHistory$(this.user?.userId, event.data['workHistoryId'])
+    this.workHistoryService.getWorkHistory$(this.user?.employeeId, event.data['workHistoryId'])
     .subscribe((response) => {
       this.workHistoryDetail = response.workHistory;
       this.splitter1.show();
