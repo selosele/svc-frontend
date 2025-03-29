@@ -124,12 +124,9 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
           FormValidator.maxLength(30),
         ]],
         genderCode: ['', [FormValidator.required]],           // 성별 코드
-        birthYmd: ['', [FormValidator.required]],             // 생년월일
-        phoneNo: ['', [FormValidator.required]],              // 휴대폰번호
-        emailAddr: ['', [                                     // 이메일주소
-          FormValidator.required,
-          FormValidator.email,
-        ]],
+        birthYmd: [''],                                       // 생년월일
+        phoneNo: [''],                                        // 휴대폰번호
+        emailAddr: ['', [FormValidator.email]],               // 이메일주소
 
         // 회사 정보
         workHistory: this.fb.group({
