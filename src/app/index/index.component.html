@@ -230,7 +230,7 @@
         </div>
     
         <div class="widget-box__container">
-          <div class="widget-box__item flex">
+          <div class="widget-box__item flex flex-wrap">
             @if (vacationStatResponse?.statsList.length > 0) {
               <ul class="widget-box__item-list flex-grow-1 w-6">
                 @for (i of vacationStatResponse?.statsList; track $index) {
@@ -262,7 +262,7 @@
             @else {
               <p>아직 사용한 휴가가 없어요.</p>
 
-              <div class="mt-2">
+              <div class="w-full mt-2">
                 <ui-button
                   [block]="true"
                   [outlined]="true"
