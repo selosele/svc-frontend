@@ -4,5 +4,13 @@
       "source": "/api/:path*",
       "destination": "https://svc-backend-97220385645.us-central1.run.app/api/:path*"
     }
+  ],
+  "headers": [
+    {
+      "source": "**/*.js",
+      "headers": [
+        { "key": "Content-Encoding", "value": "gzip" }
+      ]
+    }
   ]
 }
