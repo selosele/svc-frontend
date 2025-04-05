@@ -9,7 +9,7 @@ import { UiHiddenFieldComponent } from '@app/shared/components/form/ui-hidden-fi
 import { UiCompanyFieldComponent } from '@app/shared/components/form/ui-company-field/ui-company-field.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { UiMessageService } from '@app/shared/services';
-import { isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty, dateUtil } from '@app/shared/utils';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { SaveWorkHistoryRequestDTO, WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
@@ -104,6 +104,11 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
 
   /** 회사 정보를 저장한다. */
   async onSubmit(value: SaveWorkHistoryRequestDTO): Promise<void> {
+    if (dateUtil(value.joinYmd).isAfter(dateUtil())) {
+      this.messageService.toastError('입사일자는 지금보다 미래일 수 없어요.');
+      return;
+    }
+
     const crudName = isEmpty(value.workHistoryId) ? '등록' : '수정';
 
     const confirm = await this.messageService.confirm1(`회사 정보를 ${crudName}하시겠어요?`);
