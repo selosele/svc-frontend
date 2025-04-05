@@ -113,30 +113,26 @@
       </div>
   
       <div class="col">
-        <ui-dropdown
-          [control]="employeeForm.get('workHistory.rankCode')"
+        <ui-text-field
+          [control]="employeeForm.get('workHistory.rankCodeName')"
           [label]="'직위'"
-          [data]="rankCodes"
           [readonly]="true"
         />
       </div>
   
       <div class="col">
-        <ui-dropdown
-          [control]="employeeForm.get('workHistory.jobTitleCode')"
+        <ui-text-field
+          [control]="employeeForm.get('workHistory.jobTitleCodeName')"
           [label]="'직책'"
-          [data]="jobTitleCodes"
           [readonly]="true"
         />
       </div>
   
       <div class="col">
-        <ui-date-field
+        <ui-text-field
           [control]="employeeForm.get('workHistory.joinYmd')"
           [label]="'입사일자'"
-          [dateFormat]="'yymmdd'"
-          [placeholder]="'YYYYMMDD'"
-          [readonlyInput]="true"
+          [readonly]="true"
         />
       </div>
     </div>

@@ -316,7 +316,9 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
         companyName: ['', [FormValidator.required]],      // 회사명
         joinYmd: ['', [FormValidator.required]],          // 입사일자,
         rankCode: ['', [FormValidator.required]],         // 직위 코드
+        rankCodeName: [''],                               // 직위 코드명
         jobTitleCode: ['', [FormValidator.required]],     // 직책 코드
+        jobTitleCodeName: [''],                           // 직책 코드명
       }),
     });
   }
