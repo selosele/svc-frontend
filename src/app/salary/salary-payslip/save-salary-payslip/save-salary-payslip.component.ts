@@ -197,7 +197,9 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   private getWorkHistory(): void {
     this.workHistoryService.getWorkHistory$(this.user?.employeeId, this.workHistoryId)
     .subscribe((response) => {
-      this.payslipForm.get('rankCode').patchValue(response.workHistory.rankCode);
+      if (isObjectEmpty(this.payslip)) {
+        this.payslipForm.get('rankCode').patchValue(response.workHistory.rankCode);
+      }
       this.joinYmd = dateUtil(response.workHistory.joinYmd).format('YYYY-MM-DD');
     });
   }
