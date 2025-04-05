@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreBaseComponent } from '@app/shared/components/core';
@@ -38,6 +39,7 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private companyStore: CompanyStore,
     private dialogRef: DynamicDialogRef,
     private messageService: UiMessageService,
@@ -191,7 +193,14 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
   /** 회사등록신청을 추가한다. */
   addCompanyApply(): void {
     if (this.isSystemAdmin) {
-      this.messageService.toastInfo('시스템관리자는 등록신청할 필요 없이 시스템관리 > 회사정보관리 화면에서 바로 회사를 등록할 수 있어요.');
+      const alert = this.messageService.alert('시스템관리자는 등록신청할 필요 없이<br><strong>시스템관리 > 회사정보관리</strong> 화면에서 바로 회사를 등록할 수 있어요.');
+      alert.onClose.subscribe(async () => {
+        const confirm = await this.messageService.confirm1('회사정보관리 화면으로 이동하시겠어요?');
+        if (!confirm) return;
+
+        this.dialogRef.close();
+        this.router.navigate(['/sys/companies'], { queryParams: { menuId: this.getMenuIdByMenuUrl('/sys/companies') } });
+      });
       return;
     }
 
