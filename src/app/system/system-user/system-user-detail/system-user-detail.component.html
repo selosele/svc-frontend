@@ -204,6 +204,11 @@
   </div>
 
   @if (isDetailNotEmpty && !isUserSelf) {
-    <ui-button button (click)="superLogin()">로그인</ui-button>
+    <ui-button button
+      [size]="'small'"
+      (click)="superLogin()"
+    >
+      로그인
+    </ui-button>
   }
 </ui-split-form>
