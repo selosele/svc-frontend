@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 import { UiDialogService, UiLoadingService } from '@app/shared/services';
 import { EmployeeStore } from '@app/employee/employee.store';
 import { EmployeeService } from '@app/employee/employee.service';
@@ -24,6 +25,7 @@ import { ArticleDataStateDTO, ArticleResultDTO } from '@app/article/article.mode
 import { PayslipResponseDTO } from '@app/payslip/payslip.model';
 import { VacationByMonthResultDTO, VacationStatsResponseDTO, VacationStatsResultDTO } from '@app/vacation/vacation.model';
 import { isObjectEmpty } from '@app/shared/utils';
+import { WorkHistoryService } from '@app/work-history/work-history.service';
 
 @Component({
   standalone: true,
@@ -55,6 +57,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
     private payslipService: PayslipService,
     private vacationStore: VacationStore,
     private vacationService: VacationService,
+    private workHistoryService: WorkHistoryService,
   ) {
     super();
   }
@@ -177,13 +180,16 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   /** 휴가통계 목록 클릭된 항목의 ID */
   statsItemClickId: number;
 
+  /** 최신 근무이력 ID */
+  currentWorkHistoryId: number;
+
   /** 게시글 목록 조회 개수 */
   private articleLimit = 6;
 
   ngOnInit() {
     this.activeBoardId = this.boardStore.select<number>('mainBoardTabKey').value;
 
-    if (!this.mainEmployeeDataLoad && this.user) {
+    if (this.user) {
       this.getEmployee();
     }
 
@@ -191,7 +197,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       this.listBoard();
     }
 
-    if (!this.mainPayslipResponseDataLoad && this.user) {
+    if (this.user) {
       this.getCurrentPayslip();
     }
 
@@ -199,7 +205,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
       this.initChartData();
     }
 
-    if (!this.vacationStatResponseDataLoad && this.user) {
+    if (this.user) {
       this.listVacationStats();
     }
   }
@@ -351,10 +357,13 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 최신 급여명세서를 조회한다. */
-  getCurrentPayslip(): void {
+  async getCurrentPayslip(): Promise<void> {
+    const currentWorkHistoryResponse = await lastValueFrom(this.workHistoryService.getCurrentWorkHistory$(this.user?.employeeId));
+    this.currentWorkHistoryId = currentWorkHistoryResponse?.workHistory?.workHistoryId;
+
     this.payslipService.listPayslip$({
       userId: this.user?.userId,
-      workHistoryId: this.user?.workHistoryId,
+      workHistoryId: this.currentWorkHistoryId,
       isGetCurrent: 'Y',
     })
     .subscribe((response) => {

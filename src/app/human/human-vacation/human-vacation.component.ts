@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
 import { DropdownChangeEvent } from 'primeng/dropdown';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
@@ -62,21 +63,27 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     super();
   }
 
+  /** 최신 근무이력 ID */
+  currentWorkHistoryId: number;
+
   /** 회사 탭 */
   tabs: Tab[] = [];
 
-  /**
-   * 선택된 회사 탭의 index
-   *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
-   */
-  get activeIndex() {
-    return this.vacationStore.select<number>('vacationWorkHistoryTabIndex').value;
-  }
+  // /**
+  //  * 선택된 회사 탭의 index
+  //  *   -다른 페이지로 갔다가 다시 돌아와도 클릭했던 탭을 유지하고자 상태관리
+  //  */
+  // get activeIndex() {
+  //   return this.vacationStore.select<number>('vacationWorkHistoryTabIndex').value;
+  // }
 
-  /** 선택된 회사 탭의 index를 변경한다. */
-  set activeIndex(value: number) {
-    this.vacationStore.update('vacationWorkHistoryTabIndex', value);
-  }
+  // /** 선택된 회사 탭의 index를 변경한다. */
+  // set activeIndex(value: number) {
+  //   this.vacationStore.update('vacationWorkHistoryTabIndex', value);
+  // }
+
+  /** 선택된 회사 탭의 index */
+  activeIndex = 0;
 
   /** 선택된 회사 탭의 근무이력 ID */
   activeWorkHistoryId: number;
@@ -119,16 +126,19 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     return this.vacationStore.select<WorkHistoryResultDTO[]>('vacationWorkHistoryList').value;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.data.subscribe(({ code }) => {
       this.annualTypeCodes = code['ANNUAL_TYPE_00'];
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    this.vacationService.setWorkHistoryId(parseInt(`${this.user?.workHistoryId}`));
+    const currentWorkHistoryResponse = await lastValueFrom(this.workHistoryService.getCurrentWorkHistory$(this.user?.employeeId));
+    this.currentWorkHistoryId = currentWorkHistoryResponse?.workHistory?.workHistoryId;
+
+    this.vacationService.setWorkHistoryId(this.currentWorkHistoryId);
 
     this.caculateVacationForm = this.fb.group({
-      workHistoryId: [this.user?.workHistoryId],          // 근무이력 ID
+      workHistoryId: [this.currentWorkHistoryId],         // 근무이력 ID
       employeeId: [this.user?.employeeId],                // 직원 ID
       joinYmd: [''],                                      // 입사일자
       quitYmd: [''],                                      // 퇴사일자
@@ -136,7 +146,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       vacationTypeCodes: [this.defaultVacationTypeCodes], // 휴가 계산에 포함할 휴가 구분 코드 (기본 값)
     });
 
-    this.activeWorkHistoryId = Number(this.user?.workHistoryId);
+    this.activeWorkHistoryId = this.currentWorkHistoryId;
 
     if (this.user) {
       this.listVacationCalc(this.activeWorkHistoryId);
@@ -249,9 +259,9 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
       this.setJoinYmd();
 
-      if (!this.workHistoryListDataLoad) {
+      //if (!this.workHistoryListDataLoad) {
         this.listWorkHistory();
-      }
+      //}
     });
   }
 

@@ -24,6 +24,11 @@ export class WorkHistoryService {
     return this.http.get<WorkHistoryResponseDTO>(`/hm/employees/${employeeId}/companies/${workHistoryId}`);
   }
 
+  /** 최신 근무이력을 조회한다. */
+  getCurrentWorkHistory$(employeeId: number) {
+    return this.http.get<WorkHistoryResponseDTO>(`/hm/employees/${employeeId}/companies/current`);
+  }
+
   /** 근무이력을 추가한다. */
   addWorkHistory$(dto: SaveWorkHistoryRequestDTO) {
     const { employeeId } = dto;
