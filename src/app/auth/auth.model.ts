@@ -114,9 +114,6 @@ export class AuthenticatedUser {
   /** 사용자 계정 */
   userAccount?: string;
 
-  /** 근무이력 ID */
-  workHistoryId?: number;
-
   /** 회사명 */
   companyName?: string;
 
