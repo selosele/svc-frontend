@@ -33,6 +33,9 @@ export class FormFieldComponent implements OnInit {
   /** input readonly */
   @Input() readonly? = false;
 
+  /** input disabled */
+  @Input() disabled? = false;
+
   /** input label */
   @Input() label?: string;
 

@@ -135,35 +135,71 @@
       <ui-hidden-field [control]="detailForm.get('employee.workHistory.workHistoryId')" />
       <ui-hidden-field [control]="detailForm.get('employee.workHistory.companyId')" />
       
-      <ui-company-field
-        [control]="detailForm.get('employee.workHistory.corporateName')"
-        [label]="'회사(법인)명'"
-      />
+      @if (isDetailNotEmpty) {
+        <ui-text-field
+          [control]="detailForm.get('employee.workHistory.corporateName')"
+          [label]="'회사(법인)명'"
+          [readonly]="true"
+        />
+      }
+      @else {
+        <ui-company-field
+          [control]="detailForm.get('employee.workHistory.corporateName')"
+          [label]="'회사(법인)명'"
+        />
+      }
     </div>
 
     <div class="col-6">
-      <ui-company-field
-        [control]="detailForm.get('employee.workHistory.companyName')"
-        [label]="'회사명'"
-      />
+      @if (isDetailNotEmpty) {
+        <ui-text-field
+          [control]="detailForm.get('employee.workHistory.companyName')"
+          [label]="'회사명'"
+          [readonly]="true"
+        />
+      }
+      @else {
+        <ui-company-field
+          [control]="detailForm.get('employee.workHistory.companyName')"
+          [label]="'회사명'"
+        />
+      }
     </div>
 
     <div class="col-6">
-      <ui-date-field
-        [control]="detailForm.get('employee.workHistory.joinYmd')"
-        [label]="'입사일자'"
-        [dateFormat]="'yymmdd'"
-        [placeholder]="'YYYYMMDD'"
-      />
+      @if (isDetailNotEmpty) {
+        <ui-text-field
+          [control]="detailForm.get('employee.workHistory.joinYmd')"
+          [label]="'입사일자'"
+          [readonly]="true"
+        />
+      }
+      @else {
+        <ui-date-field
+          [control]="detailForm.get('employee.workHistory.joinYmd')"
+          [label]="'입사일자'"
+          [dateFormat]="'yymmdd'"
+          [placeholder]="'YYYYMMDD'"
+        />
+      }
     </div>
   
     <div class="col-6">
-      <ui-date-field
-        [control]="detailForm.get('employee.workHistory.quitYmd')"
-        [label]="'퇴사일자'"
-        [dateFormat]="'yymmdd'"
-        [placeholder]="'YYYYMMDD'"
-      />
+      @if (isDetailNotEmpty) {
+        <ui-text-field
+          [control]="detailForm.get('employee.workHistory.quitYmd')"
+          [label]="'퇴사일자'"
+          [readonly]="true"
+        />
+      }
+      @else {
+        <ui-date-field
+          [control]="detailForm.get('employee.workHistory.quitYmd')"
+          [label]="'퇴사일자'"
+          [dateFormat]="'yymmdd'"
+          [placeholder]="'YYYYMMDD'"
+        />
+      }
     </div>
   </div>
 
