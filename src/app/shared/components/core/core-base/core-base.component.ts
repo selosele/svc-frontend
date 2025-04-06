@@ -77,7 +77,7 @@ export class CoreBaseComponent {
     return new Date(dateUtil(date).format(format));
   }
 
-  /** 숫자를 천 단위 콤마기호와 함께 문자열로 반환한다. */
+  /** 숫자를 천 단위 콤마기호 문자열로 반환한다. */
   protected numberWithCommas(value: number | string): string {
     return _numberWithCommas(value);
   }

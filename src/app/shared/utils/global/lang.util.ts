@@ -52,7 +52,7 @@ export function groupBy<T>(arr: T[], key: string): T[] {
   ] as T[];
 }
 
-/** 숫자를 천 단위 콤마기호와 함께 문자열로 반환한다. */
+/** 숫자를 천 단위 콤마기호 문자열로 반환한다. */
 export function numberWithCommas(value: number | string): string {
   if (isEmpty(value)) return null;
   return new Intl.NumberFormat().format(
