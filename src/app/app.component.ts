@@ -13,9 +13,10 @@ import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
 import { MenuResultDTO } from './menu/menu.model';
-import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent } from './shared/components/layout';
+import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent, LayoutMobileMenuComponent } from './shared/components/layout';
 import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
 import { MAIN_PAGE_PATH2 } from './shared/utils';
+import { LayoutMobileMenuStore } from './shared/components/layout/layout-mobile-menu/layout-mobile-menu.store';
 
 @Component({
   standalone: true,
@@ -30,6 +31,7 @@ import { MAIN_PAGE_PATH2 } from './shared/utils';
     LayoutHeaderComponent,
     LayoutMenuBookmarkComponent,
     LayoutBreadcrumbComponent,
+    LayoutMobileMenuComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -45,6 +47,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
     private userStore: UserStore,
     private roleStore: RoleStore,
     private notificationStore: NotificationStore,
+    private layoutMobileMenuStore: LayoutMobileMenuStore,
     private messageService: UiMessageService,
     private userService: UserService,
     private roleService: RoleService,
@@ -85,6 +88,11 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
 
   set hasBookmark(value: boolean) {
     this.menuStore.update('hasBookmark', value);
+  }
+
+  /** 모바일 메뉴 표출 여부 */
+  get isVisible() {
+    return this.layoutMobileMenuStore.select<boolean>('isVisible').value;
   }
 
   ngOnInit() {

@@ -1,0 +1,59 @@
+<nav class="layout-mobile-menu" [class.active]="isVisible">
+  <div class="layout-mobile-menu__user-info">
+    <div class="layout-mobile-menu__user-info__inner">
+      <p>
+        <a
+          [routerLink]="'/hm/my-info'"
+          [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }"
+          (click)="isVisible = false;"
+        >{{ user?.employeeName }}</a> 님 반갑습니다
+      </p>
+      <ui-button
+        [size]="'small'"
+        [icon]="'pi-sign-out'"
+        [text]="true"
+        [rounded]="true"
+        [title]="'로그아웃'"
+        (click)="logout()"
+      />
+    </div>
+  </div>
+
+  <ul class="layout-mobile-menu__depth1">
+    <ng-container *ngFor="let menu1 of menuTree$ | async">
+      <li
+        *ngIf="menu1.data.upMenuId === null && menu1.data.menuShowYn === 'Y'"
+        [class.current]="((currentUpMenuId$ | async) ?? (currentMenuId$ | async)) === menu1.data.menuId"
+        [class.active]="activeMenuId === menu1.data.menuId"
+      >
+        @if (menu1?.children.length > 0) {
+          <a [href]="menu1.data.menuUrl" (click)="toggleSubMenu($event, menu1.data.menuId, 'HAS_CHILDREN')" ngClass="menu-link">
+            {{ menu1.data.menuName }}
+          </a>
+        }
+        @else {
+          <a
+            [routerLink]="menu1.data.menuUrl"
+            [queryParams]="{ menuId: menu1.data.menuId }"
+            (click)="toggleSubMenu($event, menu1.data.menuId)"
+            ngClass="menu-link"
+          >
+            {{ menu1.data.menuName }}
+          </a>
+        }
+        
+        @if (menu1?.children.length > 0) {
+          <ul [class.active]="activeMenuId === menu1.data.menuId" class="layout-mobile-menu__depth2">
+            <ng-container *ngFor="let menu2 of menu1.children">
+              <li *ngIf="menu2.data.menuShowYn === 'Y'" [class.active]="(currentMenuId$ | async) === menu2.data.menuId">
+                <a [routerLink]="menu2.data.menuUrl" [queryParams]="{ menuId: menu2.data.menuId }" ngClass="menu-link">
+                  {{ menu2.data.menuName }}
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+        }
+      </li>
+    </ng-container>
+  </ul>
+</nav>

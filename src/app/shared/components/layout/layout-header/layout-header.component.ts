@@ -10,6 +10,7 @@ import { LayoutMenuComponent } from '../layout-menu/layout-menu.component';
 import { LayoutNotificationComponent } from '../layout-notification/layout-notification.component';
 import { UiButtonComponent, UiSkeletonComponent } from '../../ui';
 import { HumanMyInfoComponent } from '@app/human/human-my-info/human-my-info.component';
+import { LayoutMobileMenuStore } from '../layout-mobile-menu/layout-mobile-menu.store';
 
 @Component({
   standalone: true,
@@ -32,6 +33,7 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
   constructor(
     private userStore: UserStore,
     private dialogService: UiDialogService,
+    private layoutMobileMenuStore: LayoutMobileMenuStore,
   ) {
     super();
   }
@@ -53,6 +55,11 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
     return this.userStore.select<UserSetupResultDTO>('userSetup').value;
   }
 
+  /** 모바일 메뉴 표출 여부 */
+  get isMobileMenuVisible() {
+    return this.layoutMobileMenuStore.select<boolean>('isVisible').value;
+  }
+
   ngOnInit() {
     this.lastScrollTop = window.scrollY;
   }
@@ -68,6 +75,11 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
       focusOnShow: false,
       header: '내 정보 조회',
     });
+  }
+
+  /** 모바일 메뉴를 토글한다. */
+  toggleMobileMenu(): void {
+    this.layoutMobileMenuStore.update('isVisible', !this.isMobileMenuVisible);
   }
 
   /** 스크롤시, header를 위로 이동한다. */

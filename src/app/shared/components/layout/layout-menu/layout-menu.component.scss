@@ -1,7 +1,12 @@
 @import 'styles/base/variables';
 
 .layout-menu  {
+  display: none;
   height: 100%;
+
+  @media (min-width: $min-standard-width2) {
+    display: block;
+  }
 
   &__depth1 {
     display: table;

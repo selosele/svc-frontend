@@ -1,4 +1,4 @@
-<div class="app">
+<div class="app" [class.is-layer-open]="isVisible">
   @if (isLogined) {
     <layout-header />
     
@@ -38,6 +38,8 @@
   @else {
     <router-outlet />
   }
+
+  <layout-mobile-menu />
 
   <ui-loading />
   <ui-message />

@@ -32,6 +32,14 @@ body {
   word-break: keep-all;
   word-wrap: break-word;
 
+  &:has(.app.is-layer-open) {
+    overflow: hidden;
+    
+    @media (min-width: $min-standard-width2) {
+      overflow: visible;
+    }
+  }
+
   @media (min-width: $min-standard-width) {
     min-width: auto;
   }

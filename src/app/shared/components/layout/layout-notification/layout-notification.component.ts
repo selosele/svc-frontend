@@ -42,7 +42,7 @@ export class LayoutNotificationComponent implements OnInit {
 
   /** 알림 표출 상태 */
   get isNotificationLayerVisible() {
-    return this.notificationStore.select<string>('isNotificationLayerVisible').value;
+    return this.notificationStore.select<boolean>('isNotificationLayerVisible').value;
   }
 
   ngOnInit() {

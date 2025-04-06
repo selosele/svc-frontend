@@ -1,3 +1,5 @@
+@import 'styles/base/variables';
+
 .layout-site-title {
   position: relative;
   
@@ -6,12 +8,24 @@
     align-items: center;
     gap: 0.5rem;
     width: 17.5rem;
-    font-size: 1.5rem;
+    font-size: 18px;
+
+    @media (min-width: $min-standard-width2) {
+      font-size: 1.5rem;
+    }
 
     a {
+      overflow: hidden;
       position: relative;
+      max-width: 180px;
       white-space: nowrap;
+      text-overflow: ellipsis;
       font-weight: 700;
+
+      @media (min-width: $min-minimal-width) {
+        max-width: none;
+        font-size: 1.5rem;
+      }
 
       &:after {
         content: "";
@@ -25,7 +39,11 @@
     }
 
     &[type="text"] {
-      width: 15.625rem;
+      width: 170px;
+
+      @media (min-width: $min-standard-width2) {
+        width: 15.625rem;
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-<header class="layout-header" [class.is-hidden]="!isScrollDown" [class.is-active]="isScrollActive" #header>
+<header class="layout-header" [class.hidden]="!isScrollDown" [class.active]="isScrollActive" #header>
   <div class="layout-header__inner">
     @if (userSetup == null) {
       <div [ngStyle]="{ width: '17.5rem' }">
@@ -11,12 +11,25 @@
     <layout-menu />
 
     <div class="layout-header__right">
-      <p class="layout-header__user-info">
-        <layout-notification />
-        <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }">{{ user?.employeeName }}</a> 님 반갑습니다
-      </p>
+      <layout-notification />
       
-      <ui-button [size]="'small'" (click)="logout()">로그아웃</ui-button>
+      <div class="layout-header__user-info">
+        <div class="layout-header__user-info__inner">
+          <p>
+            <a [routerLink]="'/hm/my-info'" [queryParams]="{ menuId: getMenuIdByMenuUrl('/hm/my-info') }">{{ user?.employeeName }}</a> 님 반갑습니다
+          </p>
+          <ui-button [size]="'small'" (click)="logout()">로그아웃</ui-button>
+        </div>
+      </div>
+
+      <ui-button
+        [size]="'small'"
+        [icon]="isMobileMenuVisible ? 'pi-times' : 'pi-bars'"
+        [text]="true"
+        [title]="isMobileMenuVisible ? '모바일 메뉴 닫기' : '모바일 메뉴 열기'"
+        [class]="'layout-header__mobile-menu'"
+        (click)="toggleMobileMenu()"
+      />
     </div>
   </div>
 </header>
