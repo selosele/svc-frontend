@@ -40,6 +40,12 @@
               "./node_modules/quill/dist/quill.snow.css",
               "src/app/styles/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src/app",
+                "./src/app/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
