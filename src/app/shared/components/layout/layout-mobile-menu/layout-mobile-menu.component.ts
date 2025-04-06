@@ -6,7 +6,6 @@ import { LayoutMobileMenuStore } from './layout-mobile-menu.store';
 import { MenuStore } from '@app/menu/menu.store';
 import { MenuTree } from '@app/menu/menu.model';
 import { UiButtonComponent } from '../../ui';
-import { LayoutNotificationComponent } from '../layout-notification/layout-notification.component';
 
 @Component({
   standalone: true,
@@ -14,7 +13,6 @@ import { LayoutNotificationComponent } from '../layout-notification/layout-notif
     CommonModule,
     RouterModule,
     UiButtonComponent,
-    LayoutNotificationComponent,
   ],
   selector: 'layout-mobile-menu',
   templateUrl: './layout-mobile-menu.component.html',

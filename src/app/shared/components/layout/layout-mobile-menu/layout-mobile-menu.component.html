@@ -46,7 +46,12 @@
           <ul [class.active]="activeMenuId === menu1.data.menuId" class="layout-mobile-menu__depth2">
             <ng-container *ngFor="let menu2 of menu1.children">
               <li *ngIf="menu2.data.menuShowYn === 'Y'" [class.active]="(currentMenuId$ | async) === menu2.data.menuId">
-                <a [routerLink]="menu2.data.menuUrl" [queryParams]="{ menuId: menu2.data.menuId }" ngClass="menu-link">
+                <a
+                  [routerLink]="menu2.data.menuUrl"
+                  [queryParams]="{ menuId: menu2.data.menuId }"
+                  (click)="isVisible = false;"
+                  ngClass="menu-link"
+                >
                   {{ menu2.data.menuName }}
                 </a>
               </li>
