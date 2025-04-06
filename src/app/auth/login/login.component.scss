@@ -1,25 +1,32 @@
+@import 'styles/base/variables';
+
 .login {
   &-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 100vh;
-    padding: 0 1rem;
+    padding: 5rem 1rem 0;
     background-color: var(--gray-50);
+    align-content: center;
   }
 
   &__form {
-    width: 30rem;
-    padding: 2rem;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 20px;
     border: 1px solid var(--surface-300);
     background-color: var(--surface-0);
+
+    @media (min-width: $min-minimal-width) {
+      padding: 2rem;
+    }
   }
 
   &__title {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 2.25rem;
+    font-size: 26px;
+
+    @media (min-width: $min-medium-width) {
+      font-size: 2.25rem;
+    }
   }
 }
 
