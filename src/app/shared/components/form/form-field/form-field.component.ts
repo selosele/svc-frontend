@@ -45,6 +45,9 @@ export class FormFieldComponent implements OnInit {
   /** input align */
   @Input() align?: string;
 
+  /** input autocomplete */
+  @Input() autocomplete?: string;
+
   /** input value */
   @Input() value?: any = '';
 

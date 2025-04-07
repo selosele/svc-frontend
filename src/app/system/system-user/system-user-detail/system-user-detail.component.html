@@ -32,7 +32,7 @@
       <div class="col">
         <ui-text-field
           [control]="detailForm.get('userPassword')"
-          [label]="'사용자 비밀번호'" type="password" [placeholder]="'12자 이내'"
+          [label]="'사용자 비밀번호'" [type]="'password'" [placeholder]="'12자 이내'" [autocomplete]="'new-password'"
         />
       </div>
     }

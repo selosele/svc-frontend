@@ -36,7 +36,7 @@
           [block]="true"
           [control]="loginForm.get('userAccount')"
           [label]="'아이디'"
-          [placeholder]="'아이디'"
+          [placeholder]="'아이디'" [autocomplete]="'username'"
         />
       </div>
 
@@ -44,7 +44,7 @@
         <ui-text-field
           [block]="true"
           [control]="loginForm.get('userPassword')"
-          [label]="'비밀번호'" [placeholder]="'비밀번호'" type="password"
+          [label]="'비밀번호'" [placeholder]="'비밀번호'" [type]="'password'" [autocomplete]="'current-password'"
         />
       </div>
 
