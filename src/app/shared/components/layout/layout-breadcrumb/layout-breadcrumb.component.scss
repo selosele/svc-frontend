@@ -1,6 +1,12 @@
+@import 'styles/base/variables';
+
 .layout-breadcrumb {
-  margin-bottom: 1.25rem;
+  margin-bottom: 10px;
   padding: 0.375rem;
+
+  @media (min-width: $min-medium-width) {
+    margin-bottom: 1.25rem;
+  }
 
   > ul {
     display: flex;

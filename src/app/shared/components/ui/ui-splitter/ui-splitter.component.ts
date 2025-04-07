@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SplitterModule } from 'primeng/splitter';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
@@ -16,7 +16,7 @@ import { UiButtonComponent } from '../ui-button/ui-button.component';
   styleUrl: './ui-splitter.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class UiSplitterComponent {
+export class UiSplitterComponent implements AfterViewInit {
 
   /** 가로/세로 */
   @Input() layout: 'horizontal' | 'vertical' = 'horizontal';
@@ -33,6 +33,10 @@ export class UiSplitterComponent {
     color: 'inherit',
   };
 
+  ngAfterViewInit() {
+    this.changeSplitterLayout();
+  }
+
   /** splitter를 활성화한다. */
   show(): void {
     this.splitterActiveSubject.next(true);
@@ -46,6 +50,21 @@ export class UiSplitterComponent {
   /** 닫기 버튼을 클릭해서 splitter를 비활성화한다. */
   protected onClose(event: Event): void {
     this.hide();
+  }
+
+  /** splitter 레이아웃을 변경한다. */
+  protected changeSplitterLayout(): void {
+    if (window.innerWidth <= 1200) {
+      this.layout !== 'vertical' ? this.layout = 'vertical' : '';
+    } else {
+      this.layout !== 'horizontal' ? this.layout = 'horizontal' : '';
+    }
+  }
+
+  /** 모바일에서 세로형으로 변경한다. */
+  @HostListener('window:resize', ['$event'])
+  protected onWindowResize(event: Event): void {
+    this.changeSplitterLayout();
   }
 
 }

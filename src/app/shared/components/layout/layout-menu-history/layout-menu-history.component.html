@@ -1,27 +1,25 @@
 <div class="layout-menu-history" *ngIf="menuHistoryList.length > 0">
-  <div class="grid">
-    <div class="col col-2">
+  <div class="layout-menu-history__inner">
+    <div class="layout-menu-history__title">
       <h2>최근 방문한 페이지</h2>
     </div>
 
-    <div class="col col-10">
-      <ul class="layout-menu-history__list">
-        <ng-container *ngFor="let i of menuHistoryList">
-          <li [class.active]="i.menuId === menuId" (contextmenu)="onContextMenu($event, i.menuId)">
-            <a [routerLink]="i.menuUrl" [queryParams]="{ menuId: i.menuId }" [title]="'최근 방문한 페이지'">
-              {{ i.menuName }}
-            </a>
-            <ui-button
-              [size]="'small'"
-              [icon]="'pi-times'"
-              [severity]="'secondary'"
-              [title]="'최근 방문한 페이지 삭제'"
-              (click)="onRemove(i.menuId)"
-            />
-          </li>
-        </ng-container>
-      </ul>
-    </div>
+    <ul class="layout-menu-history__list">
+      <ng-container *ngFor="let i of menuHistoryList">
+        <li [class.active]="i.menuId === menuId" (contextmenu)="onContextMenu($event, i.menuId)">
+          <a [routerLink]="i.menuUrl" [queryParams]="{ menuId: i.menuId }" [title]="'최근 방문한 페이지'">
+            {{ i.menuName }}
+          </a>
+          <ui-button
+            [size]="'small'"
+            [icon]="'pi-times'"
+            [severity]="'secondary'"
+            [title]="'최근 방문한 페이지 삭제'"
+            (click)="onRemove(i.menuId)"
+          />
+        </li>
+      </ng-container>
+    </ul>
   </div>
 </div>
 <p-contextMenu [model]="contextMenus" #cm />

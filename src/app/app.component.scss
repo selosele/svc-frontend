@@ -1,6 +1,13 @@
+@import 'styles/base/variables';
+
 .page-wrapper {
   // padding: 5rem 1.5rem 2rem 1.5rem;
-  padding: 0.6rem 1.5rem 2rem 1.5rem;
+  padding: 0.6rem 0.5rem 2rem 0.5rem;
+
+  @media (min-width: $min-minimal-width) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 
   &__inner {
     /* min-height: calc(100vh - 6.375rem); */
@@ -27,6 +34,11 @@
 
   &__title-name {
     margin: 0;
+    font-size: 26px;
+
+    @media (min-width: $min-minimal-width) {
+      font-size: 2rem;
+    }
   }
 }
 
