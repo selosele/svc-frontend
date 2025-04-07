@@ -17,6 +17,10 @@
 
     &2 {
       width: calc(100% / 3);
+
+      .widget-box__container {
+        display: block;
+      }
     }
 
     &3 {
