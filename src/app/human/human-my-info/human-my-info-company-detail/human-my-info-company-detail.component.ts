@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { UiSplitFormComponent } from '@app/shared/components/form/ui-split-form/ui-split-form.component';
+import { UiTextFieldComponent } from '@app/shared/components/form';
 import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/ui-date-field.component';
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
 import { UiHiddenFieldComponent } from '@app/shared/components/form/ui-hidden-field/ui-hidden-field.component';
 import { UiCompanyFieldComponent } from '@app/shared/components/form/ui-company-field/ui-company-field.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { UiMessageService } from '@app/shared/services';
-import { isEmpty, isObjectEmpty, dateUtil } from '@app/shared/utils';
+import { isEmpty, isObjectEmpty, dateUtil, isNotObjectEmpty } from '@app/shared/utils';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { SaveWorkHistoryRequestDTO, WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { UiContentTitleComponent } from '@app/shared/components/ui';
@@ -19,6 +20,7 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
   standalone: true,
   imports: [
     UiSplitFormComponent,
+    UiTextFieldComponent,
     UiDateFieldComponent,
     UiDropdownComponent,
     UiHiddenFieldComponent,
@@ -42,6 +44,11 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
 
   /** 회사 정보 */
   @Input() detail: WorkHistoryResultDTO = null;
+
+  /** 회사 정보 존재 여부 */
+  get isDetailNotEmpty() {
+    return isNotObjectEmpty(this.detail);
+  }
 
   /** 회사 상세 조회 form */
   detailForm: FormGroup;

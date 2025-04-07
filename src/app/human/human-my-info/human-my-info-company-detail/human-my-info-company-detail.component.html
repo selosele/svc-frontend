@@ -12,10 +12,22 @@
 
   <div class="grid mt-2">
     <div class="col-4">
-      <ui-company-field
-        [control]="detailForm.get('companyName')"
-        [label]="'회사명'"
-      />
+      
+      @if (isDetailNotEmpty) {
+        <ui-text-field
+          [control]="detailForm.get('companyName')"
+          [label]="'회사명'"
+          [readonly]="true"
+        />
+      }
+      @else {
+        <ui-company-field
+          [control]="detailForm.get('companyName')"
+          [label]="'회사명'"
+          [tooltip]="'근무이력 등록 후에는 수정할 수 없으니 신중하게 입력해주세요.'"
+          [tooltipPosition]="'bottom'"
+        />
+      }
     </div>
 
     <div class="col-4">
