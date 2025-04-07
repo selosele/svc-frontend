@@ -83,16 +83,16 @@ export class LayoutHeaderComponent extends CoreBaseComponent implements OnInit {
   }
 
   /** 스크롤시, header를 위로 이동한다. */
-  @HostListener('document:scroll', ['$event'])
-  onDocumentScroll(event: Event): void {
-    if (window.scrollY < 0) return;
+  // @HostListener('document:scroll', ['$event'])
+  // onDocumentScroll(event: Event): void {
+  //   if (window.scrollY < 0) return;
 
-    if (Math.abs(window.scrollY - this.lastScrollTop) < this.header.nativeElement.offsetTop)
-      return;
+  //   if (Math.abs(window.scrollY - this.lastScrollTop) < this.header.nativeElement.offsetTop)
+  //     return;
 
-    this.isScrollActive = window.scrollY > 0;
-    this.isScrollDown = window.scrollY < this.lastScrollTop;
-    this.lastScrollTop = window.scrollY;
-  }
+  //   this.isScrollActive = window.scrollY > 0;
+  //   this.isScrollDown = window.scrollY < this.lastScrollTop;
+  //   this.lastScrollTop = window.scrollY;
+  // }
 
 }
