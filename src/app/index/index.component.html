@@ -52,6 +52,7 @@
         @if (mainBoardList?.length > 0) {
           <ui-tab
             [tabs]="mainBoardTabList"
+            [horizontalFix]="true"
             [activeIndex]="mainBoardTabIndex"
             (activeIndexChange)="onMainBoardTabChange($event)"
           >
@@ -139,6 +140,7 @@
               <div class="mt-4">
                 <ui-tab
                   [tabs]="mainPayslipTabList"
+                  [horizontalFix]="true"
                   [activeIndex]="mainPayslipTabIndex"
                   (activeIndexChange)="onMainPayslipTabChange($event)"
                 >

@@ -25,6 +25,9 @@ export class UiTabComponent implements AfterViewInit {
   /** 세로 탭 사용 여부 */
   @Input() vertical = false;
 
+  /** 가로 탭 fix 여부 */
+  @Input() horizontalFix = false;
+
   /** 탭 클릭 이벤트 */
   @Output() change = new EventEmitter<UiTabChangeEvent>();
 
@@ -47,6 +50,8 @@ export class UiTabComponent implements AfterViewInit {
 
   /** 탭 레이아웃을 변경한다. */
   protected changeTabLayout(): void {
+    if (this.horizontalFix) return;
+
     if (window.innerWidth <= 1200) {
       this.vertical ? this.vertical = false : '';
     } else {
