@@ -21,21 +21,21 @@
       <div class="col">
         <ui-text-field
           [control]="changePasswordForm.get('currentPassword')"
-          [label]="'현재 비밀번호'" type="password" [placeholder]="'12자 이내'"
+          [label]="'현재 비밀번호'" [type]="'password'" [placeholder]="'12자 이내'"
         />
       </div>
 
       <div class="col">
         <ui-text-field
           [control]="changePasswordForm.get('newPassword')"
-          [label]="'새 비밀번호'" type="password" [placeholder]="'12자 이내'"
+          [label]="'새 비밀번호'" [type]="'password'" [placeholder]="'12자 이내'"
         />
       </div>
 
       <div class="col">
         <ui-text-field
           [control]="changePasswordForm.get('newPasswordConfirm')"
-          [label]="'새 비밀번호 확인'" type="password" [placeholder]="'12자 이내'"
+          [label]="'새 비밀번호 확인'" [type]="'password'" [placeholder]="'12자 이내'"
         />
       </div>
     </div>
