@@ -57,7 +57,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
   }
 
   /** 레이아웃 하단 박스 요소 */
-  @ViewChild('layoutBottom') lmh: ElementRef<HTMLElement>;
+  @ViewChild('layoutBottom') lb: ElementRef<HTMLElement>;
 
   /** 마지막 scroll top */
   lastScrollTop = 0;
@@ -170,9 +170,9 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
 
   /** 페이지 맨 하단으로 스크롤했는지 감지한다. */
   detectScrollEnd(): void {
-    if (this.lmh) {
-      const lmhBottom = this.lmh.nativeElement.getBoundingClientRect().bottom;
-      this.isScroll = Math.ceil(lmhBottom) >= window.innerHeight;
+    if (this.lb) {
+      const lbBottom = this.lb.nativeElement.getBoundingClientRect().bottom;
+      this.isScroll = Math.ceil(lbBottom) >= window.innerHeight;
     } else {
       this.isScroll = false;
     }
