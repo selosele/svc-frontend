@@ -7,8 +7,12 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    width: 17.5rem;
-    font-size: 18px;
+    width: 170px;
+    font-size: 1.5rem;
+
+    @media (min-width: $min-mini-width) {
+      width: 17.5rem;
+    }
 
     @media (min-width: $min-standard-width2) {
       font-size: 1.5rem;
@@ -39,9 +43,13 @@
     }
 
     &[type="text"] {
-      width: 170px;
+      width: 130px;
 
-      @media (min-width: $min-standard-width2) {
+      @media (min-width: $min-mini-width) {
+        width: 170px;
+      }
+
+      @media (min-width: $min-mini-width) {
         width: 15.625rem;
       }
     }
