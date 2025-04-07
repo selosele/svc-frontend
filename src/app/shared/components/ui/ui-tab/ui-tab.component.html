@@ -1,4 +1,10 @@
-<div class="ui-tab" [class.horizontal]="!vertical" [class.vertical]="vertical">
+<div
+  class="ui-tab"
+  [class.horizontal]="!vertical"
+  [class.vertical]="vertical"
+  [class.type1]="type === 'type1'"
+  [class.type2]="type === 'type2'"
+>
   <p-tabView
     [activeIndex]="activeIndex"
     (onChange)="onChange($event)"

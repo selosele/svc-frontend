@@ -28,6 +28,9 @@ export class UiTabComponent implements AfterViewInit {
   /** 가로 탭 fix 여부 */
   @Input() horizontalFix = false;
 
+  /** 탭 type */
+  @Input() type = 'type1';
+
   /** 탭 클릭 이벤트 */
   @Output() change = new EventEmitter<UiTabChangeEvent>();
 
