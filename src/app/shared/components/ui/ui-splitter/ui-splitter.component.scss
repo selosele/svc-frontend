@@ -23,7 +23,7 @@
   .p-splitter-gutter {
     margin: 0 1rem;
 
-    &:has(~ .p-splitter-panel:empty) {
+    &:has(~ .p-splitter-panel:not(:has(>div.active))) {
       display: none;
     }
   }
@@ -38,7 +38,7 @@
       }
     }
 
-    &:has(~ .p-splitter-panel:not(:empty)) {
+    &:has(~ .p-splitter-panel:not(:has(>div.active))) {
       &::-webkit-scrollbar {
         width: 1rem;
       }
@@ -58,10 +58,6 @@
       }
     }
 
-    &:not(:has(*)) {
-      display: none;
-    }
-
     > div {
       width: 100%;
     }
@@ -73,7 +69,7 @@
     }
     
     .p-splitter-panel {
-      &:has(~ .p-splitter-panel:not(:empty)) {
+      &:has(~ .p-splitter-panel:not(:has(>div.active))) {
         overflow-x: auto;
         padding-right: 1rem;
 

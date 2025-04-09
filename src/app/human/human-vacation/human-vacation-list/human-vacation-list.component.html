@@ -4,7 +4,7 @@
   <ui-skeleton />
 }
 @else {
-  <ui-splitter [layout]="'vertical'" #splitter>
+  <ui-splitter [layout]="'vertical'" [verticalFix]="true" #splitter>
     <ui-table #table first
       [title]="tableTitle"
       [text]="tableText"

@@ -21,6 +21,9 @@ export class UiSplitterComponent implements AfterViewInit {
   /** 가로/세로 */
   @Input() layout: 'horizontal' | 'vertical' = 'horizontal';
 
+  /** 세로 레이아웃 fix 여부 */
+  @Input() verticalFix = false;
+
   /** splitter 활성화 여부 */
   private splitterActiveSubject = new BehaviorSubject<boolean>(false);
   isSplitterActive$ = this.splitterActiveSubject.asObservable();
@@ -54,6 +57,8 @@ export class UiSplitterComponent implements AfterViewInit {
 
   /** splitter 레이아웃을 변경한다. */
   protected changeSplitterLayout(): void {
+    if (this.verticalFix) return;
+
     if (window.innerWidth <= 1200) {
       this.layout !== 'vertical' ? this.layout = 'vertical' : '';
     } else {
