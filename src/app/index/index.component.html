@@ -245,23 +245,25 @@
                       [class.active]="i.vacationStatsId === statsItemClickId"
                       (click)="onStatsItemClick(i)"
                     >
-                      <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.yyyy }}년</span>
+                      <span class="absolute top-0 left-0 px-2 py-1 bg-primary-50 text-primary">{{ i.yyyy }}년</span>
                       {{ i.vacationTypeCodeName }} ({{ i.vacationUseCount }}개)
                     </a>
                   </li>
                 }
               </ul>
   
-              <ul class="flex flex-grow-1 flex-wrap gap-2 w-6">
-                @for (i of vacationListByMonth; track $index) {
-                  <li style="width: calc(50% - 0.5rem);">
-                    <span class="inline-flex w-3rem mr-1 px-2 py-1 bg-primary-50 text-primary text-center">
-                      {{ i.vacationMonth }}월
-                    </span>
-                    {{ i.vacationUseCount }}개
-                  </li>
-                }
-              </ul>
+              @if (vacationListByMonth?.length > 0) {
+                <ul class="flex flex-grow-1 flex-wrap gap-2 w-6">
+                  @for (i of vacationListByMonth; track $index) {
+                    <li style="width: calc(50% - 0.5rem);">
+                      <span class="inline-flex w-3rem mr-1 px-2 py-1 bg-primary-50 text-primary text-center">
+                        {{ i.vacationMonth }}월
+                      </span>
+                      {{ i.vacationUseCount }}개
+                    </li>
+                  }
+                </ul>
+              }
             }
             @else {
               <p>아직 사용한 휴가가 없어요.</p>
@@ -303,7 +305,7 @@
               <ul class="widget-box__item-list">
                 @for (i of vacationStatResponse?.vacationList; track $index) {
                   <li>
-                    <span class="mr-2 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationTypeCodeName }}</span>
+                    <span class="absolute top-0 left-0 px-2 py-1 bg-primary-50 text-primary">{{ i.vacationTypeCodeName }}</span>
                     {{ ngDate(i.vacationStartYmd) | date: 'yyyy년 MM월 dd일' }} ~ {{ ngDate(i.vacationEndYmd) | date: 'yyyy년 MM월 dd일' }} ({{ i.vacationUseCount }}일)
                   </li>
                 }
