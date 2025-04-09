@@ -3,7 +3,7 @@
     @if (isEditable) {
       <input #editName
         type="text"
-        class="layout-site-title__text"
+        [title]="'편집'"
         [value]="name"
         (keyup)="onKeyup()"
         (keyup.enter)="onSubmit($event)"

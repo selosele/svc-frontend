@@ -79,6 +79,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          overflow: hidden;
           width: 4.375rem;
           height: 4.375rem;
           border-radius: 50%;
@@ -115,28 +116,23 @@
       }
 
       &-list {
-        li + li {
-          margin-top: 0.9375rem;
+        li {
+          display: flex;
+          align-items: center;
+          position: relative;
+          min-height: 1.75rem;
+          padding-left: 5.1875rem;
+
+          + li {
+            margin-top: 0.5rem;
+          }
         }
       }
 
       li {
         a {
-          position: relative;
-
           &.active {
-            &:before {
-              content: "";
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              left: calc(100% + 0.5rem);
-              width: 0.5rem;
-              height: 0.5rem;
-              margin: auto 0;
-              border-radius: 50%;
-              background-color: var(--primary-color);
-            }
+            color: var(--primary-color);
           }
         }
       }
