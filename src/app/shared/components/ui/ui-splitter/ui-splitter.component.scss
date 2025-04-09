@@ -32,6 +32,12 @@
     position: relative;
     height: 100%;
 
+    &:last-of-type {
+      &:not(:has(>div.active)) {
+        display: none;
+      }
+    }
+
     &:has(~ .p-splitter-panel:not(:empty)) {
       &::-webkit-scrollbar {
         width: 1rem;
