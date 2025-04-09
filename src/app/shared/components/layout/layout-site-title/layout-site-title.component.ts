@@ -55,14 +55,12 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnIni
   }
 
   /** 편집버튼을 활성화한다. */
-  onEditVisibleActivate(event?: Event): void {
-    event.stopPropagation();
+  onEditVisibleActivate(): void {
     this.isEditVisible = true;
   }
 
   /** 편집버튼을 비활성화한다. */
-  onEditVisibleDeActivate(event?: Event): void {
-    event.stopPropagation();
+  onEditVisibleDeActivate(): void {
     if (this.isEditable) return;
 
     this.isEditVisible = false;
