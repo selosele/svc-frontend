@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { filter } from 'rxjs';
 import { UiMessageService } from '@app/shared/services';
 import { UserStore } from '@app/user/user.store';
 import { UserService } from '@app/user/user.service';
@@ -18,10 +19,11 @@ import { CoreBaseComponent } from '../../core';
   styleUrl: './layout-site-title.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutSiteTitleComponent extends CoreBaseComponent {
+export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnInit {
 
   constructor(
     private eRef: ElementRef,
+    private router: Router,
     private userStore: UserStore,
     private messageService: UiMessageService,
     private userService: UserService,
@@ -44,13 +46,23 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent {
   /** 사이트타이틀명 편집 상태 */
   isEditable = false;
 
+  ngOnInit() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.onEditVisibleDeActivate();
+      });
+  }
+
   /** 편집버튼을 활성화한다. */
-  onEditVisibleActivate(): void {
+  onEditVisibleActivate(event?: Event): void {
+    event.stopPropagation();
     this.isEditVisible = true;
   }
 
   /** 편집버튼을 비활성화한다. */
-  onEditVisibleDeActivate(): void {
+  onEditVisibleDeActivate(event?: Event): void {
+    event.stopPropagation();
     if (this.isEditable) return;
 
     this.isEditVisible = false;

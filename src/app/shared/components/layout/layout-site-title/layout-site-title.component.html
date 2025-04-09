@@ -1,4 +1,4 @@
-<div class="layout-site-title" (mouseenter)="onEditVisibleActivate()" (mouseleave)="onEditVisibleDeActivate()">
+<div class="layout-site-title" (mouseenter)="onEditVisibleActivate($event)" (mouseleave)="onEditVisibleDeActivate($event)">
   <div class="layout-site-title__text">
     @if (isEditable) {
       <input #editName
@@ -10,7 +10,7 @@
       >
     }
     @else {
-      <a [routerLink]="link" (focusin)="onEditVisibleActivate()">
+      <a [routerLink]="link" (focusin)="onEditVisibleActivate($event)">
         {{ name }}
       </a>
     }
