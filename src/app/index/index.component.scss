@@ -1,22 +1,44 @@
+@import 'styles/base/variables';
+
 .widget {
   &-wrapper {
     display: flex;
     gap: 1rem;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    @media (min-width: $min-standard-width) {
+      flex-wrap: nowrap;
+    }
   }
 
   &-container {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
     gap: 1rem;
 
+    @media (min-width: $min-standard-width) {
+      flex-direction: column;
+    }
+
     &1 {
-      width: calc(100% / 3);
+      width: 100%;
+
+      @media (min-width: $min-standard-width) {
+        width: calc(100% / 3);
+      }
     }
 
     &2 {
-      width: calc(100% / 3);
+      width: 100%;
+
+      @media (min-width: $min-big-width) {
+        width: calc(50% - 0.5rem);
+      }
+
+      @media (min-width: $min-standard-width) {
+        width: calc(100% / 3);
+      }
 
       .widget-box__container {
         display: block;
@@ -24,7 +46,15 @@
     }
 
     &3 {
-      width: calc(100% / 3);
+      width: 100%;
+
+      @media (min-width: $min-big-width) {
+        width: calc(50% - 0.5rem);
+      }
+
+      @media (min-width: $min-standard-width) {
+        width: calc(100% / 3);
+      }
     }
   }
 
@@ -43,6 +73,46 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+      }
+    }
+
+    &1,
+    &2 {
+      flex: none;
+      width: 100%;
+
+      @media (min-width: $min-medium-width) {
+        flex: 1;
+        width: calc(50% - 0.5rem);
+      }
+
+      @media (min-width: $min-standard-width) {
+        width: 100%;
+      }
+    }
+
+    &4,
+    &5,
+    &6 {
+      flex: none;
+
+      @media (min-width: $min-standard-width) {
+        flex: 1;
+      }
+    }
+
+    .p-tabview .p-tabview-panels {
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 0;
+
+      @media (min-width: $min-medium-width) {
+        padding-bottom: 1.25rem;
+      }
+  
+      @media (min-width: $min-standard-width) {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
       }
     }
 
@@ -80,10 +150,15 @@
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          width: 4.375rem;
-          height: 4.375rem;
+          width: 56px;
+          height: 56px;
           border-radius: 50%;
           background-color: var(--primary-50);
+
+          @media (min-width: $min-medium-width) {
+            width: 4.375rem;
+            height: 4.375rem;
+          }
   
           i {
             font-size: 1.5rem;
@@ -95,8 +170,12 @@
           justify-content: center;
           flex-wrap: wrap;
           font-weight: 700;
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           width: 100%;
+
+          @media (min-width: $min-medium-width) {
+            font-size: 1.5rem;
+          }
 
           > span {
             display: block;
@@ -109,22 +188,22 @@
         }
       }
 
-      ul {
+      &-list {
         overflow: auto;
         height: 6.25rem;
         padding: 0;
-      }
 
-      &-list {
-        li {
-          display: flex;
-          align-items: center;
-          position: relative;
-          min-height: 1.75rem;
-          padding-left: 5.1875rem;
+        &.type1 {
+          > li {
+            display: flex;
+            align-items: center;
+            position: relative;
+            min-height: 1.75rem;
+            padding-left: 5.1875rem;
 
-          + li {
-            margin-top: 0.5rem;
+            + li {
+              margin-top: 0.5rem;
+            }
           }
         }
       }
@@ -144,6 +223,7 @@
       &-item {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         flex-wrap: wrap;
         gap: 1rem;
 
@@ -155,6 +235,16 @@
           display: flex;
           justify-content: center;
           margin-top: 1rem;
+
+          button {
+            width: 30px;
+            height: 30px;
+
+            @media (min-width: $min-medium-width) {
+              width: 2.357rem;
+              height: 2.357rem;
+            }
+          }
         }
 
         a {
@@ -170,10 +260,14 @@
         }
 
         span {
-          display: block;
+          display: none;
           width: max-content;
           font-size: 0.9rem;
           text-align: right;
+
+          @media (min-width: $min-mini-width) {
+            display: block;
+          }
         }
       }
     }

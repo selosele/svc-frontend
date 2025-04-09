@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
@@ -39,7 +39,8 @@ import { WorkHistoryService } from '@app/work-history/work-history.service';
   ],
   selector: 'view-index',
   templateUrl: './index.component.html',
-  styleUrl: './index.component.scss'
+  styleUrl: './index.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class IndexComponent extends CoreBaseComponent implements OnInit {
 

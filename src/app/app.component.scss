@@ -1,10 +1,15 @@
 @import 'styles/base/variables';
 
 .page-wrapper {
-  // padding: 5rem 1.5rem 2rem 1.5rem;
+  /* padding: 5rem 1.5rem 2rem 1.5rem; */
   padding: 0.6rem 0.5rem 2rem 0.5rem;
 
   @media (min-width: $min-minimal-width) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: $min-medium-width) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
