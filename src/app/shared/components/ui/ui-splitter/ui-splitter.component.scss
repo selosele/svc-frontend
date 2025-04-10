@@ -22,10 +22,6 @@
 
   .p-splitter-gutter {
     margin: 0 1rem;
-
-    &:has(~ .p-splitter-panel:not(:has(>div.active))) {
-      display: none;
-    }
   }
   
   .p-splitter-panel {
@@ -66,6 +62,12 @@
   &.horizontal {
     .ui-splitter__buttons {
       padding-bottom: 1rem;
+    }
+
+    .p-splitter-gutter {
+      &:has(~ .p-splitter-panel>div:not(.active)) {
+        display: none;
+      }
     }
     
     .p-splitter-panel {
