@@ -249,15 +249,12 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   private listVacationCalc(workHistoryId: number): void {
     this.vacationService.listVacationCalc$(workHistoryId)
     .subscribe((response) => {
+      this.setAnnualTypeCode();
 
-      // 사용자 지정 휴가계산설정이 있으면 설정해주고
+      // 사용자 지정 휴가계산설정이 있으면 설정해준다.
       if (response.vacationCalcList?.length > 0) {
-        this.caculateVacationForm.get('annualTypeCode').patchValue(response.vacationCalcList[0].annualTypeCode);
+        // this.caculateVacationForm.get('annualTypeCode').patchValue(response.vacationCalcList[0].annualTypeCode);
         this.caculateVacationForm.get('vacationTypeCodes').patchValue(response.vacationCalcList.map(x => x.vacationTypeCode));
-      }
-      // 없으면 기본 값을 설정한다.
-      else {
-        this.setAnnualTypeCode();
       }
 
       this.setJoinYmd();
@@ -270,8 +267,9 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 연차발생기준 코드 값을 설정한다. */
   private setAnnualTypeCode(): void {
-    const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
     const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.currentWorkHistoryResponse?.workHistory?.joinYmd;
+    const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.currentWorkHistoryResponse?.workHistory?.quitYmd;
+    const nowDate = dateUtil(dateUtil(quitYmd).format('YYYYMMDD')) || dateUtil(dateUtil().format('YYYYMMDD'));
 
     // 근속 1년 미만일 경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
