@@ -22,7 +22,7 @@ import { VacationStore } from '@app/vacation/vacation.store';
 import { VacationService } from '@app/vacation/vacation.service';
 import { UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
-import { dateUtil } from '@app/shared/utils';
+import { dateUtil, isNotBlank } from '@app/shared/utils';
 import { WorkHistoryResponseDTO, WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 
 @Component({
@@ -269,7 +269,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   private setAnnualTypeCode(): void {
     const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.currentWorkHistoryResponse?.workHistory?.joinYmd;
     const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.currentWorkHistoryResponse?.workHistory?.quitYmd;
-    const nowDate = dateUtil(dateUtil(quitYmd).format('YYYYMMDD')) || dateUtil(dateUtil().format('YYYYMMDD'));
+    const nowDate = isNotBlank(quitYmd) ? dateUtil(dateUtil(quitYmd).format('YYYYMMDD')) : dateUtil(dateUtil().format('YYYYMMDD'));
 
     // 근속 1년 미만일 경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
