@@ -131,26 +131,10 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-4">
       <ui-hidden-field [control]="detailForm.get('employee.workHistory.workHistoryId')" />
       <ui-hidden-field [control]="detailForm.get('employee.workHistory.companyId')" />
-      
-      @if (isDetailNotEmpty) {
-        <ui-text-field
-          [control]="detailForm.get('employee.workHistory.corporateName')"
-          [label]="'회사(법인)명'"
-          [readonly]="true"
-        />
-      }
-      @else {
-        <ui-company-field
-          [control]="detailForm.get('employee.workHistory.corporateName')"
-          [label]="'회사(법인)명'"
-        />
-      }
-    </div>
 
-    <div class="col-6">
       @if (isDetailNotEmpty) {
         <ui-text-field
           [control]="detailForm.get('employee.workHistory.companyName')"
@@ -166,7 +150,7 @@
       }
     </div>
 
-    <div class="col-6">
+    <div class="col-4">
       @if (isDetailNotEmpty) {
         <ui-text-field
           [control]="detailForm.get('employee.workHistory.joinYmd')"
@@ -184,7 +168,7 @@
       }
     </div>
   
-    <div class="col-6">
+    <div class="col-4">
       @if (isDetailNotEmpty) {
         <ui-text-field
           [control]="detailForm.get('employee.workHistory.quitYmd')"
