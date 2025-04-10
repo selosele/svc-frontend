@@ -23,7 +23,7 @@ import { VacationService } from '@app/vacation/vacation.service';
 import { UiMessageService } from '@app/shared/services';
 import { UiTextFieldComponent } from '../../shared/components/form/ui-text-field/ui-text-field.component';
 import { dateUtil } from '@app/shared/utils';
-import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
+import { WorkHistoryResponseDTO, WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 
 @Component({
   standalone: true,
@@ -62,6 +62,9 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   ) {
     super();
   }
+
+  /** 최신 근무이력 정보 */
+  currentWorkHistoryResponse: WorkHistoryResponseDTO;
 
   /** 최신 근무이력 ID */
   currentWorkHistoryId: number;
@@ -132,8 +135,8 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
     });
 
-    const currentWorkHistoryResponse = await lastValueFrom(this.workHistoryService.getCurrentWorkHistory$(this.user?.employeeId));
-    this.currentWorkHistoryId = currentWorkHistoryResponse?.workHistory?.workHistoryId;
+    this.currentWorkHistoryResponse = await lastValueFrom(this.workHistoryService.getCurrentWorkHistory$(this.user?.employeeId));
+    this.currentWorkHistoryId = this.currentWorkHistoryResponse?.workHistory?.workHistoryId;
 
     this.vacationService.setWorkHistoryId(this.currentWorkHistoryId);
 
@@ -268,7 +271,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
   /** 연차발생기준 코드 값을 설정한다. */
   private setAnnualTypeCode(): void {
     const nowDate = dateUtil(dateUtil().format('YYYYMMDD'));
-    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.currentWorkHistoryResponse?.workHistory?.joinYmd;
 
     // 근속 1년 미만일 경우
     if (nowDate.diff(dateUtil(joinYmd), 'year') < 1) {
@@ -284,8 +287,8 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
 
   /** 입사일자 값을 설정한다. */
   private setJoinYmd(): void {
-    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.user?.joinYmd;
-    const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.user?.quitYmd;
+    const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.currentWorkHistoryResponse?.workHistory?.joinYmd;
+    const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.currentWorkHistoryResponse?.workHistory?.quitYmd;
     this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
     this.caculateVacationForm.get('quitYmd').patchValue(quitYmd);
   }
