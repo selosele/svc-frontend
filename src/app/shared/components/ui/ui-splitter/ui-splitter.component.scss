@@ -71,7 +71,7 @@
     }
     
     .p-splitter-panel {
-      &:has(~ .p-splitter-panel:not(:has(>div.active))) {
+      &:has(~ .p-splitter-panel>div.active) {
         overflow-x: auto;
         padding-right: 1rem;
 
