@@ -18,21 +18,21 @@
 
   <ui-form [form]="changePasswordForm" [useSubmit]="false" (submit)="onSubmitPassword($event)">
     <div class="grid mt-2">
-      <div class="col">
+      <div class="col-12 sm:col-4">
         <ui-text-field
           [control]="changePasswordForm.get('currentPassword')"
           [label]="'현재 비밀번호'" [type]="'password'" [placeholder]="'12자 이내'"
         />
       </div>
 
-      <div class="col">
+      <div class="col-12 sm:col-4">
         <ui-text-field
           [control]="changePasswordForm.get('newPassword')"
           [label]="'새 비밀번호'" [type]="'password'" [placeholder]="'12자 이내'"
         />
       </div>
 
-      <div class="col">
+      <div class="col-12 sm:col-4">
         <ui-text-field
           [control]="changePasswordForm.get('newPasswordConfirm')"
           [label]="'새 비밀번호 확인'" [type]="'password'" [placeholder]="'12자 이내'"
@@ -54,14 +54,14 @@
 
   <ui-form [form]="employeeForm" [useSubmit]="false" (submit)="onSubmitEmployee($event)">
     <div class="grid mt-2">
-      <div class="col">
+      <div class="col-12 sm:col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('employeeName')"
           [label]="'직원명'" [placeholder]="'30자 이내'"
         />
       </div>
   
-      <div class="col">
+      <div class="col-12 sm:col-4 lg:col">
         <ui-dropdown
           [control]="employeeForm.get('genderCode')"
           [label]="'성별'"
@@ -69,7 +69,7 @@
         />
       </div>
 
-      <div class="col">
+      <div class="col-12 sm:col-4 lg:col">
         <ui-date-field
           [control]="employeeForm.get('birthYmd')"
           [label]="'생년월일'"
@@ -78,14 +78,14 @@
         />
       </div>
 
-      <div class="col">
+      <div class="col-12 sm:col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('phoneNo')"
           [label]="'휴대폰번호'" [placeholder]="'- 제외'"
         />
       </div>
 
-      <div class="col">
+      <div class="col-12 sm:col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('emailAddr')"
           [label]="'이메일주소'"
@@ -95,8 +95,8 @@
       </div>
     </div>
 
-    <div class="grid">
-      <div class="col">
+    <!-- <div class="grid">
+      <div class="col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('workHistory.companyName')"
           [label]="'회사명'"
@@ -104,7 +104,7 @@
         />
       </div>
   
-      <div class="col">
+      <div class="col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('workHistory.rankCodeName')"
           [label]="'직위'"
@@ -112,7 +112,7 @@
         />
       </div>
   
-      <div class="col">
+      <div class="col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('workHistory.jobTitleCodeName')"
           [label]="'직책'"
@@ -120,7 +120,7 @@
         />
       </div>
   
-      <div class="col">
+      <div class="col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('workHistory.joinYmd')"
           [label]="'입사일자'"
@@ -128,14 +128,14 @@
         />
       </div>
   
-      <div class="col">
+      <div class="col-4 lg:col">
         <ui-text-field
           [control]="employeeForm.get('workHistory.quitYmd')"
           [label]="'퇴사일자'"
           [readonly]="true"
         />
       </div>
-    </div>
+    </div> -->
 
     <div class="ui-form__buttons">
       <ui-button
