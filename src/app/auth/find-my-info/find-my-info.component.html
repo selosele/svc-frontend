@@ -10,7 +10,7 @@
   
   <ui-form [form]="findAccountForm" [useSubmit]="false" (submit)="onSubmitFindAccount($event)">
     <div class="grid">
-      <div class="col-5">
+      <div class="col-6 sm:col-5">
         <ui-text-field
           [control]="findAccountForm.get('employeeName')"
           [label]="'실명'"
@@ -18,7 +18,7 @@
         />
       </div>
   
-      <div class="col-5">
+      <div class="col-6 sm:col-5">
         <ui-text-field
           [control]="findAccountForm.get('emailAddr')"
           [label]="'이메일주소'"
@@ -26,8 +26,8 @@
         />
       </div>
 
-      <div class="col flex align-items-end">
-        <ui-button [type]="'submit'">아이디 찾기</ui-button>
+      <div class="col-12 sm:col flex align-items-end">
+        <ui-button [type]="'submit'">확인</ui-button>
       </div>
     </div>
   </ui-form>
@@ -45,7 +45,7 @@
   
   <ui-form [form]="findPasswordForm" [useSubmit]="false" (submit)="onSubmitFindPassword($event)">
     <div class="grid">
-      <div class="col-5">
+      <div class="col-6 sm:col-5">
         <ui-text-field
           [control]="findPasswordForm.get('userAccount')"
           [label]="'아이디'"
@@ -53,7 +53,7 @@
         />
       </div>
   
-      <div class="col-5">
+      <div class="col-6 sm:col-5">
         <ui-text-field
           [control]="findPasswordForm.get('emailAddr')"
           [label]="'이메일주소'"
@@ -61,21 +61,21 @@
         />
       </div>
 
-      <div class="col flex align-items-end">
-        <ui-button [type]="'submit'">비밀번호 찾기</ui-button>
+      <div class="col-12 sm:col flex align-items-end">
+        <ui-button [type]="'submit'">확인</ui-button>
       </div>
     </div>
 
     @if (userCertHistory !== null) {
       <div class="grid">
-        <div class="col-10">
+        <div class="col-12 sm:col-10">
           <ui-text-field
             [control]="findPasswordForm.get('certCode')"
             [label]="certCodeLabel"
           />
         </div>
         
-        <div class="col flex align-items-end">
+        <div class="col-12 sm:col flex align-items-end">
           <ui-button button [type]="'submit'" [severity]="'success'">
             확인
           </ui-button>
