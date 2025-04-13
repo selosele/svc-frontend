@@ -26,21 +26,21 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('menuName')"
         [label]="'메뉴명'"
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('menuUrl')"
         [label]="'메뉴 URL'"
       />
     </div>
 
-    <div class="col-3">
+    <div class="col-6 sm:col-3">
       <ui-text-field
         [control]="detailForm.get('menuOrder')"
         [label]="'메뉴 순서'"
@@ -48,7 +48,7 @@
       />
     </div>
 
-    <div class="col-3">
+    <div class="col-6 sm:col-3">
       <ui-text-field
         [control]="detailForm.get('menuDepth')"
         [label]="'메뉴 뎁스'"
@@ -56,7 +56,7 @@
       />
     </div>
 
-    <div class="col-3">
+    <div class="col-6 sm:col-3">
       <ui-dropdown
         [control]="detailForm.get('menuShowYn')"
         [label]="'표출 여부'"
@@ -64,7 +64,7 @@
       />
     </div>
 
-    <div class="col-3">
+    <div class="col-6 sm:col-3">
       <ui-dropdown
         [control]="detailForm.get('useYn')"
         [label]="'사용 여부'"
