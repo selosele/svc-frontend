@@ -75,7 +75,7 @@ export class SystemRoleComponent extends CoreBaseComponent implements OnInit {
       this.dialogService.open(SystemRoleDetailComponent, {
         focusOnShow: false,
         header: `"${event.data['roleName']}" 권한별 사용자 및 메뉴 목록 조회`,
-        data: { userList: userResponse, menuTree },
+        data: { userList: userResponse.userList, menuTree },
       });
     });
   }
