@@ -54,7 +54,7 @@ export class UiTableComponent {
   @Input() selectionMode: 'single' | 'multiple' = 'single';
 
   /** 테이블 스크롤 높이 값 */
-  @Input() scrollHeight = '400px';
+  @Input() scrollHeight?: string;
 
   /** 테이블 데이터 없을 시 표출할 텍스트 */
   @Input() emptymessage = '데이터가 없어요.';
