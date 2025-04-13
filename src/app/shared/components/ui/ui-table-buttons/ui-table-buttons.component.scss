@@ -10,15 +10,22 @@
 
   &-right {
     display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 1rem;
     width: 100%;
-    margin-top: 1rem;
+  }
 
-    @media (min-width: $min-big-width) {
-      justify-content: flex-end;
-      flex: 1;
-      margin-top: 0;
+  &.has-title {
+    .ui-table__buttons-right {
+      justify-content: start;
+      margin-top: 1rem;
+
+      @media (min-width: $min-big-width) {
+        justify-content: flex-end;
+        flex: 1;
+        margin-top: 0;
+      }
     }
   }
 
