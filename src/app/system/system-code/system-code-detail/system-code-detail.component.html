@@ -10,7 +10,7 @@
   <ui-content-title [text]="'코드 정보'" />
 
   <div class="grid mt-2">
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('codeId')"
         [label]="'코드 ID'"
@@ -18,21 +18,21 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('upCodeId')"
         [label]="'상위 코드 ID'"
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('codeValue')"
         [label]="'코드 값'"
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('codeName')"
         [label]="'코드명'"
