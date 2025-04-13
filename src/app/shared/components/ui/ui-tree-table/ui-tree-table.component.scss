@@ -1,11 +1,19 @@
+@import 'styles/base/variables';
+
 .ui-tree-table {
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow-x: auto;
   line-height: 1.5;
 
   &__view {
+    min-width: 700px;
     font-family: inherit;
+
+    @media (min-width: $min-large-width) {
+      // min-width: 1400px;
+    }
   }
 
   .p-treetable .p-treetable-thead > tr > th {
