@@ -4,6 +4,56 @@
   <ui-skeleton />
 }
 @else {
+  <ui-form [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
+    <div class="grid">
+      <div class="col-12 sm:col-6 md:col-3">
+        <ui-date-field
+          [control]="searchForm.get('payslipPaymentYYYY')"
+          [label]="'급여명세서 지급 연도'"
+          [view]="'year'"
+          [dateFormat]="'yy'"
+          [placeholder]="'YYYY'"
+          [readonlyInput]="true"
+          (select)="onSearchFormSubmit()"
+          (clear)="onSearchFormSubmit()"
+          (clearClick)="onSearchFormSubmit()"
+        />
+      </div>
+
+      <div class="col-12 sm:col-6 md:col-3">
+        <ui-date-field
+          [control]="searchForm.get('payslipPaymentMM')"
+          [label]="'급여명세서 지급 월'"
+          [view]="'month'"
+          [dateFormat]="'mm'"
+          [placeholder]="'MM'"
+          [readonlyInput]="true"
+          (select)="onSearchFormSubmit()"
+          (clear)="onSearchFormSubmit()"
+          (clearClick)="onSearchFormSubmit()"
+        />
+      </div>
+
+      <div class="col-12 sm:col-6 md:col-3">
+        <ui-text-field
+          [control]="searchForm.get('joinYmd')"
+          [label]="'입사일자'"
+          [readonly]="true"
+        />
+      </div>
+
+      @if (searchForm.get('quitYmd').value) {
+        <div class="col-12 sm:col-6 md:col-3">
+          <ui-text-field
+            [control]="searchForm.get('quitYmd')"
+            [label]="'퇴사일자'"
+            [readonly]="true"
+          />
+        </div>
+      }
+    </div>
+  </ui-form>
+
   <ui-table #table first
     [title]="tableTitle"
     [text]="tableText"
@@ -23,56 +73,6 @@
     (refresh)="onRefresh()"
     (rowSelect)="onRowSelect($event)"
   >
-    <ui-form top [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
-      <div class="grid">
-        <div class="col-12 sm:col-6 md:col-3">
-          <ui-date-field
-            [control]="searchForm.get('payslipPaymentYYYY')"
-            [label]="'급여명세서 지급 연도'"
-            [view]="'year'"
-            [dateFormat]="'yy'"
-            [placeholder]="'YYYY'"
-            [readonlyInput]="true"
-            (select)="onSearchFormSubmit()"
-            (clear)="onSearchFormSubmit()"
-            (clearClick)="onSearchFormSubmit()"
-          />
-        </div>
-
-        <div class="col-12 sm:col-6 md:col-3">
-          <ui-date-field
-            [control]="searchForm.get('payslipPaymentMM')"
-            [label]="'급여명세서 지급 월'"
-            [view]="'month'"
-            [dateFormat]="'mm'"
-            [placeholder]="'MM'"
-            [readonlyInput]="true"
-            (select)="onSearchFormSubmit()"
-            (clear)="onSearchFormSubmit()"
-            (clearClick)="onSearchFormSubmit()"
-          />
-        </div>
-
-        <div class="col-12 sm:col-6 md:col-3">
-          <ui-text-field
-            [control]="searchForm.get('joinYmd')"
-            [label]="'입사일자'"
-            [readonly]="true"
-          />
-        </div>
-
-        @if (searchForm.get('quitYmd').value) {
-          <div class="col-12 sm:col-6 md:col-3">
-            <ui-text-field
-              [control]="searchForm.get('quitYmd')"
-              [label]="'퇴사일자'"
-              [readonly]="true"
-            />
-          </div>
-        }
-      </div>
-    </ui-form>
-
     <ui-button buttons
       [size]="'small'"
       [icon]="'pi-plus'"
