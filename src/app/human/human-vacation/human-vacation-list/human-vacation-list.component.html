@@ -4,6 +4,36 @@
   <ui-skeleton />
 }
 @else {
+  <ui-form [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
+    <div class="grid mt-1">
+      <div class="col-12 w-full md:col-fixed md:w-auto">
+        <ui-date-field
+          [control]="searchForm.get('vacationStartYmd')"
+          [label]="'휴가 시작일자로 검색'"
+          [dateFormat]="'yymmdd'"
+          [placeholder]="'YYYYMMDD'"
+          [readonlyInput]="true"
+          (select)="onSearchFormSubmit()"
+          (clear)="onSearchFormSubmit()"
+          (clearClick)="onSearchFormSubmit()"
+        />
+      </div>
+
+      <div class="col-12 w-full md:col-fixed md:w-auto">
+        <ui-date-field
+          [control]="searchForm.get('vacationEndYmd')"
+          [label]="'휴가 종료일자로 검색'"
+          [dateFormat]="'yymmdd'"
+          [placeholder]="'YYYYMMDD'"
+          [readonlyInput]="true"
+          (select)="onSearchFormSubmit()"
+          (clear)="onSearchFormSubmit()"
+          (clearClick)="onSearchFormSubmit()"
+        />
+      </div>
+    </div>
+  </ui-form>
+
   <ui-splitter [layout]="'vertical'" [verticalFix]="true" #splitter>
     <ui-table #table first
       [title]="tableTitle"
@@ -23,36 +53,6 @@
       (rowSelect)="onRowSelect($event)"
       (unRowSelect)="onRowUnselect($event)"
     >
-      <ui-form top [form]="searchForm" [useSubmit]="false" (submit)="onSubmit($event)">
-        <div class="grid mt-1">
-          <div class="col-12 w-full md:col-fixed md:w-auto">
-            <ui-date-field
-              [control]="searchForm.get('vacationStartYmd')"
-              [label]="'휴가 시작일자로 검색'"
-              [dateFormat]="'yymmdd'"
-              [placeholder]="'YYYYMMDD'"
-              [readonlyInput]="true"
-              (select)="onSearchFormSubmit()"
-              (clear)="onSearchFormSubmit()"
-              (clearClick)="onSearchFormSubmit()"
-            />
-          </div>
-
-          <div class="col-12 w-full md:col-fixed md:w-auto">
-            <ui-date-field
-              [control]="searchForm.get('vacationEndYmd')"
-              [label]="'휴가 종료일자로 검색'"
-              [dateFormat]="'yymmdd'"
-              [placeholder]="'YYYYMMDD'"
-              [readonlyInput]="true"
-              (select)="onSearchFormSubmit()"
-              (clear)="onSearchFormSubmit()"
-              (clearClick)="onSearchFormSubmit()"
-            />
-          </div>
-        </div>
-      </ui-form>
-
       <ui-button buttons
         [size]="'small'"
         [icon]="'pi-plus'"
