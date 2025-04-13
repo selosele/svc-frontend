@@ -77,4 +77,33 @@
       }
     }
   }
+
+  &.responsive {
+    colgroup {
+      display: none;
+  
+      @media (min-width: $min-medium-width) {
+        display: table-column-group;
+      }
+    }
+  
+    col {
+      display: none;
+  
+      @media (min-width: $min-medium-width) {
+        display: table-column;
+      }
+    }
+    
+    th,
+    td {
+      display: block;
+      width: 100%;
+
+      @media (min-width: $min-medium-width) {
+        display: table-cell;
+        width: auto;
+      }
+    }
+  }
 }

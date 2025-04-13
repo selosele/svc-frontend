@@ -1,16 +1,25 @@
+@import 'styles/base/variables';
+
 .ui-table__buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: 1rem;
   margin-bottom: 1rem;
 
   &-right {
     display: flex;
-    justify-content: flex-end;
-    flex: 1;
+    flex-wrap: wrap;
     gap: 1rem;
     width: 100%;
+    margin-top: 1rem;
+
+    @media (min-width: $min-big-width) {
+      justify-content: flex-end;
+      flex: 1;
+      margin-top: 0;
+    }
   }
 
   &:not(:has(*)) {

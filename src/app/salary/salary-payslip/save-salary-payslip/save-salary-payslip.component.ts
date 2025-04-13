@@ -11,7 +11,7 @@ import { UiMessageService } from '@app/shared/services';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { PayslipResultDTO, SavePayslipRequestDTO } from '@app/payslip/payslip.model';
-import { dateUtil, isEmpty, isObjectEmpty } from '@app/shared/utils';
+import { dateUtil, isEmpty, isNotObjectEmpty, isObjectEmpty } from '@app/shared/utils';
 import { TransformToDto } from '@app/shared/decorators';
 
 @Component({
@@ -219,10 +219,10 @@ export class SaveSalaryPayslipComponent extends CoreBaseComponent implements OnI
   /** 급여명세서 제목을 설정한다. */
   private setTitle(title: string | Date): void {
     if (isEmpty(title)) {
-      this.title = `0000년 00월 급여명세서 (${this.payslip.companyName})`;
+      this.title = `0000년 00월 급여명세서 ${isNotObjectEmpty(this.payslip) ? `(${this.payslip.companyName})` : ''}`;
     } else {
       const date = dateUtil(title).format('YYYY년 MM월');
-      this.title = `${date} 급여명세서 (${this.payslip.companyName})`;
+      this.title = `${date} 급여명세서 ${isNotObjectEmpty(this.payslip) ? `(${this.payslip.companyName})` : ''}`;
     }
   }
 

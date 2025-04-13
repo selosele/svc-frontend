@@ -12,7 +12,7 @@
 </layout-page-description>
 
 <ui-form [form]="payslipForm" (submit)="onSubmit($event)">
-  <div class="ui-basic-table type1">
+  <div class="ui-basic-table type1 responsive">
     <table>
       <caption>급여명세서 기본 정보</caption>
       <colgroup>
@@ -62,8 +62,8 @@
     </table>
   </div>
 
-  <div class="flex">
-    <div class="ui-basic-table type2 flex-grow-1 mt-4">
+  <div class="flex flex-wrap">
+    <div class="ui-basic-table type2 flex-grow-1 mt-4 sm:w-6">
       <table>
         <caption>급여명세서 세부 내역 - 지급(지급내역, 지급액)</caption>
         <colgroup>
@@ -96,7 +96,7 @@
       </table>
     </div>
 
-    <div class="ui-basic-table type2 flex-grow-1 mt-4">
+    <div class="ui-basic-table type2 flex-grow-1 mt-4 sm:w-6">
       <table>
         <caption>급여명세서 세부 내역 - 공제(공제내역, 공제액)</caption>
         <colgroup>
