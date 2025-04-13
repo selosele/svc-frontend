@@ -2,10 +2,17 @@
 
   // 가로 탭
   &.horizontal {
-    .p-tabview-nav {
-      overflow-x: auto;
-      overflow-y: hidden;
-      width: 100%;
+    .p-tabview {
+      .p-tabview-nav {
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+      }
+
+      .p-tabview-panels {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
 
     &.type2 {
