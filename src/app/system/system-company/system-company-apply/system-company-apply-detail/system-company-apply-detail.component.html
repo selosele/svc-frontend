@@ -9,28 +9,28 @@
   <ui-content-title [text]="'회사등록신청 정보'" />
 
   <div class="grid mt-2">
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('corporateName')"
         [label]="'법인명'"
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('companyName')"
         [label]="'회사명'"
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('registrationNo')"
         [label]="'사업자등록번호'"
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-dropdown
         [control]="detailForm.get('applyStateCode')"
         [label]="'신청상태'"
@@ -48,7 +48,7 @@
       </div>
     }
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('applicantName')"
         [label]="'신청자명'"
@@ -56,7 +56,7 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
       <ui-text-field
         [control]="detailForm.get('applyDt')"
         [label]="'신청일시'"
