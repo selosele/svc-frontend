@@ -8,7 +8,7 @@
   <ui-content-title [text]="'게시판 정보'" />
 
   <div class="grid mt-2">
-    <div class="col-4">
+    <div class="col-12 md:col-4">
       <ui-text-field
         [control]="detailForm.get('boardId')"
         [label]="'게시판 ID'"
@@ -17,7 +17,7 @@
       />
     </div>
 
-    <div class="col-4">
+    <div class="col-12 md:col-4">
       <ui-dropdown
         [control]="detailForm.get('boardTypeCode')"
         [label]="'게시판 구분'"
@@ -25,7 +25,7 @@
       />
     </div>
 
-    <div class="col-4">
+    <div class="col-12 md:col-4">
       <ui-dropdown
         [control]="detailForm.get('useYn')"
         [label]="'사용 여부'"
@@ -33,7 +33,7 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 md:col-6">
       <ui-text-field
         [control]="detailForm.get('boardOrder')"
         [label]="'게시판 순서'"
@@ -41,7 +41,7 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-12 md:col-6">
       <ui-dropdown
         [control]="detailForm.get('mainShowYn')"
         [label]="'메인 화면 표출 여부'"
