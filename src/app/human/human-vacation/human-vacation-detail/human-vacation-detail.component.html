@@ -11,7 +11,7 @@
   <ui-content-title [text]="'휴가 정보'" />
 
   <div class="grid mt-2">
-    <div class="col">
+    <div class="col-12 md:col">
       <ui-dropdown
         [control]="detailForm.get('vacationTypeCode')"
         [label]="'휴가 구분'"
@@ -19,7 +19,7 @@
       />
     </div>
 
-    <div class="col">
+    <div class="col-12 md:col">
       <ui-date-field
         [control]="detailForm.get('vacationStartYmd')"
         [label]="'휴가 시작일자'"
@@ -28,7 +28,7 @@
       />
     </div>
 
-    <div class="col">
+    <div class="col-12 md:col">
       <ui-date-field
         [control]="detailForm.get('vacationEndYmd')"
         [label]="'휴가 종료일자'"
@@ -37,7 +37,7 @@
       />
     </div>
 
-    <div class="col">
+    <div class="col-12 md:col">
       <ui-text-field
         [control]="detailForm.get('vacationUseCount')"
         [label]="'휴가 사용일수'"
