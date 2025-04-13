@@ -1,20 +1,35 @@
+@import 'styles/base/variables';
+
 .article-view {
   &__top {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-bottom: 2rem;
     padding: 1rem;
     background-color: var(--surface-50);
+
+    @media (min-width: $min-small-width) {
+      gap: 0;
+    }
 
     &__item {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      width: 100%;
+
+      @media (min-width: $min-small-width) {
+        width: auto;
+      }
 
       & + & {
-        margin-left: 0.75rem;
-        padding-left: 0.75rem;
-        border-left: 1px solid var(--surface-200);
+        @media (min-width: $min-small-width) {
+          margin-left: 0.75rem;
+          padding-left: 0.75rem;
+          border-left: 1px solid var(--surface-200);
+        }
       }
     }
   }
