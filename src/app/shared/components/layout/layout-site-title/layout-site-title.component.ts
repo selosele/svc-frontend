@@ -91,13 +91,13 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnIni
     event.stopPropagation();
 
     const userId = this.user?.userId;
-    const siteTitleName = this.editName.nativeElement.value as string;
+    const siteTitleName = (this.editName.nativeElement.value as string).trim();
 
-    if (!siteTitleName.trim()) {
+    if (!siteTitleName) {
       return;
     }
 
-    if (siteTitleName.trim().length > 20) {
+    if (siteTitleName.length > 20) {
       this.messageService.toastInfo('20자 이내로 입력해주세요.');
       return;
     }
