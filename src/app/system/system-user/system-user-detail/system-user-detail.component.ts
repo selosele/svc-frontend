@@ -7,7 +7,7 @@ import { SaveUserRequestDTO, UserResultDTO, UserRoleResultDTO } from '@app/user/
 import { RoleResultDTO } from '@app/role/role.model';
 import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiCompanyFieldComponent, UiDateFieldComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
 import { UiButtonComponent, UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
-import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles } from '@app/shared/utils';
+import { isObjectEmpty, isNotObjectEmpty, isEmpty, roles, isBlank } from '@app/shared/utils';
 import { UiMessageService } from '@app/shared/services';
 import { RoleStore } from '@app/role/role.store';
 import { CodeService } from '@app/code/code.service';
@@ -248,6 +248,25 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
     if (!confirm) return;
 
     this.authService.superLogin({ userAccount: this.detail.userAccount });
+  }
+
+  /** 사용자의 비밀번호를 초기화한다. */
+  async resetPassword(): Promise<void> {
+    if (isBlank(this.detail.employee.emailAddr)) {
+      this.messageService.toastInfo('이메일주소가 등록되어 있지 않아요.<br>이메일주소를 등록한 후 다시 시도해주세요.');
+      return;
+    }
+
+    const confirm = await this.messageService.confirm1(`임시 비밀번호를 ${this.detail.userAccount}(${this.detail.employee.employeeName}님) 메일로 발송하시겠어요?`);
+    if (!confirm) return;
+
+    this.authService.resetUserPassword$({
+      userAccount: this.detail.userAccount,
+      emailAddr: this.detail.employee.emailAddr,
+    })
+    .subscribe(() => {
+      this.messageService.toastSuccess(`임시 비밀번호를 ${this.detail.userAccount}(${this.detail.employee.employeeName}님) 메일로 발송했어요.`);
+    });
   }
 
   /** 닫기 버튼을 클릭한다. */

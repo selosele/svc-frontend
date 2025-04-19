@@ -195,4 +195,13 @@
       로그인
     </ui-button>
   }
+
+  @if (isDetailNotEmpty) {
+    <ui-button button
+      [size]="'small'"
+      (click)="resetPassword()"
+    >
+      비밀번호 초기화
+    </ui-button>
+  }
 </ui-split-form>

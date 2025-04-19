@@ -99,6 +99,11 @@ export class AuthService {
     return this.http.post<boolean>('/co/auth/find-user-password2', dto);
   }
 
+  /** 사용자의 비밀번호를 초기화한다. */
+  resetUserPassword$(dto: FindUserInfoRequestDTO) {
+    return this.http.post<boolean>('/co/auth/reset-user-password', dto);
+  }
+
   /** 로그인 여부를 반환한다. */
   isLogined(): boolean {
     const accessToken = this.getAccessToken();
