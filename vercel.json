@@ -1,8 +1,11 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/:path*",
-      "destination": "https://svc.selosele.com/api/:path*"
+      "src": "/api/(.*)",
+      "dest": "https://svc.selosele.com/api/$1",
+      "headers": {
+        "host": "svc.selosele.com"
+      }
     }
   ]
 }
