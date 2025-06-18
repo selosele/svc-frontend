@@ -27,6 +27,9 @@ export class SaveUserRequestDTO extends HttpRequestDTOBase {
   /** 직원 정보 */
   employee?: SaveEmployeeRequestDTO;
 
+  /** 사용자 수정, 사용자 잠금설정 구분 값 */
+  flagName?: string;
+
 }
 
 /** 사용자 조회 결과 DTO */
