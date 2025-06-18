@@ -4,14 +4,15 @@ import { catchError, finalize, throwError } from 'rxjs';
 import { UiLoadingService, UiMessageService } from '@app/shared/services';
 import { isNotBlank } from '@app/shared/utils';
 import { AuthService } from '@app/auth/auth.service';
+import { environment } from 'environments/environment';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
-  const BASE_URI = 'api';
+  const baseUri = environment.apiBaseUrl;
   const authService = inject(AuthService);
   const accessToken = authService.getAccessToken();
   const newReq = req.clone({
-    url: `${BASE_URI}${req.url}`,
+    url: `${baseUri}${req.url}`,
     setHeaders: {
       // Content-Type 헤더를 아래처럼 설정 시, API 서버에서 JSON이 아닌 형식의 데이터를 반환하면 오류 발생
       // 'Content-Type': 'application/json; charset=utf-8',
