@@ -8,7 +8,9 @@ import { environment } from 'environments/environment';
 
 /** API 인터셉터 */
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
-  const baseUri = environment.apiBaseUrl;
+  let baseUri = 'api'
+  if (environment.production) baseUri = 'https://svc.selosele.com/api';
+
   const authService = inject(AuthService);
   const accessToken = authService.getAccessToken();
   const newReq = req.clone({
