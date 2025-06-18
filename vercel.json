@@ -2,11 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://svc.selosele.com/api/:path*"
-    },
-    {
-      "source": "/api/:path*/",
-      "destination": "https://svc.selosele.com/api/:path*/"
+      "destination": "https://svc.selosele.com/:path*"
     }
   ]
 }
