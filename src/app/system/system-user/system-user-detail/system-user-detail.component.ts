@@ -190,7 +190,7 @@ export class SystemUserDetailComponent extends CoreBaseComponent implements OnIn
     const confirm = await this.messageService.confirm1(`계정을 ${userActiveYn === 'Y' ? '잠금해제하시겠어요?' : '잠그시겠어요?'}`);
     if (!confirm) return;
 
-    this.userService.updateUser$({ userId: this.detail?.userId, userActiveYn, flagName: 'UPDATE_USER_ACTIVE_YN' })
+    this.userService.updateUser$({ userId: this.detail?.userId, userActiveYn, actionType: 'UPDATE_USER_ACTIVE_YN' })
     .subscribe((response) => {
       this.messageService.toastSuccess('정상적으로 처리되었어요.');
 
