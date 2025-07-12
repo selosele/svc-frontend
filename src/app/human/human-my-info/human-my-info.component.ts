@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { UpdateUserPasswordRequestDTO } from '@app/user/user.model';
+import { SaveUserRequestDTO, UpdateUserPasswordRequestDTO } from '@app/user/user.model';
 import { UserService } from '@app/user/user.service';
 import { UiMessageService } from '@app/shared/services';
 import { EmployeeStore } from '@app/employee/employee.store';
@@ -15,11 +15,13 @@ import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { EmployeeResultDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
 import { CompanyApplyResultDTO } from '@app/company/company.model';
-import { UiButtonComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
 import { UiDateFieldComponent } from '@app/shared/components/form/ui-date-field/ui-date-field.component';
+import { UiRadioComponent } from '@app/shared/components/form/ui-radio/ui-radio.component';
+import { UiRadioGroupComponent } from '@app/shared/components/form/ui-radio-group/ui-radio-group.component';
 import { UiDropdownComponent } from '@app/shared/components/form/ui-dropdown/ui-dropdown.component';
 import { FormValidator } from '@app/shared/components/form/form-validator/form-validator.component';
 import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detail/human-my-info-company-detail.component';
@@ -36,13 +38,16 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
     UiTextFieldComponent,
     UiDateFieldComponent,
     UiDropdownComponent,
+    UiRadioComponent,
+    UiRadioGroupComponent,
     UiTableComponent,
     UiSplitterComponent,
     UiContentTitleComponent,
+    UiCardComponent,
     LayoutPageDescriptionComponent,
     HumanMyInfoCompanyDetailComponent,
     HumanMyInfoCompanyApplyDetailComponent,
-],
+  ],
   selector: 'view-human-my-info',
   templateUrl: './human-my-info.component.html',
   styleUrl: './human-my-info.component.scss'
@@ -90,6 +95,9 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 직원 정보 form */
   employeeForm: FormGroup;
+
+  /** 민감정보열람 동의 form */
+  sensitiveAgreeForm: FormGroup;
 
   /** 성별 코드 데이터 목록 */
   genderCodes: DropdownData[];
@@ -284,6 +292,17 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     this.splitter2.hide();
   }
 
+  /** 약관 동의 정보를 저장한다. */
+  async onSubmitAgree(value: SaveUserRequestDTO): Promise<void> {
+    const confirm = await this.messageService.confirm1('저장하시겠어요?');
+    if (!confirm) return;
+
+    this.userSerivce.updateUser$(value)
+    .subscribe((response) => {
+      this.messageService.toastSuccess('정상적으로 저장되었어요.');
+    });
+  }
+
   /** form을 초기화한다. */
   private initForm(): void {
     this.changePasswordForm = this.fb.group({
@@ -322,12 +341,21 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
         jobTitleCodeName: [''],                           // 직책 코드명
       }),
     });
+
+    this.sensitiveAgreeForm = this.fb.group({
+      userId: [Number(this.user?.userId), [FormValidator.required]],   // 사용자 ID
+      userAccount: [this.user?.userAccount, [FormValidator.required]], // 사용자 계정
+      agreeTypeCode: ['SENSITIVE', [FormValidator.required]],          // 동의 구분 코드
+      agreeYn: ['', [FormValidator.required]],                         // 동의 여부
+      actionType: ['UPDATE_USER_AGREE', [FormValidator.required]],     // 동작 구분
+    });
   }
 
   /** 직원 정보 form을 설정한다. */
   private setMyInfoForm(): void {
     this.employeeStore.select<EmployeeResultDTO>('employee').asObservable().subscribe((data) => {
       this.setMyInfoFormData(data);
+      this.setSensitiveAgreeForm(data);
     });
   }
 
@@ -337,6 +365,11 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
       ...employee,
       workHistory: employee?.workHistoryList[0],
     });
+  }
+
+  /** 약관 동의 form을 설정한다. */
+  private setSensitiveAgreeForm(employee: EmployeeResultDTO): void {
+    this.sensitiveAgreeForm.patchValue({ agreeYn: employee?.sensitiveAgreeYn });
   }
 
   /** 신청상태 color 클래스명을 반환한다. */

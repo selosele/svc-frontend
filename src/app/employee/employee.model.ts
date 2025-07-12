@@ -54,6 +54,9 @@ export class EmployeeResultDTO {
   /** 사용자 마지막 로그인 일시 */
   lastLoginDt?: string;
 
+  /** 민감정보열람 동의 여부 */
+  sensitiveAgreeYn?: string;
+
   /** 근무이력 목록 */
   workHistoryList?: WorkHistoryResultDTO[];
 

@@ -21,6 +21,12 @@ export class SaveUserRequestDTO extends HttpRequestDTOBase {
   /** 사용자 활성화 여부 */
   userActiveYn?: string;
 
+  /** 동의 구분 코드 */
+  agreeTypeCode?: string;
+
+  /** 동의 여부 */
+  agreeYn?: string;
+
   /** 권한 ID 목록 */
   roles?: string[];
 
