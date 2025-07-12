@@ -4,7 +4,7 @@
     <li>비밀번호 변경 또는 직원 정보 변경 시, 자동으로 로그아웃 처리되며 재로그인이 필요해요.</li>
     <li>근무이력 정보 변경 시, 로그아웃 후 재로그인을 권장드려요.</li>
     <li>권한 조회/변경은 시스템관리자에게 문의해주세요.</li>
-    <li>최근 접속: {{ employeeForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</li>
+    <li>최근 접속: {{ employeeForm.get('lastLoginDt').value }}</li>
   </ul>
 </layout-page-description>
 

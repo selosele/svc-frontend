@@ -4,7 +4,6 @@ import { UiButtonComponent } from '../../ui';
 import { NotificationStore } from '@app/notification/notification.store';
 import { NotificationService } from '@app/notification/notification.service';
 import { NotificationResultDTO } from '@app/notification/notification.model';
-import { dateUtil } from '@app/shared/utils';
 
 @Component({
   standalone: true,
@@ -73,17 +72,6 @@ export class LayoutNotificationComponent implements OnInit {
     .subscribe(() => {
       this.listNotification();
     });
-  }
-
-  /** 알림 등록일시를 반환한다. */
-  getCreateDt(value: string): string {
-    const createDt = dateUtil(value);
-
-    // 하루가 안지났으면 시간단위로 반환
-    if (!dateUtil().isAfter(createDt, 'day')) {
-      return createDt.format('HH:mm:ss');  
-    }
-    return createDt.format('YYYY.MM.DD.');
   }
 
   /** 알림창 바깥 화면을 클릭해서 알림창을 닫는다. */

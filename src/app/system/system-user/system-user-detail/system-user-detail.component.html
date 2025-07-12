@@ -8,7 +8,7 @@
   <ui-content-title [text]="'사용자 정보'" />
 
   @if (isDetailNotEmpty) {
-    <p class="mt-2">마지막 로그인 일시: {{ detailForm.get('lastLoginDt').value | date: 'yyyy년 MM월 dd일 hh시 mm분 ss초' }}</p>
+    <p class="mt-2">마지막 로그인 일시: {{ detailForm.get('lastLoginDt').value }}</p>
   }
 
   <div class="grid mt-2 mb-4">
