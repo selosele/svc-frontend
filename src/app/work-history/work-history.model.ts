@@ -41,6 +41,12 @@ export class SaveWorkHistoryRequestDTO extends HttpRequestDTOBase {
   /** 회사명 */
   companyName?: string;
 
+  /** 회사 주소 */
+  companyAddr?: string;
+
+  /** 대표자명 */
+  ceoName?: string;
+
   /** 직위 코드 */
   rankCode?: string;
 

@@ -143,6 +143,8 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
             companyName: company.enpPbanCmpyNm || company.corpNm,
             corporateName: company.corpNm,
             registrationNo: company.bzno,
+            companyAddr: company.enpBsadr,
+            ceoName: company.enpRprFnm,
             enpBsadr: company.enpBsadr,
             enpTlno: company.enpTlno,
             enpRprFnm: company.enpRprFnm,
@@ -175,9 +177,9 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
       <ul class="search-company__list">
         <li>사업자등록번호: <strong>${event.value?.registrationNo}</strong></li>
         <li>회사명/법인명: <strong>${event.value?.companyName}</strong></li>
-        <li>회사 소재지: <strong>${event.value?.enpBsadr}</strong></li>
+        <li>회사 소재지: <strong>${event.value?.companyAddr}</strong></li>
         <li>전화번호: <strong>${event.value?.enpTlno.replaceAll(' ', '')}</strong></li>
-        <li>대표자명: <strong>${event.value?.enpRprFnm}</strong></li>
+        <li>대표자명: <strong>${event.value?.ceoName}</strong></li>
       </ul>
       <p class="mt-2">해당 회사를 선택하시겠어요?</p>
     `);
@@ -187,6 +189,8 @@ export class ModalSearchCompanyComponent extends CoreBaseComponent implements On
       companyName: event.value.companyName,
       corporateName: event.value.corporateName,
       registrationNo: event.value.registrationNo,
+      companyAddr: event.value.companyAddr,
+      ceoName: event.value.ceoName,
     });
   }
 

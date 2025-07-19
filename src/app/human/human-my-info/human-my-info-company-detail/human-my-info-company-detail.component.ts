@@ -83,6 +83,8 @@ export class HumanMyInfoCompanyDetailComponent extends CoreBaseComponent impleme
       registrationNo: [''],                           // 사업자등록번호
       companyName: ['', [FormValidator.required]],    // 회사명
       corporateName: [''],                            // 법인명
+      companyAddr: [''],                              // 회사 주소
+      ceoName: [''],                                  // 대표자명
       rankCode: ['', [FormValidator.required]],       // 직위 코드
       jobTitleCode: ['', [FormValidator.required]],   // 직책 코드
       joinYmd: ['', [FormValidator.required]],        // 입사일자
