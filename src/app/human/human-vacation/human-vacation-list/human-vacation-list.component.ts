@@ -79,21 +79,25 @@ export class HumanVacationListComponent extends CoreBaseComponent implements OnI
 
   /** 테이블 엑셀 다운로드 헤더 */
   excelHeader = [
-    { 'vacationTypeCodeName': '휴가 구분' },
-    { 'vacationStartYmd'    : '휴가 시작일자' },
-    { 'vacationEndYmd'      : '휴가 종료일자' },
-    { 'vacationUseCount'    : '휴가 사용일수' },
-    { 'vacationContent'     : '휴가 내용' }
+    { 'vacationTypeCodeName'     : '휴가 구분' },
+    { 'vacationStatusCodeName'   : '휴가 상태' },
+    { 'vacationStartYmd'         : '휴가 시작일자' },
+    { 'vacationEndYmd'           : '휴가 종료일자' },
+    { 'vacationUseCount'         : '휴가 사용일수' },
+    { 'vacationContent'          : '휴가 내용' }
   ];
 
   /** 테이블 컬럼 */
   cols = [
-    { field: 'vacationTypeCodeName', header: '휴가 구분' },
-    { field: 'vacationStartYmd',     header: '휴가 시작일자' },
-    { field: 'vacationEndYmd',       header: '휴가 종료일자',
+    { field: 'vacationTypeCodeName',      header: '휴가 구분' },
+    { field: 'vacationStatusCodeName',    header: '휴가 상태',
+      valueGetter: (data: VacationResultDTO) => `<span class="mr-2 px-2 py-1 bg-primary-50 text-primary">${data.vacationStatusCodeName}</span>`
+    },
+    { field: 'vacationStartYmd',          header: '휴가 시작일자' },
+    { field: 'vacationEndYmd',            header: '휴가 종료일자',
       valueGetter: (data: VacationResultDTO) => `${data.vacationEndYmd} (${data.vacationUseCount}일)`
     },
-    { field: 'vacationContent',      header: '휴가 내용' },
+    { field: 'vacationContent',           header: '휴가 내용' },
   ];
 
   ngOnInit() {

@@ -47,6 +47,9 @@ export class SaveVacationRequestDTO extends HttpRequestDTOBase {
   @Transform(({ value }) => (isNotEmpty(value) ? Number(value) : null))
   vacationUseCount?: number;
 
+  /** 휴가 상태 코드 */
+  vacationStatusCode?: string;
+
 }
 
 /** 휴가 조회 결과 DTO */
@@ -78,6 +81,12 @@ export class VacationResultDTO {
 
   /** 휴가 사용일수 */
   vacationUseCount?: number;
+
+  /** 휴가 상태 코드 */
+  vacationStatusCode?: string;
+
+  /** 휴가 상태 코드명 */
+  vacationStatusCodeName?: string;
 
   /** 삭제 여부 */
   deleteYn?: string;
@@ -213,6 +222,9 @@ export class GetVacationByMonthRequestDTO extends HttpRequestDTOBase {
 
   /** 근무이력 ID */
   workHistoryId?: number;
+
+  /** 직원 ID */
+  employeeId?: number;
 
   /** 휴가사용연도 */
   yyyy?: string;

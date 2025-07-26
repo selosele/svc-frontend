@@ -24,7 +24,7 @@ export const humanRoutes: Routes = [
     resolve: { code: codeResolver },
     data: {
       roles: [roles.EMPLOYEE.id],
-      codeKeys: ['VACATION_TYPE_00', 'ANNUAL_TYPE_00'],
+      codeKeys: ['VACATION_TYPE_00', 'VACATION_STATUS_00', 'ANNUAL_TYPE_00'],
     },
     loadComponent: () => import('./human-vacation/human-vacation.component').then(x => x.HumanVacationComponent),
   },

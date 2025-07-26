@@ -447,7 +447,7 @@ export class IndexComponent extends CoreBaseComponent implements OnInit {
 
     this.vacationService.listVacationByMonth$({
       yyyy: i.yyyy,
-      workHistoryId: i.workHistoryId,
+      employeeId: Number(this.user?.employeeId),
       vacationTypeCode: i.vacationTypeCode
     })
     .subscribe((response) => {

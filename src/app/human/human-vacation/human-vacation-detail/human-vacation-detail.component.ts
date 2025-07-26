@@ -50,6 +50,9 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
   /** 휴가 구분 코드 데이터 목록 */
   vacationTypeCodes: DropdownData[];
 
+  /** 휴가 상태 코드 데이터 목록 */
+  vacationStatusCodes: DropdownData[];
+
   /** 삭제 버튼 사용 여부 */
   useRemove = true;
 
@@ -67,6 +70,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
       vacationId: [''],                                       // 휴가 ID
       workHistoryId: [''],                                    // 근무이력 ID
       vacationTypeCode: ['', [FormValidator.required]],       // 휴가 구분 코드
+      vacationStatusCode: ['', [FormValidator.required]],     // 휴가 상태 코드
       vacationStartYmd: ['', [FormValidator.required]],       // 휴가 시작일자
       vacationEndYmd: ['', [FormValidator.required]],         // 휴가 종료일자
       vacationUseCount: ['', [FormValidator.numeric]],        // 휴가 사용일수
@@ -75,6 +79,7 @@ export class HumanVacationDetailComponent implements OnInit, OnChanges {
 
     this.route.data.subscribe(({ code }) => {
       this.vacationTypeCodes = code['VACATION_TYPE_00'];
+      this.vacationStatusCodes = code['VACATION_STATUS_00'];
     });
 
     this.vacationStore.select<number>('vacationWorkHistoryId').asObservable().subscribe((data) => {
