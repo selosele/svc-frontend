@@ -49,6 +49,9 @@ export class UiTreeTableComponent {
   /** 트리테이블 데이터 없을 시 표출할 텍스트 */
   @Input() emptymessage = '데이터가 없어요.';
 
+  /** 후방주의모드 사용여부 */
+  @Input() useBackMode = false;
+
   /** 트리테이블 컬럼 목록 */
   @Input() cols!: Column[];
 

@@ -17,6 +17,34 @@ export class StoreService {
 
   }
 
+  /** 상태를 로컬스토리지에 저장한다. */
+  persist(key: string, value: any): void {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  /** 로컬스토리지에 저장된 상태를 가져온다. */
+  persistGet(key: string): string {
+    const value = window.localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  }
+
+  /** 로컬스토리지에 저장된 상태를 삭제한다. */
+  persistDelete(key: string): void {
+    window.localStorage.removeItem(key);
+  }
+
+  /** 로컬스토리지에 저장된 상태의 변경을 감지한다. */
+  persistDetect<T>(key: string, callback: (value: any) => void): void {
+    this.select<T>(key).asObservable().subscribe((_value) => {
+      callback(this.persistGet(key));
+    });
+    window.addEventListener('storage', (event: StorageEvent) => {
+      if (event.key === key) {
+        callback(event.newValue ? JSON.parse(event.newValue) : null);
+      }
+    });
+  }
+
   /** 상태를 생성해서 반환한다(상태가 존재하면 기존 상태를 반환). */
   create<T>(key: string, defaultValue: T): BehaviorSubject<T> {
     if (this.store.has(key)) {
@@ -39,7 +67,9 @@ export class StoreService {
 
   /** 상태를 반환한다. */
   select<T>(key: string): BehaviorSubject<T> {
-    return this.store.get(key).subject as BehaviorSubject<T>;
+    const value = this.store.get(key);
+    if (!value) return null;
+    return value.subject as BehaviorSubject<T>;
   }
 
   /** 상태를 변경한다. */

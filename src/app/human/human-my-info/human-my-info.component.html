@@ -14,6 +14,17 @@
   <ui-skeleton />
 }
 @else {
+  <ui-content-title [text]="'후방주의 모드'" />
+  <div class="grid mt-2">
+    <div class="col">
+      <p class="mb-2">뒤에서 누가 볼까봐 걱정된다면? 후방주의 모드를 사용하세요! 급여 등의 민감정보는 모자이크 처리돼요.</p>
+      <ui-toggle-button
+        [checked]="isBackMode"
+        (change)="onChangeBackMode($event)"
+      />
+    </div>
+  </div>
+
   <ui-content-title [text]="'비밀번호 변경'" />
 
   <ui-form [form]="changePasswordForm" [useSubmit]="false" (submit)="onSubmitPassword($event)">

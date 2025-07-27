@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
+import { StoreService } from '@app/shared/services';
 import { dateUtil, numberWithCommas as _numberWithCommas, roles } from '@app/shared/utils';
 
 /**
@@ -16,6 +17,9 @@ import { dateUtil, numberWithCommas as _numberWithCommas, roles } from '@app/sha
   styleUrl: './core-base.component.scss'
 })
 export class CoreBaseComponent {
+
+  /** store */
+  protected store = inject(StoreService);
 
   /** 인증·인가 서비스 */
   protected authService = inject(AuthService);
@@ -46,6 +50,11 @@ export class CoreBaseComponent {
   /** css text-color 변수 값을 반환한다. */
   protected get textColor() {
     return this.documentStyle.getPropertyValue('--text-color');
+  }
+
+  /** 후방주의모드 활성화 여부 값을 반환한다. */
+  protected get isBackMode() {
+    return Boolean(this.store.persistGet('isBackMode')) ?? false;
   }
 
   /** 액션 목록 */

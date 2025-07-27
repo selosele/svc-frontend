@@ -34,6 +34,11 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     private workHistoryService: WorkHistoryService,
   ) {
     super();
+    
+    this.store.create('isBackMode', Boolean(this.store.persistGet('isBackMode')) ?? false);
+    this.store.persistDetect('isBackMode', (value: boolean) => {
+      this.setPayslipTableContent();
+    });
   }
 
   /** 최신 근무이력 ID */
@@ -137,7 +142,7 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
       if (isEmpty(data)) return;
 
       const currentPayslip = data[this.activeWorkHistoryId]?.data.payslipList[0];
-      this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip);
+      this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip, this.isBackMode);
     });
   }
 

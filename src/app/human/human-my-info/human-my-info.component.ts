@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ToggleButtonChangeEvent } from 'primeng/togglebutton';
 import { CoreBaseComponent } from '@app/shared/components/core';
 import { SaveUserRequestDTO, UpdateUserPasswordRequestDTO } from '@app/user/user.model';
 import { UserService } from '@app/user/user.service';
@@ -15,7 +16,7 @@ import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
 import { EmployeeResultDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
 import { CompanyApplyResultDTO } from '@app/company/company.model';
-import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent } from '@app/shared/components/ui';
+import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent, UiToggleButtonComponent } from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
@@ -44,6 +45,7 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
     UiSplitterComponent,
     UiContentTitleComponent,
     UiCardComponent,
+    UiToggleButtonComponent,
     LayoutPageDescriptionComponent,
     HumanMyInfoCompanyDetailComponent,
     HumanMyInfoCompanyApplyDetailComponent,
@@ -290,6 +292,11 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** 회사등록신청현황 닫기 버튼을 클릭한다. */
   onClose2(): void {
     this.splitter2.hide();
+  }
+
+  /** 후방주의 모드 변경 버튼을 클릭한다. */
+  onChangeBackMode(event: ToggleButtonChangeEvent): void {
+    this.store.persist('isBackMode', event.checked);
   }
 
   /** 약관 동의 정보를 저장한다. */

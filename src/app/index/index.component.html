@@ -107,7 +107,7 @@
       }
       @else {
         <div class="widget-box__title">
-          <strong>최근급여</strong>
+          <strong [class.blur]="isBackMode">최근급여</strong>
           <ui-button
             [icon]="'pi-plus'"
             [text]="true"
@@ -119,7 +119,7 @@
         <div class="widget-box__container">
           <div class="widget-box__item">
             @if (currentPayslip !== null) {
-              <div class="flex flex-wrap justify-content-between gap-3">
+              <div class="flex flex-wrap justify-content-between gap-3" [class.blur]="isBackMode">
                 <p>
                   <span class="block mb-1">{{ ngDate(currentPayslip.payslipPaymentYmd) | date: 'yyyy년 MM월 dd일' }}</span>
                   <strong class="block text-3xl text-primary">{{ numberWithCommas(currentPayslip.totalAmount) }}원</strong>
@@ -154,9 +154,9 @@
               </div>
             }
             @else {
-              <p>급여내역이 없어요.</p>
+              <p [class.blur]="isBackMode">급여내역이 없어요.</p>
 
-              <div class="mt-2">
+              <div class="mt-2" [class.blur]="isBackMode">
                 <ui-button
                   [block]="true"
                   [outlined]="true"

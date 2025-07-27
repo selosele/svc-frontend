@@ -35,7 +35,7 @@
       (sortFunction)="onSort($event)"
     >
       <ng-template pTemplate="header" let-columns>
-        <tr>
+        <tr [class.blur]="useBackMode">
           <th *ngIf="useRowIndex">No</th>
           <th *ngIf="useCheckbox">
             <p-tableHeaderCheckbox />
@@ -49,14 +49,14 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage" let-columns>
-        <tr>
+        <tr [class.blur]="useBackMode">
           <td [colSpan]="colspan" class="text-center">
             {{ emptymessage }}
           </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-        <tr [pSelectableRow]="rowData" (dblclick)="onRowDblclick(rowData)">
+        <tr [pSelectableRow]="rowData" [class.blur]="useBackMode" (dblclick)="onRowDblclick(rowData)">
           <td *ngIf="useRowIndex">
             {{ getRowIndex(rowIndex) }}
           </td>
