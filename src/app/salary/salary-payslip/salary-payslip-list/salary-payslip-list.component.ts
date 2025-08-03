@@ -146,8 +146,7 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
     this.payslipStore.select<number>('payslipWorkHistoryId').asObservable().subscribe((data) => {
       if (!data) return;
 
-      this.searchForm.get('joinYmd').patchValue(this.workHistoryList[this.activeIndex]?.joinYmd);
-      this.searchForm.get('quitYmd').patchValue(this.workHistoryList[this.activeIndex]?.quitYmd);
+      this.setJoinQuitYmd(data);
       
       if (!this.payslipResponseDataLoad) {
         this.listPayslip({ workHistoryId: data, userId: this.user?.userId });
@@ -308,6 +307,14 @@ export class SalaryPayslipListComponent extends CoreBaseComponent implements OnI
         this.getPayslip({ payslipId: result.data.payslipId, payslipPaymentYmd: result.data.payslipPaymentYmd });
       }
     });
+  }
+
+  /** 입사일자, 퇴사일자 값을 설정한다. */
+  private setJoinQuitYmd(workHistoryId: number): void {
+    const joinYmd = this.workHistoryList.find(x => x.workHistoryId === workHistoryId)?.joinYmd;
+    const quitYmd = this.workHistoryList.find(x => x.workHistoryId === workHistoryId)?.quitYmd;
+    this.searchForm.get('joinYmd').patchValue(joinYmd);
+    this.searchForm.get('quitYmd').patchValue(quitYmd);
   }
 
 }

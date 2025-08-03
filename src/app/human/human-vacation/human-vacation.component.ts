@@ -257,7 +257,7 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
         this.caculateVacationForm.get('vacationTypeCodes').patchValue(response.vacationCalcList.map(x => x.vacationTypeCode));
       }
 
-      this.setJoinYmd();
+      this.setJoinQuitYmd();
 
       //if (!this.workHistoryListDataLoad) {
         this.listWorkHistory();
@@ -283,8 +283,8 @@ export class HumanVacationComponent extends CoreBaseComponent implements OnInit 
     }
   }
 
-  /** 입사일자 값을 설정한다. */
-  private setJoinYmd(): void {
+  /** 입사일자, 퇴사일자 값을 설정한다. */
+  private setJoinQuitYmd(): void {
     const joinYmd = this.workHistoryList?.[this.activeIndex]?.joinYmd || this.currentWorkHistoryResponse?.workHistory?.joinYmd;
     const quitYmd = this.workHistoryList?.[this.activeIndex]?.quitYmd || this.currentWorkHistoryResponse?.workHistory?.quitYmd;
     this.caculateVacationForm.get('joinYmd').patchValue(joinYmd);
