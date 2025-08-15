@@ -7,11 +7,15 @@ import { PayslipStore } from '@app/payslip/payslip.store';
 import { PayslipService } from '@app/payslip/payslip.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
-import { Tab, UiTabChangeEvent } from '@app/shared/components/ui/ui-tab/ui-tab.model';
+import {
+  Tab,
+  UiTabChangeEvent,
+} from '@app/shared/components/ui/ui-tab/ui-tab.model';
 import { UiSkeletonComponent, UiTabComponent } from '@app/shared/components/ui';
 import { SalaryPayslipListComponent } from './salary-payslip-list/salary-payslip-list.component';
 import { PayslipDataStateDTO } from '@app/payslip/payslip.model';
 import { isEmpty } from '@app/shared/utils';
+import { IS_BACKMODE_KEY } from '@app/shared/constants';
 
 @Component({
   standalone: true,
@@ -20,23 +24,28 @@ import { isEmpty } from '@app/shared/utils';
     LayoutPageDescriptionComponent,
     SalaryPayslipListComponent,
     UiSkeletonComponent,
-    UiTabComponent
+    UiTabComponent,
   ],
   selector: 'view-salary-payslip',
   templateUrl: './salary-payslip.component.html',
-  styleUrl: './salary-payslip.component.scss'
+  styleUrl: './salary-payslip.component.scss',
 })
-export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit {
-
+export class SalaryPayslipComponent
+  extends CoreBaseComponent
+  implements OnInit
+{
   constructor(
     private payslipStore: PayslipStore,
     private payslipService: PayslipService,
-    private workHistoryService: WorkHistoryService,
+    private workHistoryService: WorkHistoryService
   ) {
     super();
-    
-    this.store.create('isBackMode', Boolean(this.store.persistGet('isBackMode')) ?? false);
-    this.store.persistDetect('isBackMode', (value: boolean) => {
+
+    this.store.create(
+      IS_BACKMODE_KEY,
+      Boolean(this.store.persistGet(IS_BACKMODE_KEY)) ?? false
+    );
+    this.store.persistDetect(IS_BACKMODE_KEY, (value: boolean) => {
       this.setPayslipTableContent();
     });
   }
@@ -88,18 +97,27 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
 
   /** 근무이력 목록 데이터 로드 완료 여부 */
   get workHistoryListDataLoad() {
-    const data = this.payslipStore.select<Tab[]>('payslipWorkHistoryTabList').value;
-    return data?.find(x => x.key === this.activeWorkHistoryId)?.dataLoad ?? false;
+    const data = this.payslipStore.select<Tab[]>(
+      'payslipWorkHistoryTabList'
+    ).value;
+    return (
+      data?.find((x) => x.key === this.activeWorkHistoryId)?.dataLoad ?? false
+    );
   }
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    return this.payslipStore.select<WorkHistoryResultDTO[]>('payslipWorkHistoryList').value;
+    return this.payslipStore.select<WorkHistoryResultDTO[]>(
+      'payslipWorkHistoryList'
+    ).value;
   }
 
   async ngOnInit() {
-    const currentWorkHistoryResponse = await lastValueFrom(this.workHistoryService.getCurrentWorkHistory$(this.user?.employeeId));
-    this.currentWorkHistoryId = currentWorkHistoryResponse?.workHistory?.workHistoryId;
+    const currentWorkHistoryResponse = await lastValueFrom(
+      this.workHistoryService.getCurrentWorkHistory$(this.user?.employeeId)
+    );
+    this.currentWorkHistoryId =
+      currentWorkHistoryResponse?.workHistory?.workHistoryId;
 
     this.payslipService.setWorkHistoryId(this.currentWorkHistoryId);
 
@@ -126,14 +144,25 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
 
   /** 근무이력 목록을 조회한다. */
   private listWorkHistory(): void {
-    this.workHistoryService.listWorkHistory$({
-      employeeId: this.user?.employeeId,
-    })
-    .subscribe((response) => {
-      this.payslipStore.update('payslipWorkHistoryList', response.workHistoryList);
-      this.payslipStore.update('payslipWorkHistoryTabList', response.workHistoryList.map(x => ({ title: x.companyName, key: x.workHistoryId, dataLoad: true })));
-      this.setPayslipTableContent();
-    });
+    this.workHistoryService
+      .listWorkHistory$({
+        employeeId: this.user?.employeeId,
+      })
+      .subscribe((response) => {
+        this.payslipStore.update(
+          'payslipWorkHistoryList',
+          response.workHistoryList
+        );
+        this.payslipStore.update(
+          'payslipWorkHistoryTabList',
+          response.workHistoryList.map((x) => ({
+            title: x.companyName,
+            key: x.workHistoryId,
+            dataLoad: true,
+          }))
+        );
+        this.setPayslipTableContent();
+      });
   }
 
   /** 테이블 문구를 설정한다. */
@@ -141,9 +170,13 @@ export class SalaryPayslipComponent extends CoreBaseComponent implements OnInit 
     this.payslipResponse.asObservable().subscribe((data) => {
       if (isEmpty(data)) return;
 
-      const currentPayslip = data[this.activeWorkHistoryId]?.data.payslipList[0];
-      this.payslipService.setPayslipTableContent(this.activeIndex, currentPayslip, this.isBackMode);
+      const currentPayslip =
+        data[this.activeWorkHistoryId]?.data.payslipList[0];
+      this.payslipService.setPayslipTableContent(
+        this.activeIndex,
+        currentPayslip,
+        this.isBackMode
+      );
     });
   }
-
 }

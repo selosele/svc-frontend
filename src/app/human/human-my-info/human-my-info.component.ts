@@ -4,7 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToggleButtonChangeEvent } from 'primeng/togglebutton';
 import { CoreBaseComponent } from '@app/shared/components/core';
-import { SaveUserRequestDTO, UpdateUserPasswordRequestDTO } from '@app/user/user.model';
+import {
+  SaveUserRequestDTO,
+  UpdateUserPasswordRequestDTO,
+} from '@app/user/user.model';
 import { UserService } from '@app/user/user.service';
 import { UiMessageService } from '@app/shared/services';
 import { EmployeeStore } from '@app/employee/employee.store';
@@ -14,9 +17,20 @@ import { EmployeeService } from '@app/employee/employee.service';
 import { CompanyService } from '@app/company/company.service';
 import { WorkHistoryService } from '@app/work-history/work-history.service';
 import { WorkHistoryResultDTO } from '@app/work-history/work-history.model';
-import { EmployeeResultDTO, SaveEmployeeRequestDTO } from '@app/employee/employee.model';
+import {
+  EmployeeResultDTO,
+  SaveEmployeeRequestDTO,
+} from '@app/employee/employee.model';
 import { CompanyApplyResultDTO } from '@app/company/company.model';
-import { UiButtonComponent, UiCardComponent, UiContentTitleComponent, UiSkeletonComponent, UiSplitterComponent, UiTableComponent, UiToggleButtonComponent } from '@app/shared/components/ui';
+import {
+  UiButtonComponent,
+  UiCardComponent,
+  UiContentTitleComponent,
+  UiSkeletonComponent,
+  UiSplitterComponent,
+  UiTableComponent,
+  UiToggleButtonComponent,
+} from '@app/shared/components/ui';
 import { LayoutPageDescriptionComponent } from '@app/shared/components/layout';
 import { UiFormComponent } from '@app/shared/components/form/ui-form/ui-form.component';
 import { UiTextFieldComponent } from '@app/shared/components/form/ui-text-field/ui-text-field.component';
@@ -28,6 +42,7 @@ import { FormValidator } from '@app/shared/components/form/form-validator/form-v
 import { HumanMyInfoCompanyDetailComponent } from './human-my-info-company-detail/human-my-info-company-detail.component';
 import { HumanMyInfoCompanyApplyDetailComponent } from './human-my-info-company-apply-detail/human-my-info-company-apply-detail.component';
 import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdown.model';
+import { IS_BACKMODE_KEY } from '@app/shared/constants';
 
 @Component({
   standalone: true,
@@ -52,10 +67,9 @@ import { DropdownData } from '@app/shared/components/form/ui-dropdown/ui-dropdow
   ],
   selector: 'view-human-my-info',
   templateUrl: './human-my-info.component.html',
-  styleUrl: './human-my-info.component.scss'
+  styleUrl: './human-my-info.component.scss',
 })
 export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -65,7 +79,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     private userSerivce: UserService,
     private employeeService: EmployeeService,
     private companyService: CompanyService,
-    private workHistoryService: WorkHistoryService,
+    private workHistoryService: WorkHistoryService
   ) {
     super();
   }
@@ -83,13 +97,15 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 근무이력 목록 */
   get workHistoryList() {
-    const employee = this.employeeStore.select<EmployeeResultDTO>('employee').value;
+    const employee =
+      this.employeeStore.select<EmployeeResultDTO>('employee').value;
     return employee.workHistoryList;
   }
 
   /** 회사등록신청 목록 */
   get companyApplyList() {
-    return this.companyStore.select<CompanyApplyResultDTO[]>('companyApplyList').value
+    return this.companyStore.select<CompanyApplyResultDTO[]>('companyApplyList')
+      .value;
   }
 
   /** 비밀번호 변경 form */
@@ -113,24 +129,30 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** 근무이력정보 테이블 컬럼 */
   cols1 = [
     { field: 'companyName', header: '회사명' },
-    { field: 'joinYmd',     header: '입사일자',
-      valueGetter: (data: WorkHistoryResultDTO) => `${dateUtil(data.joinYmd).format('YYYY년 MM월 DD일')}`
+    {
+      field: 'joinYmd',
+      header: '입사일자',
+      valueGetter: (data: WorkHistoryResultDTO) =>
+        `${dateUtil(data.joinYmd).format('YYYY년 MM월 DD일')}`,
     },
-    { field: 'quitYmd',     header: '퇴사일자',
+    {
+      field: 'quitYmd',
+      header: '퇴사일자',
       valueGetter: (data: WorkHistoryResultDTO) => {
         if (isBlank(data.quitYmd)) {
           return '<span class="mr-2 px-2 py-1 bg-primary-50 text-primary">재직중</span>';
         }
         return `${dateUtil(data.quitYmd).format('YYYY년 MM월 DD일')}`;
-      }
+      },
     },
-    { header: '재직기간',
+    {
+      header: '재직기간',
       valueGetter: (data: WorkHistoryResultDTO) => {
         if (data.workDiffY === 0) return `${data.workDiffM}개월`;
         if (data.workDiffM === 0) return `${data.workDiffY}년`;
-        
+
         return `${data.workDiffY}년 ${data.workDiffM}개월`;
-      }
+      },
     },
   ];
 
@@ -142,16 +164,18 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 회사등록신청현황 테이블 컬럼 */
   cols2 = [
-    { field: 'companyName',        header: '회사명' },
-    { field: 'corporateName',      header: '법인명' },
-    { field: 'registrationNo',     header: '사업자등록번호' },
-    { field: 'applyContent',       header: '내용' },
-    { field: 'applyDt',            header: '신청일시' },
-    { field: 'applyStateCodeName', header: '신청상태',
+    { field: 'companyName', header: '회사명' },
+    { field: 'corporateName', header: '법인명' },
+    { field: 'registrationNo', header: '사업자등록번호' },
+    { field: 'applyContent', header: '내용' },
+    { field: 'applyDt', header: '신청일시' },
+    {
+      field: 'applyStateCodeName',
+      header: '신청상태',
       valueGetter: (data: CompanyApplyResultDTO) => {
         const colorClass = this.getColorClass(data.applyStateCode);
         return `<span class="px-3 py-1 ${colorClass}">${data.applyStateCodeName}</span>`;
-      }
+      },
     },
   ];
 
@@ -170,7 +194,10 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
     this.initForm();
 
-    if (isEmpty(this.employeeStore.select<EmployeeResultDTO>('employee').value) && this.user) {
+    if (
+      isEmpty(this.employeeStore.select<EmployeeResultDTO>('employee').value) &&
+      this.user
+    ) {
       this.getEmployee();
     }
     this.setMyInfoForm();
@@ -195,12 +222,15 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
       return;
     }
 
-    const confirm = await this.messageService.confirm1('비밀번호를 변경하시겠어요?');
+    const confirm = await this.messageService.confirm1(
+      '비밀번호를 변경하시겠어요?'
+    );
     if (!confirm) return;
 
-    this.userSerivce.updatePassword$(value)
-    .subscribe(() => {
-      const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
+    this.userSerivce.updatePassword$(value).subscribe(() => {
+      const alert = this.messageService.alert(
+        '정상적으로 변경되었어요.<br>다시 로그인해주세요.'
+      );
       alert.onClose.subscribe((data) => {
         this.authService.logout();
       });
@@ -212,9 +242,10 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     const confirm = await this.messageService.confirm1('저장하시겠어요?');
     if (!confirm) return;
 
-    this.employeeService.updateEmployee$(value)
-    .subscribe((response) => {
-      const alert = this.messageService.alert('정상적으로 변경되었어요.<br>다시 로그인해주세요.');
+    this.employeeService.updateEmployee$(value).subscribe((response) => {
+      const alert = this.messageService.alert(
+        '정상적으로 변경되었어요.<br>다시 로그인해주세요.'
+      );
       alert.onClose.subscribe((data) => {
         this.authService.logout();
       });
@@ -234,11 +265,12 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 근무이력정보 테이블 행을 선택한다. */
   onRowSelect1(event: any): void {
-    this.workHistoryService.getWorkHistory$(this.user?.employeeId, event.data['workHistoryId'])
-    .subscribe((response) => {
-      this.workHistoryDetail = response.workHistory;
-      this.splitter1.show();
-    });
+    this.workHistoryService
+      .getWorkHistory$(this.user?.employeeId, event.data['workHistoryId'])
+      .subscribe((response) => {
+        this.workHistoryDetail = response.workHistory;
+        this.splitter1.show();
+      });
   }
 
   /** 근무이력정보 테이블 행을 선택 해제한다. */
@@ -270,11 +302,12 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 회사등록신청현황 테이블 행을 선택한다. */
   onRowSelect2(event: any): void {
-    this.companyService.getCompanyApply$(event.data['companyApplyId'])
-    .subscribe((response) => {
-      this.companyApplyDetail = response.companyApply;
-      this.splitter2.show();
-    });
+    this.companyService
+      .getCompanyApply$(event.data['companyApplyId'])
+      .subscribe((response) => {
+        this.companyApplyDetail = response.companyApply;
+        this.splitter2.show();
+      });
   }
 
   /** 회사등록신청현황 테이블 행을 선택 해제한다. */
@@ -296,7 +329,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 후방주의 모드 변경 버튼을 클릭한다. */
   onChangeBackMode(event: ToggleButtonChangeEvent): void {
-    this.store.persist('isBackMode', event.checked);
+    this.store.persist(IS_BACKMODE_KEY, event.checked);
   }
 
   /** 약관 동의 정보를 저장한다. */
@@ -304,8 +337,7 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
     const confirm = await this.messageService.confirm1('저장하시겠어요?');
     if (!confirm) return;
 
-    this.userSerivce.updateUser$(value)
-    .subscribe((response) => {
+    this.userSerivce.updateUser$(value).subscribe((response) => {
       this.messageService.toastSuccess('정상적으로 저장되었어요.');
     });
   }
@@ -313,57 +345,73 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
   /** form을 초기화한다. */
   private initForm(): void {
     this.changePasswordForm = this.fb.group({
-      currentPassword: ['', [FormValidator.required, FormValidator.maxLength(12)]],       // 현재 비밀번호
-      newPassword: ['', [FormValidator.required, FormValidator.maxLength(12)]],           // 변경할 비밀번호
-      newPasswordConfirm: ['', [FormValidator.required, FormValidator.maxLength(12)]]     // 변경할 비밀번호 확인
+      currentPassword: [
+        '',
+        [FormValidator.required, FormValidator.maxLength(12)],
+      ], // 현재 비밀번호
+      newPassword: ['', [FormValidator.required, FormValidator.maxLength(12)]], // 변경할 비밀번호
+      newPasswordConfirm: [
+        '',
+        [FormValidator.required, FormValidator.maxLength(12)],
+      ], // 변경할 비밀번호 확인
     });
 
     this.employeeForm = this.fb.group({
-
       // 직원 정보
-      employeeId: ['', [FormValidator.required]],         // 직원 ID
-      employeeName: ['', [                                // 직원명
-        FormValidator.required,
-        FormValidator.maxLength(30),
-      ]],
-      genderCode: ['', [FormValidator.required]],         // 성별 코드
-      birthYmd: [''],                                     // 생년월일
-      phoneNo: [''],                                      // 휴대폰번호
-      emailAddr: ['', [                                   // 이메일주소
-        FormValidator.required,
-        FormValidator.email,
-      ]],
-      lastLoginDt: [''],                                  // 사용자 마지막 로그인 일시
+      employeeId: ['', [FormValidator.required]], // 직원 ID
+      employeeName: [
+        '',
+        [
+          // 직원명
+          FormValidator.required,
+          FormValidator.maxLength(30),
+        ],
+      ],
+      genderCode: ['', [FormValidator.required]], // 성별 코드
+      birthYmd: [''], // 생년월일
+      phoneNo: [''], // 휴대폰번호
+      emailAddr: [
+        '',
+        [
+          // 이메일주소
+          FormValidator.required,
+          FormValidator.email,
+        ],
+      ],
+      lastLoginDt: [''], // 사용자 마지막 로그인 일시
 
       // 근무이력정보
       workHistory: this.fb.group({
-        companyId: ['', [FormValidator.required]],        // 회사 ID
-        corporateName: ['', [FormValidator.required]],    // 법인명
-        companyName: ['', [FormValidator.required]],      // 회사명
-        joinYmd: ['', [FormValidator.required]],          // 입사일자
-        quitYmd: [''],                                    // 퇴사일자
-        rankCode: ['', [FormValidator.required]],         // 직위 코드
-        rankCodeName: [''],                               // 직위 코드명
-        jobTitleCode: ['', [FormValidator.required]],     // 직책 코드
-        jobTitleCodeName: [''],                           // 직책 코드명
+        companyId: ['', [FormValidator.required]], // 회사 ID
+        corporateName: ['', [FormValidator.required]], // 법인명
+        companyName: ['', [FormValidator.required]], // 회사명
+        joinYmd: ['', [FormValidator.required]], // 입사일자
+        quitYmd: [''], // 퇴사일자
+        rankCode: ['', [FormValidator.required]], // 직위 코드
+        rankCodeName: [''], // 직위 코드명
+        jobTitleCode: ['', [FormValidator.required]], // 직책 코드
+        jobTitleCodeName: [''], // 직책 코드명
       }),
     });
 
     this.sensitiveAgreeForm = this.fb.group({
-      userId: [Number(this.user?.userId), [FormValidator.required]],   // 사용자 ID
+      userId: [Number(this.user?.userId), [FormValidator.required]], // 사용자 ID
       userAccount: [this.user?.userAccount, [FormValidator.required]], // 사용자 계정
-      agreeTypeCode: ['SENSITIVE', [FormValidator.required]],          // 동의 구분 코드
-      agreeYn: ['', [FormValidator.required]],                         // 동의 여부
-      actionType: ['UPDATE_USER_AGREE', [FormValidator.required]],     // 동작 구분
+      agreeTypeCode: ['SENSITIVE', [FormValidator.required]], // 동의 구분 코드
+      agreeYn: ['', [FormValidator.required]], // 동의 여부
+      actionType: ['UPDATE_USER_AGREE', [FormValidator.required]], // 동작 구분
     });
   }
 
   /** 직원 정보 form을 설정한다. */
   private setMyInfoForm(): void {
-    this.employeeStore.select<EmployeeResultDTO>('employee').asObservable().subscribe((data) => {
-      this.setMyInfoFormData(data);
-      this.setSensitiveAgreeForm(data);
-    });
+    this.employeeStore
+      .select<EmployeeResultDTO>('employee')
+      .asObservable()
+      .subscribe((data) => {
+        this.setMyInfoFormData(data);
+        this.setSensitiveAgreeForm(data);
+      });
   }
 
   /** 직원 정보 form 데이터를 설정한다. */
@@ -381,7 +429,6 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
   /** 신청상태 color 클래스명을 반환한다. */
   private getColorClass(applyStateCode: string): string {
-
     // 신청
     if (applyStateCode === 'NEW') {
       return 'bg-primary-reverse';
@@ -397,5 +444,4 @@ export class HumanMyInfoComponent extends CoreBaseComponent implements OnInit {
 
     return '';
   }
-
 }

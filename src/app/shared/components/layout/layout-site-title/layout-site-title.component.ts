@@ -1,32 +1,39 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { UiMessageService } from '@app/shared/services';
 import { UserStore } from '@app/user/user.store';
 import { UserService } from '@app/user/user.service';
-import { MAIN_PAGE_PATH1 } from '@app/shared/utils';
+import { MAIN_PAGE_PATH1 } from '@app/shared/constants';
 import { UiButtonComponent } from '../../ui';
 import { CoreBaseComponent } from '../../core';
 
 @Component({
   standalone: true,
-  imports: [
-    RouterModule,
-    UiButtonComponent,
-  ],
+  imports: [RouterModule, UiButtonComponent],
   selector: 'layout-site-title',
   templateUrl: './layout-site-title.component.html',
   styleUrl: './layout-site-title.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnInit {
-
+export class LayoutSiteTitleComponent
+  extends CoreBaseComponent
+  implements OnInit
+{
   constructor(
     private eRef: ElementRef,
     private router: Router,
     private userStore: UserStore,
     private messageService: UiMessageService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     super();
   }
@@ -48,7 +55,7 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnIni
 
   ngOnInit() {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.onEditVisibleDeActivate();
       });
@@ -101,12 +108,13 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnIni
       this.messageService.toastInfo('20자 이내로 입력해주세요.');
       return;
     }
-    
-    this.userService.addUserSetup$({ userId, siteTitleName })
-    .subscribe((response) => {
-      this.userStore.update('userSetup', response.userSetup);
-      this.messageService.toastSuccess('저장되었어요.');
-    });
+
+    this.userService
+      .addUserSetup$({ userId, siteTitleName })
+      .subscribe((response) => {
+        this.userStore.update('userSetup', response.userSetup);
+        this.messageService.toastSuccess('저장되었어요.');
+      });
   }
 
   /** 편집필드 바깥 화면을 클릭해서 편집필드를 닫는다. */
@@ -129,5 +137,4 @@ export class LayoutSiteTitleComponent extends CoreBaseComponent implements OnIni
       document.title = this.name;
     }
   }
-
 }

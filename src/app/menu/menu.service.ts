@@ -5,17 +5,24 @@ import { combineLatest } from 'rxjs';
 import { TreeNode } from 'primeng/api';
 import { MenuStore } from './menu.store';
 import { HttpService } from '@app/shared/services';
-import { GetMenuRequestDTO, MenuBookmarkResponseDTO, MenuResponseDTO, MenuResultDTO, MenuTree, SaveMenuBookmarkRequestDTO, SaveMenuRequestDTO } from '@app/menu/menu.model';
-import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
+import {
+  GetMenuRequestDTO,
+  MenuBookmarkResponseDTO,
+  MenuResponseDTO,
+  MenuResultDTO,
+  MenuTree,
+  SaveMenuBookmarkRequestDTO,
+  SaveMenuRequestDTO,
+} from '@app/menu/menu.model';
+import { MAIN_PAGE_PATH2 } from '@app/shared/constants';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
-
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
     private route: ActivatedRoute,
-    private menuStore: MenuStore,
+    private menuStore: MenuStore
   ) {}
 
   /** 메뉴접속이력 목록 저장 key */
@@ -25,10 +32,11 @@ export class MenuService {
   listMenu(dto?: GetMenuRequestDTO): void {
     const params = this.httpService.createParams(dto);
 
-    this.http.get<MenuResponseDTO>('/co/menus', { params })
-    .subscribe((response) => {
-      this.setMenuList(response.menuList);
-    });
+    this.http
+      .get<MenuResponseDTO>('/co/menus', { params })
+      .subscribe((response) => {
+        this.setMenuList(response.menuList);
+      });
   }
 
   /** 메뉴 목록을 조회한다. */
@@ -72,11 +80,12 @@ export class MenuService {
 
   /** 메뉴 즐겨찾기 목록을 조회한다. */
   listMenuBookmark(): void {
-    this.http.get<MenuBookmarkResponseDTO>('/co/menubookmarks')
-    .subscribe((response) => {
-      this.menuStore.update('menuBookmarkList', response.menuBookmarkList);
-      this.menuStore.update('menuBookmarkListDataLoad', true);
-    });
+    this.http
+      .get<MenuBookmarkResponseDTO>('/co/menubookmarks')
+      .subscribe((response) => {
+        this.menuStore.update('menuBookmarkList', response.menuBookmarkList);
+        this.menuStore.update('menuBookmarkListDataLoad', true);
+      });
   }
 
   /** 메뉴 즐겨찾기를 추가한다. */
@@ -98,17 +107,20 @@ export class MenuService {
   setData(): void {
     combineLatest([
       this.route.queryParams,
-      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable()
-    ])
-    .subscribe(([queryParams, menuList]) => {
+      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable(),
+    ]).subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
 
       let menuId = Number(queryParams?.menuId);
       if (isNaN(menuId)) menuId = null;
 
       this.setCurrentMenuId(menuId);
-      this.setCurrentUpMenuId(menuList.find(x => x.menuId === menuId)?.upMenuId);
-      this.setCurrentPageTitle(menuList.find(x => x.menuId === menuId)?.menuName);
+      this.setCurrentUpMenuId(
+        menuList.find((x) => x.menuId === menuId)?.upMenuId
+      );
+      this.setCurrentPageTitle(
+        menuList.find((x) => x.menuId === menuId)?.menuName
+      );
     });
   }
 
@@ -116,22 +128,28 @@ export class MenuService {
   setBreadcrumb(): void {
     combineLatest([
       this.route.queryParams,
-      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable()
-    ])
-    .subscribe(([queryParams, menuList]) => {
+      this.menuStore.select<MenuResultDTO[]>('menuList').asObservable(),
+    ]).subscribe(([queryParams, menuList]) => {
       if (menuList.length === 0) return;
 
       const menuId = Number(queryParams?.menuId);
-      const upMenuId = menuList.find(x => x.menuId === menuId)?.upMenuId;
+      const upMenuId = menuList.find((x) => x.menuId === menuId)?.upMenuId;
 
       this.menuStore.update('breadcrumbList', [
-        
         // 홈
         { icon: 'pi pi-home', route: MAIN_PAGE_PATH2 },
         // 상위 메뉴
-        ...menuList.filter(x => x.menuId === upMenuId).map(x => ({ label: x.menuName })),
+        ...menuList
+          .filter((x) => x.menuId === upMenuId)
+          .map((x) => ({ label: x.menuName })),
         // 현재 메뉴
-        ...menuList.filter(x => x.menuId === menuId).map(x => ({ label: x.menuName, route: x.menuUrl, queryParams: { menuId: x.menuId } })),
+        ...menuList
+          .filter((x) => x.menuId === menuId)
+          .map((x) => ({
+            label: x.menuName,
+            route: x.menuUrl,
+            queryParams: { menuId: x.menuId },
+          })),
       ]);
     });
   }
@@ -168,13 +186,17 @@ export class MenuService {
   setMenuHistoryList(list: MenuResultDTO[]): void {
     //list.sort((a, b) => a.menuId === menuId ? -1 : 1); // 가장 먼저 방문한 페이지가 맨 앞에 오게 하기
     this.menuStore.update('menuHistoryList', list);
-    window.localStorage.setItem(this.MENU_HISTORY_LIST_KEY, JSON.stringify(list));
+    window.localStorage.setItem(
+      this.MENU_HISTORY_LIST_KEY,
+      JSON.stringify(list)
+    );
   }
 
   /** 메뉴 URL로 메뉴 ID를 찾아서 반환한다. */
   getMenuIdByMenuUrl(menuUrl: string): number {
-    return this.menuStore.select<MenuResultDTO[]>('menuList').value
-      .find(x => x.menuUrl === menuUrl)?.menuId;
+    return this.menuStore
+      .select<MenuResultDTO[]>('menuList')
+      .value.find((x) => x.menuUrl === menuUrl)?.menuId;
   }
 
   /** 메뉴 트리를 생성한다. */
@@ -206,5 +228,4 @@ export class MenuService {
     }
     return tree;
   }
-
 }

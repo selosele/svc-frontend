@@ -3,67 +3,77 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StoreService, UiDialogService } from '@app/shared/services';
-import { ACCESS_TOKEN_KEY, LOGIN_PAGE_PATH, MAIN_PAGE_PATH1, SAVE_USER_ACCOUNT_KEY, isNotBlank } from '@app/shared/utils';
-import { AuthenticatedUser, LoginRequestDTO, LoginResponseDTO, FindUserInfoRequestDTO, UserCertHistoryResponseDTO } from './auth.model';
+import { isNotBlank } from '@app/shared/utils';
+import {
+  ACCESS_TOKEN_KEY,
+  LOGIN_PAGE_PATH,
+  MAIN_PAGE_PATH1,
+  SAVE_USER_ACCOUNT_KEY,
+} from '@app/shared/constants';
+import {
+  AuthenticatedUser,
+  LoginRequestDTO,
+  LoginResponseDTO,
+  FindUserInfoRequestDTO,
+  UserCertHistoryResponseDTO,
+} from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   constructor(
     private router: Router,
     private store: StoreService,
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
-    private dialogService: UiDialogService,
+    private dialogService: UiDialogService
   ) {}
 
   /** 로그인을 한다. */
   login(dto: LoginRequestDTO): void {
-    this.http.post<LoginResponseDTO>('/co/auth/login', dto)
-    .subscribe((response) => {
-      const accessToken = response.accessToken;
-      if (isNotBlank(accessToken)) {
-        
-        // 액세스 토큰 설정
-        this.setAccessToken(accessToken);
+    this.http
+      .post<LoginResponseDTO>('/co/auth/login', dto)
+      .subscribe((response) => {
+        const accessToken = response.accessToken;
+        if (isNotBlank(accessToken)) {
+          // 액세스 토큰 설정
+          this.setAccessToken(accessToken);
 
-        // 아이디 저장 여부 값에 따른 설정
-        if (dto.saveUserAccountYn[0] === 'Y') {
-          this.setSaveUserAccount(dto.userAccount);
-        } else {
-          this.removeSaveUserAccount();
+          // 아이디 저장 여부 값에 따른 설정
+          if (dto.saveUserAccountYn[0] === 'Y') {
+            this.setSaveUserAccount(dto.userAccount);
+          } else {
+            this.removeSaveUserAccount();
+          }
+
+          // 메인 화면으로 이동
+          this.router.navigateByUrl(MAIN_PAGE_PATH1);
         }
-
-        // 메인 화면으로 이동
-        this.router.navigateByUrl(MAIN_PAGE_PATH1);
-      }
-    });
+      });
   }
 
   /** 특정 사용자로 로그인한다. */
   superLogin(dto: LoginRequestDTO): void {
-    this.http.post<LoginResponseDTO>('/co/auth/superlogin', dto)
-    .subscribe(async (response) => {
-      const accessToken = response.accessToken;
-      if (isNotBlank(accessToken)) {
+    this.http
+      .post<LoginResponseDTO>('/co/auth/superlogin', dto)
+      .subscribe(async (response) => {
+        const accessToken = response.accessToken;
+        if (isNotBlank(accessToken)) {
+          // 로그인 정보 삭제
+          this.clearAuthInfo();
 
-        // 로그인 정보 삭제
-        this.clearAuthInfo();
-        
-        // 액세스 토큰 설정
-        this.setAccessToken(accessToken);
+          // 액세스 토큰 설정
+          this.setAccessToken(accessToken);
 
-        // 메인 화면으로 이동
-        await this.router.navigateByUrl(MAIN_PAGE_PATH1);
-        window.location.reload();
-      }
-    });
+          // 메인 화면으로 이동
+          await this.router.navigateByUrl(MAIN_PAGE_PATH1);
+          window.location.reload();
+        }
+      });
   }
 
   /** 로그아웃을 한다. */
   logout(): void {
-    this.http.post<void>('/co/auth/logout', {})
-    .subscribe(async () => {
+    this.http.post<void>('/co/auth/logout', {}).subscribe(async () => {
       this.clearAuthInfo();
       await this.router.navigateByUrl(LOGIN_PAGE_PATH);
       window.location.reload();
@@ -91,7 +101,10 @@ export class AuthService {
 
   /** 사용자의 비밀번호를 찾는다(인증코드 발송). */
   findUserPassword1$(dto: FindUserInfoRequestDTO) {
-    return this.http.post<UserCertHistoryResponseDTO>('/co/auth/find-user-password1', dto);
+    return this.http.post<UserCertHistoryResponseDTO>(
+      '/co/auth/find-user-password1',
+      dto
+    );
   }
 
   /** 사용자의 비밀번호를 찾는다(임시 비밀번호 발급). */
@@ -132,14 +145,20 @@ export class AuthService {
   hasRoleAll(...roleIds: string[]): boolean {
     const user = this.getAuthenticatedUser();
     if (!user) return false;
-    return roleIds.every(roleId => user.roles.filter(userRoleId => userRoleId === roleId).length > 0);
+    return roleIds.every(
+      (roleId) =>
+        user.roles.filter((userRoleId) => userRoleId === roleId).length > 0
+    );
   }
 
   /** 권한을 1개라도 가지고 있는지 여부를 반환한다. */
   hasRoleOr(...roleIds: string[]): boolean {
     const user = this.getAuthenticatedUser();
     if (!user) return false;
-    return roleIds.some(roleId => user.roles.filter(userRoleId => userRoleId === roleId).length > 0);
+    return roleIds.some(
+      (roleId) =>
+        user.roles.filter((userRoleId) => userRoleId === roleId).length > 0
+    );
   }
 
   /** 액세스 토큰을 반환한다. */
@@ -181,5 +200,4 @@ export class AuthService {
   removeSaveUserAccount(): void {
     window.localStorage.removeItem(SAVE_USER_ACCOUNT_KEY);
   }
-
 }

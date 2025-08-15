@@ -1,4 +1,12 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  HostListener,
+  NgZone,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
@@ -13,9 +21,20 @@ import { UserService } from './user/user.service';
 import { RoleService } from './role/role.service';
 import { CodeService } from './code/code.service';
 import { MenuResultDTO } from './menu/menu.model';
-import { LayoutBreadcrumbComponent, LayoutHeaderComponent, LayoutMenuBookmarkComponent, LayoutMobileMenuComponent } from './shared/components/layout';
-import { UiAlertComponent, UiButtonComponent, UiConfirmComponent, UiLoadingComponent, UiMessageComponent } from './shared/components/ui';
-import { MAIN_PAGE_PATH2 } from './shared/utils';
+import {
+  LayoutBreadcrumbComponent,
+  LayoutHeaderComponent,
+  LayoutMenuBookmarkComponent,
+  LayoutMobileMenuComponent,
+} from './shared/components/layout';
+import {
+  UiAlertComponent,
+  UiButtonComponent,
+  UiConfirmComponent,
+  UiLoadingComponent,
+  UiMessageComponent,
+} from './shared/components/ui';
+import { MAIN_PAGE_PATH2 } from './shared/constants';
 import { LayoutMobileMenuStore } from './shared/components/layout/layout-mobile-menu/layout-mobile-menu.store';
 
 @Component({
@@ -35,10 +54,12 @@ import { LayoutMobileMenuStore } from './shared/components/layout/layout-mobile-
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent extends CoreBaseComponent implements OnInit, AfterViewChecked {
-
+export class AppComponent
+  extends CoreBaseComponent
+  implements OnInit, AfterViewChecked
+{
   constructor(
     private zone: NgZone,
     private router: Router,
@@ -51,7 +72,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
     private messageService: UiMessageService,
     private userService: UserService,
     private roleService: RoleService,
-    private codeService: CodeService,
+    private codeService: CodeService
   ) {
     super();
   }
@@ -67,7 +88,7 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
 
   /** 페이지 타이틀 */
   currentPageTitle$ = this.menuService.getCurrentPageTitle$();
-  
+
   /** 현재 메뉴 */
   currentMenu: MenuResultDTO;
 
@@ -97,15 +118,14 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
 
   ngOnInit() {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.isLogined) {
-
           // 코드 목록 조회
           if (!this.codeStore.select<boolean>('codeListDataLoad').value) {
             this.codeService.listCode$().subscribe();
           }
-          
+
           // 권한 목록 조회
           if (!this.roleStore.select<boolean>('roleListDataLoad').value) {
             this.roleService.listRole();
@@ -121,8 +141,9 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
           this.notificationStore.update('isNotificationLayerVisible', false);
 
           // 즐겨찾기 등의 표시를 위해 현재 메뉴를 찾기
-          this.currentMenu = this.menuStore.select<MenuResultDTO[]>('menuList').value
-            ?.find(x => x.menuId === this.currentMenuId);
+          this.currentMenu = this.menuStore
+            .select<MenuResultDTO[]>('menuList')
+            .value?.find((x) => x.menuId === this.currentMenuId);
           this.hasBookmark = this.currentMenu?.menuBookmarkId !== null;
         }
       });
@@ -139,32 +160,34 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
   /** 메뉴 즐겨찾기를 추가/수정한다. */
   saveMenuBookmark(menuBookmarkId: number): void {
     if (this.hasBookmark) {
-      this.menuService.removeMenuBookmark$(menuBookmarkId)
-      .subscribe(() => {
+      this.menuService.removeMenuBookmark$(menuBookmarkId).subscribe(() => {
         this.messageService.toastSuccess('즐겨찾기 삭제되었어요.');
         this.hasBookmark = false;
         this.menuService.listMenuBookmark();
-        this.menuService.listMenu$()
-        .subscribe((response) => {
+        this.menuService.listMenu$().subscribe((response) => {
           this.menuService.setMenuList(response.menuList);
-          this.currentMenu = this.menuStore.select<MenuResultDTO[]>('menuList').value
-            ?.find(x => x.menuId === this.currentMenuId);
+          this.currentMenu = this.menuStore
+            .select<MenuResultDTO[]>('menuList')
+            .value?.find((x) => x.menuId === this.currentMenuId);
         });
       });
-    }
-    else {
-      this.menuService.addMenuBookmark$({ menuId: this.currentMenuId, userId: Number(this.user?.userId) })
-      .subscribe((response) => {
-        this.messageService.toastSuccess('즐겨찾기 추가되었어요.');
-        this.hasBookmark = true;
-        this.menuService.listMenuBookmark();
-        this.menuService.listMenu$()
+    } else {
+      this.menuService
+        .addMenuBookmark$({
+          menuId: this.currentMenuId,
+          userId: Number(this.user?.userId),
+        })
         .subscribe((response) => {
-          this.menuService.setMenuList(response.menuList);
-          this.currentMenu = this.menuStore.select<MenuResultDTO[]>('menuList').value
-            ?.find(x => x.menuId === this.currentMenuId);
+          this.messageService.toastSuccess('즐겨찾기 추가되었어요.');
+          this.hasBookmark = true;
+          this.menuService.listMenuBookmark();
+          this.menuService.listMenu$().subscribe((response) => {
+            this.menuService.setMenuList(response.menuList);
+            this.currentMenu = this.menuStore
+              .select<MenuResultDTO[]>('menuList')
+              .value?.find((x) => x.menuId === this.currentMenuId);
+          });
         });
-      });
     }
   }
 
@@ -184,5 +207,4 @@ export class AppComponent extends CoreBaseComponent implements OnInit, AfterView
     if (window.scrollY < 0) return;
     this.detectScrollEnd();
   }
-  
 }

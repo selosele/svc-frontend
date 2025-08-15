@@ -1,10 +1,18 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
-import { MAIN_PAGE_PATH1 } from '@app/shared/utils';
+import { MAIN_PAGE_PATH1 } from '@app/shared/constants';
 
 /** 로그인 guard */
-export const loginGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const loginGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 

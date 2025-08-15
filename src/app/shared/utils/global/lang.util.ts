@@ -1,15 +1,3 @@
-/** 로그인 페이지 PATH */
-export const LOGIN_PAGE_PATH = '/auth/login';
-
-/** 메인 페이지 PATH */
-export const MAIN_PAGE_PATH1 = '/';
-
-/** 메인 페이지 PATH */
-export const MAIN_PAGE_PATH2 = '/index';
-
-/** 에러 페이지 PATH */
-export const ERROR_PAGE_PATH = '/error';
-
 /** 값이 비었는지 확인한다. */
 export function isEmpty(value: any): boolean {
   return value === null || value === undefined || value === '';
@@ -48,7 +36,7 @@ export function deepCopy(value: any): any {
 /** 객체 배열을 key 기준으로 group by해서 반환한다. */
 export function groupBy<T>(arr: T[], key: string): T[] {
   return [
-    ...new Map(arr.reverse().map((obj) => [obj[key], obj])).values()
+    ...new Map(arr.reverse().map((obj) => [obj[key], obj])).values(),
   ] as T[];
 }
 

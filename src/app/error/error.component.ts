@@ -2,23 +2,17 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { UiButtonComponent } from '@app/shared/components/ui';
-import { MAIN_PAGE_PATH2 } from '@app/shared/utils';
+import { MAIN_PAGE_PATH2 } from '@app/shared/constants';
 
 @Component({
   standalone: true,
-  imports: [
-    UiButtonComponent,
-  ],
+  imports: [UiButtonComponent],
   selector: 'view-error',
   templateUrl: './error.component.html',
-  styleUrl: './error.component.scss'
+  styleUrl: './error.component.scss',
 })
 export class ErrorComponent {
-
-  constructor(
-    private router: Router,
-    private location: Location,
-  ) {}
+  constructor(private router: Router, private location: Location) {}
 
   /** 메인 페이지로 이동한다. */
   goMainPage(): void {
@@ -29,5 +23,4 @@ export class ErrorComponent {
   goBackPage(): void {
     this.location.back();
   }
-
 }

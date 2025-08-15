@@ -1,8 +1,27 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormValidator, UiCheckboxComponent, UiCheckboxGroupComponent, UiCheckboxListComponent, UiDropdownComponent, UiHiddenFieldComponent, UiSplitFormComponent, UiTextFieldComponent } from '@app/shared/components/form';
-import { UiCardComponent, UiContentTitleComponent } from '@app/shared/components/ui';
-import { isEmpty, isNotObjectEmpty, isObjectEmpty, roles } from '@app/shared/utils';
+import {
+  FormValidator,
+  UiCheckboxComponent,
+  UiCheckboxGroupComponent,
+  UiCheckboxListComponent,
+  UiDropdownComponent,
+  UiHiddenFieldComponent,
+  UiSplitFormComponent,
+  UiTextFieldComponent,
+} from '@app/shared/components/form';
+import {
+  UiCardComponent,
+  UiContentTitleComponent,
+} from '@app/shared/components/ui';
+import { isEmpty, isNotObjectEmpty, isObjectEmpty } from '@app/shared/utils';
+import { roles } from '@app/shared/constants';
 import { UiMessageService } from '@app/shared/services';
 import { RoleStore } from '@app/role/role.store';
 import { CodeService } from '@app/code/code.service';
@@ -26,16 +45,15 @@ import { TransformToDto } from '@app/shared/decorators';
   ],
   selector: 'system-menu-detail',
   templateUrl: './system-menu-detail.component.html',
-  styleUrl: './system-menu-detail.component.scss'
+  styleUrl: './system-menu-detail.component.scss',
 })
 export class SystemMenuDetailComponent {
-
   constructor(
     private fb: FormBuilder,
     private roleStore: RoleStore,
     private messageService: UiMessageService,
     private codeService: CodeService,
-    private menuService: MenuService,
+    private menuService: MenuService
   ) {}
 
   /** 메뉴 정보 */
@@ -75,26 +93,37 @@ export class SystemMenuDetailComponent {
 
   ngOnInit() {
     this.detailForm = this.fb.group({
-
       // 메뉴 정보
-      originalMenuId: [''],                         // 기존 메뉴 ID
-      menuId: ['', [FormValidator.numeric]],        // 메뉴 ID
-      upMenuId: ['', [FormValidator.numeric]],      // 상위 메뉴 ID
-      menuName: ['', [                              // 메뉴명
-        FormValidator.required,
-        FormValidator.maxLength(30)
-      ]],
-      menuUrl: ['', [                               // 메뉴 URL
-        FormValidator.required,
-        FormValidator.maxLength(100)]
+      originalMenuId: [''], // 기존 메뉴 ID
+      menuId: ['', [FormValidator.numeric]], // 메뉴 ID
+      upMenuId: ['', [FormValidator.numeric]], // 상위 메뉴 ID
+      menuName: [
+        '',
+        [
+          // 메뉴명
+          FormValidator.required,
+          FormValidator.maxLength(30),
+        ],
       ],
-      menuOrder: ['', [FormValidator.numeric]],     // 메뉴 순서
-      menuDepth: ['', [                             // 메뉴 뎁스
-        FormValidator.required,
-        FormValidator.numeric
-      ]],
-      menuShowYn: ['', [FormValidator.required]],   // 메뉴 표출 여부
-      useYn: ['', [FormValidator.required]],        // 사용 여부
+      menuUrl: [
+        '',
+        [
+          // 메뉴 URL
+          FormValidator.required,
+          FormValidator.maxLength(100),
+        ],
+      ],
+      menuOrder: ['', [FormValidator.numeric]], // 메뉴 순서
+      menuDepth: [
+        '',
+        [
+          // 메뉴 뎁스
+          FormValidator.required,
+          FormValidator.numeric,
+        ],
+      ],
+      menuShowYn: ['', [FormValidator.required]], // 메뉴 표출 여부
+      useYn: ['', [FormValidator.required]], // 사용 여부
 
       // 메뉴 권한 정보
       menuRoleList: ['', [FormValidator.required]], // 권한 ID
@@ -105,8 +134,10 @@ export class SystemMenuDetailComponent {
     if (changes.detail && this.detailForm) {
       this.useRemove = true;
       this.roles = this.roleStore.select<RoleResultDTO[]>('roleList').value;
-      this.defaultRoles = this.roles.filter(x => x.roleId === roles.EMPLOYEE.id).map(x => x.roleId);
-      
+      this.defaultRoles = this.roles
+        .filter((x) => x.roleId === roles.EMPLOYEE.id)
+        .map((x) => x.roleId);
+
       if (isObjectEmpty(changes.detail.currentValue)) {
         this.useRemove = false;
         this.detailForm.reset({
@@ -119,7 +150,8 @@ export class SystemMenuDetailComponent {
       this.detailForm.patchValue({
         ...this.detail,
         originalMenuId: this.detail.menuId,
-        menuRoleList: this.detail.menuRoleList.map(x => x.roleId) || this.defaultRoles,
+        menuRoleList:
+          this.detail.menuRoleList.map((x) => x.roleId) || this.defaultRoles,
       });
     }
   }
@@ -129,13 +161,14 @@ export class SystemMenuDetailComponent {
   async onSubmit(value: SaveMenuRequestDTO): Promise<void> {
     const crudName = isEmpty(value.originalMenuId) ? '등록' : '수정';
 
-    const confirm = await this.messageService.confirm1(`메뉴 정보를 ${crudName}하시겠어요?`);
+    const confirm = await this.messageService.confirm1(
+      `메뉴 정보를 ${crudName}하시겠어요?`
+    );
     if (!confirm) return;
 
     // 메뉴 ID가 없으면 추가 API를 타고
     if (isEmpty(value.originalMenuId)) {
-      this.menuService.addMenu$(value)
-      .subscribe((response) => {
+      this.menuService.addMenu$(value).subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.detailForm.get('originalMenuId').patchValue(response.menu.menuId);
         this.refresh.emit();
@@ -143,8 +176,7 @@ export class SystemMenuDetailComponent {
     }
     // 있으면 수정 API를 탄다.
     else {
-      this.menuService.updateMenu$(value)
-      .subscribe((response) => {
+      this.menuService.updateMenu$(value).subscribe((response) => {
         this.messageService.toastSuccess(`정상적으로 ${crudName}되었어요.`);
         this.refresh.emit();
       });
@@ -153,11 +185,12 @@ export class SystemMenuDetailComponent {
 
   /** 메뉴를 삭제한다. */
   async onRemove(event: Event): Promise<void> {
-    const confirm = await this.messageService.confirm2('메뉴를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.');
+    const confirm = await this.messageService.confirm2(
+      '메뉴를 삭제하시겠어요?<br>이 작업은 복구할 수 없어요.'
+    );
     if (!confirm) return;
 
-    this.menuService.removeMenu$(this.detail.menuId)
-    .subscribe(() => {
+    this.menuService.removeMenu$(this.detail.menuId).subscribe(() => {
       this.messageService.toastSuccess('정상적으로 삭제되었어요.');
       this.remove.emit();
     });
@@ -167,5 +200,4 @@ export class SystemMenuDetailComponent {
   onClose(): void {
     this.close.emit();
   }
-
 }

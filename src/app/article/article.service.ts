@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from '@app/shared/services';
 import { ArticleStore } from './article.store';
-import { ArticleDataStateDTO, ArticleResponseDTO, ArticleResultDTO, GetArticleRequestDTO, SaveArticleRequestDTO } from './article.model';
-import { roles } from '@app/shared/utils';
+import {
+  ArticleDataStateDTO,
+  ArticleResponseDTO,
+  ArticleResultDTO,
+  GetArticleRequestDTO,
+  SaveArticleRequestDTO,
+} from './article.model';
+import { roles } from '@app/shared/constants';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
-
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
-    private articleStore: ArticleStore,
+    private articleStore: ArticleStore
   ) {}
 
   /** 게시글 목록을 조회한다. */
@@ -22,24 +27,25 @@ export class ArticleService {
 
   /** 게시글 목록을 조회한다. */
   listArticle(boardId: number): void {
-    this.listArticle$({ boardId })
-    .subscribe((response) => {
-      const oldValue = this.articleStore.select<ArticleDataStateDTO>('articleResponse').value;
+    this.listArticle$({ boardId }).subscribe((response) => {
+      const oldValue =
+        this.articleStore.select<ArticleDataStateDTO>('articleResponse').value;
       this.articleStore.update('articleResponse', {
         ...oldValue,
-        [boardId]: { data: response, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
+        [boardId]: { data: response, dataLoad: true }, // 게시판 ID별로 게시글 목록을 상태관리
       });
     });
   }
 
   /** 메인화면 게시글 목록을 조회한다. */
   listMainArticle(boardId: number, limit?: number): void {
-    this.listArticle$({ boardId, limit })
-    .subscribe((response) => {
-      const oldValue = this.articleStore.select<ArticleDataStateDTO>('mainArticleResponse').value;
+    this.listArticle$({ boardId, limit }).subscribe((response) => {
+      const oldValue = this.articleStore.select<ArticleDataStateDTO>(
+        'mainArticleResponse'
+      ).value;
       this.articleStore.update('mainArticleResponse', {
         ...oldValue,
-        [boardId]: { data: response, dataLoad: true } // 게시판 ID별로 게시글 목록을 상태관리
+        [boardId]: { data: response, dataLoad: true }, // 게시판 ID별로 게시글 목록을 상태관리
       });
     });
   }
@@ -74,19 +80,22 @@ export class ArticleService {
   }
 
   /** 게시글 작성자명을 반환한다. */
-  getArticleWriterName(data: ArticleResultDTO, options = { tagUseYn: 'Y' }): string {
-
+  getArticleWriterName(
+    data: ArticleResultDTO,
+    options = { tagUseYn: 'Y' }
+  ): string {
     // 1. 작성자가 시스템관리자인 경우
     if (data.isSystemAdmin === 1) {
-
       // 닉네임이 있으면 닉네임을 반환하고, 없으면 "시스템관리자" 권한명을 반환
       if (options.tagUseYn === 'Y') {
-        return data.articleWriterNickname ?? `<strong>${roles.SYSTEM_ADMIN.name}</strong>`;
+        return (
+          data.articleWriterNickname ??
+          `<strong>${roles.SYSTEM_ADMIN.name}</strong>`
+        );
       }
       return data.articleWriterNickname ?? roles.SYSTEM_ADMIN.name;
     }
     // 2. 작성자가 시스템관리자가 아닌 경우
     return data.articleWriterNickname ?? data.employeeName;
   }
-
 }

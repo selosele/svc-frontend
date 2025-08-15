@@ -1,8 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { MenuService } from '@app/menu/menu.service';
+import { IS_BACKMODE_KEY, roles } from '@app/shared/constants';
 import { StoreService } from '@app/shared/services';
-import { dateUtil, numberWithCommas as _numberWithCommas, roles } from '@app/shared/utils';
+import {
+  dateUtil,
+  numberWithCommas as _numberWithCommas,
+} from '@app/shared/utils';
 
 /**
  * 모든 컴포넌트의 기본이 되는 컴포넌트.
@@ -14,16 +18,15 @@ import { dateUtil, numberWithCommas as _numberWithCommas, roles } from '@app/sha
   imports: [],
   selector: 'core-base',
   templateUrl: './core-base.component.html',
-  styleUrl: './core-base.component.scss'
+  styleUrl: './core-base.component.scss',
 })
 export class CoreBaseComponent {
-
   /** store */
   protected store = inject(StoreService);
 
   /** 인증·인가 서비스 */
   protected authService = inject(AuthService);
-  
+
   /** 메뉴 서비스 */
   protected menuService = inject(MenuService);
 
@@ -54,25 +57,23 @@ export class CoreBaseComponent {
 
   /** 후방주의모드 활성화 여부 값을 반환한다. */
   protected get isBackMode() {
-    return Boolean(this.store.persistGet('isBackMode')) ?? false;
+    return Boolean(this.store.persistGet(IS_BACKMODE_KEY)) ?? false;
   }
 
   /** 액션 목록 */
   protected get actions() {
     return {
-
       /** 추가/수정/삭제 */
       SAVE: 'SAVE',
-    
+
       /** 수정 */
       UPDATE: 'UPDATE',
-    
+
       /** 복사 */
       COPY: 'COPY',
-    
+
       /** 새로고침 */
       RELOAD: 'RELOAD',
-    
     };
   }
 
@@ -90,5 +91,4 @@ export class CoreBaseComponent {
   protected numberWithCommas(value: number | string): string {
     return _numberWithCommas(value);
   }
-
 }
