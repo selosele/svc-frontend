@@ -6,6 +6,7 @@ import { StoreService, UiDialogService } from '@app/shared/services';
 import { isNotBlank } from '@app/shared/utils';
 import {
   ACCESS_TOKEN_KEY,
+  IS_BACKMODE_KEY,
   LOGIN_PAGE_PATH,
   MAIN_PAGE_PATH1,
   SAVE_USER_ACCOUNT_KEY,
@@ -86,7 +87,7 @@ export class AuthService {
     this.dialogService.closeAllDialog();
 
     Object.keys(window.localStorage).forEach((key) => {
-      if (key !== SAVE_USER_ACCOUNT_KEY) {
+      if (key !== SAVE_USER_ACCOUNT_KEY && key !== IS_BACKMODE_KEY) {
         window.localStorage.removeItem(key); // 필수로 저장되어 있어야 하는 key를 제외하고 전부 삭제
       }
     });
