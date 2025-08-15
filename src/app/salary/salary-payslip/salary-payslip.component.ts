@@ -41,10 +41,6 @@ export class SalaryPayslipComponent
   ) {
     super();
 
-    this.store.create(
-      IS_BACKMODE_KEY,
-      Boolean(this.store.persistGet(IS_BACKMODE_KEY)) ?? false
-    );
     this.store.persistDetect(IS_BACKMODE_KEY, (value: boolean) => {
       this.setPayslipTableContent();
     });

@@ -4,7 +4,6 @@ import { StoreMap } from '@app/shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class StoreService {
-
   constructor() {
     this.init();
   }
@@ -13,9 +12,7 @@ export class StoreService {
   private store: StoreMap = new Map();
 
   /** 특정 로직을 최초 실행한다. */
-  init() {
-
-  }
+  init() {}
 
   /** 상태를 로컬스토리지에 저장한다. */
   persist(key: string, value: any): void {
@@ -35,9 +32,6 @@ export class StoreService {
 
   /** 로컬스토리지에 저장된 상태의 변경을 감지한다. */
   persistDetect<T>(key: string, callback: (value: any) => void): void {
-    this.select<T>(key).asObservable().subscribe((_value) => {
-      callback(this.persistGet(key));
-    });
     window.addEventListener('storage', (event: StorageEvent) => {
       if (event.key === key) {
         callback(event.newValue ? JSON.parse(event.newValue) : null);
@@ -88,5 +82,4 @@ export class StoreService {
   deleteAll(): void {
     this.store.clear();
   }
-
 }
