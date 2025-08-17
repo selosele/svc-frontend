@@ -17,4 +17,10 @@ export const roles = {
     id: 'ROLE_EMPLOYEE',
     name: '직원',
   },
+
+  /** 챗봇 권한 */
+  CHATBOT: {
+    id: 'ROLE_CHATBOT',
+    name: '챗봇',
+  },
 };
